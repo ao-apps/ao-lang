@@ -55,6 +55,21 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 					<li>Pulling small, general-purpose extensions to the standard Java libraries out of
 						<core:link book="/aocode-public" page="/index.jspx" /> into a new
 						<code>ao-lang</code> project.</li>
+					<li><code>ProcessResult</code> improvements:
+						<ol>
+							<li>Now uses only one additional thread to read standard error.</li>
+							<li>Delays the allocation of <code>StringBuilder</code> objects until needed.</li>
+							<li>Provides an appropriate starting buffer size to the <code>StringBuilder</code> objects.</li>
+							<li>Reduces the amount of <code>synchronization</code>.</li>
+						</ol>
+					</li>
+					<li><code>BufferManager</code> improvements:
+						<ol>
+							<li>Uses soft references to avoid potential runaway memory leaks.</li>
+							<li>Provides additional statistics including the number of buffers zero-filled and detected as garbage collected.</li>
+							<li>Javadoc comment improvements.</li>
+						</ol>
+					</li>
 				</ul>
 			</changelog:release>
 		</c:if>
