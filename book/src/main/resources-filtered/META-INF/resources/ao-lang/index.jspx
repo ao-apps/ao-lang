@@ -31,7 +31,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 	<core:page
 		title="@{documented.name}"
 		description="@{documented.description}"
-		datePublished="2017-03-10T18:55:40-0600"
+		datePublished="2017-03-12T18:35:33-0500"
 	>
 		<core:child page="changelog.jspx" />
 		<core:child page="apidocs/index.jspx" />
@@ -64,7 +64,8 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 					<ao:a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</ao:a>
 					- A popular set of extra methods generally extending the standard Java libraries.
 				</li>
-				<li><ao:a href="https://github.com/google/guava"> - Google Core Libraries for Java.</ao:a></li>
+				<li><ao:a href="https://github.com/google/guava">Google Guava</ao:a>
+					- Google Core Libraries for Java.</li>
 			</ul>
 		</section:section>
 		<section:section label="Project Links">
