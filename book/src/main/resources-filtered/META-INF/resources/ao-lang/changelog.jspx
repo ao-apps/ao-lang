@@ -35,7 +35,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		title="@{documented.name} Changelog"
 		shortTitle="Changelog"
 		tocLevels="1"
-		datePublished="2017-03-10T18:52:46-0600"
+		datePublished="2017-03-12T17:48:23-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-lang:pom.version}" />
@@ -68,6 +68,12 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 							<li>Uses soft references to avoid potential runaway memory leaks.</li>
 							<li>Provides additional statistics including the number of buffers zero-filled and detected as garbage collected.</li>
 							<li>Javadoc comment improvements.</li>
+						</ol>
+					</li>
+					<li><code>ApplicationResourcesAccessor</code> improvements:
+						<ol>
+							<li>Added <code>Listener</code> hook for code interested in calls to <code>getMessage</code>.</li>
+							<li>Used this new hook to decouple <code>ao-lang</code> from <code>aocode-public</code>.</li>
 						</ol>
 					</li>
 				</ul>
