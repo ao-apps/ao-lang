@@ -32,13 +32,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Utilities to read FastExternalizable, Externalizable, and Serializable objects.
- *
+ * Utilities to read {@link FastExternalizable}, {@link Externalizable}, and {@link Serializable} objects.
+ * <p>
  * When multiple objects are being written, this avoids the repetitive writing of classnames and serialVersionUIDs.
- *
- * Any object that is ObjectInputValidation is validated immediately - there is no need
+ * </p>
+ * <p>
+ * Any object that is {@link ObjectInputValidation} is validated immediately - there is no need
  * and no mechanism to register the validation since this is for simple value objects
  * that don't participate in more complex object graphs.
+ * </p>
  *
  * @author  AO Industries, Inc.
  */
@@ -47,8 +49,12 @@ public class FastObjectInput implements ObjectInput {
 	private static final ThreadLocal<FastObjectInput> threadFastObjectInput = new ThreadLocal<FastObjectInput>();
 
 	/**
-	 * Gets the wrapper for the provided ObjectOutput, creating if needed.
-	 * To avoid memory leaks, it should also be unwrapped in a finally block.
+	 * Gets the wrapper for the provided {@link ObjectInput}, creating if needed.
+	 * To avoid memory leaks, it must also be {@link #unwrap() unwrapped} in a finally block.
+	 * <p>
+	 * TODO: Can {@link FastObjectInput} itself implement {@link AutoCloseable} for {@link #unwrap()}?
+	 *       Maybe this means it no longer implements {@link ObjectInput} directly?
+	 * </p>
 	 */
 	public static FastObjectInput wrap(ObjectInput in) throws IOException {
 		FastObjectInput fastIn;
@@ -56,22 +62,15 @@ public class FastObjectInput implements ObjectInput {
 			fastIn = (FastObjectInput)in;
 		} else {
 			fastIn = threadFastObjectInput.get();
-			if(fastIn==null) {
+			if(fastIn == null) {
 				threadFastObjectInput.set(fastIn = new FastObjectInput(in));
 			} else {
 				// Must be same as previously used value
-				if(in!=fastIn.in) throw new IOException("ObjectInput changed unexpectedly");
+				if(in != fastIn.in) throw new IOException("ObjectInput changed unexpectedly");
 			}
 		}
 		fastIn.incrementWrapCount();
 		return fastIn;
-	}
-
-	/**
-	 * Unwraps the object input.
-	 */
-	public void unwrap() throws IOException {
-		if(decrementWrapCount()==0) threadFastObjectInput.remove();
 	}
 
 	private final ObjectInput in;
@@ -100,19 +99,26 @@ public class FastObjectInput implements ObjectInput {
 	}
 
 	private void incrementWrapCount() throws IOException {
-		if(wrapCount==Integer.MAX_VALUE) throw new IOException("Maximum wrap count reached.");
+		if(wrapCount == Integer.MAX_VALUE) throw new IOException("Maximum wrap count reached.");
 		wrapCount++;
 	}
 
-	private int decrementWrapCount() {
-		if(wrapCount>0) wrapCount--;
-		return wrapCount;
+	/**
+	 * Unwraps the object input.
+	 *
+	 * @throws  IllegalStateException  if not wrapped
+	 */
+	public void unwrap() throws IllegalStateException {
+		assert wrapCount >= 0;
+		if(wrapCount == 0) throw new IllegalStateException("Not wrapped");
+		wrapCount--;
+		if(wrapCount == 0) threadFastObjectInput.remove();
 	}
 
 	/**
-	 * Reads a possibly-fast externalizable object from the stream.
+	 * Reads a possibly-{@link FastExternalizable} object from the stream.
 	 *
-	 * @see  #writeObject
+	 * @see  FastObjectOutput#writeObject(java.lang.Object)
 	 */
 	@Override
 	public Object readObject() throws IOException, ClassNotFoundException {
@@ -130,9 +136,9 @@ public class FastObjectInput implements ObjectInput {
 	}
 
 	/**
-	 * Reads a fast serializable object from the stream.
+	 * Reads a {@link FastExternalizable} object from the stream.
 	 *
-	 * @see  #writeFastObject(java.io.ObjectOutput, com.aoindustries.io.FastExternalizable)
+	 * @see  FastObjectOutput#writeFastObject(com.aoindustries.io.FastExternalizable)
 	 */
 	protected FastExternalizable readFastObject() throws IOException, ClassNotFoundException {
 		int code = in.read();
@@ -150,17 +156,17 @@ public class FastObjectInput implements ObjectInput {
 	}
 
 	/**
-	 * Reads a fast serializable object from the stream.
+	 * Reads a {@link FastExternalizable} object from the stream.
 	 *
 	 * @see  #writeFastObject(java.io.ObjectOutput, com.aoindustries.io.FastExternalizable)
 	 */
 	private FastExternalizable readFastObject(int code) throws IOException, ClassNotFoundException {
-		assert code>=FastObjectOutput.FAST_NEW;
+		assert code >= FastObjectOutput.FAST_NEW;
 		// Resolve class (as lastClass) by code
 		switch(code) {
 			case FastObjectOutput.FAST_SAME :
 			{
-				if(lastClass==null) throw new StreamCorruptedException("lastClass is null");
+				if(lastClass == null) throw new StreamCorruptedException("lastClass is null");
 				break;
 			}
 			case FastObjectOutput.FAST_NEW :
@@ -173,8 +179,8 @@ public class FastObjectInput implements ObjectInput {
 			case FastObjectOutput.FAST_SEEN_SHORT :
 			{
 				int offset = in.readShort() & 0xffff;
-				int classId = offset + (255-FastObjectOutput.FAST_SEEN_INT);
-				if(classId>=nextClassId) throw new StreamCorruptedException("Class ID not already in steam: "+classId);
+				int classId = offset + (255 - FastObjectOutput.FAST_SEEN_INT);
+				if(classId >= nextClassId) throw new StreamCorruptedException("Class ID not already in steam: " + classId);
 				lastClass = classesById.get(classId);
 				lastSerialVersionUID = serialVersionUIDsById.get(classId);
 				break;
@@ -182,7 +188,7 @@ public class FastObjectInput implements ObjectInput {
 			case FastObjectOutput.FAST_SEEN_INT :
 			{
 				int classId = in.readInt();
-				if(classId>=nextClassId) throw new StreamCorruptedException("Class ID not already in steam: "+classId);
+				if(classId >= nextClassId) throw new StreamCorruptedException("Class ID not already in steam: " + classId);
 				lastClass = classesById.get(classId);
 				lastSerialVersionUID = serialVersionUIDsById.get(classId);
 				break;
@@ -191,7 +197,7 @@ public class FastObjectInput implements ObjectInput {
 			{
 				assert code > FastObjectOutput.FAST_SEEN_INT;
 				int classId = code - (FastObjectOutput.FAST_SEEN_INT + 1);
-				if(classId>=nextClassId) throw new StreamCorruptedException("Class ID not already in steam: "+classId);
+				if(classId >= nextClassId) throw new StreamCorruptedException("Class ID not already in steam: " + classId);
 				lastClass = classesById.get(classId);
 				lastSerialVersionUID = serialVersionUIDsById.get(classId);
 			}
@@ -199,7 +205,7 @@ public class FastObjectInput implements ObjectInput {
 		try {
 			FastExternalizable obj = (FastExternalizable)lastClass.newInstance();
 			long actualSerialVersionUID = obj.getSerialVersionUID();
-			if(lastSerialVersionUID!=actualSerialVersionUID) throw new InvalidClassException(lastClass.getName(), "Mismatched serialVersionUID: expected "+lastSerialVersionUID+", got "+actualSerialVersionUID);
+			if(lastSerialVersionUID != actualSerialVersionUID) throw new InvalidClassException(lastClass.getName(), "Mismatched serialVersionUID: expected " + lastSerialVersionUID + ", got " + actualSerialVersionUID);
 			obj.readExternal(this);
 			if(obj instanceof ObjectInputValidation) ((ObjectInputValidation)obj).validateObject();
 			return obj;
@@ -215,7 +221,7 @@ public class FastObjectInput implements ObjectInput {
 	}
 
 	/**
-	 * Reads a fast serialized String from the stream.
+	 * Reads a fast serialized {@link String} from the stream.
 	 *
 	 * @see  #writeFastUTF(java.io.ObjectOutput, com.aoindustries.io.FastExternalizable)
 	 */
@@ -229,7 +235,7 @@ public class FastObjectInput implements ObjectInput {
 			}
 			case FastObjectOutput.STANDARD :
 			{
-				throw new IOException("Unexpected code: "+code);
+				throw new IOException("Unexpected code: " + code);
 			}
 			case -1 :
 			{
@@ -237,7 +243,7 @@ public class FastObjectInput implements ObjectInput {
 			}
 			case FastObjectOutput.FAST_SAME :
 			{
-				if(lastString==null) throw new StreamCorruptedException("lastString is null");
+				if(lastString == null) throw new StreamCorruptedException("lastString is null");
 				return lastString;
 			}
 			case FastObjectOutput.FAST_NEW :
@@ -250,21 +256,21 @@ public class FastObjectInput implements ObjectInput {
 			case FastObjectOutput.FAST_SEEN_SHORT :
 			{
 				int offset = in.readShort() & 0xffff;
-				int stringId = offset + (255-FastObjectOutput.FAST_SEEN_INT);
-				if(stringId>=nextStringId) throw new StreamCorruptedException("String ID not already in steam: "+stringId);
+				int stringId = offset + (255 - FastObjectOutput.FAST_SEEN_INT);
+				if(stringId >= nextStringId) throw new StreamCorruptedException("String ID not already in steam: " + stringId);
 				return lastString = stringsById.get(stringId);
 			}
 			case FastObjectOutput.FAST_SEEN_INT :
 			{
 				int stringId = in.readInt();
-				if(stringId>=nextStringId) throw new StreamCorruptedException("String ID not already in steam: "+stringId);
+				if(stringId >= nextStringId) throw new StreamCorruptedException("String ID not already in steam: " + stringId);
 				return lastString = stringsById.get(stringId);
 			}
 			default :
 			{
 				assert code > FastObjectOutput.FAST_SEEN_INT;
 				int stringId = code - (FastObjectOutput.FAST_SEEN_INT + 1);
-				if(stringId>=nextStringId) throw new StreamCorruptedException("String ID not already in steam: "+stringId);
+				if(stringId >= nextStringId) throw new StreamCorruptedException("String ID not already in steam: " + stringId);
 				return lastString = stringsById.get(stringId);
 			}
 		}
