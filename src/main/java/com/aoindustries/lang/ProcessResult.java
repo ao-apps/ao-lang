@@ -39,7 +39,7 @@ public class ProcessResult {
 	/**
 	 * Executes the provided command and gets the result in the system default character set.
 	 */
-	public static ProcessResult exec(String[] command) throws IOException {
+	public static ProcessResult exec(String ... command) throws IOException {
 		return getProcessResult(Runtime.getRuntime().exec(command), Charset.defaultCharset());
 	}
 
