@@ -5,8 +5,9 @@ Minimal Java library with no external dependencies shared by many other projects
 * Small, simple, unfocused utilities that are generally extensions to the standard Java libraries.
 * Shared by many other projects and can be used to glue them together.
 * Small footprint, self-contained, no transitive dependencies - not part of a big monolithic package.
-* Android compatible.
-* Java EE 6+ compatible.
+* Java 1.6 implementation:
+    * Android compatible.
+    * Java EE 6+ compatible.
 
 ## Motivation
 As we untangle our monolitic [AOCode Public](https://aoindustries.com/aocode-public/) project, we are placing small, simple, and unfocused utilities into this new project.  These tools are generally extensions to the standard Java libraries.  The `ao-lang` project is used by many other projects, but does not have any dependencies itself.
