@@ -22,6 +22,9 @@
  */
 package com.aoindustries.util;
 
+import java.text.Collator;
+import java.util.Locale;
+
 /**
  * Utilities that help when working with comparators.
  *
@@ -49,6 +52,19 @@ public final class ComparatorUtils {
 	}
 
 	/**
+	 * Compares two shorts.
+	 * 
+	 * @see Short#compare(short,short) as of Java 1.7
+	 * 
+	 * Java 1.7: deprecated  use java.lang.Short#compare(short,short) as of Java 1.7
+	 */
+	// Java 1.7: @Deprecated
+	public static int compare(short s1, short s2) {
+		// Java 1.7: return Short.compare(s1, s2);
+		return (s1 < s2) ? -1 : ((s1 == s2) ? 0 : 1);
+	}
+
+	/**
 	 * Compares two booleans.
 	 * 
 	 * @see Boolean#compare(boolean,boolean) as of Java 1.7
@@ -72,5 +88,17 @@ public final class ComparatorUtils {
 	public static int compare(long l1, long l2) {
 		// Java 1.7: return Long.compare(l1, l2);
 		return (l1 < l2) ? -1 : ((l1 == l2) ? 0 : 1);
+	}
+
+	private static final Collator collator = Collator.getInstance(Locale.ROOT);
+	/**
+	 * Compares two strings in a root-locale case-insensitive mannger, while
+	 * remaining strictly consistent with equals.
+	 */
+	public static int compareIgnoreCaseConsistentWithEquals(String s1, String s2) {
+		if(s1 == s2) return 0;
+		int diff = collator.compare(s1, s2);
+		if(diff != 0) return diff;
+		return s1.compareTo(s2);
 	}
 }
