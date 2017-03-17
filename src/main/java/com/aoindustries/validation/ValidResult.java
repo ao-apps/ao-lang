@@ -27,13 +27,13 @@ package com.aoindustries.validation;
  *
  * @author  AO Industries, Inc.
  */
-final class ValidResult implements ValidationResult {
+final public class ValidResult implements ValidationResult {
 
 	private static final long serialVersionUID = -5742207860354792003L;
 
 	private static final ValidResult singleton = new ValidResult();
 
-	static ValidResult getInstance() {
+	public static ValidResult getInstance() {
 		return singleton;
 	}
 

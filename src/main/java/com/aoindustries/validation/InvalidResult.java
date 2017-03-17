@@ -31,7 +31,7 @@ import java.io.Serializable;
  *
  * @author  AO Industries, Inc.
  */
-final class InvalidResult implements ValidationResult {
+final public class InvalidResult implements ValidationResult {
 
 	private static final long serialVersionUID = -105878200149461063L;
 
@@ -39,13 +39,13 @@ final class InvalidResult implements ValidationResult {
 	private final String key;
 	private final Serializable[] args;
 
-	InvalidResult(ApplicationResourcesAccessor accessor, String key) {
+	public InvalidResult(ApplicationResourcesAccessor accessor, String key) {
 		this.accessor = accessor;
 		this.key = key;
 		this.args = AoArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
-	InvalidResult(ApplicationResourcesAccessor accessor, String key, Serializable... args) {
+	public InvalidResult(ApplicationResourcesAccessor accessor, String key, Serializable... args) {
 		this.accessor = accessor;
 		this.key = key;
 		this.args = args;

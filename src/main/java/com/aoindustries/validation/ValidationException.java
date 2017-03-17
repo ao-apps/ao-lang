@@ -33,7 +33,7 @@ public class ValidationException extends Exception {
 
 	private static final long serialVersionUID = -1153407618428602416L;
 
-	final ValidationResult result;
+	private final ValidationResult result;
 
 	public ValidationException(ValidationResult result) {
 		super(result.toString()); // Conversion done in server
@@ -50,5 +50,9 @@ public class ValidationException extends Exception {
 	@Override
 	public String getLocalizedMessage() {
 		return result.toString(); // Conversion done in client
+	}
+
+	public ValidationResult getResult() {
+		return result;
 	}
 }
