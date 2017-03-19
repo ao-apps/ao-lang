@@ -776,4 +776,36 @@ public class AoCollections {
 ////			);
 //		}
 //	}
+
+	/**
+	 * Returns a modifiable set of all the keys in a map that match the given value.
+	 * This is a copy of the keys and will not write-through or be altered by the original map.
+	 * The set will have the same iteration order as the original map.
+	 */
+	public static <K,V> Set<K> filterByValue(Map<K,V> map, String value) {
+		Set<K> filtered = new LinkedHashSet<K>();
+		for(Map.Entry<K,V> entry : map.entrySet()) {
+			if(ObjectUtils.equals(entry.getValue(), value)) {
+				K key = entry.getKey();
+				if(!filtered.add(key)) throw new AssertionError("Duplicate key: " + key);
+			}
+		}
+		return filtered;
+	}
+
+	/**
+	 * Returns a modifiable sorted set of all the keys in a sorted map that match the given value.
+	 * This is a copy of the keys and will not write-through or be altered by the original map.
+	 * The set uses the same comparator as the original map.
+	 */
+	public static <K,V> SortedSet<K> filterByValue(SortedMap<K,V> map, String value) {
+		TreeSet<K> filtered = new TreeSet<K>(map.comparator());
+		for(Map.Entry<K,V> entry : map.entrySet()) {
+			if(ObjectUtils.equals(entry.getValue(), value)) {
+				K key = entry.getKey();
+				if(!filtered.add(key)) throw new AssertionError("Duplicate key: " + key);
+			}
+		}
+		return filtered;
+	}
 }
