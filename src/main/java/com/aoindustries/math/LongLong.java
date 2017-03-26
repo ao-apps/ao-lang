@@ -205,12 +205,16 @@ public class LongLong extends Number implements Comparable<LongLong> {
 		return getBigInteger().toString();
 	}
 
-	@Override
-	public int hashCode() {
+	public static int hashCode(long hi, long lo) {
 		return
 			(int)(hi ^ (hi >>> 32))
 			^ (int)(lo ^ (lo >>> 32))
 		;
+	}
+
+	@Override
+	public int hashCode() {
+		return hashCode(hi, lo);
 	}
 
 	@Override
