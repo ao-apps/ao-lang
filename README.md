@@ -1,6 +1,13 @@
 # [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://aoindustries.com/) [AO Lang](https://aoindustries.com/ao-lang/)
 Minimal Java library with no external dependencies shared by many other projects.
 
+## Project Links
+* [Project Home](https://aoindustries.com/ao-lang/)
+* [Changelog](https://aoindustries.com/ao-lang/changelog)
+* [API Docs](https://aoindustries.com/ao-lang/apidocs/)
+* [Maven Central Repository](https://search.maven.org/#search%7Cgav%7C1%7Cg:%22com.aoindustries%22%20AND%20a:%22ao-lang%22)
+* [GitHub](https://github.com/aoindustries/ao-lang)
+
 ## Features
 * Small, simple, unfocused utilities that are generally extensions to the standard Java libraries.
 * Shared by many other projects and can be used to glue them together.
@@ -16,13 +23,6 @@ As we untangle our monolitic [AOCode Public](https://aoindustries.com/aocode-pub
 There may be functionality that is also found in other projects.  This project is of a different evolutionary origin.
 * [Apache Commons Lang](https://commons.apache.org/proper/commons-lang/) - A popular set of extra methods generally extending the standard Java libraries.
 * [Google Guava](https://github.com/google/guava) - Google Core Libraries for Java.
-
-## Project Links
-* [Project Home](https://aoindustries.com/ao-lang/)
-* [Changelog](https://aoindustries.com/ao-lang/changelog)
-* [API Docs](https://aoindustries.com/ao-lang/apidocs/)
-* [Maven Central Repository](https://search.maven.org/#search%7Cgav%7C1%7Cg:%22com.aoindustries%22%20AND%20a:%22ao-lang%22)
-* [GitHub](https://github.com/aoindustries/ao-lang)
 
 ## Contact Us
 For questions or support, please [contact us](https://aoindustries.com/contact):
