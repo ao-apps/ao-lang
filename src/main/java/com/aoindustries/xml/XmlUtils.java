@@ -224,6 +224,19 @@ public final class XmlUtils {
 	}
 
 	/**
+	 * Gets the text content of a child element for a tag name or {@code null} if not found.
+	 * Is an error if more than once child is found for the given name.
+	 *
+	 * @see #getChildElementByTagName(org.w3c.dom.Element, java.lang.String)
+	 *
+	 * @throws  IllegalStateException  if there is more than one child element with the given name
+	 */
+	public static String getChildTextContent(Element element, String childTagName) {
+		Element childElem = getChildElementByTagName(element, childTagName);
+		return childElem == null ? null : childElem.getTextContent();
+	}
+
+	/**
 	 * @deprecated  Use {@link #toString(org.w3c.dom.Node)} instead.
 	 */
 	@Deprecated
