@@ -822,7 +822,7 @@ public class AoCollections {
 	 * This is a copy of the keys and will not write-through or be altered by the original map.
 	 * The set will have the same iteration order as the original map.
 	 */
-	public static <K,V> Set<K> filterByValue(Map<? extends K,? extends V> map, String value) {
+	public static <K,V> Set<K> filterByValue(Map<? extends K,? extends V> map, V value) {
 		Set<K> filtered = new LinkedHashSet<K>();
 		for(Map.Entry<? extends K,? extends V> entry : map.entrySet()) {
 			if(ObjectUtils.equals(entry.getValue(), value)) {
