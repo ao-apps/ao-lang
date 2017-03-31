@@ -243,7 +243,7 @@ public class AoCollections {
 	/**
 	 * Performs defensive shallow copy and returns unmodifiable collection.
 	 */
-	public static <T> Collection<T> unmodifiableCopyCollection(Collection<T> collection) {
+	public static <T> Collection<T> unmodifiableCopyCollection(Collection<? extends T> collection) {
 		int size = collection.size();
 		if(size==0) return Collections.emptyList();
 		// TODO: Create an unmodifiable collection that can only be populated here, and reused.
@@ -287,7 +287,7 @@ public class AoCollections {
 	/**
 	 * Performs defensive shallow copy and returns unmodifiable list.
 	 */
-	public static <T> List<T> unmodifiableCopyList(Collection<T> collection) {
+	public static <T> List<T> unmodifiableCopyList(Collection<? extends T> collection) {
 		int size = collection.size();
 		if(size==0) return Collections.emptyList();
 		// TODO: Create an unmodifiable collection that can only be populated here, and reused.
@@ -332,7 +332,7 @@ public class AoCollections {
 	 * Performs defensive shallow copy and returns unmodifiable set.
 	 * The iteration order of the original set is maintained.
 	 */
-	public static <T> Set<T> unmodifiableCopySet(Collection<T> collection) {
+	public static <T> Set<T> unmodifiableCopySet(Collection<? extends T> collection) {
 		int size = collection.size();
 		if(size==0) return Collections.emptySet();
 		// TODO: Create an unmodifiable collection that can only be populated here, and reused.
@@ -369,7 +369,7 @@ public class AoCollections {
 	/**
 	 * Performs defensive shallow copy and returns unmodifiable sorted set.
 	 */
-	public static <T> SortedSet<T> unmodifiableCopySortedSet(Collection<T> collection) {
+	public static <T> SortedSet<T> unmodifiableCopySortedSet(Collection<? extends T> collection) {
 		int size = collection.size();
 		if(size==0) return emptySortedSet();
 		// TODO: Create an unmodifiable collection that can only be populated here, and reused.
@@ -420,7 +420,7 @@ public class AoCollections {
 	 * Performs defensive shallow copy and returns unmodifiable map.
 	 * The iteration order of the original set is maintained.
 	 */
-	public static <K,V> Map<K,V> unmodifiableCopyMap(Map<K,V> map) {
+	public static <K,V> Map<K,V> unmodifiableCopyMap(Map<? extends K, ? extends V> map) {
 		int size = map.size();
 		if(size==0) return Collections.emptyMap();
 		// TODO: Create an unmodifiable collection that can only be populated here, and reused.
@@ -461,7 +461,7 @@ public class AoCollections {
 	/**
 	 * Performs defensive shallow copy and returns unmodifiable sorted map.
 	 */
-	public static <K,V> SortedMap<K,V> unmodifiableCopySortedMap(Map<K,V> map) {
+	public static <K,V> SortedMap<K,V> unmodifiableCopySortedMap(Map<? extends K, ? extends V> map) {
 		// TODO: int size = sortedMap.size();
 		// TODO: if(size==0) return emptySortedMap();
 		// TODO: Create an unmodifiable collection that can only be populated here, and reused.
