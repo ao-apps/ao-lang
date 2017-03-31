@@ -585,9 +585,9 @@ public class AoCollections {
 
 	static class UnmodifiableIterator<E> implements Iterator<E> {
 
-		private final Iterator<E> iter;
+		private final Iterator<? extends E> iter;
 
-		UnmodifiableIterator(Iterator<E> iter) {
+		UnmodifiableIterator(Iterator<? extends E> iter) {
 			this.iter = iter;
 		}
 
@@ -610,14 +610,19 @@ public class AoCollections {
 	/**
 	 * Wraps an iterator to make it unmodifiable.
 	 */
-	public static <E> Iterator<E> unmodifiableIterator(Iterator<E> iter) {
+	public static <E> Iterator<E> unmodifiableIterator(Iterator<? extends E> iter) {
 		// Don't wrap already unmodifiable iterator types.
 		if(
 			(iter instanceof UnmodifiableIterator<?>)
 			|| (iter instanceof EnumerationIterator<?>)
 			|| (iter instanceof SingletonIterator<?>)
 			|| (iter==EmptyIterator.instance)
-		) return iter;
+		) {
+			// Safe change of generic bounds only because returned iterator is unmodifiable
+			@SuppressWarnings("unchecked")
+			Iterator<E> unmodifiable = (Iterator<E>)iter;
+			return unmodifiable;
+		}
 		return new UnmodifiableIterator<E>(iter);
 	}
 
@@ -749,7 +754,7 @@ public class AoCollections {
 	/**
 	 * Filters a list for all elements of a given class.
 	 */
-	public static <E,R extends E> List<R> filter(List<E> list, Class<R> clazz) {
+	public static <E,R extends E> List<R> filter(List<? extends E> list, Class<? extends R> clazz) {
 		if(list==null) return Collections.emptyList();
 		else {
 			/* Imperative version: */
@@ -817,9 +822,9 @@ public class AoCollections {
 	 * This is a copy of the keys and will not write-through or be altered by the original map.
 	 * The set will have the same iteration order as the original map.
 	 */
-	public static <K,V> Set<K> filterByValue(Map<K,V> map, String value) {
+	public static <K,V> Set<K> filterByValue(Map<? extends K,? extends V> map, String value) {
 		Set<K> filtered = new LinkedHashSet<K>();
-		for(Map.Entry<K,V> entry : map.entrySet()) {
+		for(Map.Entry<? extends K,? extends V> entry : map.entrySet()) {
 			if(ObjectUtils.equals(entry.getValue(), value)) {
 				K key = entry.getKey();
 				if(!filtered.add(key)) throw new AssertionError("Duplicate key: " + key);
@@ -833,9 +838,9 @@ public class AoCollections {
 	 * This is a copy of the keys and will not write-through or be altered by the original map.
 	 * The set uses the same comparator as the original map.
 	 */
-	public static <K,V> SortedSet<K> filterByValue(SortedMap<K,V> map, String value) {
+	public static <K,V> SortedSet<K> filterByValue(SortedMap<K,? extends V> map, V value) {
 		TreeSet<K> filtered = new TreeSet<K>(map.comparator());
-		for(Map.Entry<K,V> entry : map.entrySet()) {
+		for(Map.Entry<K,? extends V> entry : map.entrySet()) {
 			if(ObjectUtils.equals(entry.getValue(), value)) {
 				K key = entry.getKey();
 				if(!filtered.add(key)) throw new AssertionError("Duplicate key: " + key);
