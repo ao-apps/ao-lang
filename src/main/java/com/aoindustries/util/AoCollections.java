@@ -401,8 +401,8 @@ public class AoCollections {
 		//for(int i=0, len=unmodifiableSortedSetClasses.length; i<len; i++) if(unmodifiableSortedSetClasses[i]==clazz) return (SortedSet<T>)collection;
 		if(size==1) return singletonSortedSet(collection.iterator().next());
 		SortedSet<T> copy;
-		if(collection instanceof SortedSet<?>) {
-			copy = new TreeSet<T>((SortedSet<T>)collection);
+		if(collection instanceof SortedSet) {
+			copy = new TreeSet<T>((SortedSet<? extends T>)collection);
 		} else {
 			copy = new TreeSet<T>(collection);
 		}
@@ -496,7 +496,7 @@ public class AoCollections {
 	/**
 	 * Performs defensive shallow copy and returns unmodifiable sorted map.
 	 */
-	public static <K,V> SortedMap<K,V> unmodifiableCopySortedMap(Map<? extends K, ? extends V> map) {
+	public static <K,V> SortedMap<K,V> unmodifiableCopySortedMap(Map<K, ? extends V> map) {
 		// TODO: int size = sortedMap.size();
 		// TODO: if(size==0) return emptySortedMap();
 		// TODO: Create an unmodifiable collection that can only be populated here, and reused.
@@ -510,8 +510,8 @@ public class AoCollections {
 		// TODO:     return singletonSortedMap(key, sortedMap.get(key));
 		// TODO: }
 		SortedMap<K,V> copy;
-		if(map instanceof SortedMap<?,?>) {
-			copy = new TreeMap<K,V>((SortedMap<K,V>)map);
+		if(map instanceof SortedMap) {
+			copy = new TreeMap<K,V>((SortedMap<K,? extends V>)map);
 		} else {
 			copy = new TreeMap<K,V>(map);
 		}
@@ -613,9 +613,9 @@ public class AoCollections {
 	public static <E> Iterator<E> unmodifiableIterator(Iterator<? extends E> iter) {
 		// Don't wrap already unmodifiable iterator types.
 		if(
-			(iter instanceof UnmodifiableIterator<?>)
-			|| (iter instanceof EnumerationIterator<?>)
-			|| (iter instanceof SingletonIterator<?>)
+			(iter instanceof UnmodifiableIterator)
+			|| (iter instanceof EnumerationIterator)
+			|| (iter instanceof SingletonIterator)
 			|| (iter==EmptyIterator.instance)
 		) {
 			// Safe change of generic bounds only because returned iterator is unmodifiable
