@@ -231,12 +231,19 @@ public class AoCollections {
 	 * If collection has one element, uses <code>Collections.singletonList</code>.
 	 * Otherwise, wraps the collection with <code>Collections.unmodifiableCollection</code>.
 	 */
-	public static <T> Collection<T> optimalUnmodifiableCollection(Collection<T> collection) {
+	public static <T> Collection<T> optimalUnmodifiableCollection(Collection<? extends T> collection) {
 		int size = collection.size();
-		if(size==0) return Collections.emptyList();
+		if(size == 0) return Collections.emptyList();
 		Class<?> clazz = collection.getClass();
-		for(int i=0, len=unmodifiableCollectionClasses.length; i<len; i++) if(unmodifiableCollectionClasses[i]==clazz) return collection;
-		if(size==1) return Collections.singletonList(collection.iterator().next());
+		for(int i=0, len = unmodifiableCollectionClasses.length; i < len; i++) {
+			if(unmodifiableCollectionClasses[i] == clazz) {
+				// Safe change of generic bounds only because returned collection is unmodifiable
+				@SuppressWarnings("unchecked")
+				Collection<T> unmodifiable = (Collection<T>)collection;
+				return unmodifiable;
+			}
+		}
+		if(size == 1) return Collections.singletonList(collection.iterator().next());
 		return Collections.unmodifiableCollection(collection);
 	}
 
@@ -274,12 +281,19 @@ public class AoCollections {
 	 * @see ArrayList#trimToSize()
 	 * @see Collections#unmodifiableList(java.util.List)
 	 */
-	public static <T> List<T> optimalUnmodifiableList(List<T> list) {
+	public static <T> List<T> optimalUnmodifiableList(List<? extends T> list) {
 		int size = list.size();
-		if(size==0) return Collections.emptyList();
+		if(size == 0) return Collections.emptyList();
 		Class<?> clazz = list.getClass();
-		for(int i=0, len=unmodifiableListClasses.length; i<len; i++) if(unmodifiableListClasses[i]==clazz) return list;
-		if(size==1) return Collections.singletonList(list.get(0));
+		for(int i = 0, len = unmodifiableListClasses.length; i < len; i++) {
+			if(unmodifiableListClasses[i] == clazz) {
+				// Safe change of generic bounds only because returned list is unmodifiable
+				@SuppressWarnings("unchecked")
+				List<T> unmodifiable = (List<T>)list;
+				return unmodifiable;
+			}
+		}
+		if(size == 1) return Collections.singletonList(list.get(0));
 		if(list instanceof ArrayList) ((ArrayList)list).trimToSize();
 		return Collections.unmodifiableList(list);
 	}
@@ -319,12 +333,19 @@ public class AoCollections {
 	 * If set has one element, uses <code>Collections.singleton</code>.
 	 * Otherwise, wraps the set with <code>Collections.unmodifiableSet</code>.
 	 */
-	public static <T> Set<T> optimalUnmodifiableSet(Set<T> set) {
+	public static <T> Set<T> optimalUnmodifiableSet(Set<? extends T> set) {
 		int size = set.size();
-		if(size==0) return Collections.emptySet();
+		if(size == 0) return Collections.emptySet();
 		Class<?> clazz = set.getClass();
-		for(int i=0, len=unmodifiableSetClasses.length; i<len; i++) if(unmodifiableSetClasses[i]==clazz) return set;
-		if(size==1) return Collections.singleton(set.iterator().next());
+		for(int i = 0, len = unmodifiableSetClasses.length; i < len; i++) {
+			if(unmodifiableSetClasses[i] == clazz) {
+				// Safe change of generic bounds only because returned set is unmodifiable
+				@SuppressWarnings("unchecked")
+				Set<T> unmodifiable = (Set<T>)set;
+				return unmodifiable;
+			}
+		}
+		if(size == 1) return Collections.singleton(set.iterator().next());
 		return Collections.unmodifiableSet(set);
 	}
 
@@ -404,12 +425,19 @@ public class AoCollections {
 	 * If map has one element, uses <code>Collections.singletonMap</code>.
 	 * Otherwise, wraps the map with <code>Collections.unmodifiableMap</code>.
 	 */
-	public static <K,V> Map<K,V> optimalUnmodifiableMap(Map<K,V> map) {
+	public static <K,V> Map<K,V> optimalUnmodifiableMap(Map<? extends K,? extends V> map) {
 		int size = map.size();
-		if(size==0) return Collections.emptyMap();
+		if(size == 0) return Collections.emptyMap();
 		Class<?> clazz = map.getClass();
-		for(int i=0, len=unmodifiableMapClasses.length; i<len; i++) if(unmodifiableMapClasses[i]==clazz) return map;
-		if(size==1) {
+		for(int i = 0, len = unmodifiableMapClasses.length; i < len; i++) {
+			if(unmodifiableMapClasses[i] == clazz) {
+				// Safe change of generic bounds only because returned map is unmodifiable
+				@SuppressWarnings("unchecked")
+				Map<K,V> unmodifiable = (Map<K,V>)map;
+				return unmodifiable;
+			}
+		}
+		if(size == 1) {
 			Map.Entry<? extends K,? extends V> entry = map.entrySet().iterator().next();
 			return Collections.singletonMap(entry.getKey(), entry.getValue());
 		}
@@ -446,11 +474,18 @@ public class AoCollections {
 	 * If sorted map has one element, uses <code>singletonSortedMap</code>.
 	 * Otherwise, wraps the sorted map with <code>Collections.unmodifiableSortedMap</code>.
 	 */
-	public static <K,V> SortedMap<K,V> optimalUnmodifiableSortedMap(SortedMap<K,V> sortedMap) {
+	public static <K,V> SortedMap<K,V> optimalUnmodifiableSortedMap(SortedMap<K,? extends V> sortedMap) {
 		// TODO: int size = sortedMap.size();
-		// TODO: if(size==0) return emptySortedMap();
+		// TODO: if(size == 0) return emptySortedMap();
 		Class<?> clazz = sortedMap.getClass();
-		for(int i=0, len=unmodifiableSortedMapClasses.length; i<len; i++) if(unmodifiableSortedMapClasses[i]==clazz) return sortedMap;
+		for(int i = 0, len = unmodifiableSortedMapClasses.length; i < len; i++) {
+			if(unmodifiableSortedMapClasses[i] == clazz) {
+				// Safe change of generic bounds only because returned map is unmodifiable
+				@SuppressWarnings("unchecked")
+				SortedMap<K,V> unmodifiable = (SortedMap<K,V>)sortedMap;
+				return unmodifiable;
+			}
+		}
 		// TODO: if(size==1) {
 		// TODO:     K key = sortedMap.firstKey();
 		// TODO:     return singletonSortedMap(key, sortedMap.get(key));
