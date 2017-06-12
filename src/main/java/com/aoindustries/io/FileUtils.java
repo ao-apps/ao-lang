@@ -22,8 +22,8 @@
  */
 package com.aoindustries.io;
 
+import com.aoindustries.util.BufferManager;
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -31,12 +31,14 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.InterruptedIOException;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 
 /**
@@ -409,15 +411,34 @@ final public class FileUtils {
 	}
 
 	/**
-	 * Reads the contents of a File and returns as a String.
+	 * Reads the contents of a File and returns as a String in the system default character set.
+	 *
+	 * @see  #readFileAsString(java.io.File, java.nio.charset.Charset)
+	 * @see  Charset#defaultCharset()
 	 */
 	public static String readFileAsString(File file) throws IOException {
+		return readFileAsString(file, Charset.defaultCharset());
+	}    
+
+	/**
+	 * Reads the contents of a File and returns as a String in the provided character set.
+	 *
+	 * @see  #readFileAsString(java.io.File)
+	 */
+	public static String readFileAsString(File file, Charset charset) throws IOException {
 		long len = file.length();
 		StringBuilder SB = len>0 && len<=Integer.MAX_VALUE ? new StringBuilder((int)len) : new StringBuilder();
-		BufferedReader in = new BufferedReader(new FileReader(file));
+		Reader in = new InputStreamReader(new FileInputStream(file), charset);
 		try {
-			int ch;
-			while((ch=in.read())!=-1) SB.append((char)ch);
+			char[] buff = BufferManager.getChars();
+			try {
+				int numChars;
+				while((numChars = in.read(buff, 0, BufferManager.BUFFER_SIZE)) != -1) {
+					SB.append(buff, 0, numChars);
+				}
+			} finally {
+				BufferManager.release(buff, false);
+			}
 		} finally {
 			in.close();
 		}
