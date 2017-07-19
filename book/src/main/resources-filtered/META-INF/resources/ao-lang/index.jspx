@@ -32,7 +32,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		title="@{documented.name}"
 		description="@{documented.description}"
 		datePublished="2017-03-12T18:35:33-0500"
-		dateModified="2017-07-18T08:58:35-0500"
+		dateModified="2017-07-19T18:05:40-0500"
 	>
 		<core:child page="changelog.jspx" />
 		<core:child page="apidocs/index.jspx" />

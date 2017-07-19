@@ -36,7 +36,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-0500"
-		dateModified="2017-07-13T19:55:06-0500"
+		dateModified="2017-07-19T18:05:40-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-lang:pom.version}" />
@@ -51,66 +51,74 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				groupId="@{documented.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{documented.scm.url}"
-			>
-				<ul>
-					<li>Pulling small, general-purpose extensions to the standard Java libraries out of
-						<core:link book="/aocode-public" page="/index.jspx" /> into a new
-						<core:link page="index.jspx" /> project.</li>
-					<li>New <code>AoArrays.sortParallelArrays</code> method to sort parallel arrays.</li>
-					<li><code>ProcessResult</code> improvements:
-						<ol>
-							<li><code>exec</code> method now allows varargs.</li>
-							<li>Now uses only one additional thread to read standard error.</li>
-							<li>Delays the allocation of <code>StringBuilder</code> objects until needed.</li>
-							<li>Provides an appropriate starting buffer size to the <code>StringBuilder</code> objects.</li>
-							<li>Reduces the amount of <code>synchronization</code>.</li>
-						</ol>
-					</li>
-					<li><code>BufferManager</code> improvements:
-						<ol>
-							<li>Uses soft references to avoid potential runaway memory leaks.</li>
-							<li>Provides additional statistics including the number of buffers zero-filled and detected as garbage collected.</li>
-							<li>Javadoc comment improvements.</li>
-						</ol>
-					</li>
-					<li><code>ApplicationResourcesAccessor</code> improvements:
-						<ol>
-							<li>Added <code>Listener</code> hook for code interested in calls to <code>getMessage</code>.</li>
-							<li>Used this new hook to decouple <core:link page="index.jspx" /> from <core:link book="/aocode-public" page="/index.jspx" />.</li>
-						</ol>
-					</li>
-					<li><code>FastObjectOutput</code> improvements:
-						<ol>
-							<li><code>writeFastUTF</code> compares strings with <code>.equals</code> to find all duplicates.</li>
-							<li>Removed internal quick-scan arrays. We've learned to not underestimate the performance of <code>HashMap</code>.</li>
-							<li>Improved Javadocs.</li>
-						</ol>
-					</li>
-					<li><code>FastObjectInput</code> improvements:
-						<ol>
-							<li>Improved Javadocs.</li>
-						</ol>
-					</li>
-					<li>Also moving some of the small, general-purpose extensions to the standard Java libraries out of
-						<core:link book="/aoserv/client" page="/index.jspx" /> into this new
-						<core:link page="index.jspx" /> project.
-					</li>
-					<li><code>AoCollections</code> improvements:
-						<ol>
-							<li>New <code>filterByValue</code> methods to get the key set from maps for all entries matching a given value.</li>
-							<li><code>unmodifiableCopy*</code> methods allow wider generic bounds for more versatility.</li>
-							<li><code>optimalUnmodifiable*</code> methods allow wider generic bounds for more versatility.</li>
-							<li><code>unmodifiableIterator</code> method allows wider generic bounds for more versatility.</li>
-							<li><code>filter</code> method allows wider generic bounds for more versatility.</li>
-							<li><code>filterByValue</code> methods allow wider generic bounds for more versatility.</li>
-						</ol>
-					</li>
-					<li>New method <code>XmlUtils.getChildTextContent(Element, String)</code> to get child text content with a one-liner.</li>
-					<li>New method <code>FileUtils.readFileAsString(File, Charset)</code> to provide the character set when reading a file into a string.</li>
-					<li>New localized exception <code>LocalizedIllegalStateException</code>.</li>
-					<li>Updated dependencies.</li>
-				</ul>
-			</changelog:release>
+			/>
 		</c:if>
+		<changelog:release
+			projectName="@{documented.name}"
+			version="1.0.0"
+			datePublished="2017-07-19T18:05:40-0500"
+			groupId="@{documented.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{documented.scm.url}"
+		>
+			<ul>
+				<li>Pulling small, general-purpose extensions to the standard Java libraries out of
+					<core:link book="/aocode-public" page="/index.jspx" /> into a new
+					<core:link page="index.jspx" /> project.</li>
+				<li>New <code>AoArrays.sortParallelArrays</code> method to sort parallel arrays.</li>
+				<li><code>ProcessResult</code> improvements:
+					<ol>
+						<li><code>exec</code> method now allows varargs.</li>
+						<li>Now uses only one additional thread to read standard error.</li>
+						<li>Delays the allocation of <code>StringBuilder</code> objects until needed.</li>
+						<li>Provides an appropriate starting buffer size to the <code>StringBuilder</code> objects.</li>
+						<li>Reduces the amount of <code>synchronization</code>.</li>
+					</ol>
+				</li>
+				<li><code>BufferManager</code> improvements:
+					<ol>
+						<li>Uses soft references to avoid potential runaway memory leaks.</li>
+						<li>Provides additional statistics including the number of buffers zero-filled and detected as garbage collected.</li>
+						<li>Javadoc comment improvements.</li>
+					</ol>
+				</li>
+				<li><code>ApplicationResourcesAccessor</code> improvements:
+					<ol>
+						<li>Added <code>Listener</code> hook for code interested in calls to <code>getMessage</code>.</li>
+						<li>Used this new hook to decouple <core:link page="index.jspx" /> from <core:link book="/aocode-public" page="/index.jspx" />.</li>
+					</ol>
+				</li>
+				<li><code>FastObjectOutput</code> improvements:
+					<ol>
+						<li><code>writeFastUTF</code> compares strings with <code>.equals</code> to find all duplicates.</li>
+						<li>Removed internal quick-scan arrays. We've learned to not underestimate the performance of <code>HashMap</code>.</li>
+						<li>Improved Javadocs.</li>
+					</ol>
+				</li>
+				<li><code>FastObjectInput</code> improvements:
+					<ol>
+						<li>Improved Javadocs.</li>
+					</ol>
+				</li>
+				<li>Also moving some of the small, general-purpose extensions to the standard Java libraries out of
+					<core:link book="/aoserv/client" page="/index.jspx" /> into this new
+					<core:link page="index.jspx" /> project.
+				</li>
+				<li><code>AoCollections</code> improvements:
+					<ol>
+						<li>New <code>filterByValue</code> methods to get the key set from maps for all entries matching a given value.</li>
+						<li><code>unmodifiableCopy*</code> methods allow wider generic bounds for more versatility.</li>
+						<li><code>optimalUnmodifiable*</code> methods allow wider generic bounds for more versatility.</li>
+						<li><code>unmodifiableIterator</code> method allows wider generic bounds for more versatility.</li>
+						<li><code>filter</code> method allows wider generic bounds for more versatility.</li>
+						<li><code>filterByValue</code> methods allow wider generic bounds for more versatility.</li>
+					</ol>
+				</li>
+				<li>New method <code>XmlUtils.getChildTextContent(Element, String)</code> to get child text content with a one-liner.</li>
+				<li>New method <code>FileUtils.readFileAsString(File, Charset)</code> to provide the character set when reading a file into a string.</li>
+				<li>New localized exception <code>LocalizedIllegalStateException</code>.</li>
+				<li>Updated dependencies.</li>
+			</ul>
+		</changelog:release>
 	</core:page>
 </jsp:root>
