@@ -32,7 +32,7 @@ import javax.crypto.spec.PBEKeySpec;
 
 /**
  * A salted, hashed and key stretched password.
- * {@link https://crackstation.net/hashing-security.htm}
+ * <a href="https://crackstation.net/hashing-security.htm">https://crackstation.net/hashing-security.htm</a>
  *
  * @author  AO Industries, Inc.
  */
@@ -139,7 +139,7 @@ public class HashedPassword {
 	/**
 	 * Checks if this matches the provided password.
 	 * Performs comparisons in length-constant time.
-	 * {@link https://crackstation.net/hashing-security.htm}
+	 * <a href="https://crackstation.net/hashing-security.htm">https://crackstation.net/hashing-security.htm</a>
 	 */
 	public boolean matches(String password) {
 		// Hash again with the original salt and iterations
@@ -158,7 +158,7 @@ public class HashedPassword {
 	 * Compares two byte arrays in length-constant time. This comparison method
 	 * is used so that password hashes cannot be extracted from an on-line 
 	 * system using a timing attack and then attacked off-line.
-	 * {@link https://crackstation.net/hashing-security.htm}
+	 * <a href="https://crackstation.net/hashing-security.htm">https://crackstation.net/hashing-security.htm</a>
 	 *
 	 * @param   a       the first byte array
 	 * @param   b       the second byte array 
