@@ -336,8 +336,12 @@ final public class FileUtils {
 	/**
 	 * Gets a File for a URL, retrieving the contents into a temporary file if needed.
 	 *
-	 * @param  deleteOnExit  when <code>true</code>, any newly created temp file will be flagged for deleteRecursive of exit
+	 * @param  deleteOnExit  when <code>true</code>, any newly created temp file will be flagged for {@link File#deleteOnExit() delete on exit}
+	 *
+	 * @deprecated  Please use <a href="https://aoindustries.com/ao-tempfiles/apidocs/com/aoindustries/tempfiles/TempFileContext.html">TempFileContext</a>
+	 *              as {@link File#deleteOnExit()} is prone to memory leaks in long-running applications.
 	 */
+	@Deprecated
 	public static File getFile(URL url, String urlEncoding, boolean deleteOnExit) throws IOException {
 		if("file".equalsIgnoreCase(url.getProtocol())) {
 			String path = url.getFile();
