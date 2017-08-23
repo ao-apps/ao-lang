@@ -72,8 +72,8 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		>
 			<ul>
 				<li>Pulling small, general-purpose extensions to the standard Java libraries out of
-					<core:link book="/aocode-public" page="/index.jspx" /> into a new
-					<core:link page="index.jspx" /> project.</li>
+					<core:link book="/aocode-public" page="/" /> into a new
+					<core:link page="/" /> project.</li>
 				<li>New <code>AoArrays.sortParallelArrays</code> method to sort parallel arrays.</li>
 				<li><code>ProcessResult</code> improvements:
 					<ol>
@@ -94,7 +94,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				<li><code>ApplicationResourcesAccessor</code> improvements:
 					<ol>
 						<li>Added <code>Listener</code> hook for code interested in calls to <code>getMessage</code>.</li>
-						<li>Used this new hook to decouple <core:link page="index.jspx" /> from <core:link book="/aocode-public" page="/index.jspx" />.</li>
+						<li>Used this new hook to decouple <core:link page="/" /> from <core:link book="/aocode-public" page="/" />.</li>
 					</ol>
 				</li>
 				<li><code>FastObjectOutput</code> improvements:
@@ -110,8 +110,8 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 					</ol>
 				</li>
 				<li>Also moving some of the small, general-purpose extensions to the standard Java libraries out of
-					<core:link book="/aoserv/client" page="/index.jspx" /> into this new
-					<core:link page="index.jspx" /> project.
+					<core:link book="/aoserv/client" page="/" /> into this new
+					<core:link page="/" /> project.
 				</li>
 				<li><code>AoCollections</code> improvements:
 					<ol>
