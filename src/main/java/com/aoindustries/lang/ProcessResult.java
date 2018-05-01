@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -158,8 +158,6 @@ public class ProcessResult {
 				stderr
 			);
 		} catch(InterruptedException err) {
-			// Restore the interrupted status
-			Thread.currentThread().interrupt();
 			IOException ioErr = new InterruptedIOException();
 			ioErr.initCause(err);
 			throw ioErr;
