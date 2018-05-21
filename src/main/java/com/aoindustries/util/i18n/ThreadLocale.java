@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,6 +22,7 @@
  */
 package com.aoindustries.util.i18n;
 
+import com.aoindustries.lang.CallableE;
 import java.util.Locale;
 import java.util.concurrent.Callable;
 
@@ -70,4 +71,42 @@ final public class ThreadLocale {
 			set(oldLocale);
 		}
 	}
+
+	/**
+	 * Changes the current thread locale and calls the Callable.  The locale is
+	 * automatically restored.
+	 */
+	public static <V,E extends Exception> V set(Locale locale, CallableE<V,E> callable) throws E {
+		Locale oldLocale = get();
+		try {
+			set(locale);
+			return callable.call();
+		} finally {
+			set(oldLocale);
+		}
+	}
+
+	/**
+	 * TODO: Java 1.8: Deprecate and use java.util.function.Supplier instead
+	 */
+	public static interface Supplier<T> {
+		T get();
+	}
+	/**
+	 * Changes the current thread locale and calls the Callable.  The locale is
+	 * automatically restored.
+	 *
+	 * TODO: Java 1.8: Deprecate and use java.util.function.Supplier instead
+	 */
+	public static <V> V set(Locale locale, Supplier<V> supplier) {
+		Locale oldLocale = get();
+		try {
+			set(locale);
+			return supplier.get();
+		} finally {
+			set(oldLocale);
+		}
+	}
+
+	// TODO: Java 8: Create a version of set taking Supplier<V> for lambdas
 }
