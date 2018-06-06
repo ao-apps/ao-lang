@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2014, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -38,12 +38,10 @@ import java.util.Map;
  * Insertion order is maintained.
  * </p>
  * <p>
- * size=0: null<br/>
- * size=1: Collections.singletonMap<br/>
- * size=2: LinkedHashMap
+ * size=0: {@link Collections#emptyMap()}<br />
+ * size=1: {@link Collections#singletonMap(java.lang.Object, java.lang.Object)}<br />
+ * size=2: {@link LinkedHashMap}
  * </p>
- *
- * TODO: The size zero state should be represented by Collections.EMPTY_MAP
  *
  * @author  AO Industries, Inc.
  */
@@ -56,7 +54,8 @@ public class MinimalMap {
 	 * Puts a new element in a map, returning the (possibly new) map.
 	 */
 	public static <K,V> Map<K,V> put(Map<K,V> map, K key, V value) {
-		if(map == null) {
+		// Still supporting null map for API compatibility
+		if(map == null || map.isEmpty()) {
 			// The first entry is always a singletonMap
 			map = Collections.singletonMap(key, value);
 		} else if(map.size()==1) {
@@ -83,14 +82,15 @@ public class MinimalMap {
 	 * Removes an element from a map, returning the (possibly new) map.
 	 */
 	public static <K,V> Map<K,V> remove(final Map<K,V> map, final K key) {
-		if(map == null) {
+		// Still supporting null map for API compatibility
+		if(map == null || map.isEmpty()) {
 			// Empty map, nothing to remove
-			return null;
+			return Collections.emptyMap();
 		} else if(map.size()==1) {
 			// Is a singleton map
 			if(map.containsKey(key)) {
 				// Map is now empty
-				return null;
+				return Collections.emptyMap();
 			} else {
 				// Map unchanged
 				return map;
@@ -114,6 +114,7 @@ public class MinimalMap {
 	 * Gets an element from a map.
 	 */
 	public static <K,V> V get(Map<K,V> map, K key) {
+		// Still supporting null map for API compatibility
 		return map==null ? null : map.get(key);
 	}
 
@@ -121,6 +122,7 @@ public class MinimalMap {
 	 * Checks if a key is contained in the map.
 	 */
 	public static <K,V> boolean containsKey(Map<K,V> map, K key) {
+		// Still supporting null map for API compatibility
 		return map!=null && map.containsKey(key);
 	}
 
@@ -128,6 +130,7 @@ public class MinimalMap {
 	 * Gets the value collection.
 	 */
 	public static <K,V> Collection<V> values(Map<K,V> map) {
+		// Still supporting null map for API compatibility
 		if(map==null) {
 			return Collections.emptyList();
 		} else {
@@ -139,7 +142,8 @@ public class MinimalMap {
 	 * Performs a shallow copy of the value collection.
 	 */
 	public static <K,V> Collection<V> valuesCopy(Map<K,V> map) {
-		if(map==null) {
+		// Still supporting null map for API compatibility
+		if(map==null || map.isEmpty()) {
 			return Collections.emptyList();
 		} if(map.size() == 1) {
 			// singletonMap is unmodifiable: no wrapping required
@@ -155,9 +159,10 @@ public class MinimalMap {
 	 * created by MinimalMap and to be used through MinimalMap.
 	 */
 	public static <K,V> Map<K,V> copy(Map<K,V> map) {
-		if(map==null) {
+		// Still supporting null map for API compatibility
+		if(map==null || map.isEmpty()) {
 			// Empty
-			return null;
+			return Collections.emptyMap();
 		}
 		if(map.size()==1) {
 			// Is a singletonMap (unmodifiable) - safe to share instance.
@@ -172,7 +177,8 @@ public class MinimalMap {
 	 * May or may not wrap this list itself.
 	 */
 	public static <K,V> Map<K,V> unmodifiable(Map<K,V> map) {
-		if(map==null) {
+		// Still supporting null map for API compatibility
+		if(map==null || map.isEmpty()) {
 			// Empty
 			return Collections.emptyMap();
 		}

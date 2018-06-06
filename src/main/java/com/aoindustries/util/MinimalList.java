@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2014, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -32,12 +32,10 @@ import java.util.List;
  * MinimalList is most suited for building list-based data structures that use less
  * heap space than a pure ArrayList-based solution.
  * <p>
- * size=0: null<br/>
- * size=1: Collections.singletonList<br/>
- * size=2: ArrayList
+ * size=0: {@link Collections#emptyList()}<br />
+ * size=1: {@link Collections#singletonList(java.lang.Object)}<br />
+ * size=2: {@link ArrayList}
  * </p>
- *
- * TODO: The size zero state should be represented by Collections.EMPTY_LIST
  *
  * @author  AO Industries, Inc.
  */
@@ -50,7 +48,8 @@ public class MinimalList {
 	 * Adds a new element to a list, returning the (possibly new) list.
 	 */
 	public static <E> List<E> add(List<E> list, E elem) {
-		if(list == null) {
+		// Still supporting null list for API compatibility
+		if(list == null || list.isEmpty()) {
 			// The first element is always a singletonList
 			list = Collections.singletonList(elem);
 		} else if(list.size()==1) {
@@ -70,6 +69,7 @@ public class MinimalList {
 	 * Gets an element from a list.
 	 */
 	public static <E> E get(List<E> list, int index) throws IndexOutOfBoundsException {
+		// Still supporting null list for API compatibility
 		if(list==null) throw new IndexOutOfBoundsException();
 		return list.get(index);
 	}
@@ -79,9 +79,10 @@ public class MinimalList {
 	 * created by MinimalList and to be used through MinimalList.
 	 */
 	public static <E> List<E> copy(List<E> list) {
+		// Still supporting null list for API compatibility
 		if(list==null) {
 			// Empty
-			return null;
+			return Collections.emptyList();
 		}
 		if(list.size()==1) {
 			// Is a singletonList (unmodifiable) - safe to share instance.
@@ -96,7 +97,8 @@ public class MinimalList {
 	 * May or may not wrap this list itself.
 	 */
 	public static <E> List<E> unmodifiable(List<E> list) {
-		if(list==null) {
+		// Still supporting null list for API compatibility
+		if(list==null || list.isEmpty()) {
 			// Empty
 			return Collections.emptyList();
 		}
