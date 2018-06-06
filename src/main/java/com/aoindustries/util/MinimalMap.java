@@ -51,6 +51,13 @@ public class MinimalMap {
 	}
 
 	/**
+	 * Gets the empty map representation.
+	 */
+	public static <K,V> Map<K,V> emptyMap() {
+		return Collections.emptyMap();
+	}
+
+	/**
 	 * Puts a new element in a map, returning the (possibly new) map.
 	 */
 	public static <K,V> Map<K,V> put(Map<K,V> map, K key, V value) {

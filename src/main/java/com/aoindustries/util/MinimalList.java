@@ -45,6 +45,13 @@ public class MinimalList {
 	}
 
 	/**
+	 * Gets the empty list representation.
+	 */
+	public static <E> List<E> emptyList() {
+		return Collections.emptyList();
+	}
+
+	/**
 	 * Adds a new element to a list, returning the (possibly new) list.
 	 */
 	public static <E> List<E> add(List<E> list, E elem) {
