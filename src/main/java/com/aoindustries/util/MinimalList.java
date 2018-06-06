@@ -74,7 +74,11 @@ public class MinimalList {
 
 	/**
 	 * Gets an element from a list.
+	 *
+	 * @deprecated  Since empty lists are no longer represented by {@code null}, invoke
+	 *              {@link List#get(int)} directly now.
 	 */
+	@Deprecated
 	public static <E> E get(List<E> list, int index) throws IndexOutOfBoundsException {
 		// Still supporting null list for API compatibility
 		if(list==null) throw new IndexOutOfBoundsException();

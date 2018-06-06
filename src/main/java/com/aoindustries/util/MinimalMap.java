@@ -119,7 +119,11 @@ public class MinimalMap {
 
 	/**
 	 * Gets an element from a map.
+	 *
+	 * @deprecated  Since empty maps are no longer represented by {@code null}, invoke
+	 *              {@link Map#get(java.lang.Object)} directly now.
 	 */
+	@Deprecated
 	public static <K,V> V get(Map<K,V> map, K key) {
 		// Still supporting null map for API compatibility
 		return map==null ? null : map.get(key);
@@ -127,7 +131,11 @@ public class MinimalMap {
 
 	/**
 	 * Checks if a key is contained in the map.
+	 *
+	 * @deprecated  Since empty maps are no longer represented by {@code null}, invoke
+	 *              {@link Map#containsKey(java.lang.Object)} directly now.
 	 */
+	@Deprecated
 	public static <K,V> boolean containsKey(Map<K,V> map, K key) {
 		// Still supporting null map for API compatibility
 		return map!=null && map.containsKey(key);
@@ -135,7 +143,11 @@ public class MinimalMap {
 
 	/**
 	 * Gets the value collection.
+	 *
+	 * @deprecated  Since empty maps are no longer represented by {@code null}, invoke
+	 *              {@link Map#values()} directly now.
 	 */
+	@Deprecated
 	public static <K,V> Collection<V> values(Map<K,V> map) {
 		// Still supporting null map for API compatibility
 		if(map==null) {
