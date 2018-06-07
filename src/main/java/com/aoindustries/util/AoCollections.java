@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2012, 2013, 2014, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2012, 2013, 2014, 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -758,7 +758,7 @@ public class AoCollections {
 		if(list==null) return Collections.emptyList();
 		else {
 			/* Imperative version: */
-			List<R> results = null;
+			List<R> results = MinimalList.emptyList();
 			for(E element : list) {
 				if(clazz.isInstance(element)) {
 					results = MinimalList.add(results, clazz.cast(element));
