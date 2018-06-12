@@ -363,7 +363,9 @@ public class AoCollections {
 		//Class<?> clazz = collection.getClass();
 		//for(int i=0, len=unmodifiableSetClasses.length; i<len; i++) if(unmodifiableSetClasses[i]==clazz) return (Set<T>)collection;
 		if(size==1) return Collections.singleton(collection.iterator().next());
-		return Collections.unmodifiableSet(new LinkedHashSet<T>(collection));
+		Set<T> set = new LinkedHashSet<T>(collection);
+		if(set.size() == 1) return Collections.singleton(set.iterator().next());
+		return Collections.unmodifiableSet(set);
 	}
 
 	private static final Class<?>[] unmodifiableSortedSetClasses = {
@@ -406,6 +408,7 @@ public class AoCollections {
 		} else {
 			copy = new TreeSet<T>(collection);
 		}
+		if(copy.size() == 1) return singletonSortedSet(copy.iterator().next());
 		return Collections.unmodifiableSortedSet(copy);
 	}
 
