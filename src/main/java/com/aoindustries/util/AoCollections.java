@@ -248,9 +248,20 @@ public class AoCollections {
 	}
 
 	/**
-	 * Performs defensive shallow copy and returns unmodifiable collection.
+	 * Gets a collection from an iterable.
+	 * Casts the iterable to collection, if possible.
+	 * Otherwise builds a new list from the iterable, maintaining iteration order.
 	 */
-	public static <T> Collection<T> unmodifiableCopyCollection(Collection<? extends T> collection) {
+	public static <E> Collection<E> asCollection(Iterable<E> iterable) {
+		if(iterable instanceof Collection) return (Collection<E>)iterable;
+		List<E> list = new ArrayList<E>();
+		for(E elem : iterable) {
+			list.add(elem);
+		}
+		return list;
+	}
+
+	private static <T> Collection<T> unmodifiableCopyCollection(Collection<? extends T> collection, boolean copyNeeded) {
 		int size = collection.size();
 		if(size==0) return Collections.emptyList();
 		// TODO: Create an unmodifiable collection that can only be populated here, and reused.
@@ -260,7 +271,22 @@ public class AoCollections {
 		//Class<?> clazz = collection.getClass();
 		//for(int i=0, len=unmodifiableCollectionClasses.length; i<len; i++) if(unmodifiableCollectionClasses[i]==clazz) return collection;
 		if(size==1) return Collections.singletonList(collection.iterator().next());
-		return Collections.unmodifiableCollection(new ArrayList<T>(collection));
+		return Collections.unmodifiableCollection(copyNeeded ? new ArrayList<T>(collection) : collection);
+	}
+
+	/**
+	 * Performs defensive shallow copy and returns unmodifiable collection.
+	 */
+	public static <T> Collection<T> unmodifiableCopyCollection(Collection<? extends T> collection) {
+		return unmodifiableCopyCollection(collection, true);
+	}
+
+	/**
+	 * Performs defensive shallow copy and returns unmodifiable collection.
+	 */
+	public static <T> Collection<T> unmodifiableCopyCollection(Iterable<? extends T> iter) {
+		if(iter instanceof Collection) return unmodifiableCopyCollection((Collection<? extends T>)iter, true);
+		return unmodifiableCopyCollection(asCollection(iter), false);
 	}
 
 	private static final Class<?>[] unmodifiableListClasses = {
@@ -299,9 +325,21 @@ public class AoCollections {
 	}
 
 	/**
-	 * Performs defensive shallow copy and returns unmodifiable list.
+	 * Gets a list from an iterable.
+	 * Casts the iterable to list, if possible.
+	 * Otherwise builds a new list from the iterable, maintaining iteration order.
 	 */
-	public static <T> List<T> unmodifiableCopyList(Collection<? extends T> collection) {
+	public static <E> List<E> asList(Iterable<E> iterable) {
+		if(iterable instanceof List) return (List<E>)iterable;
+		List<E> list = new ArrayList<E>();
+		for(E elem : iterable) {
+			list.add(elem);
+		}
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T> List<T> unmodifiableCopyList(Collection<? extends T> collection, boolean copyNeeded) {
 		int size = collection.size();
 		if(size==0) return Collections.emptyList();
 		// TODO: Create an unmodifiable collection that can only be populated here, and reused.
@@ -311,7 +349,23 @@ public class AoCollections {
 		//Class<?> clazz = collection.getClass();
 		//for(int i=0, len=unmodifiableListClasses.length; i<len; i++) if(unmodifiableListClasses[i]==clazz) return (List<T>)collection;
 		if(size==1) return Collections.singletonList(collection.iterator().next());
+		if(!copyNeeded && collection instanceof List) return Collections.unmodifiableList((List<T>)collection);
 		return Collections.unmodifiableList(new ArrayList<T>(collection));
+	}
+
+	/**
+	 * Performs defensive shallow copy and returns unmodifiable list.
+	 */
+	public static <T> List<T> unmodifiableCopyList(Collection<? extends T> collection) {
+		return unmodifiableCopyList(collection, true);
+	}
+
+	/**
+	 * Performs defensive shallow copy and returns unmodifiable list.
+	 */
+	public static <T> List<T> unmodifiableCopyList(Iterable<? extends T> iter) {
+		if(iter instanceof Collection) return unmodifiableCopyList((Collection<? extends T>)iter, true);
+		return unmodifiableCopyList(asList(iter), false);
 	}
 
 	private static final Class<?>[] unmodifiableSetClasses = {
@@ -350,10 +404,21 @@ public class AoCollections {
 	}
 
 	/**
-	 * Performs defensive shallow copy and returns unmodifiable set.
-	 * The iteration order of the original set is maintained.
+	 * Gets a set from an iterable.
+	 * Casts the iterable to set, if possible.
+	 * Otherwise builds a new set from the iterable, maintaining iteration order.
 	 */
-	public static <T> Set<T> unmodifiableCopySet(Collection<? extends T> collection) {
+	public static <E> Set<E> asSet(Iterable<E> iterable) {
+		if(iterable instanceof Set) return (Set<E>)iterable;
+		Set<E> set = new LinkedHashSet<E>();
+		for(E elem : iterable) {
+			set.add(elem);
+		}
+		return set;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T> Set<T> unmodifiableCopySet(Collection<? extends T> collection, boolean copyNeeded) {
 		int size = collection.size();
 		if(size==0) return Collections.emptySet();
 		// TODO: Create an unmodifiable collection that can only be populated here, and reused.
@@ -363,9 +428,27 @@ public class AoCollections {
 		//Class<?> clazz = collection.getClass();
 		//for(int i=0, len=unmodifiableSetClasses.length; i<len; i++) if(unmodifiableSetClasses[i]==clazz) return (Set<T>)collection;
 		if(size==1) return Collections.singleton(collection.iterator().next());
+		if(!copyNeeded && collection instanceof Set) return Collections.unmodifiableSet((Set<T>)collection);
 		Set<T> set = new LinkedHashSet<T>(collection);
 		if(set.size() == 1) return Collections.singleton(set.iterator().next());
 		return Collections.unmodifiableSet(set);
+	}
+
+	/**
+	 * Performs defensive shallow copy and returns unmodifiable set.
+	 * The iteration order of the original set is maintained.
+	 */
+	public static <T> Set<T> unmodifiableCopySet(Collection<? extends T> collection) {
+		return unmodifiableCopySet(collection, true);
+	}
+
+	/**
+	 * Performs defensive shallow copy and returns unmodifiable set.
+	 * The iteration order of the original set is maintained.
+	 */
+	public static <T> Set<T> unmodifiableCopySet(Iterable<? extends T> iter) {
+		if(iter instanceof Collection) return unmodifiableCopySet((Collection<? extends T>)iter, true);
+		return unmodifiableCopySet(asSet(iter), false);
 	}
 
 	private static final Class<?>[] unmodifiableSortedSetClasses = {
@@ -390,9 +473,21 @@ public class AoCollections {
 	}
 
 	/**
-	 * Performs defensive shallow copy and returns unmodifiable sorted set.
+	 * Gets a sorted set from an iterable.
+	 * Casts the iterable to sorted set, if possible.
+	 * Otherwise builds a new sorted set from the iterable, in natural ordering.
 	 */
-	public static <T> SortedSet<T> unmodifiableCopySortedSet(Collection<? extends T> collection) {
+	public static <E> SortedSet<E> asSortedSet(Iterable<E> iterable) {
+		if(iterable instanceof SortedSet) return (SortedSet<E>)iterable;
+		SortedSet<E> sortedSet = new TreeSet<E>();
+		for(E elem : iterable) {
+			sortedSet.add(elem);
+		}
+		return sortedSet;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T> SortedSet<T> unmodifiableCopySortedSet(Collection<? extends T> collection, boolean copyNeeded) {
 		int size = collection.size();
 		if(size==0) return emptySortedSet();
 		// TODO: Create an unmodifiable collection that can only be populated here, and reused.
@@ -402,6 +497,7 @@ public class AoCollections {
 		//Class<?> clazz = collection.getClass();
 		//for(int i=0, len=unmodifiableSortedSetClasses.length; i<len; i++) if(unmodifiableSortedSetClasses[i]==clazz) return (SortedSet<T>)collection;
 		if(size==1) return singletonSortedSet(collection.iterator().next());
+		if(!copyNeeded && collection instanceof SortedSet) return Collections.unmodifiableSortedSet((SortedSet<T>)collection);
 		SortedSet<T> copy;
 		if(collection instanceof SortedSet) {
 			copy = new TreeSet<T>((SortedSet<? extends T>)collection);
@@ -410,6 +506,21 @@ public class AoCollections {
 		}
 		if(copy.size() == 1) return singletonSortedSet(copy.iterator().next());
 		return Collections.unmodifiableSortedSet(copy);
+	}
+
+	/**
+	 * Performs defensive shallow copy and returns unmodifiable sorted set.
+	 */
+	public static <T> SortedSet<T> unmodifiableCopySortedSet(Collection<? extends T> collection) {
+		return unmodifiableCopySortedSet(collection, true);
+	}
+
+	/**
+	 * Performs defensive shallow copy and returns unmodifiable sorted set.
+	 */
+	public static <T> SortedSet<T> unmodifiableCopySortedSet(Iterable<? extends T> iter) {
+		if(iter instanceof Collection) return unmodifiableCopySortedSet((Collection<? extends T>)iter, true);
+		return unmodifiableCopySortedSet(asSortedSet(iter), false);
 	}
 
 	private static final Class<?>[] unmodifiableMapClasses = {
