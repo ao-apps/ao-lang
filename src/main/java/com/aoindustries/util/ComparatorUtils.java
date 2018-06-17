@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -91,8 +91,9 @@ public final class ComparatorUtils {
 	}
 
 	private static final Collator collator = Collator.getInstance(Locale.ROOT);
+
 	/**
-	 * Compares two strings in a root-locale case-insensitive mannger, while
+	 * Compares two strings in a root-locale case-insensitive manner, while
 	 * remaining strictly consistent with equals.
 	 */
 	public static int compareIgnoreCaseConsistentWithEquals(String s1, String s2) {
