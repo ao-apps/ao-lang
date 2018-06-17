@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-0500"
-		dateModified="2018-06-14T16:29:04-0500"
+		dateModified="2018-06-17T18:11:40-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-lang:pom.version}" />
@@ -84,6 +84,21 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 						New methods in <ao:a href="apidocs/com/aoindustries/util/AoCollections.html">AoCollections</ao:a> to assist
 						in efficiently converting <ao:a rel="nofollow" href="@{javac.link.javaApi}java/lang/Iterable.html">Iterable</ao:a>
 						to different types of <ao:a rel="nofollow" href="@{javac.link.javaApi}java/util/Collection.html">Collection</ao:a>.
+					</li>
+					<li>
+						<p>
+							Deprecating methods in favor of <ao:a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</ao:a> where
+							functionality is redundant.
+						</p>
+						<p>
+							This does not introduce any dependency on <code>commons-lang</code>.
+							The dependency is both <code>&lt;optional /&gt;</code> and <code>&lt;provided /&gt;</code>
+							because it is only used for javadoc <code>@link</code> and <code>@see</code> generation.
+						</p>
+						<p>
+							This is not an exhaustive search for redundant behavior.
+							We will identify and deprecate over time as we go.
+						</p>
 					</li>
 				</ul>
 			</changelog:release>

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2011, 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -26,7 +26,11 @@ package com.aoindustries.lang;
  * Indicates some part of the code has not been implemented yet.
  *
  * @author  AO Industries, Inc.
+ *
+ * @deprecated  Please use {@link org.apache.commons.lang3.NotImplementedException} from
+ *              <a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a>.
  */
+@Deprecated
 public class NotImplementedException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;

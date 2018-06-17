@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2012, 2013, 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -26,20 +26,23 @@ import java.nio.charset.Charset;
 
 /**
  * Defines some constants for handling standard character sets.
+ * <p>
+ * TODO: Java 1.7: deprecated  Use {@link java.nio.charset.StandardCharsets} as of Java 1.7.
+ * </p>
+ *
+ * @see java.nio.charset.StandardCharsets in Java 1.7
  *
  * @author  AO Industries, Inc.
- * 
- * Java 1.7: deprecated  Use java.nio.charset.StandardCharsets as of Java 1.7
- * @see java.nio.charset.StandardCharsets in Java 1.7
  */
-// Java .1.7: @Deprecated
+// TODO: Java 1.7: @Deprecated
 public class Charsets {
 
 	/**
-	 * Java 1.7: deprecated  Use java.nio.charset.StandardCharsets as of Java 1.7
+	 * TODO: Java 1.7: deprecated  Use {@link java.nio.charset.StandardCharsets} as of Java 1.7.
+	 *
 	 * @see java.nio.charset.StandardCharsets in Java 1.7
 	 */
-	// Java 1.7: @Deprecated
+	// TODO: Java 1.7: @Deprecated
 	public static final Charset
 		US_ASCII   = Charset.forName("US-ASCII"),
 		ISO_8859_1 = Charset.forName("ISO-8859-1"),
