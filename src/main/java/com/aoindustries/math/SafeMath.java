@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2013, 2014, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2013, 2014, 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -107,6 +107,21 @@ public class SafeMath {
 	}
 
 	/**
+	 * Multiplies any number of longs, looking for any overflow.
+	 *
+	 * @exception  ArithmeticException  for overflow
+	 *
+	 * @return  The product or {@code 1} when no values
+	 *
+	 * @see #multiply(long, long)
+	 */
+	public static long multiply(long ... values) {
+		long product = 1;
+		for(long value : values) product = multiply(product, value);
+		return product;
+	}
+
+	/**
 	 * Computes the average of two values without overflow or underflow.
 	 */
 	public static int avg(int value1, int value2) {
@@ -116,6 +131,17 @@ public class SafeMath {
 				+ (long)value2
 			) / 2
 		);
+	}
+
+	/**
+	 * Computes the average of multiple values without overflow or underflow.
+	 *
+	 * @throws ArithmeticException  When values is empty (due to resulting division by zero)
+	 */
+	public static int avg(int ... values) {
+		long sum = 0;
+		for(int value : values) sum += value;
+		return (int)(sum / values.length);
 	}
 
 	/*
