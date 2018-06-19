@@ -1,4 +1,4 @@
-# [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://aoindustries.com/) [AO Lang](https://aoindustries.com/ao-lang/)
+# [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://github.com/aoindustries) [AO Lang](https://github.com/aoindustries/ao-lang)
 <p>
 	<a href="https://aoindustries.com/life-cycle#project-current-stable">
 		<img src="https://aoindustries.com/ao-badges/project-current-stable.svg" alt="project: current stable" />
@@ -39,7 +39,7 @@ Minimal Java library with no external dependencies shared by many other projects
     * Java EE 6+ compatible.
 
 ## Motivation
-As we untangle our monolitic [AOCode Public](https://aoindustries.com/aocode-public/) project, we are placing small, simple, and unfocused utilities into this new project.  These tools are generally extensions to the standard Java libraries.  The `ao-lang` project is used by many other projects, but does not have any dependencies itself.
+As we untangle our monolitic [AOCode Public](https://github.com/aoindustries/aocode-public) project, we are placing small, simple, and unfocused utilities into this new project.  These tools are generally extensions to the standard Java libraries.  The `ao-lang` project is used by many other projects, but does not have any dependencies itself.
 
 ## Alternatives
 There may be functionality that is also found in other projects.  This project is of a different evolutionary origin.
