@@ -168,6 +168,7 @@ public class AoCollections {
 		}
 
 		@Override
+		@SuppressWarnings("deprecation") // TODO: Java 1.7: Do not suppress
 		public boolean contains(Object o) {return ObjectUtils.equals(o, element);}
 
 		@Override
@@ -176,18 +177,21 @@ public class AoCollections {
 		}
 
 		@Override
+		@SuppressWarnings("deprecation") // TODO: Java 1.7: Do not suppress
 		public SortedSet<E> subSet(E fromElement, E toElement) {
 			if(ObjectUtils.equals(element, fromElement) && ObjectUtils.equals(element, toElement)) return emptySortedSet();
 			throw new IllegalArgumentException();
 		}
 
 		@Override
+		@SuppressWarnings("deprecation") // TODO: Java 1.7: Do not suppress
 		public SortedSet<E> headSet(E toElement) {
 			if(ObjectUtils.equals(element, toElement)) return emptySortedSet();
 			throw new IllegalArgumentException();
 		}
 
 		@Override
+		@SuppressWarnings("deprecation") // TODO: Java 1.7: Do not suppress
 		public SortedSet<E> tailSet(E fromElement) {
 			if(ObjectUtils.equals(element, fromElement)) return this;
 			throw new IllegalArgumentException();
@@ -663,6 +667,11 @@ public class AoCollections {
 		return (Iterator<E>)EmptyIterator.instance;
 	}
 
+	/**
+	 * @deprecated  Please use {@link org.apache.commons.collections4.iterators.SingletonIterator} from
+	 *              <a href="https://commons.apache.org/proper/commons-collections/">Apache Commons Collections</a>.
+	 */
+	@Deprecated
 	static class SingletonIterator<E> implements Iterator<E> {
 
 		private final E value;
@@ -692,7 +701,11 @@ public class AoCollections {
 
 	/**
 	 * Gets an unmodifiable iterator for a single object.
+	 *
+	 * @deprecated  Please use {@link org.apache.commons.collections4.iterators.SingletonIterator} from
+	 *              <a href="https://commons.apache.org/proper/commons-collections/">Apache Commons Collections</a>.
 	 */
+	@Deprecated
 	public static <E> Iterator<E> singletonIterator(E value) {
 		return new SingletonIterator<E>(value);
 	}
@@ -815,6 +828,7 @@ public class AoCollections {
 	 * 
 	 * If both collections are null they are also considered equal.
 	 */
+	@SuppressWarnings("deprecation") // TODO: Java 1.7: Do not suppress
 	public static boolean equals(Collection<?> collection1, Collection<?> collection2) {
 		if(collection1 == null) {
 			return collection2 == null;
@@ -936,6 +950,7 @@ public class AoCollections {
 	 * This is a copy of the keys and will not write-through or be altered by the original map.
 	 * The set will have the same iteration order as the original map.
 	 */
+	@SuppressWarnings("deprecation") // TODO: Java 1.7: Do not suppress
 	public static <K,V> Set<K> filterByValue(Map<? extends K,? extends V> map, V value) {
 		Set<K> filtered = new LinkedHashSet<K>();
 		for(Map.Entry<? extends K,? extends V> entry : map.entrySet()) {
@@ -952,6 +967,7 @@ public class AoCollections {
 	 * This is a copy of the keys and will not write-through or be altered by the original map.
 	 * The set uses the same comparator as the original map.
 	 */
+	@SuppressWarnings("deprecation") // TODO: Java 1.7: Do not suppress
 	public static <K,V> SortedSet<K> filterByValue(SortedMap<K,? extends V> map, V value) {
 		TreeSet<K> filtered = new TreeSet<K>(map.comparator());
 		for(Map.Entry<K,? extends V> entry : map.entrySet()) {

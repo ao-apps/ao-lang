@@ -55,6 +55,8 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 							<groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId>
 							<configuration>
 								<links>
+									<!-- TODO: https://commons.apache.org/proper/commons-collections/javadocs/api-4.1/ once exists -->
+									<link>https://commons.apache.org/proper/commons-collections/javadocs/api-release/</link>
 									<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.7/</link>
 								</links>
 							</configuration>
@@ -69,6 +71,12 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		<dependency>
 			<groupId>junit</groupId><artifactId>junit</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId><artifactId>commons-collections4</artifactId><version>4.1</version>
+			<!-- Only used for javadocs generation -->
+			<scope>provided</scope>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.7</version>
