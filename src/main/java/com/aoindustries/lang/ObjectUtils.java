@@ -40,7 +40,7 @@ public final class ObjectUtils {
 	/**
 	 * Gets the hashCode for an object or <code>0</code> when <code>null</code>.
 	 * <p>
-	 * TODO: Java 1.7: deprecated  use {@link java.util.Objects#hashCode(java.lang.Object)} as of Java 1.7.
+	 * Java 1.7: deprecated  use {@link java.util.Objects#hashCode(java.lang.Object)} as of Java 1.7.
 	 * </p>
 	 *
 	 * @see java.util.Objects#hashCode(java.lang.Object) as of Java 1.7
@@ -56,7 +56,7 @@ public final class ObjectUtils {
 	/**
 	 * Gets the hashCode for a set of objects or <code>0</code> when <code>null</code>.
 	 * <p>
-	 * TODO: Java 1.7: deprecated  use {@link java.util.Objects#hash(java.lang.Object...)} as of Java 1.7.
+	 * Java 1.7: deprecated  use {@link java.util.Objects#hash(java.lang.Object...)} as of Java 1.7.
 	 * </p>
 	 *
 	 * @see java.util.Objects#hash(java.lang.Object...) as of Java 1.7
@@ -72,7 +72,7 @@ public final class ObjectUtils {
 	/**
 	 * Compares the equality of two objects, including their null states.
 	 * <p>
-	 * TODO: Java 1.7: deprecated  use java.util.Objects#equals(Object, Object) as of Java 1.7.
+	 * Java 1.7: deprecated  use java.util.Objects#equals(Object, Object) as of Java 1.7.
 	 * </p>
 	 * @see java.util.Objects#equals(java.lang.Object, java.lang.Object) as of Java 1.7
 	 *
@@ -87,7 +87,7 @@ public final class ObjectUtils {
 	/**
 	 * Calls toString if non-null, returns null when null.
 	 * <p>
-	 * TODO: Java 1.7: deprecated  use {@link java.util.Objects#toString(java.lang.Object, java.lang.String)} as of Java 1.7.
+	 * Java 1.7: deprecated  use {@link java.util.Objects#toString(java.lang.Object, java.lang.String)} as of Java 1.7.
 	 * </p>
 	 *
 	 * @see java.util.Objects#toString(java.lang.Object, java.lang.String)

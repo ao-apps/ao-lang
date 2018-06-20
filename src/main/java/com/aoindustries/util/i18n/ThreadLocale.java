@@ -87,7 +87,7 @@ final public class ThreadLocale {
 	}
 
 	/**
-	 * TODO: Java 1.8: Deprecate and use java.util.function.Supplier instead
+	 * Java 1.8: Deprecate and use java.util.function.Supplier instead
 	 */
 	public static interface Supplier<T> {
 		T get();
@@ -96,7 +96,7 @@ final public class ThreadLocale {
 	 * Changes the current thread locale and calls the Callable.  The locale is
 	 * automatically restored.
 	 *
-	 * TODO: Java 1.8: Deprecate and use java.util.function.Supplier instead
+	 * Java 1.8: Deprecate and use java.util.function.Supplier instead
 	 */
 	public static <V> V set(Locale locale, Supplier<V> supplier) {
 		Locale oldLocale = get();
@@ -108,5 +108,5 @@ final public class ThreadLocale {
 		}
 	}
 
-	// TODO: Java 8: Create a version of set taking Supplier<V> for lambdas
+	// Java 1.8: Create a version of set taking Supplier<V> for lambdas
 }

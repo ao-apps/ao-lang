@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -59,7 +59,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * arrays on each use.
  * </p>
  *
- * TODO: Java 1.7+: Implement as concurrent queue/deque instead of thread locals?
+ * Java 1.7: Implement as concurrent queue/deque instead of thread locals?
  *
  * @author  AO Industries, Inc.
  */

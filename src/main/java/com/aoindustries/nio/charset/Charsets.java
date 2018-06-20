@@ -27,22 +27,22 @@ import java.nio.charset.Charset;
 /**
  * Defines some constants for handling standard character sets.
  * <p>
- * TODO: Java 1.7: deprecated  Use {@link java.nio.charset.StandardCharsets} as of Java 1.7.
+ * Java 1.7: deprecated  Use {@link java.nio.charset.StandardCharsets} as of Java 1.7.
  * </p>
  *
  * @see java.nio.charset.StandardCharsets in Java 1.7
  *
  * @author  AO Industries, Inc.
  */
-// TODO: Java 1.7: @Deprecated
+// Java 1.7: @Deprecated
 public class Charsets {
 
 	/**
-	 * TODO: Java 1.7: deprecated  Use {@link java.nio.charset.StandardCharsets} as of Java 1.7.
+	 * Java 1.7: deprecated  Use {@link java.nio.charset.StandardCharsets} as of Java 1.7.
 	 *
 	 * @see java.nio.charset.StandardCharsets in Java 1.7
 	 */
-	// TODO: Java 1.7: @Deprecated
+	// Java 1.7: @Deprecated
 	public static final Charset
 		US_ASCII   = Charset.forName("US-ASCII"),
 		ISO_8859_1 = Charset.forName("ISO-8859-1"),

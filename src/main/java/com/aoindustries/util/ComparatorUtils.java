@@ -43,7 +43,7 @@ public final class ComparatorUtils {
 	/**
 	 * Compares two integers.
 	 * <p>
-	 * TODO: Java 1.7: deprecated  use {@link java.lang.Integer#compare(int, int)} as of Java 1.7.
+	 * Java 1.7: deprecated  use {@link java.lang.Integer#compare(int, int)} as of Java 1.7.
 	 * </p>
 	 *
 	 * @see Integer#compare(int,int) as of Java 1.7
@@ -53,14 +53,14 @@ public final class ComparatorUtils {
 	 */
 	@Deprecated
 	public static int compare(int i1, int i2) {
-		// TODO: Java 1.7: return Integer.compare(i1, i2);
+		// Java 1.7: return Integer.compare(i1, i2);
 		return (i1 < i2) ? -1 : ((i1 == i2) ? 0 : 1);
 	}
 
 	/**
 	 * Compares two shorts.
 	 * <p>
-	 * TODO: Java 1.7: deprecated  use {@link Short#compare(short,short)} as of Java 1.7.
+	 * Java 1.7: deprecated  use {@link Short#compare(short,short)} as of Java 1.7.
 	 * </p>
 	 *
 	 * @see Short#compare(short,short) as of Java 1.7
@@ -70,14 +70,14 @@ public final class ComparatorUtils {
 	 */
 	@Deprecated
 	public static int compare(short s1, short s2) {
-		// TODO: Java 1.7: return Short.compare(s1, s2);
+		// Java 1.7: return Short.compare(s1, s2);
 		return (s1 < s2) ? -1 : ((s1 == s2) ? 0 : 1);
 	}
 
 	/**
 	 * Compares two booleans.
 	 * <p>
-	 * TODO: Java 1.7: deprecated  use {@link java.lang.Boolean#compare(boolean,boolean)} as of Java 1.7.
+	 * Java 1.7: deprecated  use {@link java.lang.Boolean#compare(boolean,boolean)} as of Java 1.7.
 	 * </p>
 	 *
 	 * @see Boolean#compare(boolean,boolean) as of Java 1.7
@@ -87,14 +87,14 @@ public final class ComparatorUtils {
 	 */
 	@Deprecated
 	public static int compare(boolean b1, boolean b2) {
-		// TODO: Java 1.7: return Boolean.compare(b1, b2);
+		// Java 1.7: return Boolean.compare(b1, b2);
 		return (b1 == b2) ? 0 : (b1 ? 1 : -1);
 	}
 
 	/**
 	 * Compares two longs.
 	 * <p>
-	 * TODO: Java 1.7: deprecated  use {@link java.lang.Long#compare(long,long)} as of Java 1.7.
+	 * Java 1.7: deprecated  use {@link java.lang.Long#compare(long,long)} as of Java 1.7.
 	 * </p>
 	 *
 	 * @see Long#compare(long,long) as of Java 1.7
@@ -104,7 +104,7 @@ public final class ComparatorUtils {
 	 */
 	@Deprecated
 	public static int compare(long l1, long l2) {
-		// TODO: Java 1.7: return Long.compare(l1, l2);
+		// Java 1.7: return Long.compare(l1, l2);
 		return (l1 < l2) ? -1 : ((l1 == l2) ? 0 : 1);
 	}
 
