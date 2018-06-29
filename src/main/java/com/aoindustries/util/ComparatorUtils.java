@@ -24,8 +24,6 @@ package com.aoindustries.util;
 
 import java.text.Collator;
 import java.util.Locale;
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * Utilities that help when working with comparators.
@@ -48,7 +46,7 @@ public final class ComparatorUtils {
 	 *
 	 * @see Integer#compare(int,int) as of Java 1.7
 	 *
-	 * @deprecated  Please use {@link NumberUtils#compare(int, int)} from
+	 * @deprecated  Please use {@link org.apache.commons.lang3.math.NumberUtils#compare(int, int)} from
 	 *              <a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a>.
 	 */
 	@Deprecated
@@ -65,7 +63,7 @@ public final class ComparatorUtils {
 	 *
 	 * @see Short#compare(short,short) as of Java 1.7
 	 *
-	 * @deprecated  Please use {@link NumberUtils#compare(short, short)} from
+	 * @deprecated  Please use {@link org.apache.commons.lang3.math.NumberUtils#compare(short, short)} from
 	 *              <a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a>.
 	 */
 	@Deprecated
@@ -82,7 +80,7 @@ public final class ComparatorUtils {
 	 *
 	 * @see Boolean#compare(boolean,boolean) as of Java 1.7
 	 *
-	 * @deprecated  Please use {@link BooleanUtils#compare(boolean, boolean)} from
+	 * @deprecated  Please use {@link org.apache.commons.lang3.BooleanUtils#compare(boolean, boolean)} from
 	 *              <a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a>.
 	 */
 	@Deprecated
@@ -99,7 +97,7 @@ public final class ComparatorUtils {
 	 *
 	 * @see Long#compare(long,long) as of Java 1.7
 	 *
-	 * @deprecated  Please use {@link NumberUtils#compare(long, long)} from
+	 * @deprecated  Please use {@link org.apache.commons.lang3.math.NumberUtils#compare(long, long)} from
 	 *              <a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a>.
 	 */
 	@Deprecated
