@@ -26,7 +26,7 @@ import com.aoindustries.lang.reflect.Classes;
 import com.aoindustries.util.function.Predicate;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -43,7 +43,7 @@ public class PolymorphicMultimap<K,V> {
 
 	private final Class<K> upperBound;
 
-	private final ConcurrentMap<Class<? extends K>, List<Map.Entry<K,V>>> entriesByClass = new ConcurrentHashMap<Class<? extends K>, List<Map.Entry<K,V>>>();
+	private final ConcurrentMap<Class<? extends K>, List<Entry<K,V>>> entriesByClass = new ConcurrentHashMap<Class<? extends K>, List<Entry<K,V>>>();
 
 	public PolymorphicMultimap(Class<K> upperBound) {
 		this.upperBound = upperBound;
@@ -62,7 +62,7 @@ public class PolymorphicMultimap<K,V> {
 		Class<? extends K> keyClass = key.getClass().asSubclass(upperBound);
 		for(Class<?> clazz : Classes.getAllClasses(keyClass, upperBound)) {
 			Class<? extends K> uClass = clazz.asSubclass(upperBound);
-			Map.Entry<K,V> newEntry = new Map.Entry<K,V>() {
+			Entry<K,V> newEntry = new Entry<K,V>() {
 				@Override
 				public K getKey() {
 					return key;
@@ -80,8 +80,8 @@ public class PolymorphicMultimap<K,V> {
 			};
 			boolean replaced;
 			do {
-				List<Map.Entry<K,V>> oldList = entriesByClass.get(uClass);
-				List<Map.Entry<K,V>> newList = MinimalList.unmodifiable(
+				List<Entry<K,V>> oldList = entriesByClass.get(uClass);
+				List<Entry<K,V>> newList = MinimalList.unmodifiable(
 					MinimalList.add(
 						oldList,
 						newEntry
@@ -101,8 +101,8 @@ public class PolymorphicMultimap<K,V> {
 	 * @return  the unmodifiable list of all objects registered of the given class, or an empty list when none registered
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends K> List<Map.Entry<T,V>> get(Class<T> clazz) {
-		List<Map.Entry<K,V>> entries = entriesByClass.get(clazz);
+	public <T extends K> List<Entry<T,V>> get(Class<T> clazz) {
+		List<Entry<K,V>> entries = entriesByClass.get(clazz);
 		if(entries == null) {
 			return Collections.emptyList();
 		} else {
@@ -118,10 +118,10 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the unmodifiable list of all objects registered of the given class that match the filter, or an empty list when none registered
 	 */
-	public <T extends K> List<Map.Entry<T,V>> get(Class<T> clazz, Predicate<? super Map.Entry<? super T, ? super V>> filter) {
-		List<Map.Entry<T,V>> entries = get(clazz);
-		List<Map.Entry<T,V>> matches = MinimalList.emptyList();
-		for(Map.Entry<T,V> entry : entries) {
+	public <T extends K> List<Entry<T,V>> get(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
+		List<Entry<T,V>> entries = get(clazz);
+		List<Entry<T,V>> matches = MinimalList.emptyList();
+		for(Entry<T,V> entry : entries) {
 			if(filter.test(entry)) {
 				matches = MinimalList.add(matches, entry);
 			}
@@ -136,8 +136,8 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the first entry registered or {@code null} for none registered
 	 */
-	public <T extends K> Map.Entry<T,V> getFirst(Class<T> clazz) {
-		List<Map.Entry<T,V>> entries = get(clazz);
+	public <T extends K> Entry<T,V> getFirst(Class<T> clazz) {
+		List<Entry<T,V>> entries = get(clazz);
 		return entries.isEmpty() ? null : entries.get(0);
 	}
 
@@ -146,8 +146,8 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the first entry registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> Map.Entry<T,V> getFirst(Class<T> clazz, Predicate<? super Map.Entry<? super T, ? super V>> filter) {
-		for(Map.Entry<T,V> entry : get(clazz)) {
+	public <T extends K> Entry<T,V> getFirst(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
+		for(Entry<T,V> entry : get(clazz)) {
 			if(filter.test(entry)) return entry;
 		}
 		return null;
@@ -158,8 +158,8 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the last entry registered or {@code null} for none registered
 	 */
-	public <T extends K> Map.Entry<T,V> getLast(Class<T> clazz) {
-		List<Map.Entry<T,V>> entries = get(clazz);
+	public <T extends K> Entry<T,V> getLast(Class<T> clazz) {
+		List<Entry<T,V>> entries = get(clazz);
 		int size = entries.size();
 		return size == 0 ? null : entries.get(size - 1);
 	}
@@ -169,10 +169,10 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the last entry registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> Map.Entry<T,V> getLast(Class<T> clazz, Predicate<? super Map.Entry<? super T, ? super V>> filter) {
-		List<Map.Entry<T,V>> entries = get(clazz);
+	public <T extends K> Entry<T,V> getLast(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
+		List<Entry<T,V>> entries = get(clazz);
 		for(int i = entries.size() - 1; i >= 0; i--) {
-			Map.Entry<T,V> entry = entries.get(i);
+			Entry<T,V> entry = entries.get(i);
 			if(filter.test(entry)) return entry;
 		}
 		return null;
