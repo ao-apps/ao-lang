@@ -24,6 +24,7 @@ package com.aoindustries.util;
 
 import com.aoindustries.lang.reflect.Classes;
 import com.aoindustries.util.function.Predicate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
@@ -98,12 +99,34 @@ public class PolymorphicMultimap<K,V> {
 			boolean replaced;
 			do {
 				Lists<K,V> oldLists = listsByClass.get(uClass);
-				Lists<K,V> newLists = new Lists<K,V>(
-					MinimalList.unmodifiable(MinimalList.add(oldLists==null ? null : oldLists.keys, key)),
-					MinimalList.unmodifiable(MinimalList.add(oldLists==null ? null : oldLists.values, value)),
-					MinimalList.unmodifiable(MinimalList.add(oldLists==null ? null : oldLists.entries, newEntry))
-				);
-				replaced = listsByClass.replace(uClass, oldLists, newLists);
+				List<K> newKeys;
+				List<V> newValues;
+				List<Entry<K,V>> newEntries;
+				if(oldLists == null) {
+					newKeys = Collections.singletonList(key);
+					newValues = Collections.singletonList(value);
+					newEntries = Collections.singletonList(newEntry);
+				} else {
+					int newSize = oldLists.keys.size() + 1;
+					List<K> newKeysTemp = new ArrayList<K>(newSize);
+					newKeysTemp.addAll(oldLists.keys);
+					newKeysTemp.add(key);
+					newKeys = Collections.unmodifiableList(newKeysTemp);
+					List<V> newValuesTemp = new ArrayList<V>(newSize);
+					newValuesTemp.addAll(oldLists.values);
+					newValuesTemp.add(value);
+					newValues = Collections.unmodifiableList(newValuesTemp);
+					List<Entry<K,V>> newEntriesTemp = new ArrayList<Entry<K,V>>(newSize);
+					newEntriesTemp.addAll(oldLists.entries);
+					newEntriesTemp.add(newEntry);
+					newEntries = Collections.unmodifiableList(newEntriesTemp);
+				}
+				Lists<K,V> newLists = new Lists<K,V>(newKeys, newValues, newEntries);
+				if(oldLists == null) {
+					replaced = listsByClass.putIfAbsent(uClass, newLists) == null;
+				} else {
+					replaced = listsByClass.replace(uClass, oldLists, newLists);
+				}
 			} while(!replaced);
 		}
 	}

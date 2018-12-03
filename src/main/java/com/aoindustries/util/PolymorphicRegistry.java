@@ -24,6 +24,7 @@ package com.aoindustries.util;
 
 import com.aoindustries.lang.reflect.Classes;
 import com.aoindustries.util.function.Predicate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -63,13 +64,21 @@ public class PolymorphicRegistry<U> {
 			boolean replaced;
 			do {
 				List<U> oldList = instancesByClass.get(uClass);
-				List<U> newList = MinimalList.unmodifiable(
-					MinimalList.add(
-						oldList,
-						instance
-					)
-				);
-				replaced = instancesByClass.replace(uClass, oldList, newList);
+				List<U> newList;
+				if(oldList == null) {
+					newList = Collections.singletonList(instance);
+				} else {
+					int newSize = oldList.size() + 1;
+					List<U> newListTemp = new ArrayList<U>(newSize);
+					newListTemp.addAll(oldList);
+					newListTemp.add(instance);
+					newList = Collections.unmodifiableList(newListTemp);
+				}
+				if(oldList == null) {
+					replaced = instancesByClass.putIfAbsent(uClass, newList) == null;
+				} else {
+					replaced = instancesByClass.replace(uClass, oldList, newList);
+				}
 			} while(!replaced);
 		}
 	}
