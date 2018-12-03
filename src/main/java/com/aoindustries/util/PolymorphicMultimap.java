@@ -419,10 +419,8 @@ public class PolymorphicMultimap<K,V> {
 	 * @return  the first key registered that matches the filter or {@code null} for none registered
 	 */
 	public <T extends K> T getFirstKeyFilterEntry(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
-		for(Entry<T,V> entry : getEntries(clazz)) {
-			if(filter.test(entry)) return entry.getKey();
-		}
-		return null;
+		Entry<T,V> entry = getFirstEntry(clazz, filter);
+		return entry == null ? null : entry.getKey();
 	}
 
 	/**
@@ -465,10 +463,8 @@ public class PolymorphicMultimap<K,V> {
 	 * @return  the first value registered that matches the filter or {@code null} for none registered
 	 */
 	public <T extends K> V getFirstValueFilterEntry(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
-		for(Entry<T,V> entry : getEntries(clazz)) {
-			if(filter.test(entry)) return entry.getValue();
-		}
-		return null;
+		Entry<T,V> entry = getFirstEntry(clazz, filter);
+		return entry == null ? null : entry.getValue();
 	}
 
 	/**
@@ -562,12 +558,8 @@ public class PolymorphicMultimap<K,V> {
 	 * @return  the last key registered that matches the filter or {@code null} for none registered
 	 */
 	public <T extends K> T getLastKeyFilterEntry(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
-		List<Entry<T,V>> entries = getEntries(clazz);
-		for(int i = entries.size() - 1; i >= 0; i--) {
-			Entry<T,V> entry = entries.get(i);
-			if(filter.test(entry)) return entry.getKey();
-		}
-		return null;
+		Entry<T,V> entry = getLastEntry(clazz, filter);
+		return entry == null ? null : entry.getKey();
 	}
 
 	/**
@@ -615,12 +607,8 @@ public class PolymorphicMultimap<K,V> {
 	 * @return  the last value registered that matches the filter or {@code null} for none registered
 	 */
 	public <T extends K> V getLastValueFilterEntry(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
-		List<Entry<T,V>> entries = getEntries(clazz);
-		for(int i = entries.size() - 1; i >= 0; i--) {
-			Entry<T,V> entry = entries.get(i);
-			if(filter.test(entry)) return entry.getValue();
-		}
-		return null;
+		Entry<T,V> entry = getLastEntry(clazz, filter);
+		return entry == null ? null : entry.getValue();
 	}
 
 	/**
