@@ -38,7 +38,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author  AO Industries, Inc.
  */
 // TODO: Should this spin-off to a microproject?
-// TODO: Should this fully implement the Map interface?
+// TODO: Should this fully implement the Map interface from Class -> Lists (exposing Lists as part of API)?
 public class PolymorphicMultimap<K,V> {
 
 	private final Class<K> upperBound;
@@ -668,5 +668,10 @@ public class PolymorphicMultimap<K,V> {
 
 	// TODO: When first needed: getAny with round-robin distribution, with and without filtered.  Maintain level of concurrency.
 	//       This could be simple underpinnings for when multiple entry of a service are registered, and requests can be
-	//       distributed between them.
+	//       distributed between them.  Note that the AtomicInteger combined with filtering might cause less-than-perfect round-robin
+	//       behavior without locking, particularly when two threads come in, the first one gets an entry, skips with filter then uses
+	//       the next one, which the second thread has also used.  This is preferential to using the AtomicInteger to always get the
+	//       next value, because - in theory - two threads with opposite filters could always race each other, each discarding what
+	//       the other could use.  Note in the API that if a strict round-robin is required, even with filtering, then external locking
+	//       must be applied.
 }
