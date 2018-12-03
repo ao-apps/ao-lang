@@ -114,9 +114,8 @@ public class PolymorphicMultimap<K,V> {
 	 * @return  the lists or {@code null} when none registered
 	 */
 	@SuppressWarnings("unchecked")
-	protected <T extends K> Lists<T,V> getLists(Class<T> clazz) {
-		Lists<K,V> lists = listsByClass.get(clazz);
-		return (Lists)lists;
+	protected <T extends K> Lists<T,V> getLists(Class<? extends T> clazz) {
+		return (Lists<T,V>)listsByClass.get(clazz);
 	}
 
 	/**
@@ -127,7 +126,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the unmodifiable list of all objects registered of the given class, or an empty list when none registered
 	 */
-	public <T extends K> List<T> getKeys(Class<T> clazz) {
+	public <T extends K> List<T> getKeys(Class<? extends T> clazz) {
 		Lists<T,?> lists = getLists(clazz);
 		if(lists == null) {
 			return Collections.emptyList();
@@ -144,7 +143,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the unmodifiable list of all objects registered of the given class that match the filter, or an empty list when none registered
 	 */
-	public <T extends K> List<T> getKeys(Class<T> clazz, Predicate<? super T> filter) {
+	public <T extends K> List<T> getKeys(Class<? extends T> clazz, Predicate<? super T> filter) {
 		List<T> keys = getKeys(clazz);
 		List<T> matches = MinimalList.emptyList();
 		for(T key : keys) {
@@ -165,7 +164,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the unmodifiable list of all objects registered of the given class that match the filter, or an empty list when none registered
 	 */
-	public <T extends K> List<T> getKeysFilterValue(Class<T> clazz, Predicate<? super V> filter) {
+	public <T extends K> List<T> getKeysFilterValue(Class<? extends T> clazz, Predicate<? super V> filter) {
 		Lists<T,V> lists = getLists(clazz);
 		if(lists == null) {
 			return Collections.emptyList();
@@ -191,7 +190,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the unmodifiable list of all objects registered of the given class that match the filter, or an empty list when none registered
 	 */
-	public <T extends K> List<T> getKeysFilterEntry(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
+	public <T extends K> List<T> getKeysFilterEntry(Class<? extends T> clazz, Predicate<? super Entry<T,V>> filter) {
 		Lists<T,V> lists = getLists(clazz);
 		if(lists == null) {
 			return Collections.emptyList();
@@ -255,7 +254,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the unmodifiable list of all objects registered of the given class that match the filter, or an empty list when none registered
 	 */
-	public <T extends K> List<V> getValuesFilterKey(Class<T> clazz, Predicate<? super T> filter) {
+	public <T extends K> List<V> getValuesFilterKey(Class<? extends T> clazz, Predicate<? super T> filter) {
 		Lists<T,V> lists = getLists(clazz);
 		if(lists == null) {
 			return Collections.emptyList();
@@ -281,7 +280,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the unmodifiable list of all objects registered of the given class that match the filter, or an empty list when none registered
 	 */
-	public <T extends K> List<V> getValuesFilterEntry(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
+	public <T extends K> List<V> getValuesFilterEntry(Class<? extends T> clazz, Predicate<? super Entry<T,V>> filter) {
 		Lists<T,V> lists = getLists(clazz);
 		if(lists == null) {
 			return Collections.emptyList();
@@ -307,7 +306,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the unmodifiable list of all objects registered of the given class, or an empty list when none registered
 	 */
-	public <T extends K> List<Entry<T,V>> getEntries(Class<T> clazz) {
+	public <T extends K> List<Entry<T,V>> getEntries(Class<? extends T> clazz) {
 		Lists<T,V> lists = getLists(clazz);
 		if(lists == null) {
 			return Collections.emptyList();
@@ -324,7 +323,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the unmodifiable list of all objects registered of the given class that match the filter, or an empty list when none registered
 	 */
-	public <T extends K> List<Entry<T,V>> getEntries(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
+	public <T extends K> List<Entry<T,V>> getEntries(Class<? extends T> clazz, Predicate<? super Entry<T,V>> filter) {
 		List<Entry<T,V>> entries = getEntries(clazz);
 		List<Entry<T,V>> matches = MinimalList.emptyList();
 		for(Entry<T,V> entry : entries) {
@@ -345,7 +344,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the unmodifiable list of all objects registered of the given class that match the filter, or an empty list when none registered
 	 */
-	public <T extends K> List<Entry<T,V>> getEntriesFilterKey(Class<T> clazz, Predicate<? super T> filter) {
+	public <T extends K> List<Entry<T,V>> getEntriesFilterKey(Class<? extends T> clazz, Predicate<? super T> filter) {
 		List<Entry<T,V>> entries = getEntries(clazz);
 		List<Entry<T,V>> matches = MinimalList.emptyList();
 		for(Entry<T,V> entry : entries) {
@@ -366,7 +365,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the unmodifiable list of all objects registered of the given class that match the filter, or an empty list when none registered
 	 */
-	public <T extends K> List<Entry<T,V>> getEntriesFilterValue(Class<T> clazz, Predicate<? super V> filter) {
+	public <T extends K> List<Entry<T,V>> getEntriesFilterValue(Class<? extends T> clazz, Predicate<? super V> filter) {
 		List<Entry<T,V>> entries = getEntries(clazz);
 		List<Entry<T,V>> matches = MinimalList.emptyList();
 		for(Entry<T,V> entry : entries) {
@@ -384,7 +383,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the first key registered or {@code null} for none registered
 	 */
-	public <T extends K> T getFirstKey(Class<T> clazz) {
+	public <T extends K> T getFirstKey(Class<? extends T> clazz) {
 		List<T> keys = getKeys(clazz);
 		return keys.isEmpty() ? null : keys.get(0);
 	}
@@ -394,7 +393,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the first key registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> T getFirstKey(Class<T> clazz, Predicate<? super T> filter) {
+	public <T extends K> T getFirstKey(Class<? extends T> clazz, Predicate<? super T> filter) {
 		for(T key : getKeys(clazz)) {
 			if(filter.test(key)) return key;
 		}
@@ -406,7 +405,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the first key registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> T getFirstKeyFilterValue(Class<T> clazz, Predicate<? super V> filter) {
+	public <T extends K> T getFirstKeyFilterValue(Class<? extends T> clazz, Predicate<? super V> filter) {
 		for(Entry<T,V> entry : getEntries(clazz)) {
 			if(filter.test(entry.getValue())) return entry.getKey();
 		}
@@ -418,7 +417,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the first key registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> T getFirstKeyFilterEntry(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
+	public <T extends K> T getFirstKeyFilterEntry(Class<? extends T> clazz, Predicate<? super Entry<T,V>> filter) {
 		Entry<T,V> entry = getFirstEntry(clazz, filter);
 		return entry == null ? null : entry.getKey();
 	}
@@ -450,7 +449,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the first value registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> V getFirstValueFilterKey(Class<T> clazz, Predicate<? super T> filter) {
+	public <T extends K> V getFirstValueFilterKey(Class<? extends T> clazz, Predicate<? super T> filter) {
 		for(Entry<T,V> entry : getEntries(clazz)) {
 			if(filter.test(entry.getKey())) return entry.getValue();
 		}
@@ -462,7 +461,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the first value registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> V getFirstValueFilterEntry(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
+	public <T extends K> V getFirstValueFilterEntry(Class<? extends T> clazz, Predicate<? super Entry<T,V>> filter) {
 		Entry<T,V> entry = getFirstEntry(clazz, filter);
 		return entry == null ? null : entry.getValue();
 	}
@@ -472,7 +471,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the first entry registered or {@code null} for none registered
 	 */
-	public <T extends K> Entry<T,V> getFirstEntry(Class<T> clazz) {
+	public <T extends K> Entry<T,V> getFirstEntry(Class<? extends T> clazz) {
 		List<Entry<T,V>> entries = getEntries(clazz);
 		return entries.isEmpty() ? null : entries.get(0);
 	}
@@ -482,7 +481,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the first entry registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> Entry<T,V> getFirstEntry(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
+	public <T extends K> Entry<T,V> getFirstEntry(Class<? extends T> clazz, Predicate<? super Entry<T,V>> filter) {
 		for(Entry<T,V> entry : getEntries(clazz)) {
 			if(filter.test(entry)) return entry;
 		}
@@ -494,7 +493,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the first entry registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> Entry<T,V> getFirstEntryFilterKey(Class<T> clazz, Predicate<? super T> filter) {
+	public <T extends K> Entry<T,V> getFirstEntryFilterKey(Class<? extends T> clazz, Predicate<? super T> filter) {
 		for(Entry<T,V> entry : getEntries(clazz)) {
 			if(filter.test(entry.getKey())) return entry;
 		}
@@ -506,7 +505,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the first entry registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> Entry<T,V> getFirstEntryFilterValue(Class<T> clazz, Predicate<? super V> filter) {
+	public <T extends K> Entry<T,V> getFirstEntryFilterValue(Class<? extends T> clazz, Predicate<? super V> filter) {
 		for(Entry<T,V> entry : getEntries(clazz)) {
 			if(filter.test(entry.getValue())) return entry;
 		}
@@ -518,7 +517,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the last key registered or {@code null} for none registered
 	 */
-	public <T extends K> T getLastKey(Class<T> clazz) {
+	public <T extends K> T getLastKey(Class<? extends T> clazz) {
 		List<T> keys = getKeys(clazz);
 		int size = keys.size();
 		return size == 0 ? null : keys.get(size - 1);
@@ -529,7 +528,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the last key registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> T getLastKey(Class<T> clazz, Predicate<? super T> filter) {
+	public <T extends K> T getLastKey(Class<? extends T> clazz, Predicate<? super T> filter) {
 		List<T> keys = getKeys(clazz);
 		for(int i = keys.size() - 1; i >= 0; i--) {
 			T key = keys.get(i);
@@ -543,7 +542,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the last key registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> T getLastKeyFilterValue(Class<T> clazz, Predicate<? super V> filter) {
+	public <T extends K> T getLastKeyFilterValue(Class<? extends T> clazz, Predicate<? super V> filter) {
 		List<Entry<T,V>> entries = getEntries(clazz);
 		for(int i = entries.size() - 1; i >= 0; i--) {
 			Entry<T,V> entry = entries.get(i);
@@ -557,7 +556,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the last key registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> T getLastKeyFilterEntry(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
+	public <T extends K> T getLastKeyFilterEntry(Class<? extends T> clazz, Predicate<? super Entry<T,V>> filter) {
 		Entry<T,V> entry = getLastEntry(clazz, filter);
 		return entry == null ? null : entry.getKey();
 	}
@@ -592,7 +591,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the last value registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> V getLastValueFilterKey(Class<T> clazz, Predicate<? super T> filter) {
+	public <T extends K> V getLastValueFilterKey(Class<? extends T> clazz, Predicate<? super T> filter) {
 		List<Entry<T,V>> entries = getEntries(clazz);
 		for(int i = entries.size() - 1; i >= 0; i--) {
 			Entry<T,V> entry = entries.get(i);
@@ -606,7 +605,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the last value registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> V getLastValueFilterEntry(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
+	public <T extends K> V getLastValueFilterEntry(Class<? extends T> clazz, Predicate<? super Entry<T,V>> filter) {
 		Entry<T,V> entry = getLastEntry(clazz, filter);
 		return entry == null ? null : entry.getValue();
 	}
@@ -616,7 +615,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the last entry registered or {@code null} for none registered
 	 */
-	public <T extends K> Entry<T,V> getLastEntry(Class<T> clazz) {
+	public <T extends K> Entry<T,V> getLastEntry(Class<? extends T> clazz) {
 		List<Entry<T,V>> entries = getEntries(clazz);
 		int size = entries.size();
 		return size == 0 ? null : entries.get(size - 1);
@@ -627,7 +626,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the last entry registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> Entry<T,V> getLastEntry(Class<T> clazz, Predicate<? super Entry<? super T, ? super V>> filter) {
+	public <T extends K> Entry<T,V> getLastEntry(Class<? extends T> clazz, Predicate<? super Entry<T,V>> filter) {
 		List<Entry<T,V>> entries = getEntries(clazz);
 		for(int i = entries.size() - 1; i >= 0; i--) {
 			Entry<T,V> entry = entries.get(i);
@@ -641,7 +640,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the last entry registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> Entry<T,V> getLastEntryFilterKey(Class<T> clazz, Predicate<? super T> filter) {
+	public <T extends K> Entry<T,V> getLastEntryFilterKey(Class<? extends T> clazz, Predicate<? super T> filter) {
 		List<Entry<T,V>> entries = getEntries(clazz);
 		for(int i = entries.size() - 1; i >= 0; i--) {
 			Entry<T,V> entry = entries.get(i);
@@ -655,7 +654,7 @@ public class PolymorphicMultimap<K,V> {
 	 *
 	 * @return  the last entry registered that matches the filter or {@code null} for none registered
 	 */
-	public <T extends K> Entry<T,V> getLastEntryFilterValue(Class<T> clazz, Predicate<? super V> filter) {
+	public <T extends K> Entry<T,V> getLastEntryFilterValue(Class<? extends T> clazz, Predicate<? super V> filter) {
 		List<Entry<T,V>> entries = getEntries(clazz);
 		for(int i = entries.size() - 1; i >= 0; i--) {
 			Entry<T,V> entry = entries.get(i);
