@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -32,7 +32,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.InterruptedIOException;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
@@ -383,31 +382,16 @@ final public class FileUtils {
 	 * Renames one file to another, throwing IOException when unsuccessful.
 	 * Allow a non-atomic delete/rename pair when the underlying system is unable
 	 * to rename one file over another, such as in Microsoft Windows.
-	 * <p>
-	 * When the delete or rename fails, will retry up to ten times with increasing
-	 * delay between each attempt.
-	 * </p>
 	 */
 	public static void renameAllowNonAtomic(File from, File to) throws IOException {
 		// Try atomic rename first
 		if(!from.renameTo(to)) {
-			final int NUM_TRIES = 10;
-			for(int attempt=1; attempt<=NUM_TRIES; attempt++) {
-				// Try delete then rename for Windows
-				if(
-					(!to.exists() || to.delete())
-					&& from.renameTo(to)
-				) {
-					break;
-				}
-				if(attempt == NUM_TRIES) throw new IOException("Unable to non-atomically rename \""+from+"\" to \""+to+'"');
-				try {
-					Thread.sleep(4 << NUM_TRIES);
-				} catch(InterruptedException e2) {
-					IOException ioErr = new InterruptedIOException();
-					ioErr.initCause(e2);
-					throw ioErr;
-				}
+			try {
+				// Try overwrite in-place for Windows
+				copy(from, to);
+				delete(from);
+			} catch(IOException e) {
+				throw new IOException("Unable to non-atomically rename \""+from+"\" to \""+to+'"', e);
 			}
 		}
 	}
