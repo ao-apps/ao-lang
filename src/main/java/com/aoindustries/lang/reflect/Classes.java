@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2018  AO Industries, Inc.
+ * Copyright (C) 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -71,6 +71,7 @@ public final class Classes {
 	 * by parent classes.
 	 * </p>
 	 */
+	// TODO: Add all interface parents and break loop when already in set.  See recent UdtMap development.
 	public static Set<Class<?>> getAllClasses(Class<?> clazz) {
 		Set<Class<?>> classes = new LinkedHashSet<Class<?>>();
 		Class<?> current = clazz;
