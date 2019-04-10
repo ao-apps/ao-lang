@@ -48,13 +48,16 @@ public final class Classes {
 	 * assignable from} the given upper bound.
 	 * </p>
 	 */
+	// TODO: Add all interface parents and break loop when already in set.  See recent UdtMap development.
 	public static <T> Set<Class<? extends T>> getAllClasses(Class<? extends T> clazz, Class<T> upperBound) {
 		Set<Class<? extends T>> classes = new LinkedHashSet<Class<? extends T>>();
 		Class<?> current = clazz;
 		do {
 			if(upperBound.isAssignableFrom(current)) classes.add(current.asSubclass(upperBound));
 			for(Class<?> iface : clazz.getInterfaces()) {
-				if(upperBound.isAssignableFrom(iface)) classes.add(iface.asSubclass(upperBound));
+				do {
+					if(upperBound.isAssignableFrom(iface)) classes.add(iface.asSubclass(upperBound));
+				} while ((iface = iface.getSuperclass()) != null);
 			}
 		} while((current = current.getSuperclass()) != null);
 		return classes;
