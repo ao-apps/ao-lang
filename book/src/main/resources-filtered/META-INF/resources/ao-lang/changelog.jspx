@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-lang - Minimal Java library with no external dependencies shared by many other projects.
-Copyright (C) 2017, 2018  AO Industries, Inc.
+Copyright (C) 2017, 2018, 2019  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -72,18 +72,18 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 					</li>
 					<li>
 						<ao:a href="apidocs/com/aoindustries/util/MinimalList.html">MinimalList</ao:a> now represents
-						an empty list as using <ao:a rel="nofollow" href="@{javac.link.javaApi}java/util/Collections.html#emptyList()">Collections.emptyList()</ao:a>
+						an empty list as using <ao:a rel="nofollow" href="@{javac.link.javaApi}/java/util/Collections.html#emptyList()">Collections.emptyList()</ao:a>
 						instead of <code>null</code>.
 					</li>
 					<li>
 						<ao:a href="apidocs/com/aoindustries/util/MinimalMap.html">MinimalMap</ao:a> now represents
-						an empty map as using <ao:a rel="nofollow" href="@{javac.link.javaApi}java/util/Collections.html#emptyMap()">Collections.emptyMap()</ao:a>
+						an empty map as using <ao:a rel="nofollow" href="@{javac.link.javaApi}/java/util/Collections.html#emptyMap()">Collections.emptyMap()</ao:a>
 						instead of <code>null</code>.
 					</li>
 					<li>
 						New methods in <ao:a href="apidocs/com/aoindustries/util/AoCollections.html">AoCollections</ao:a> to assist
-						in efficiently converting <ao:a rel="nofollow" href="@{javac.link.javaApi}java/lang/Iterable.html">Iterable</ao:a>
-						to different types of <ao:a rel="nofollow" href="@{javac.link.javaApi}java/util/Collection.html">Collection</ao:a>.
+						in efficiently converting <ao:a rel="nofollow" href="@{javac.link.javaApi}/java/lang/Iterable.html">Iterable</ao:a>
+						to different types of <ao:a rel="nofollow" href="@{javac.link.javaApi}/java/util/Collection.html">Collection</ao:a>.
 					</li>
 					<li>
 						<p>
@@ -107,7 +107,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 					</li>
 					<li>
 						New class <ao:a href="apidocs/com/aoindustries/lang/reflect/Classes.html">Classes</ao:a> to help when
-						dealing with <ao:a rel="nofollow" href="@{javac.link.javaApi}java/lang/Class.html">Class</ao:a>.
+						dealing with <ao:a rel="nofollow" href="@{javac.link.javaApi}/java/lang/Class.html">Class</ao:a>.
 					</li>
 					<li>
 						New classes <ao:a href="apidocs/com/aoindustries/util/PolymorphicRegistry.html">PolymorphicRegistry</ao:a>
@@ -128,8 +128,8 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		>
 			<ul>
 				<li>Pulling small, general-purpose extensions to the standard Java libraries out of
-					<core:link book="/aocode-public" page="/" /> into a new
-					<core:link page="/" /> project.</li>
+					<core:link book="/aocode-public" page="/index.jspx" /> into a new
+					<core:link page="index.jspx" /> project.</li>
 				<li>New <code>AoArrays.sortParallelArrays</code> method to sort parallel arrays.</li>
 				<li><code>ProcessResult</code> improvements:
 					<ol>
@@ -150,7 +150,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				<li><code>ApplicationResourcesAccessor</code> improvements:
 					<ol>
 						<li>Added <code>Listener</code> hook for code interested in calls to <code>getMessage</code>.</li>
-						<li>Used this new hook to decouple <core:link page="/" /> from <core:link book="/aocode-public" page="/" />.</li>
+						<li>Used this new hook to decouple <core:link page="index.jspx" /> from <core:link book="/aocode-public" page="/index.jspx" />.</li>
 					</ol>
 				</li>
 				<li><code>FastObjectOutput</code> improvements:
@@ -166,8 +166,8 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 					</ol>
 				</li>
 				<li>Also moving some of the small, general-purpose extensions to the standard Java libraries out of
-					<core:link book="/aoserv/client" page="/" /> into this new
-					<core:link page="/" /> project.
+					<core:link book="/aoserv/client" page="/index.jspx" /> into this new
+					<core:link page="index.jspx" /> project.
 				</li>
 				<li><code>AoCollections</code> improvements:
 					<ol>
