@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-lang - Minimal Java library with no external dependencies shared by many other projects.
-Copyright (C) 2017, 2018  AO Industries, Inc.
+Copyright (C) 2017, 2018, 2019  AO Industries, Inc.
 	support@aoindustries.com
 	7262 Bull Pen Cir
 	Mobile, AL 36695
@@ -55,16 +55,15 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 						<configuration>
 							<links>
 								<link>${javac.link.javaApi}</link>
-								<!-- TODO: https://commons.apache.org/proper/commons-collections/javadocs/api-4.1 once exists -->
-								<link>https://commons.apache.org/proper/commons-collections/javadocs/api-release</link>
-								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.7</link>
+								<link>https://commons.apache.org/proper/commons-collections/javadocs/api-4.3</link>
+								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.8.1</link>
 							</links>
 							<additionalDependencies>
 								<additionalDependency>
-									<groupId>org.apache.commons</groupId><artifactId>commons-collections4</artifactId><version>4.1</version>
+									<groupId>org.apache.commons</groupId><artifactId>commons-collections4</artifactId><version>4.3</version>
 								</additionalDependency>
 								<additionalDependency>
-									<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.7</version>
+									<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.8.1</version>
 								</additionalDependency>
 							</additionalDependencies>
 						</configuration>
