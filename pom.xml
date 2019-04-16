@@ -55,8 +55,8 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 						<configuration>
 							<links>
 								<link>${javac.link.javaApi}</link>
-								<link>https://commons.apache.org/proper/commons-collections/javadocs/api-4.3</link>
-								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.8.1</link>
+								<link>https://commons.apache.org/proper/commons-collections/javadocs/api-4.3/</link>
+								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.8.1/</link>
 							</links>
 							<additionalDependencies>
 								<additionalDependency>
