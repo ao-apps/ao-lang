@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2014, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -67,11 +67,7 @@ public final class Methods {
 			Method method = target.getClass().getMethod(methodName, parameterTypes);
 			Object result = method.invoke(target, parameterValues);
 			return returnType.cast(result);
-		} catch(NoSuchMethodException e) {
-			throw new ReflectionException(e);
-		} catch(IllegalAccessException e) {
-			throw new ReflectionException(e);
-		} catch(InvocationTargetException e) {
+		} catch(NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
 			throw new ReflectionException(e);
 		}
 	}

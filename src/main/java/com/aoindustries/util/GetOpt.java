@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2013, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -91,11 +91,7 @@ public class GetOpt {
 		try {
 			Constructor<T> constructor = type.getConstructor(parseParamTypes);
 			return constructor.newInstance(value);
-		} catch(NoSuchMethodException err) {
-			throw new IllegalArgumentException(err);
-		} catch(InstantiationException err) {
-			throw new IllegalArgumentException(err);
-		} catch(IllegalAccessException err) {
+		} catch(NoSuchMethodException | InstantiationException | IllegalAccessException err) {
 			throw new IllegalArgumentException(err);
 		} catch(InvocationTargetException err) {
 			throw new WrappedException(err);
@@ -144,7 +140,7 @@ public class GetOpt {
 	 * The "--" will be included in the arguments returned.
 	 */
 	public static List<String> getArguments(String[] args) {
-		List<String> arguments = new ArrayList<String>(args.length);
+		List<String> arguments = new ArrayList<>(args.length);
 		int c = 0;
 		for(; c<args.length; c++) {
 			String arg = args[c];

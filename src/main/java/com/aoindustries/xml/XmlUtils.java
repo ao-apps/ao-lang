@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -63,11 +63,8 @@ public final class XmlUtils {
 	 */
 	public static Document parseXml(URL url) throws IOException, ParserConfigurationException, SAXException {
 		URLConnection conn = url.openConnection();
-		InputStream in = conn.getInputStream();
-		try {
+		try (InputStream in = conn.getInputStream()) {
 			return parseXml(in);
-		} finally {
-			in.close();
 		}
 	}
 
@@ -260,10 +257,7 @@ public final class XmlUtils {
 			try {
 				writer.close();
 			} catch(IOException e) {
-				// Java 1.7: direct constructor
-				AssertionError ae = new AssertionError("IOException should never be thrown from StringWriter");
-				ae.initCause(e);
-				throw ae;
+				throw new AssertionError("IOException should never be thrown from StringWriter", e);
 			}
 		}
 		return writer.toString();

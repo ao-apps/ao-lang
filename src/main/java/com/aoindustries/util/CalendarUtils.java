@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2013, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -74,10 +74,7 @@ public class CalendarUtils {
 			formatDate(cal, result);
 			return result.toString();
 		} catch(IOException e) {
-			// Java 1.7: direct constructor
-			AssertionError ae = new AssertionError("IOException should never occur on StringBuilder");
-			ae.initCause(e);
-			throw ae;
+			throw new AssertionError("IOException should never occur on StringBuilder", e);
 		}
 	}
 

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2011, 2013, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -38,7 +38,7 @@ import java.util.Map;
  */
 public class FastObjectOutput implements ObjectOutput {
 
-	private static final ThreadLocal<FastObjectOutput> threadFastObjectOutput = new ThreadLocal<FastObjectOutput>();
+	private static final ThreadLocal<FastObjectOutput> threadFastObjectOutput = new ThreadLocal<>();
 
 	/**
 	 * Gets the wrapper for the provided {@link ObjectOutput}, creating if needed.
@@ -87,14 +87,14 @@ public class FastObjectOutput implements ObjectOutput {
 	/**
 	 * A mapping of classes to generated IDs.
 	 */
-	private final Map<Class<?>, Integer> classesMap = new HashMap<Class<?>, Integer>();
+	private final Map<Class<?>, Integer> classesMap = new HashMap<>();
 	private int nextClassId = 0;
 	private Class<?> lastClass = null;
 
 	/**
 	 * A mapping of fast string IDs.
 	 */
-	private final Map<String, Integer> stringsMap = new HashMap<String, Integer>();
+	private final Map<String, Integer> stringsMap = new HashMap<>();
 	private int nextStringId = 0;
 	private String lastString = null;
 

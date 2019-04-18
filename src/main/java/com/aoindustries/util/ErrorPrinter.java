@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -165,7 +165,7 @@ public class ErrorPrinter {
 			appendln("    Exceptions", out);
 			if(thrown==null) appendln("        No exceptions", out);
 			else {
-				List<Throwable> closed = new ArrayList<Throwable>();
+				List<Throwable> closed = new ArrayList<>();
 				closed.add(thrown);
 				printThrowables(thrown, out, 8, closed);
 			}
@@ -283,13 +283,17 @@ public class ErrorPrinter {
 					}
 				}
 			}
-		} catch(NoSuchMethodException err) {
+		} catch(
 			// OK, future versions of JspException might not have getRootCause
-		} catch(IllegalAccessException err) {
+			NoSuchMethodException
 			// OK, future versions of JspException could make it private
-		} catch(InvocationTargetException err) {
+			| IllegalAccessException
 			// Ignored because we are dealing with one exception at a time
 			// Afterall, this is the exception handling code
+			| InvocationTargetException
+			err
+		) {
+			// Do nothing
 		}
 		// Uses reflection avoid binding to ServletException directly.
 		try {
@@ -306,13 +310,17 @@ public class ErrorPrinter {
 					}
 				}
 			}
-		} catch(NoSuchMethodException err) {
+		} catch(
 			// OK, future versions of ServletException might not have getRootCause
-		} catch(IllegalAccessException err) {
+			NoSuchMethodException
 			// OK, future versions of ServletException could make it private
-		} catch(InvocationTargetException err) {
+			| IllegalAccessException
 			// Ignored because we are dealing with one exception at a time
 			// Afterall, this is the exception handling code
+			| InvocationTargetException
+			err
+		) {
+			// Do nothing
 		}
 		if(thrown instanceof SQLException) {
 			if(thrown instanceof SQLWarning) {

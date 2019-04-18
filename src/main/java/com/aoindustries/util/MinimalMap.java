@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2014, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,12 +22,12 @@
  */
 package com.aoindustries.util;
 
-import com.aoindustries.lang.ObjectUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * MinimalMap provides a set of static methods to dynamically choose the most
@@ -69,12 +69,12 @@ public class MinimalMap {
 			// Is a singleton map
 			Map.Entry<K,V> entry = map.entrySet().iterator().next();
 			K entryKey = entry.getKey();
-			if(ObjectUtils.equals(key, entryKey)) {
+			if(Objects.equals(key, entryKey)) {
 				// If have the same key, replace entry
 				map = Collections.singletonMap(entryKey, value);
 			} else {
 				// Is a second property
-				map = new LinkedHashMap<K,V>(8);
+				map = new LinkedHashMap<>(8);
 				map.put(entryKey, entry.getValue());
 				map.put(key, value);
 			}
@@ -169,7 +169,7 @@ public class MinimalMap {
 			return map.values();
 		} else {
 			// Wrap in an ArrayList
-			return new ArrayList<V>(map.values());
+			return new ArrayList<>(map.values());
 		}
 	}
 
@@ -188,7 +188,7 @@ public class MinimalMap {
 			return map;
 		}
 		// Create copy of map
-		return new LinkedHashMap<K,V>(map);
+		return new LinkedHashMap<>(map);
 	}
 
 	/**

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2013, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2012, 2013, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,33 +23,29 @@
 package com.aoindustries.nio.charset;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Defines some constants for handling standard character sets.
- * <p>
- * Java 1.7: deprecated  Use {@link java.nio.charset.StandardCharsets} as of Java 1.7.
- * </p>
  *
- * @see java.nio.charset.StandardCharsets in Java 1.7
+ * @deprecated  Use {@link java.nio.charset.StandardCharsets} as of Java 1.7.
  *
  * @author  AO Industries, Inc.
  */
-// Java 1.7: @Deprecated
+@Deprecated
 public class Charsets {
 
 	/**
-	 * Java 1.7: deprecated  Use {@link java.nio.charset.StandardCharsets} as of Java 1.7.
-	 *
-	 * @see java.nio.charset.StandardCharsets in Java 1.7
+	 * @deprecated  Use {@link java.nio.charset.StandardCharsets} as of Java 1.7.
 	 */
-	// Java 1.7: @Deprecated
+	@Deprecated
 	public static final Charset
-		US_ASCII   = Charset.forName("US-ASCII"),
-		ISO_8859_1 = Charset.forName("ISO-8859-1"),
-		UTF_8      = Charset.forName("UTF-8"),
-		UTF_16BE   = Charset.forName("UTF-16BE"),
-		UTF_16LE   = Charset.forName("UTF-16LE"),
-		UTF_16     = Charset.forName("UTF-16")
+		US_ASCII   = StandardCharsets.US_ASCII,
+		ISO_8859_1 = StandardCharsets.ISO_8859_1,
+		UTF_8      = StandardCharsets.UTF_8,
+		UTF_16BE   = StandardCharsets.UTF_16BE,
+		UTF_16LE   = StandardCharsets.UTF_16LE,
+		UTF_16     = StandardCharsets.UTF_16
 	;
 
 	/**

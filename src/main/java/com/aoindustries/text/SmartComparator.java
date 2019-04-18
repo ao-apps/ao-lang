@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,11 +22,11 @@
  */
 package com.aoindustries.text;
 
-import com.aoindustries.lang.ObjectUtils;
 import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Compares strings in a case-insensitive, locale-aware manner.  Also supports
@@ -185,8 +185,8 @@ public class SmartComparator implements Comparator<Object> {
 	@Override
 	public int compare(Object o1, Object o2) {
 		return compare(
-			ObjectUtils.toString(o1),
-			ObjectUtils.toString(o2)
+			Objects.toString(o1, null),
+			Objects.toString(o2, null)
 		);
 	}
 

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2012, 2013, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,7 +23,6 @@
 package com.aoindustries.util.zip;
 
 import com.aoindustries.io.IoUtils;
-import com.aoindustries.lang.NotImplementedException;
 import com.aoindustries.util.WrappedException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -74,11 +73,8 @@ public class ZipUtils {
 	 * Recursively packages a directory into a file.
 	 */
 	public static void createZipFile(File sourceDirectory, File zipFile) throws IOException {
-		OutputStream out = new FileOutputStream(zipFile);
-		try {
+		try (OutputStream out = new FileOutputStream(zipFile)) {
 			createZipFile(sourceDirectory, out);
-		} finally {
-			out.close();
 		}
 	}
 
@@ -126,11 +122,8 @@ public class ZipUtils {
 			setZipEntryTime(zipEntry, file.lastModified());
 			zipOut.putNextEntry(zipEntry);
 			try {
-				InputStream in = new FileInputStream(file);
-				try {
+				try (InputStream in = new FileInputStream(file)) {
 					IoUtils.copy(in, zipOut);
-				} finally {
-					in.close();
 				}
 			} finally {
 				zipOut.closeEntry();
@@ -166,9 +159,8 @@ public class ZipUtils {
 		if(!destination.isDirectory()) throw new IOException("Not a directory: "+destination.getPath());
 		// Add trailing / to sourcePrefix if missing
 		if(!sourcePrefix.isEmpty() && !sourcePrefix.endsWith("/")) sourcePrefix += "/";
-		ZipFile zipFile = new ZipFile(sourceFile);
-		try {
-			SortedMap<File,Long> directoryModifyTimes = new TreeMap<File,Long>(reverseFileComparator);
+		try (ZipFile zipFile = new ZipFile(sourceFile)) {
+			SortedMap<File,Long> directoryModifyTimes = new TreeMap<>(reverseFileComparator);
 
 			// Pass one: create directories and files
 			Enumeration<? extends ZipEntry> entries = zipFile.entries();
@@ -192,19 +184,13 @@ public class ZipUtils {
 								File directory = file.getParentFile();
 								if(!directory.exists()) directory.mkdirs();
 								if(file.exists()) throw new IOException("File exists: "+file.getPath());
-								InputStream in = zipFile.getInputStream(entry);
-								try {
-									OutputStream out = new FileOutputStream(file);
-									try {
+								try (InputStream in = zipFile.getInputStream(entry)) {
+									try (OutputStream out = new FileOutputStream(file)) {
 										long copyBytes = IoUtils.copy(in, out);
 										long size = entry.getSize();
 										if(size!=-1 && copyBytes!=size) throw new IOException("copyBytes!=size: "+copyBytes+"!="+size);
-									} finally {
-										out.close();
 									}
 									if(entryTime!=-1) file.setLastModified(entryTime);
-								} finally {
-									in.close();
 								}
 							}
 						}
@@ -217,8 +203,6 @@ public class ZipUtils {
 				//System.out.println("File: "+entry.getKey()+", mtime="+entry.getValue());
 				entry.getKey().setLastModified(entry.getValue());
 			}
-		} finally {
-			zipFile.close();
 		}
 	}
 
@@ -236,12 +220,13 @@ public class ZipUtils {
 	 * where the file contents are equal.  When duplicates are found, uses the most
 	 * recent modification time.
 	 */
+	@SuppressWarnings("deprecation")
 	public static void mergeUnzip(ZipEntryFilter filter, File destination, File ... zipFiles) throws IOException {
 		if(zipFiles.length>0) {
 			if(zipFiles.length==1) {
 				unzip(zipFiles[0], "", destination, filter);
 			} else {
-				throw new NotImplementedException("Implement merge feature when first needed");
+				throw new com.aoindustries.lang.NotImplementedException("Implement merge feature when first needed");
 			}
 		}
 	}
@@ -257,11 +242,8 @@ public class ZipUtils {
 	 * Copies all non-directory entries.
 	 */
 	public static void copyEntries(File file, ZipOutputStream zipOut, ZipEntryFilter filter) throws IOException {
-		ZipFile zipFile = new ZipFile(file);
-		try {
+		try (ZipFile zipFile = new ZipFile(file)) {
 			copyEntries(zipFile, zipOut, filter);
-		} finally {
-			zipFile.close();
 		}
 	}
 
@@ -285,11 +267,8 @@ public class ZipUtils {
 				if(time!=-1) newEntry.setTime(time);
 				zipOut.putNextEntry(newEntry);
 				try {
-					InputStream in = zipFile.getInputStream(entry);
-					try {
+					try (InputStream in = zipFile.getInputStream(entry)) {
 						IoUtils.copy(in, zipOut);
-					} finally {
-						in.close();
 					}
 				} finally {
 					zipOut.closeEntry();

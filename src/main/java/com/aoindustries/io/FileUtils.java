@@ -82,11 +82,8 @@ final public class FileUtils {
 			// Be careful about file.length() returning zero on error - always read file for zero case - no shortcut.
 			if(length!=0 && length!=contents.length) return false;
 		}
-		InputStream in = new FileInputStream(file);
-		try {
+		try (InputStream in = new FileInputStream(file)) {
 			return IoUtils.contentEquals(in, contents);
-		} finally {
-			in.close();
 		}
 	}
 
@@ -98,22 +95,17 @@ final public class FileUtils {
 		long len2 = file2.length();
 		// Read file when zero length
 		if(len1!=0 && len2!=0 && len1!=len2) return false;
-		InputStream in1 = new BufferedInputStream(new FileInputStream(file1));
-		try {
-			InputStream in2 = new BufferedInputStream(new FileInputStream(file2));
-			try {
-				while(true) {
-					int b1 = in1.read();
-					int b2 = in2.read();
-					if(b1!=b2) return false;
-					if(b1==-1) break;
-				}
-				return true;
-			} finally {
-				in2.close();
+		try (
+			InputStream in1 = new BufferedInputStream(new FileInputStream(file1));
+			InputStream in2 = new BufferedInputStream(new FileInputStream(file2))
+		) {
+			while(true) {
+				int b1 = in1.read();
+				int b2 = in2.read();
+				if(b1!=b2) return false;
+				if(b1==-1) break;
 			}
-		} finally {
-			in1.close();
+			return true;
 		}
 	}
 
@@ -123,16 +115,13 @@ final public class FileUtils {
 	 * @see  Arrays#hashCode(byte[])
 	 */
 	public static int contentHashCode(File file) throws IOException {
-		InputStream in = new BufferedInputStream(new FileInputStream(file));
-		try {
+		try (InputStream in = new BufferedInputStream(new FileInputStream(file))) {
 			int result = 1;
 			int readVal;
 			while((readVal = in.read()) != -1) {
 				result = 31 * result + (byte)readVal;
 			}
 			return result;
-		} finally {
-			in.close();
 		}
 	}
 
@@ -169,11 +158,8 @@ final public class FileUtils {
 		File tmpFile = File.createTempFile("cache_", null);
 		boolean successful = false;
 		try {
-			OutputStream out = new FileOutputStream(tmpFile);
-			try {
+			try (OutputStream out = new FileOutputStream(tmpFile)) {
 				IoUtils.copy(in, out);
-			} finally {
-				out.close();
 			}
 			successful = true;
 			return tmpFile;
@@ -224,20 +210,14 @@ final public class FileUtils {
 	 * @return  the number of bytes copied
 	 */
 	public static long copy(File from, File to) throws IOException {
-		InputStream in = new FileInputStream(from);
-		try {
+		try (InputStream in = new FileInputStream(from)) {
 			long bytes;
 			long modified = from.lastModified();
-			OutputStream out = new FileOutputStream(to);
-			try {
+			try (OutputStream out = new FileOutputStream(to)) {
 				bytes = IoUtils.copy(in, out);
-			} finally {
-				out.close();
 			}
 			if(modified!=0) to.setLastModified(modified);
 			return bytes;
-		} finally {
-			in.close();
 		}
 	}
 
@@ -247,11 +227,8 @@ final public class FileUtils {
 	 * @return  the number of bytes copied
 	 */
 	public static long copy(File from, OutputStream out) throws IOException {
-		InputStream in = new FileInputStream(from);
-		try {
+		try (InputStream in = new FileInputStream(from)) {
 			return IoUtils.copy(in, out);
-		} finally {
-			in.close();
 		}
 	}
 
@@ -261,11 +238,8 @@ final public class FileUtils {
 	 * @return  the number of characters copied
 	 */
 	public static long copy(File from, Writer out) throws IOException {
-		Reader in = new FileReader(from);
-		try {
+		try (Reader in = new FileReader(from)) {
 			return IoUtils.copy(in, out);
-		} finally {
-			in.close();
 		}
 	}
 
@@ -275,11 +249,8 @@ final public class FileUtils {
 	 * @return  the number of characters copied
 	 */
 	public static long copy(File from, Appendable out) throws IOException {
-		Reader in = new FileReader(from);
-		try {
+		try (Reader in = new FileReader(from)) {
 			return IoUtils.copy(in, out);
-		} finally {
-			in.close();
 		}
 	}
 
@@ -353,16 +324,8 @@ final public class FileUtils {
 		boolean successful = false;
 		try {
 			if(deleteOnExit) file.deleteOnExit();
-			InputStream in = url.openStream();
-			try {
-				OutputStream out = new FileOutputStream(file);
-				try {
-					IoUtils.copy(in, out);
-				} finally {
-					out.close();
-				}
-			} finally {
-				in.close();
+			try (InputStream in = url.openStream(); OutputStream out = new FileOutputStream(file)) {
+				IoUtils.copy(in, out);
 			}
 			successful = true;
 			return file;
@@ -414,8 +377,7 @@ final public class FileUtils {
 	public static String readFileAsString(File file, Charset charset) throws IOException {
 		long len = file.length();
 		StringBuilder SB = len>0 && len<=Integer.MAX_VALUE ? new StringBuilder((int)len) : new StringBuilder();
-		Reader in = new InputStreamReader(new FileInputStream(file), charset);
-		try {
+		try (Reader in = new InputStreamReader(new FileInputStream(file), charset)) {
 			char[] buff = BufferManager.getChars();
 			try {
 				int numChars;
@@ -425,8 +387,6 @@ final public class FileUtils {
 			} finally {
 				BufferManager.release(buff, false);
 			}
-		} finally {
-			in.close();
 		}
 		return SB.toString();
 	}    

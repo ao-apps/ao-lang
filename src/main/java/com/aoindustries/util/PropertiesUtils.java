@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2015, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -48,11 +48,8 @@ final public class PropertiesUtils {
 	 */
 	public static Properties loadFromFile(File file) throws IOException {
 		Properties props = new Properties();
-		InputStream in = new BufferedInputStream(new FileInputStream(file));
-		try {
+		try (InputStream in = new BufferedInputStream(new FileInputStream(file))) {
 			props.load(in);
-		} finally {
-			in.close();
 		}
 		return props;
 	}

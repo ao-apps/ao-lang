@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2012, 2013, 2014, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,7 +22,6 @@
  */
 package com.aoindustries.util;
 
-import com.aoindustries.lang.ObjectUtils;
 import java.io.Serializable;
 import java.util.AbstractList;
 import java.util.AbstractSet;
@@ -38,6 +37,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -128,7 +128,7 @@ public class AoCollections {
 	}
 
 	public static <T> SortedSet<T> singletonSortedSet(T o) {
-		return new SingletonSortedSet<T>(o);
+		return new SingletonSortedSet<>(o);
 	}
 
 	private static class SingletonSortedSet<E> extends AbstractSet<E> implements SortedSet<E>, Serializable {
@@ -168,8 +168,7 @@ public class AoCollections {
 		}
 
 		@Override
-		@SuppressWarnings("deprecation") // Java 1.7: Do not suppress
-		public boolean contains(Object o) {return ObjectUtils.equals(o, element);}
+		public boolean contains(Object o) {return Objects.equals(o, element);}
 
 		@Override
 		public Comparator<? super E> comparator() {
@@ -177,23 +176,20 @@ public class AoCollections {
 		}
 
 		@Override
-		@SuppressWarnings("deprecation") // Java 1.7: Do not suppress
 		public SortedSet<E> subSet(E fromElement, E toElement) {
-			if(ObjectUtils.equals(element, fromElement) && ObjectUtils.equals(element, toElement)) return emptySortedSet();
+			if(Objects.equals(element, fromElement) && Objects.equals(element, toElement)) return emptySortedSet();
 			throw new IllegalArgumentException();
 		}
 
 		@Override
-		@SuppressWarnings("deprecation") // Java 1.7: Do not suppress
 		public SortedSet<E> headSet(E toElement) {
-			if(ObjectUtils.equals(element, toElement)) return emptySortedSet();
+			if(Objects.equals(element, toElement)) return emptySortedSet();
 			throw new IllegalArgumentException();
 		}
 
 		@Override
-		@SuppressWarnings("deprecation") // Java 1.7: Do not suppress
 		public SortedSet<E> tailSet(E fromElement) {
-			if(ObjectUtils.equals(element, fromElement)) return this;
+			if(Objects.equals(element, fromElement)) return this;
 			throw new IllegalArgumentException();
 		}
 
@@ -214,8 +210,8 @@ public class AoCollections {
 
 		// List
 		Collections.singletonList(null).getClass(),
-		Collections.unmodifiableList(new ArrayList<Object>(0)).getClass(), // RandomAccess
-		Collections.unmodifiableList(new LinkedList<Object>()).getClass(), // Sequential
+		Collections.unmodifiableList(new ArrayList<>(0)).getClass(), // RandomAccess
+		Collections.unmodifiableList(new LinkedList<>()).getClass(), // Sequential
 
 		// Set
 		Collections.singleton(null).getClass(),
@@ -258,7 +254,7 @@ public class AoCollections {
 	 */
 	public static <E> Collection<E> asCollection(Iterable<E> iterable) {
 		if(iterable instanceof Collection) return (Collection<E>)iterable;
-		List<E> list = new ArrayList<E>();
+		List<E> list = new ArrayList<>();
 		for(E elem : iterable) {
 			list.add(elem);
 		}
@@ -275,7 +271,7 @@ public class AoCollections {
 		//Class<?> clazz = collection.getClass();
 		//for(int i=0, len=unmodifiableCollectionClasses.length; i<len; i++) if(unmodifiableCollectionClasses[i]==clazz) return collection;
 		if(size==1) return Collections.singletonList(collection.iterator().next());
-		return Collections.unmodifiableCollection(copyNeeded ? new ArrayList<T>(collection) : collection);
+		return Collections.unmodifiableCollection(copyNeeded ? new ArrayList<>(collection) : collection);
 	}
 
 	/**
@@ -295,8 +291,8 @@ public class AoCollections {
 
 	private static final Class<?>[] unmodifiableListClasses = {
 		Collections.singletonList(null).getClass(),
-		Collections.unmodifiableList(new ArrayList<Object>(0)).getClass(), // RandomAccess
-		Collections.unmodifiableList(new LinkedList<Object>()).getClass() // Sequential
+		Collections.unmodifiableList(new ArrayList<>(0)).getClass(), // RandomAccess
+		Collections.unmodifiableList(new LinkedList<>()).getClass() // Sequential
 	};
 
 	/**
@@ -335,7 +331,7 @@ public class AoCollections {
 	 */
 	public static <E> List<E> asList(Iterable<E> iterable) {
 		if(iterable instanceof List) return (List<E>)iterable;
-		List<E> list = new ArrayList<E>();
+		List<E> list = new ArrayList<>();
 		for(E elem : iterable) {
 			list.add(elem);
 		}
@@ -354,7 +350,7 @@ public class AoCollections {
 		//for(int i=0, len=unmodifiableListClasses.length; i<len; i++) if(unmodifiableListClasses[i]==clazz) return (List<T>)collection;
 		if(size==1) return Collections.singletonList(collection.iterator().next());
 		if(!copyNeeded && collection instanceof List) return Collections.unmodifiableList((List<T>)collection);
-		return Collections.unmodifiableList(new ArrayList<T>(collection));
+		return Collections.unmodifiableList(new ArrayList<>(collection));
 	}
 
 	/**
@@ -414,7 +410,7 @@ public class AoCollections {
 	 */
 	public static <E> Set<E> asSet(Iterable<E> iterable) {
 		if(iterable instanceof Set) return (Set<E>)iterable;
-		Set<E> set = new LinkedHashSet<E>();
+		Set<E> set = new LinkedHashSet<>();
 		for(E elem : iterable) {
 			set.add(elem);
 		}
@@ -433,7 +429,7 @@ public class AoCollections {
 		//for(int i=0, len=unmodifiableSetClasses.length; i<len; i++) if(unmodifiableSetClasses[i]==clazz) return (Set<T>)collection;
 		if(size==1) return Collections.singleton(collection.iterator().next());
 		if(!copyNeeded && collection instanceof Set) return Collections.unmodifiableSet((Set<T>)collection);
-		Set<T> set = new LinkedHashSet<T>(collection);
+		Set<T> set = new LinkedHashSet<>(collection);
 		if(set.size() == 1) return Collections.singleton(set.iterator().next());
 		return Collections.unmodifiableSet(set);
 	}
@@ -483,7 +479,7 @@ public class AoCollections {
 	 */
 	public static <E> SortedSet<E> asSortedSet(Iterable<E> iterable) {
 		if(iterable instanceof SortedSet) return (SortedSet<E>)iterable;
-		SortedSet<E> sortedSet = new TreeSet<E>();
+		SortedSet<E> sortedSet = new TreeSet<>();
 		for(E elem : iterable) {
 			sortedSet.add(elem);
 		}
@@ -506,7 +502,7 @@ public class AoCollections {
 		if(collection instanceof SortedSet) {
 			copy = new TreeSet<T>((SortedSet<? extends T>)collection);
 		} else {
-			copy = new TreeSet<T>(collection);
+			copy = new TreeSet<>(collection);
 		}
 		if(copy.size() == 1) return singletonSortedSet(copy.iterator().next());
 		return Collections.unmodifiableSortedSet(copy);
@@ -534,7 +530,7 @@ public class AoCollections {
 		Collections.unmodifiableMap(Collections.emptyMap()).getClass(),
 
 		// SortedMap
-		Collections.unmodifiableSortedMap(new TreeMap<Object,Object>()).getClass()
+		Collections.unmodifiableSortedMap(new TreeMap<>()).getClass()
 	};
 
 	/**
@@ -579,11 +575,11 @@ public class AoCollections {
 			Map.Entry<? extends K,? extends V> entry = map.entrySet().iterator().next();
 			return Collections.singletonMap(entry.getKey(), entry.getValue());
 		}
-		return Collections.unmodifiableMap(new LinkedHashMap<K,V>(map));
+		return Collections.unmodifiableMap(new LinkedHashMap<>(map));
 	}
 
 	private static final Class<?>[] unmodifiableSortedMapClasses = {
-		Collections.unmodifiableSortedMap(new TreeMap<Object,Object>()).getClass()
+		Collections.unmodifiableSortedMap(new TreeMap<>()).getClass()
 	};
 
 	/**
@@ -629,16 +625,16 @@ public class AoCollections {
 		// TODO: }
 		SortedMap<K,V> copy;
 		if(map instanceof SortedMap) {
-			copy = new TreeMap<K,V>((SortedMap<K,? extends V>)map);
+			copy = new TreeMap<>((SortedMap<K,? extends V>)map);
 		} else {
-			copy = new TreeMap<K,V>(map);
+			copy = new TreeMap<>(map);
 		}
 		return Collections.unmodifiableSortedMap(copy);
 	}
 
 	static class EmptyIterator<E> implements Iterator<E> {
 
-		static final EmptyIterator<?> instance = new EmptyIterator<Object>();
+		static final EmptyIterator<?> instance = new EmptyIterator<>();
 
 		private EmptyIterator() {
 		}
@@ -707,7 +703,7 @@ public class AoCollections {
 	 */
 	@Deprecated
 	public static <E> Iterator<E> singletonIterator(E value) {
-		return new SingletonIterator<E>(value);
+		return new SingletonIterator<>(value);
 	}
 
 	static class UnmodifiableIterator<E> implements Iterator<E> {
@@ -750,7 +746,7 @@ public class AoCollections {
 			Iterator<E> unmodifiable = (Iterator<E>)iter;
 			return unmodifiable;
 		}
-		return new UnmodifiableIterator<E>(iter);
+		return new UnmodifiableIterator<>(iter);
 	}
 
 	/*
@@ -819,7 +815,7 @@ public class AoCollections {
 	 * Does not support null elements.
 	 */
 	public static <E> PeekIterator<E> peekIterator(Iterator<? extends E> iter) {
-		return new PeekIterator<E>(iter);
+		return new PeekIterator<>(iter);
 	}
 
 	/**
@@ -828,7 +824,6 @@ public class AoCollections {
 	 * 
 	 * If both collections are null they are also considered equal.
 	 */
-	@SuppressWarnings("deprecation") // Java 1.7: Do not suppress
 	public static boolean equals(Collection<?> collection1, Collection<?> collection2) {
 		if(collection1 == null) {
 			return collection2 == null;
@@ -845,7 +840,7 @@ public class AoCollections {
 					int count = 0;
 					while(iter1.hasNext() && iter2.hasNext()) {
 						if(
-							!ObjectUtils.equals(
+							!Objects.equals(
 								iter1.next(),
 								iter2.next()
 							)
@@ -950,11 +945,10 @@ public class AoCollections {
 	 * This is a copy of the keys and will not write-through or be altered by the original map.
 	 * The set will have the same iteration order as the original map.
 	 */
-	@SuppressWarnings("deprecation") // Java 1.7: Do not suppress
 	public static <K,V> Set<K> filterByValue(Map<? extends K,? extends V> map, V value) {
-		Set<K> filtered = new LinkedHashSet<K>();
+		Set<K> filtered = new LinkedHashSet<>();
 		for(Map.Entry<? extends K,? extends V> entry : map.entrySet()) {
-			if(ObjectUtils.equals(entry.getValue(), value)) {
+			if(Objects.equals(entry.getValue(), value)) {
 				K key = entry.getKey();
 				if(!filtered.add(key)) throw new AssertionError("Duplicate key: " + key);
 			}
@@ -967,11 +961,10 @@ public class AoCollections {
 	 * This is a copy of the keys and will not write-through or be altered by the original map.
 	 * The set uses the same comparator as the original map.
 	 */
-	@SuppressWarnings("deprecation") // Java 1.7: Do not suppress
 	public static <K,V> SortedSet<K> filterByValue(SortedMap<K,? extends V> map, V value) {
-		TreeSet<K> filtered = new TreeSet<K>(map.comparator());
+		TreeSet<K> filtered = new TreeSet<>(map.comparator());
 		for(Map.Entry<K,? extends V> entry : map.entrySet()) {
-			if(ObjectUtils.equals(entry.getValue(), value)) {
+			if(Objects.equals(entry.getValue(), value)) {
 				K key = entry.getKey();
 				if(!filtered.add(key)) throw new AssertionError("Duplicate key: " + key);
 			}

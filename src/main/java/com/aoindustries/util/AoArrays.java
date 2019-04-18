@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2013, 2014, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2013, 2014, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,7 +22,6 @@
  */
 package com.aoindustries.util;
 
-import com.aoindustries.lang.ObjectUtils;
 import com.aoindustries.util.AoCollections.PeekIterator;
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -36,6 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.SortedMap;
@@ -185,7 +185,7 @@ public class AoArrays {
 			return results;
 		} else {
 			// 3+ collections, use priority queue
-			PriorityQueue<AoCollections.PeekIterator<? extends V>> pq = new PriorityQueue<AoCollections.PeekIterator<? extends V>>(
+			PriorityQueue<AoCollections.PeekIterator<? extends V>> pq = new PriorityQueue<>(
 				numCollections,
 				new Comparator<AoCollections.PeekIterator<? extends V>>() {
 					@Override
@@ -359,12 +359,13 @@ public class AoArrays {
 	 * values on iteration and a size that doesn't match the number of unique values.
 	 * </p>
 	 */
-	// Java 1.7: @SafeVarargs
+	@SafeVarargs
+	@SuppressWarnings("varargs")
 	public static <E> Set<E> asUnmodifiableSet(final E... array) {
 		final int len = array.length;
 		if(len==0) return Collections.emptySet();
 		if(len==1) return Collections.singleton(array[0]);
-		return new UnmodifiableArraySet<E>(array);
+		return new UnmodifiableArraySet<>(array);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="indexOf and lastIndexOf (Object[])">
@@ -380,7 +381,7 @@ public class AoArrays {
 	 */
 	public static <E> int indexOf(E[] array, E element, int fromIndex) {
 		for(int i=fromIndex, len=array.length; i<len; i++) {
-			if(ObjectUtils.equals(array[i], element)) return i;
+			if(Objects.equals(array[i], element)) return i;
 		}
 		return -1;
 	}
@@ -397,7 +398,7 @@ public class AoArrays {
 	 */
 	public static <E> int lastIndexOf(E[] array, E element, int fromIndex) {
 		for(int i=fromIndex; i>=0; i--) {
-			if(ObjectUtils.equals(array[i], element)) return i;
+			if(Objects.equals(array[i], element)) return i;
 		}
 		return -1;
 	}
@@ -712,6 +713,7 @@ public class AoArrays {
 	/**
 	 * Gets the maximum non-null value, or {@code null} if no non-null value.
 	 */
+	@SafeVarargs
 	public static <T extends Comparable<? super T>> T maxNonNull(T ... values) {
 		T max = null;
 		for(T value : values) {
@@ -758,7 +760,7 @@ public class AoArrays {
 		}
 		// A list of all indexes per key
 		// This also does the sorting within the TreeMap using natural ordering
-		SortedMap<E, List<Integer>> originalIndexesByKey = new TreeMap<E, List<Integer>>();
+		SortedMap<E, List<Integer>> originalIndexesByKey = new TreeMap<>();
 
 		// Populate the map
 		for(int i = 0; i < numKeys; i++) {
@@ -770,7 +772,7 @@ public class AoArrays {
 			} else {
 				if(originalIndexes.size() == 1) {
 					// Upgrade to ArrayList now that know have duplicate keys
-					originalIndexes = new ArrayList<Integer>(originalIndexes);
+					originalIndexes = new ArrayList<>(originalIndexes);
 					originalIndexesByKey.put(key, originalIndexes);
 				}
 				originalIndexes.add(i);

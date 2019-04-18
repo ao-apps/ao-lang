@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -40,70 +40,42 @@ public final class ComparatorUtils {
 
 	/**
 	 * Compares two integers.
-	 * <p>
-	 * Java 1.7: deprecated  use {@link java.lang.Integer#compare(int, int)} as of Java 1.7.
-	 * </p>
 	 *
-	 * @see Integer#compare(int,int) as of Java 1.7
-	 *
-	 * @deprecated  Please use {@link org.apache.commons.lang3.math.NumberUtils#compare(int, int)} from
-	 *              <a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a>.
+	 * @deprecated  use {@link java.lang.Integer#compare(int, int)} as of Java 1.7.
 	 */
 	@Deprecated
 	public static int compare(int i1, int i2) {
-		// Java 1.7: return Integer.compare(i1, i2);
-		return (i1 < i2) ? -1 : ((i1 == i2) ? 0 : 1);
+		return Integer.compare(i1, i2);
 	}
 
 	/**
 	 * Compares two shorts.
-	 * <p>
-	 * Java 1.7: deprecated  use {@link Short#compare(short,short)} as of Java 1.7.
-	 * </p>
 	 *
-	 * @see Short#compare(short,short) as of Java 1.7
-	 *
-	 * @deprecated  Please use {@link org.apache.commons.lang3.math.NumberUtils#compare(short, short)} from
-	 *              <a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a>.
+	 * @deprecated  use {@link Short#compare(short,short)} as of Java 1.7.
 	 */
 	@Deprecated
 	public static int compare(short s1, short s2) {
-		// Java 1.7: return Short.compare(s1, s2);
-		return (s1 < s2) ? -1 : ((s1 == s2) ? 0 : 1);
+		return Short.compare(s1, s2);
 	}
 
 	/**
 	 * Compares two booleans.
-	 * <p>
-	 * Java 1.7: deprecated  use {@link java.lang.Boolean#compare(boolean,boolean)} as of Java 1.7.
-	 * </p>
 	 *
-	 * @see Boolean#compare(boolean,boolean) as of Java 1.7
-	 *
-	 * @deprecated  Please use {@link org.apache.commons.lang3.BooleanUtils#compare(boolean, boolean)} from
-	 *              <a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a>.
+	 * @deprecated  use {@link java.lang.Boolean#compare(boolean,boolean)} as of Java 1.7.
 	 */
 	@Deprecated
 	public static int compare(boolean b1, boolean b2) {
-		// Java 1.7: return Boolean.compare(b1, b2);
-		return (b1 == b2) ? 0 : (b1 ? 1 : -1);
+		return Boolean.compare(b1, b2);
 	}
 
 	/**
 	 * Compares two longs.
-	 * <p>
-	 * Java 1.7: deprecated  use {@link java.lang.Long#compare(long,long)} as of Java 1.7.
-	 * </p>
 	 *
-	 * @see Long#compare(long,long) as of Java 1.7
-	 *
-	 * @deprecated  Please use {@link org.apache.commons.lang3.math.NumberUtils#compare(long, long)} from
-	 *              <a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a>.
+	 * @deprecated  use {@link java.lang.Long#compare(long,long)} as of Java 1.7.
 	 */
 	@Deprecated
 	public static int compare(long l1, long l2) {
-		// Java 1.7: return Long.compare(l1, l2);
-		return (l1 < l2) ? -1 : ((l1 == l2) ? 0 : 1);
+		return Long.compare(l1, l2);
 	}
 
 	private static final Collator collator = Collator.getInstance(Locale.ROOT);

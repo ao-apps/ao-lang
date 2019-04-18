@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -59,7 +59,9 @@ import java.util.concurrent.atomic.AtomicLong;
  * arrays on each use.
  * </p>
  *
- * Java 1.7: Implement as concurrent queue/deque instead of thread locals?
+ * TODO: Java 1.7: Implement as concurrent queue/deque instead of thread locals?
+ * TODO: Which would have better performance?
+ * TODO: In a NUMA architecture, would a thread-local buffer more consistently be allocated on the node running the thread?
  *
  * @author  AO Industries, Inc.
  */
@@ -73,14 +75,14 @@ final public class BufferManager {
 	private static final ThreadLocal<Deque<SoftReference<byte[]>>> bytes = new ThreadLocal<Deque<SoftReference<byte[]>>>() {
 		@Override
 		public Deque<SoftReference<byte[]>> initialValue() {
-			return new ArrayDeque<SoftReference<byte[]>>();
+			return new ArrayDeque<>();
 		}
 	};
 
 	private static final ThreadLocal<Deque<SoftReference<char[]>>> chars = new ThreadLocal<Deque<SoftReference<char[]>>>() {
 		@Override
 		public Deque<SoftReference<char[]>> initialValue() {
-			return new ArrayDeque<SoftReference<char[]>>();
+			return new ArrayDeque<>();
 		}
 	};
 
@@ -173,7 +175,7 @@ final public class BufferManager {
 			bytesZeroFills.getAndIncrement();
 			Arrays.fill(buffer, 0, BUFFER_SIZE, (byte)0);
 		}
-		myBytes.add(new SoftReference<byte[]>(buffer));
+		myBytes.add(new SoftReference<>(buffer));
 	}
 	private static boolean inQueue(Iterable<SoftReference<byte[]>> myBytes, byte[] buffer) {
 		for(SoftReference<byte[]> inQueue : myBytes) if(inQueue.get() == buffer) return true;
@@ -203,7 +205,7 @@ final public class BufferManager {
 			charsZeroFills.getAndIncrement();
 			Arrays.fill(buffer, 0, BUFFER_SIZE, (char)0);
 		}
-		myChars.add(new SoftReference<char[]>(buffer));
+		myChars.add(new SoftReference<>(buffer));
 	}
 	private static boolean inQueue(Iterable<SoftReference<char[]>> myChars, char[] buffer) {
 		for(SoftReference<char[]> inQueue : myChars) if(inQueue.get() == buffer) return true;

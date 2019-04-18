@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2014, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -61,7 +61,7 @@ public class MinimalList {
 			list = Collections.singletonList(elem);
 		} else if(list.size()==1) {
 			// Is a singleton list
-			List<E> newList = new ArrayList<E>(8);
+			List<E> newList = new ArrayList<>(8);
 			newList.add(list.get(0));
 			newList.add(elem);
 			list = newList;
@@ -100,7 +100,7 @@ public class MinimalList {
 			return list;
 		}
 		// Create copy of list
-		return new ArrayList<E>(list);
+		return new ArrayList<>(list);
 	}
 
 	/**

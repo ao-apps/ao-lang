@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2018  AO Industries, Inc.
+ * Copyright (C) 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -61,7 +61,7 @@ public class PolymorphicMultimap<K,V> {
 			this.entries = entries;
 		}
 	}
-	private final ConcurrentMap<Class<? extends K>,Lists<K,V>> listsByClass = new ConcurrentHashMap<Class<? extends K>,Lists<K,V>>();
+	private final ConcurrentMap<Class<? extends K>,Lists<K,V>> listsByClass = new ConcurrentHashMap<>();
 
 	public PolymorphicMultimap(Class<K> upperBound) {
 		this.upperBound = upperBound;
@@ -108,20 +108,20 @@ public class PolymorphicMultimap<K,V> {
 					newEntries = Collections.singletonList(newEntry);
 				} else {
 					int newSize = oldLists.keys.size() + 1;
-					List<K> newKeysTemp = new ArrayList<K>(newSize);
+					List<K> newKeysTemp = new ArrayList<>(newSize);
 					newKeysTemp.addAll(oldLists.keys);
 					newKeysTemp.add(key);
 					newKeys = Collections.unmodifiableList(newKeysTemp);
-					List<V> newValuesTemp = new ArrayList<V>(newSize);
+					List<V> newValuesTemp = new ArrayList<>(newSize);
 					newValuesTemp.addAll(oldLists.values);
 					newValuesTemp.add(value);
 					newValues = Collections.unmodifiableList(newValuesTemp);
-					List<Entry<K,V>> newEntriesTemp = new ArrayList<Entry<K,V>>(newSize);
+					List<Entry<K,V>> newEntriesTemp = new ArrayList<>(newSize);
 					newEntriesTemp.addAll(oldLists.entries);
 					newEntriesTemp.add(newEntry);
 					newEntries = Collections.unmodifiableList(newEntriesTemp);
 				}
-				Lists<K,V> newLists = new Lists<K,V>(newKeys, newValues, newEntries);
+				Lists<K,V> newLists = new Lists<>(newKeys, newValues, newEntries);
 				if(oldLists == null) {
 					replaced = listsByClass.putIfAbsent(uClass, newLists) == null;
 				} else {

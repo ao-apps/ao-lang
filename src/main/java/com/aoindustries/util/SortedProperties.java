@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2012, 2013, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -49,7 +49,7 @@ public class SortedProperties extends Properties {
 
 	@Override
 	public Enumeration<Object> keys() {
-		SortedSet<Object> sortedSet = new TreeSet<Object>(Collator.getInstance(Locale.ROOT));
+		SortedSet<Object> sortedSet = new TreeSet<>(Collator.getInstance(Locale.ROOT));
 		Enumeration<Object> e = super.keys();
 		while(e.hasMoreElements()) sortedSet.add(e.nextElement());
 		return Collections.enumeration(sortedSet);

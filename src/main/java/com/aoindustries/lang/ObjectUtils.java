@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2013, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2012, 2013, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -27,8 +27,11 @@ import java.util.Arrays;
 /**
  * Utilities that help when working with objects.
  *
+ * @deprecated  use {@link java.util.Objects} as of Java 1.7.
+ *
  * @author  AO Industries, Inc.
  */
+@Deprecated
 public final class ObjectUtils {
 
 	/**
@@ -39,14 +42,8 @@ public final class ObjectUtils {
 
 	/**
 	 * Gets the hashCode for an object or <code>0</code> when <code>null</code>.
-	 * <p>
-	 * Java 1.7: deprecated  use {@link java.util.Objects#hashCode(java.lang.Object)} as of Java 1.7.
-	 * </p>
 	 *
-	 * @see java.util.Objects#hashCode(java.lang.Object) as of Java 1.7
-	 *
-	 * @deprecated  Please use {@link org.apache.commons.lang3.ObjectUtils#hashCode(java.lang.Object)} from
-	 *              <a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a>.
+	 * @deprecated  use {@link java.util.Objects#hashCode(java.lang.Object)} as of Java 1.7.
 	 */
 	@Deprecated
 	public static int hashCode(Object obj) {
@@ -55,14 +52,8 @@ public final class ObjectUtils {
 
 	/**
 	 * Gets the hashCode for a set of objects or <code>0</code> when <code>null</code>.
-	 * <p>
-	 * Java 1.7: deprecated  use {@link java.util.Objects#hash(java.lang.Object...)} as of Java 1.7.
-	 * </p>
 	 *
-	 * @see java.util.Objects#hash(java.lang.Object...) as of Java 1.7
-	 *
-	 * @deprecated  Please use {@link org.apache.commons.lang3.ObjectUtils#hashCodeMulti(java.lang.Object...)} from
-	 *              <a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a>.
+	 * @deprecated  use {@link java.util.Objects#hash(java.lang.Object...)} as of Java 1.7.
 	 */
 	@Deprecated
 	public static int hash(Object... values) {
@@ -71,13 +62,8 @@ public final class ObjectUtils {
 
 	/**
 	 * Compares the equality of two objects, including their null states.
-	 * <p>
-	 * Java 1.7: deprecated  use java.util.Objects#equals(Object, Object) as of Java 1.7.
-	 * </p>
-	 * @see java.util.Objects#equals(java.lang.Object, java.lang.Object) as of Java 1.7
 	 *
-	 * @deprecated  Please use {@link org.apache.commons.lang3.ObjectUtils#equals(java.lang.Object, java.lang.Object)} from
-	 *              <a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a>.
+	 * @deprecated  use java.util.Objects#equals(Object, Object) as of Java 1.7.
 	 */
 	@Deprecated
 	public static boolean equals(Object obj1, Object obj2) {
@@ -86,14 +72,8 @@ public final class ObjectUtils {
 
 	/**
 	 * Calls toString if non-null, returns null when null.
-	 * <p>
-	 * Java 1.7: deprecated  use {@link java.util.Objects#toString(java.lang.Object, java.lang.String)} as of Java 1.7.
-	 * </p>
 	 *
-	 * @see java.util.Objects#toString(java.lang.Object, java.lang.String)
-	 *
-	 * @deprecated  Please use {@link org.apache.commons.lang3.ObjectUtils#toString(java.lang.Object, java.lang.String)} from
-	 *              <a href="https://commons.apache.org/proper/commons-lang/">Apache Commons Lang</a>.
+	 * @deprecated  use {@link java.util.Objects#toString(java.lang.Object, java.lang.String)} as of Java 1.7.
 	 */
 	@Deprecated
 	public static String toString(Object obj) {

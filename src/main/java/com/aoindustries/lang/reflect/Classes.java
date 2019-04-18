@@ -50,7 +50,7 @@ public final class Classes {
 	 */
 	// TODO: Add all interface parents and break loop when already in set.  See recent UdtMap development.
 	public static <T> Set<Class<? extends T>> getAllClasses(Class<? extends T> clazz, Class<T> upperBound) {
-		Set<Class<? extends T>> classes = new LinkedHashSet<Class<? extends T>>();
+		Set<Class<? extends T>> classes = new LinkedHashSet<>();
 		Class<?> current = clazz;
 		do {
 			if(upperBound.isAssignableFrom(current)) classes.add(current.asSubclass(upperBound));
@@ -73,7 +73,7 @@ public final class Classes {
 	 */
 	// TODO: Add all interface parents and break loop when already in set.  See recent UdtMap development.
 	public static Set<Class<?>> getAllClasses(Class<?> clazz) {
-		Set<Class<?>> classes = new LinkedHashSet<Class<?>>();
+		Set<Class<?>> classes = new LinkedHashSet<>();
 		Class<?> current = clazz;
 		do {
 			classes.add(current);

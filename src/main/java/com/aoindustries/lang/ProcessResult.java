@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -73,8 +73,7 @@ public class ProcessResult {
 				public void run() {
 					StringBuilder stderrBuilder = null; // Instantiated when first needed
 					try {
-						Reader stderrIn = new InputStreamReader(process.getErrorStream(), charset);
-						try {
+						try (Reader stderrIn = new InputStreamReader(process.getErrorStream(), charset)) {
 							char[] buff = BufferManager.getChars();
 							try {
 								int count;
@@ -87,8 +86,6 @@ public class ProcessResult {
 							} finally {
 								BufferManager.release(buff, false);
 							}
-						} finally {
-							stderrIn.close();
 						}
 					} catch(IOException exc) {
 						synchronized(stderrException) {
@@ -109,8 +106,7 @@ public class ProcessResult {
 			StringBuilder stdoutBuilder = null; // Instantiated when first needed
 			IOException stdoutException = null;
 			try {
-				Reader stdoutIn = new InputStreamReader(process.getInputStream(), charset);
-				try {
+				try (Reader stdoutIn = new InputStreamReader(process.getInputStream(), charset)) {
 					char[] buff = BufferManager.getChars();
 					try {
 						int count;
@@ -123,8 +119,6 @@ public class ProcessResult {
 					} finally {
 						BufferManager.release(buff, false);
 					}
-				} finally {
-					stdoutIn.close();
 				}
 			} catch(IOException exc) {
 				stdoutException = exc;

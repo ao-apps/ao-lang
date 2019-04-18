@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -44,7 +44,7 @@ public class ApplicationResourcesAccessor implements Serializable {
 
 	private static final long serialVersionUID = -8735217773587095120L;
 
-	private static final ConcurrentMap<String,ApplicationResourcesAccessor> accessors = new ConcurrentHashMap<String,ApplicationResourcesAccessor>();
+	private static final ConcurrentMap<String,ApplicationResourcesAccessor> accessors = new ConcurrentHashMap<>();
 
 	public static ApplicationResourcesAccessor getInstance(String baseName) {
 		ApplicationResourcesAccessor existing = accessors.get(baseName);
@@ -92,7 +92,7 @@ public class ApplicationResourcesAccessor implements Serializable {
 			if(listeners == null) {
 				newListeners = Collections.singletonList(listener);
 			} else {
-				newListeners = new ArrayList<Listener>(listeners.size() + 1);
+				newListeners = new ArrayList<>(listeners.size() + 1);
 				newListeners.addAll(listeners);
 				newListeners.add(listener);
 			}
@@ -106,7 +106,7 @@ public class ApplicationResourcesAccessor implements Serializable {
 	public static void removeListener(Listener listener) {
 		synchronized(listenersLock) {
 			if(listeners != null) {
-				ArrayList<Listener> newListeners = new ArrayList<Listener>(listeners.size()-1);
+				ArrayList<Listener> newListeners = new ArrayList<>(listeners.size()-1);
 				for(Listener l : listeners) {
 					if(l != listener) newListeners.add(l);
 				}
@@ -221,7 +221,7 @@ public class ApplicationResourcesAccessor implements Serializable {
 		if(resource == null) {
 			return "???" + locale.toString() + '.' + key + "???";
 		} else if(args.length == 0) {
-			// Make a new string instance
+			// NOTE: Make a new string instance always, since string identity is used to know how it was looked-up
 			result = new String(resource);
 		} else {
 			// newString is a new string due to StringBuffer...toString

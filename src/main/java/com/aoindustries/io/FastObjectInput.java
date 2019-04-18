@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2011, 2013, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -46,7 +46,7 @@ import java.util.List;
  */
 public class FastObjectInput implements ObjectInput {
 
-	private static final ThreadLocal<FastObjectInput> threadFastObjectInput = new ThreadLocal<FastObjectInput>();
+	private static final ThreadLocal<FastObjectInput> threadFastObjectInput = new ThreadLocal<>();
 
 	/**
 	 * Gets the wrapper for the provided {@link ObjectInput}, creating if needed.
@@ -79,8 +79,8 @@ public class FastObjectInput implements ObjectInput {
 	/**
 	 * A mapping of generated IDs to classes.
 	 */
-	private final List<Class<?>> classesById = new ArrayList<Class<?>>();
-	private final List<Long> serialVersionUIDsById = new ArrayList<Long>();
+	private final List<Class<?>> classesById = new ArrayList<>();
+	private final List<Long> serialVersionUIDsById = new ArrayList<>();
 	private int nextClassId = 0;
 
 	private Class<?> lastClass = null;
@@ -89,7 +89,7 @@ public class FastObjectInput implements ObjectInput {
 	/**
 	 * A mapping of generated IDs to strings.
 	 */
-	private final List<String> stringsById = new ArrayList<String>();
+	private final List<String> stringsById = new ArrayList<>();
 	private int nextStringId = 0;
 
 	private String lastString = null;

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2018  AO Industries, Inc.
+ * Copyright (C) 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -42,7 +42,7 @@ public class PolymorphicRegistry<U> {
 
 	private final Class<U> upperBound;
 
-	private final ConcurrentMap<Class<? extends U>,List<U>> instancesByClass = new ConcurrentHashMap<Class<? extends U>, List<U>>();
+	private final ConcurrentMap<Class<? extends U>,List<U>> instancesByClass = new ConcurrentHashMap<>();
 
 	public PolymorphicRegistry(Class<U> upperBound) {
 		this.upperBound = upperBound;
@@ -69,7 +69,7 @@ public class PolymorphicRegistry<U> {
 					newList = Collections.singletonList(instance);
 				} else {
 					int newSize = oldList.size() + 1;
-					List<U> newListTemp = new ArrayList<U>(newSize);
+					List<U> newListTemp = new ArrayList<>(newSize);
 					newListTemp.addAll(oldList);
 					newListTemp.add(instance);
 					newList = Collections.unmodifiableList(newListTemp);
