@@ -22,7 +22,6 @@
  */
 package com.aoindustries.lang.reflect;
 
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -39,6 +38,31 @@ public final class Classes {
 	private Classes() {
 	}
 
+	private static <T> void addAllClasses(Set<Class<? extends T>> classes, Set<Class<?>> notAssignable, Class<?> current, Class<T> upperBound) {
+		while(current != null) {
+			if(upperBound.isAssignableFrom(current)) {
+				if(classes.add(current.asSubclass(upperBound))) {
+					for(Class<?> iface : current.getInterfaces()) {
+						addAllClasses(classes, notAssignable, iface, upperBound);
+					}
+				} else {
+					// This class has already been mapped
+					break;
+				}
+			} else {
+				if(notAssignable.add(current)) {
+					for(Class<?> iface : current.getInterfaces()) {
+						addAllClasses(classes, notAssignable, iface, upperBound);
+					}
+				} else {
+					// This class has already been mapped
+					break;
+				}
+			}
+			current = current.getSuperclass();
+		}
+	}
+
 	/**
 	 * Gets all classes and interfaces for a class, up to and including the given upper bound.
 	 * <p>
@@ -48,19 +72,25 @@ public final class Classes {
 	 * assignable from} the given upper bound.
 	 * </p>
 	 */
-	// TODO: Add all interface parents and break loop when already in set.  See recent UdtMap development.
 	public static <T> Set<Class<? extends T>> getAllClasses(Class<? extends T> clazz, Class<T> upperBound) {
 		Set<Class<? extends T>> classes = new LinkedHashSet<>();
-		Class<?> current = clazz;
-		do {
-			if(upperBound.isAssignableFrom(current)) classes.add(current.asSubclass(upperBound));
-			for(Class<?> iface : clazz.getInterfaces()) {
-				do {
-					if(upperBound.isAssignableFrom(iface)) classes.add(iface.asSubclass(upperBound));
-				} while ((iface = iface.getSuperclass()) != null);
-			}
-		} while((current = current.getSuperclass()) != null);
+		Set<Class<?>> notAssignable = new LinkedHashSet<>();
+		addAllClasses(classes, notAssignable, clazz, upperBound);
 		return classes;
+	}
+
+	private static void addAllClasses(Set<Class<?>> classes, Class<?> current) {
+		while(current != null) {
+			if(classes.add(current)) {
+				for(Class<?> iface : current.getInterfaces()) {
+					addAllClasses(classes, iface);
+				}
+			} else {
+				// This class has already been mapped
+				break;
+			}
+			current = current.getSuperclass();
+		}
 	}
 
 	/**
@@ -71,14 +101,9 @@ public final class Classes {
 	 * by parent classes.
 	 * </p>
 	 */
-	// TODO: Add all interface parents and break loop when already in set.  See recent UdtMap development.
 	public static Set<Class<?>> getAllClasses(Class<?> clazz) {
 		Set<Class<?>> classes = new LinkedHashSet<>();
-		Class<?> current = clazz;
-		do {
-			classes.add(current);
-			classes.addAll(Arrays.asList(clazz.getInterfaces()));
-		} while((current = current.getSuperclass()) != null);
+		addAllClasses(classes, clazz);
 		return classes;
 	}
 }
