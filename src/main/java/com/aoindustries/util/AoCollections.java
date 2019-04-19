@@ -660,6 +660,7 @@ public class AoCollections {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> Iterator<E> emptyIterator() {
+		// TODO: java.util.Collections.emptyIterator()
 		return (Iterator<E>)EmptyIterator.instance;
 	}
 
