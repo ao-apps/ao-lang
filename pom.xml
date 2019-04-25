@@ -56,14 +56,14 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 							<links>
 								<link>${javac.link.javaApi}</link>
 								<link>https://commons.apache.org/proper/commons-collections/javadocs/api-4.3/</link>
-								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.8.1/</link>
+								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.9/</link>
 							</links>
 							<additionalDependencies>
 								<additionalDependency>
 									<groupId>org.apache.commons</groupId><artifactId>commons-collections4</artifactId><version>4.3</version>
 								</additionalDependency>
 								<additionalDependency>
-									<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.8.1</version>
+									<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.9</version>
 								</additionalDependency>
 							</additionalDependencies>
 						</configuration>
