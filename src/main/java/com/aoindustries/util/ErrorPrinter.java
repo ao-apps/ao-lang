@@ -37,6 +37,12 @@ import java.util.List;
 /**
  * Prints errors with more detail than a standard printStackTrace() call.  Is also able to
  * capture the error into a <code>String</code>.
+ * <p>
+ * TODO: Also print {@link Throwable#getSuppressed()}.
+ * </p>
+ * <p>
+ * TODO: Avoid repetitive sequences of stack traces to reduce total output length.
+ * </p>
  *
  * @author  AO Industries, Inc.
  */
