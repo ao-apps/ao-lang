@@ -33,6 +33,7 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ServiceLoader;
 
 /**
  * Prints errors with more detail than a standard printStackTrace() call.  Is also able to
@@ -42,6 +43,11 @@ import java.util.List;
  * </p>
  * <p>
  * TODO: Avoid repetitive sequences of stack traces to reduce total output length.
+ * </p>
+ * <p>
+ * TODO: Make an extensible way to register additional error printer features, and
+ * automatically load them via {@link ServiceLoader}.  Maybe spin this off to a
+ * microproject if we go this far.
  * </p>
  *
  * @author  AO Industries, Inc.
