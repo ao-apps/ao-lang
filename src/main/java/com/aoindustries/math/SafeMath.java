@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2013, 2014, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2013, 2014, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -61,6 +61,17 @@ public class SafeMath {
 	 * @exception  ArithmeticException  for underflow or overflow
 	 */
 	public static short castShort(int value) throws ArithmeticException {
+		if(value < Short.MIN_VALUE) throw new ArithmeticException("short underflow: " + value);
+		if(value > Short.MAX_VALUE) throw new ArithmeticException("short overflow: " + value);
+		return (short)value;
+	}
+
+	/**
+	 * Casts lng to short, looking for any underflow or overflow.
+	 *
+	 * @exception  ArithmeticException  for underflow or overflow
+	 */
+	public static short castShort(long value) throws ArithmeticException {
 		if(value < Short.MIN_VALUE) throw new ArithmeticException("short underflow: " + value);
 		if(value > Short.MAX_VALUE) throw new ArithmeticException("short overflow: " + value);
 		return (short)value;
