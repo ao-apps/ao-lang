@@ -55,6 +55,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 						<configuration>
 							<links>
 								<link>${javac.link.javaApi}</link>
+								<!-- Javadoc-only -->
 								<link>https://commons.apache.org/proper/commons-collections/javadocs/api-4.3/</link>
 								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.9/</link>
 							</links>
@@ -74,6 +75,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 	</profiles>
 
 	<dependencies>
+		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId><artifactId>junit</artifactId>
 			<scope>test</scope>
