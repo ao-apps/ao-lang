@@ -33,8 +33,9 @@ import java.util.Properties;
 
 /**
  * Property utilities.
- *
- * @see  com.aoindustries.servlet.PropertiesUtils  for use in servlet environment
+ * <p>
+ * See <a href="https://aoindustries.com/aocode-public/apidocs/com/aoindustries/servlet/PropertiesUtils.html">com.aoindustries.servlet.PropertiesUtils</a> for use in servlet environment
+ * </p>
  */
 final public class PropertiesUtils {
 

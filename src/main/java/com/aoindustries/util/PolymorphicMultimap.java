@@ -70,7 +70,7 @@ public class PolymorphicMultimap<K,V> {
 	/**
 	 * Puts an key to the registry along with an associated value.
 	 * The key is registered under {@link Classes#getAllClasses(java.lang.Class, java.lang.Class) all classes and interfaces}
-	 * it extends and implements, up to and including the upper bound {@link K}.
+	 * it extends and implements, up to and including the upper bound {@code K}.
 	 * <p>
 	 * This implementation favors lookup speed at O(1), and pays the price during {@link #put(java.lang.Object, java.lang.Object)}.
 	 * </p>

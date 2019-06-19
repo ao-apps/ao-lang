@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2015, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2015, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -28,8 +28,9 @@ import java.io.Writer;
 
 /**
  * Writer that encodes during write.
- * 
- * @see  MediaEncoder
+ * <p>
+ * See <a href="https://aoindustries.com/ao-encoding/apidocs/com/aoindustries/encoding/MediaEncoder.html">MediaEncoder</a>
+ * <p>
  *
  * @author  AO Industries, Inc.
  */
@@ -54,7 +55,7 @@ public class EncoderWriter extends FilterWriter {
 	}
 
 	/**
-	 * @see  MediaEncoder#writePrefix(java.lang.Appendable)
+	 * See <a href="https://aoindustries.com/ao-encoding/apidocs/com/aoindustries/encoding/MediaEncoder.html#writePrefixTo-java.lang.Appendable-">MediaEncoder.writePrefixTo(java.lang.Appendable)</a>
 	 */
 	public void writePrefix() throws IOException {
 		encoder.writePrefixTo(out);
@@ -104,7 +105,7 @@ public class EncoderWriter extends FilterWriter {
 	}
 
 	/**
-	 * @see  MediaEncoder#writeSuffix(java.lang.Appendable)
+	 * See <a href="https://aoindustries.com/ao-encoding/apidocs/com/aoindustries/encoding/MediaEncoder.html#writeSuffixTo-java.lang.Appendable-">MediaEncoder.writeSuffixTo(java.lang.Appendable)</a>
 	 */
 	public void writeSuffix() throws IOException {
 		encoder.writeSuffixTo(out);

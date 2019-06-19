@@ -23,10 +23,12 @@
 package com.aoindustries.io;
 
 import java.io.EOFException;
+import java.io.Externalizable;
 import java.io.IOException;
 import java.io.InvalidClassException;
 import java.io.ObjectInput;
 import java.io.ObjectInputValidation;
+import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.List;
@@ -223,7 +225,7 @@ public class FastObjectInput implements ObjectInput {
 	/**
 	 * Reads a fast serialized {@link String} from the stream.
 	 *
-	 * @see  #writeFastUTF(java.io.ObjectOutput, com.aoindustries.io.FastExternalizable)
+	 * @see  FastObjectOutput#writeFastUTF(java.lang.String)
 	 */
 	public String readFastUTF() throws IOException, ClassNotFoundException {
 		int code = in.read();

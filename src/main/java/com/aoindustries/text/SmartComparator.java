@@ -179,7 +179,7 @@ public class SmartComparator implements Comparator<Object> {
 	/**
 	 * Compares two objects by their {@link Object#toString()} values.
 	 *
-	 * @see  ObjectUtils#toString(java.lang.Object)
+	 * @see  Objects#toString(java.lang.Object, java.lang.String)
 	 * @see  #compare(java.lang.Object, java.lang.Object)
 	 */
 	@Override

@@ -51,7 +51,7 @@ public class PolymorphicRegistry<U> {
 	/**
 	 * Adds a instance to the registry.
 	 * The instance is registered under {@link Classes#getAllClasses(java.lang.Class, java.lang.Class) all classes and interfaces}
-	 * it extends and implements, up to and including the upper bound {@link U}.
+	 * it extends and implements, up to and including the upper bound {@code U}.
 	 * <p>
 	 * This implementation favors lookup speed at O(1), and pays the price during {@link #add(java.lang.Object)}.
 	 * </p>

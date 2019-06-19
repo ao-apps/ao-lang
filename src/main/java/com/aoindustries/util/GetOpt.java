@@ -106,7 +106,7 @@ public class GetOpt {
 	 * provided it defaults to <code>true</code>.
 	 * "--" may be used to separate parameters from arguments.
 	 *
-	 * @args  the values used during the processing of the parameters will be set to null
+	 * @param args  the values used during the processing of the parameters will be set to null
 	 *
 	 * @return  the converted value or <code>null</code> if not found
 	 *

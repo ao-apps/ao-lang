@@ -114,10 +114,7 @@ public class ErrorPrinter {
 	/**
 	 * Prints a detailed error report, including all stack traces, to the provided out.
 	 * Synchronizes on out to make sure concurrently reported errors will not be mixed.
-	 * If out is <code>Flushable</code>, will flush the output.
-	 * @param T
-	 * @param out
-	 * @param extraInfo
+	 * If out is {@link Flushable}, will flush the output.
 	 */
 	public static void printStackTraces(Throwable thrown, Appendable out, Object[] extraInfo) {
 

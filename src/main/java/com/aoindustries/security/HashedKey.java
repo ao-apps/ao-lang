@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -49,7 +49,7 @@ public class HashedKey implements Comparable<HashedKey> {
 	/**
 	 * Generates a random plaintext key of <code>HASH_BYTES</code> bytes in length.
 	 *
-	 * @see  #hashKey(byte[])
+	 * @see  #hash(byte[])
 	 */
 	public static byte[] generateKey() {
 		byte[] key = new byte[HASH_BYTES];

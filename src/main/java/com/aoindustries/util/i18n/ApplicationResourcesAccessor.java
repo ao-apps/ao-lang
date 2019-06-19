@@ -191,7 +191,7 @@ public class ApplicationResourcesAccessor implements Serializable {
 	 * </p>
 	 *
 	 * @see ThreadLocale
-	 * @see  #getMessage(String,Locale,String)
+	 * @see  #getMessage(java.util.Locale, java.lang.String, java.lang.Object...)
 	 */
 	public String getMessage(String key, Object... args) {
 		return getMessage(ThreadLocale.get(), key, args);
@@ -206,7 +206,7 @@ public class ApplicationResourcesAccessor implements Serializable {
 	 * Substitutes arguments in the text where it finds {0}, {1}, {2}, ...
 	 * </p>
 	 *
-	 * @see  #getMessage(String,Locale,String)
+	 * @see  #getMessage(java.util.Locale, java.lang.String)
 	 */
 	public String getMessage(Locale locale, String key, Object... args) {
 		String resource = null;

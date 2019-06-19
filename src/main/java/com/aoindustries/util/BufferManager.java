@@ -107,7 +107,7 @@ final public class BufferManager {
 	;
 
 	/**
-	 * Gets a {@code byte[]] of length {@code BUFFER_SIZE} that may
+	 * Gets a {@code byte[]} of length {@code BUFFER_SIZE} that may
 	 * be temporarily used for any purpose.  Once done with the buffer,
 	 * {@code release} should be called, this is best accomplished
 	 * in a {@code finally} block.
