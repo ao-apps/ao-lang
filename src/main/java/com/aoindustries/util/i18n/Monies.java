@@ -179,14 +179,14 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 
 	/**
 	 * Displays as a comma-separated list of {@link Money#toString()}
-	 * or {@code "∅"} for an empty set.
+	 * or {@code ""} for an empty set.
 	 *
 	 * @see  Money#toString()
 	 */
 	@Override
 	public String toString() {
 		int size = monies.size();
-		if(size == 0) return "∅";
+		if(size == 0) return "";
 		if(size == 1) return monies.values().iterator().next().toString();
 		StringBuilder sb = new StringBuilder();
 		for(Money money : monies.values()) {
