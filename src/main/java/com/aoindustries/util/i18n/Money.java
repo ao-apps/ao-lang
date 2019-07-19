@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2009, 2010, 2011, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -155,9 +155,9 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 		return currency.getSymbol(ThreadLocale.get())+getValue().toPlainString();
 	}
 
-	public Money add(Money augend) throws ArithmeticException {
-		if(currency!=augend.currency) throw new ArithmeticException("currency!=augend.currency: "+currency+"!="+augend.currency);
-		return new Money(currency, getValue().add(augend.getValue()));
+	public Money add(Money addend) throws ArithmeticException {
+		if(currency != addend.currency) throw new ArithmeticException("currency != addend.currency: "+currency+" != "+addend.currency);
+		return new Money(currency, getValue().add(addend.getValue()));
 	}
 
 	/**
