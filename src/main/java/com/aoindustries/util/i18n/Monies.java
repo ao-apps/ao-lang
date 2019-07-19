@@ -53,6 +53,7 @@ public class Monies implements Iterable<Money> {
 	}
 
 	public static Monies of(Money money) {
+		if(money == null) return of();
 		return new Monies(Collections.singletonMap(money.getCurrency(), money));
 	}
 
@@ -67,11 +68,11 @@ public class Monies implements Iterable<Money> {
 	 * Combines all the provided the money, adding together any that have the same currency.
 	 */
 	public static Monies of(Money ... monies) {
-		if(monies.length == 0) return of();
+		if(monies == null || monies.length == 0) return of();
 		if(monies.length == 1) return of(monies[0]);
 		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		for(Money m : monies) {
-			add(newMap, m);
+			if(m != null) add(newMap, m);
 		}
 		return of(newMap);
 	}
@@ -80,9 +81,10 @@ public class Monies implements Iterable<Money> {
 	 * Combines all the provided the money, adding together any that have the same currency.
 	 */
 	public static Monies of(Iterable<Money> monies) {
+		if(monies == null) return of();
 		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		for(Money m : monies) {
-			add(newMap, m);
+			if(m != null) add(newMap, m);
 		}
 		return of(newMap);
 	}
@@ -145,6 +147,7 @@ public class Monies implements Iterable<Money> {
 	 * @see  Money#add(com.aoindustries.util.i18n.Money)
 	 */
 	public Monies add(Money addend) throws ArithmeticException {
+		if(addend == null) return this;
 		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		newMap.putAll(monies);
 		add(newMap, addend);
@@ -155,6 +158,7 @@ public class Monies implements Iterable<Money> {
 	 * @see  Money#add(com.aoindustries.util.i18n.Money)
 	 */
 	public Monies add(Monies addend) throws ArithmeticException {
+		if(addend == null) return this;
 		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		newMap.putAll(monies);
 		for(Money money : addend) {
