@@ -56,7 +56,7 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 		this.currency = currency;
 		try {
 			int currencyScale = currency.getDefaultFractionDigits();
-			if(currencyScale!=-1) value = value.setScale(currencyScale);
+			if(currencyScale != -1) value = value.setScale(currencyScale);
 			this.scale = value.scale();
 			this.value = value.movePointRight(value.scale()).longValueExact();
 		} catch(ArithmeticException err) {
@@ -71,8 +71,8 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 		this.currency = currency;
 		try {
 			int currencyScale = currency.getDefaultFractionDigits();
-			if(currencyScale!=-1 && currencyScale!=scale) {
-				value = BigDecimal.valueOf(value, scale).setScale(currencyScale).movePointRight(currencyScale).longValueExact();
+			if(currencyScale != -1 && currencyScale != scale) {
+				value = value == 0 ? 0 : BigDecimal.valueOf(value, scale).setScale(currencyScale).movePointRight(currencyScale).longValueExact();
 				scale = currencyScale;
 			}
 			this.value = value;
@@ -87,7 +87,7 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 
 	private void validate() throws NumberFormatException {
 		int currencyScale = currency.getDefaultFractionDigits();
-		if(currencyScale!=-1 && currencyScale!=scale) throw new NumberFormatException("currency.scale!=value.scale: "+currencyScale+"!="+scale);
+		if(currencyScale != -1 && currencyScale != scale) throw new NumberFormatException("currency.scale != value.scale: " + currencyScale + " != " + scale);
 	}
 
 	/**
@@ -98,10 +98,9 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 		if(!(o instanceof Money)) return false;
 		Money other = (Money)o;
 		return
-			currency==other.currency
-			&& value==other.value
-			&& scale==other.scale
-		;
+			currency == other.currency
+			&& value == other.value
+			&& scale == other.scale;
 	}
 
 	@Override
@@ -120,7 +119,7 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 	@Override
 	public int compareTo(Money other) {
 		int diff = CurrencyComparator.getInstance().compare(currency, other.currency);
-		if(diff!=0) return diff;
+		if(diff != 0) return diff;
 		return getValue().compareTo(other.getValue());
 	}
 
@@ -172,7 +171,7 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 	 */
 	public Money multiply(BigDecimal multiplicand, RoundingMode roundingMode) throws ArithmeticException {
 		int currencyScale = currency.getDefaultFractionDigits();
-		if(currencyScale==-1) currencyScale = scale; // Use same scale if currency doesn't dictate
+		if(currencyScale == -1) currencyScale = scale; // Use same scale if currency doesn't dictate
 		return new Money(currency, getValue().multiply(multiplicand).setScale(currencyScale, roundingMode));
 	}
 

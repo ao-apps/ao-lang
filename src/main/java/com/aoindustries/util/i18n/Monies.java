@@ -27,8 +27,10 @@ import java.math.RoundingMode;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Currency;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -37,7 +39,7 @@ import java.util.TreeMap;
  *
  * @author  AO Industries, Inc.
  */
-public class Monies implements Iterable<Money> {
+public class Monies implements Comparable<Monies>, Iterable<Money> {
 
 	private static void add(Map<Currency,Money> monies, Money addend) {
 		Currency currency = addend.getCurrency();
@@ -105,6 +107,45 @@ public class Monies implements Iterable<Money> {
 	@Override
 	public int hashCode() {
 		return monies.hashCode();
+	}
+
+	/**
+	 * Compares two {@link Monies} by comparing each value matched by {@link Currency}.
+	 * During comparison, any currency not set is handles as zero.
+	 * <p>
+	 * Two {@link Monies} are not comparable when they have a conflict where one currency is higher
+	 * and a different currency is lower.
+	 * </p>
+	 */
+	@Override
+	public int compareTo(Monies o) {
+		// Find the set of all currencies
+		Set<Currency> currencies = new HashSet<>();
+		currencies.addAll(monies.keySet());
+		currencies.addAll(o.monies.keySet());
+		boolean isLessThan = false;
+		boolean isMoreThan = false;
+		for(Currency currency : currencies) {
+			Money m1 = monies.get(currency);
+			if(m1 == null) m1 = new Money(currency, 0, 0);
+			Money m2 = o.monies.get(currency);
+			if(m2 == null) m2 = new Money(currency, 0, 0);
+			int diff = m1.compareTo(m2);
+			if(diff < 0) {
+				if(isMoreThan) {
+					throw new IllegalArgumentException("Incomparable monies, both less-than and greater-than: " + this + " and " + o);
+				}
+				isLessThan = true;
+			} else if(diff > 0) {
+				if(isLessThan) {
+					throw new IllegalArgumentException("Incomparable monies, both less-than and greater-than: " + this + " and " + o);
+				}
+				isMoreThan = true;
+			}
+		}
+		if(isLessThan) return -1;
+		if(isMoreThan) return 1;
+		return 0;
 	}
 
 	@Override
