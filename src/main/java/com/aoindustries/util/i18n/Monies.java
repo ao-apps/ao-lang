@@ -109,6 +109,22 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 		return monies.hashCode();
 	}
 
+	private static int compare(Money m1, Money m2) {
+		if(m1 == null) {
+			if(m2 == null) {
+				return 0;
+			} else {
+				return Long.compare(0, m2.getUnscaledValue());
+			}
+		} else {
+			if(m2 == null) {
+				return Long.compare(m1.getUnscaledValue(), 0);
+			} else {
+				return m1.compareTo(m2);
+			}
+		}
+	}
+
 	/**
 	 * Compares two {@link Monies} by comparing each value matched by {@link Currency}.
 	 * During comparison, any currency not set is handles as zero.
@@ -126,11 +142,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 		boolean isLessThan = false;
 		boolean isMoreThan = false;
 		for(Currency currency : currencies) {
-			Money m1 = monies.get(currency);
-			if(m1 == null) m1 = new Money(currency, 0, 0);
-			Money m2 = o.monies.get(currency);
-			if(m2 == null) m2 = new Money(currency, 0, 0);
-			int diff = m1.compareTo(m2);
+			int diff = compare(monies.get(currency), o.monies.get(currency));
 			if(diff < 0) {
 				if(isMoreThan) {
 					throw new IllegalArgumentException("Incomparable monies, both less-than and greater-than: " + this + " and " + o);
