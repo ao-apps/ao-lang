@@ -120,6 +120,7 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 	public int compareTo(Money other) {
 		int diff = CurrencyComparator.getInstance().compare(currency, other.currency);
 		if(diff != 0) return diff;
+		if(scale == other.scale) return Long.compare(value, other.value);
 		return getValue().compareTo(other.getValue());
 	}
 
@@ -151,7 +152,7 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 	 */
 	@Override
 	public String toString() {
-		return currency.getSymbol(ThreadLocale.get())+getValue().toPlainString();
+		return currency.getSymbol(ThreadLocale.get()) + getValue().toPlainString();
 	}
 
 	public Money add(Money addend) throws ArithmeticException {
