@@ -48,6 +48,13 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 		monies.put(currency, total);
 	}
 
+	private static void subtract(Map<Currency,Money> monies, Money subtrahend) {
+		Currency currency = subtrahend.getCurrency();
+		Money total = monies.get(currency);
+		total = (total == null) ? subtrahend : total.subtract(subtrahend);
+		monies.put(currency, total);
+	}
+
 	private static final Monies EMPTY_MONIES = new Monies(Collections.<Currency,Money>emptyMap());
 
 	public static Monies of() {
@@ -258,6 +265,30 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 		for(Money money : monies.values()) {
 			Currency currency = money.getCurrency();
 			newMap.put(currency, money.negate());
+		}
+		return of(newMap);
+	}
+
+	/**
+	 * @see  Money#subtract(com.aoindustries.util.i18n.Money)
+	 */
+	public Monies subtract(Money subtrahend) throws ArithmeticException {
+		if(subtrahend == null) return this;
+		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
+		newMap.putAll(monies);
+		subtract(newMap, subtrahend);
+		return of(newMap);
+	}
+
+	/**
+	 * @see  Money#subtract(com.aoindustries.util.i18n.Money)
+	 */
+	public Monies subtract(Monies subtrahend) throws ArithmeticException {
+		if(subtrahend == null) return this;
+		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
+		newMap.putAll(monies);
+		for(Money money : subtrahend) {
+			subtract(newMap, money);
 		}
 		return of(newMap);
 	}

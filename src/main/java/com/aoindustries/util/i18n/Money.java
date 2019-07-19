@@ -183,6 +183,11 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 		return new Money(currency, getValue().negate());
 	}
 
+	public Money subtract(Money subtrahend) throws ArithmeticException {
+		if(currency != subtrahend.currency) throw new ArithmeticException("currency != subtrahend.currency: "+currency+" != "+subtrahend.currency);
+		return new Money(currency, getValue().subtract(subtrahend.getValue()));
+	}
+
 	// <editor-fold defaultstate="collapsed" desc="FastExternalizable">
 	private static final long serialVersionUID = 2287045704444180509L;
 
