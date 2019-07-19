@@ -208,4 +208,14 @@ public class Monies implements Iterable<Money> {
 		}
 		return of(newMap);
 	}
+
+	/**
+	 * Check if this is empty or all values are zero.
+	 */
+	public boolean isZero() {
+		for(Money money : monies.values()) {
+			if(money.getUnscaledValue() != 0) return false;
+		}
+		return true;
+	}
 }
