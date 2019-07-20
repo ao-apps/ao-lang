@@ -180,6 +180,18 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 		return monies;
 	}
 
+	public boolean isEmpty() {
+		return monies.isEmpty();
+	}
+
+	public int size() {
+		return monies.size();
+	}
+
+	public Set<Currency> getCurrencies() {
+		return monies.keySet();
+	}
+
 	public Collection<Money> getValues() {
 		return monies.values();
 	}
@@ -301,5 +313,26 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 			if(money.getUnscaledValue() != 0) return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Removes all currencies with a zero monetary value.
+	 */
+	public Monies removeZeros() {
+		boolean hasZero = false;
+		for(Money money : monies.values()) {
+			if(money.getUnscaledValue() == 0) {
+				hasZero = true;
+				break;
+			}
+		}
+		if(!hasZero) return this;
+		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
+		for(Money money : monies.values()) {
+			if(money.getUnscaledValue() != 0) {
+				newMap.put(money.getCurrency(), money);
+			}
+		}
+		return of(newMap);
 	}
 }
