@@ -149,10 +149,12 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 	/**
 	 * Displays the monetary value as currency symbol (in Locale-specific display) followed by value, such as $100.00
 	 * or $-100.50.
+	 *
+	 * @see  CurrencyUtil#getSymbol(java.util.Currency, java.util.Locale)
 	 */
 	@Override
 	public String toString() {
-		return currency.getSymbol(ThreadLocale.get()) + getValue().toPlainString();
+		return CurrencyUtil.getSymbol(currency, ThreadLocale.get()) + getValue().toPlainString();
 	}
 
 	public Money add(Money addend) throws ArithmeticException {
