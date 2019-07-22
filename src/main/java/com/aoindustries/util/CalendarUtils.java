@@ -87,7 +87,7 @@ public class CalendarUtils {
 	public static String formatDate(Calendar cal) {
 		if(cal == null) return null;
 		try {
-			StringBuilder result = new StringBuilder(10); // 10: Number of characters in "YYYY-MM-DD"
+			StringBuilder result = new StringBuilder("YYYY-MM-DD".length());
 			formatDate(cal, result);
 			return result.toString();
 		} catch(IOException e) {
