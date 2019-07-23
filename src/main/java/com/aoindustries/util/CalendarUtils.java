@@ -38,44 +38,6 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * Gets the date from the "YYYY-MM-DD" format in the given time zone or {@code null} if the parameter is {@code null}.
-	 * Allows negative years like "-344-01-23".
-	 * Allows shorter months and days like "1976-1-9".
-	 *
-	 * @param timeZone  The time zone to use or {@code null} to use the default time zone
-	 */
-	public static GregorianCalendar parseDate(String yyyy_mm_dd, TimeZone timeZone) throws IllegalArgumentException {
-		if(yyyy_mm_dd == null) return null;
-		int pos1 = yyyy_mm_dd.indexOf('-', 1); // Start search at second character to allow negative years: -1000-01-23
-		if(pos1 == -1) throw new IllegalArgumentException("Invalid date: "  +yyyy_mm_dd);
-		int pos2 = yyyy_mm_dd.indexOf('-', pos1 + 1);
-		if(pos2 == -1) throw new IllegalArgumentException("Invalid date: " + yyyy_mm_dd);
-		int year = Integer.parseInt(yyyy_mm_dd.substring(0, pos1));
-		int month = Integer.parseInt(yyyy_mm_dd.substring(pos1 + 1, pos2));
-		if(month < 1 || month > 12) throw new IllegalArgumentException("Invalid month: " + yyyy_mm_dd);
-		int day = Integer.parseInt(yyyy_mm_dd.substring(pos2 + 1));
-		GregorianCalendar gcal = timeZone == null ? new GregorianCalendar() : new GregorianCalendar(timeZone);
-		gcal.set(Calendar.YEAR, year);
-		gcal.set(Calendar.MONTH, month - 1);
-		if(day < 1 || day > gcal.getActualMaximum(Calendar.DATE)) throw new IllegalArgumentException("Invalid day of month: " + yyyy_mm_dd);
-		gcal.set(Calendar.DATE, day);
-		gcal.set(Calendar.HOUR_OF_DAY, 0);
-		gcal.set(Calendar.MINUTE, 0);
-		gcal.set(Calendar.SECOND, 0);
-		gcal.set(Calendar.MILLISECOND, 0);
-		return gcal;
-	}
-
-	/**
-	 * Gets the date from the "YYYY-MM-DD" format in the default time zone or {@code null} if the parameter is {@code null}.
-	 * Allows negative years like "-344-01-23".
-	 * Allows shorter months and days like "1976-1-9".
-	 */
-	public static GregorianCalendar parseDate(String yyyy_mm_dd) throws IllegalArgumentException {
-		return parseDate(yyyy_mm_dd, null);
-	}
-
-	/**
 	 * Formats a date in "YYYY-MM-DD" format.
 	 *
 	 * @return  the formatted date or {@code null} if the parameter is {@code null}
@@ -116,6 +78,50 @@ public class CalendarUtils {
 			if(day < 10) out.append('0');
 			out.append(Integer.toString(day));
 		}
+	}
+
+	/**
+	 * Gets the date from the "YYYY-MM-DD" format in the given time zone or {@code null} if the parameter is {@code null}.
+	 * Allows negative years like "-344-01-23".
+	 * Allows shorter months and days like "1976-1-9".
+	 *
+	 * @param timeZone  The time zone to use or {@code null} to use the default time zone
+	 */
+	public static GregorianCalendar parseDate(String yyyy_mm_dd, TimeZone timeZone) throws IllegalArgumentException {
+		if(yyyy_mm_dd == null) return null;
+
+		final int year, month, day;
+
+		yyyy_mm_dd = yyyy_mm_dd.trim();
+		int pos1 = yyyy_mm_dd.indexOf('-', 1); // Start search at second character to allow negative years: -1000-01-23
+		if(pos1 == -1) throw new IllegalArgumentException("Invalid date: " + yyyy_mm_dd);
+		int pos2 = yyyy_mm_dd.indexOf('-', pos1 + 1);
+		if(pos2 == -1) throw new IllegalArgumentException("Invalid date: " + yyyy_mm_dd);
+		year = Integer.parseInt(yyyy_mm_dd.substring(0, pos1).trim());
+		month = Integer.parseInt(yyyy_mm_dd.substring(pos1 + 1, pos2).trim());
+		day = Integer.parseInt(yyyy_mm_dd.substring(pos2 + 1).trim());
+
+		GregorianCalendar gcal = timeZone == null ? new GregorianCalendar() : new GregorianCalendar(timeZone);
+		if(month < 1 || month > 12) throw new IllegalArgumentException("Invalid month: " + yyyy_mm_dd);
+		if(day < 1 || day > gcal.getActualMaximum(Calendar.DATE)) throw new IllegalArgumentException("Invalid day of month: " + yyyy_mm_dd);
+
+		gcal.set(Calendar.YEAR, year);
+		gcal.set(Calendar.MONTH, month - 1);
+		gcal.set(Calendar.DATE, day);
+		gcal.set(Calendar.HOUR_OF_DAY, 0);
+		gcal.set(Calendar.MINUTE, 0);
+		gcal.set(Calendar.SECOND, 0);
+		gcal.set(Calendar.MILLISECOND, 0);
+		return gcal;
+	}
+
+	/**
+	 * Gets the date from the "YYYY-MM-DD" format in the default time zone or {@code null} if the parameter is {@code null}.
+	 * Allows negative years like "-344-01-23".
+	 * Allows shorter months and days like "1976-1-9".
+	 */
+	public static GregorianCalendar parseDate(String yyyy_mm_dd) throws IllegalArgumentException {
+		return parseDate(yyyy_mm_dd, null);
 	}
 
 	/**
@@ -188,6 +194,89 @@ public class CalendarUtils {
 			out.append(' ');
 			formatTime(cal, out);
 		}
+	}
+
+	/**
+	 * Gets the date and time from the "YYYY-MM-DD[ HH:MM[:SS[.MMM]]]" format in the given time zone or {@code null} if the parameter is {@code null}.
+	 * Allows negative years like "-344-01-23".
+	 * Allows shorter months, days, hours, minutes, and millis like "1976-1-9 1:2:3.1".
+	 *
+	 * @param timeZone  The time zone to use or {@code null} to use the default time zone
+	 */
+	public static GregorianCalendar parseDateTime(String dateTime, TimeZone timeZone) throws IllegalArgumentException {
+		if(dateTime == null) return null;
+
+		final int year, month, day, hour, minute, second, millisecond;
+
+		dateTime = dateTime.trim();
+		int pos1 = dateTime.indexOf('-', 1); // Start search at second character to allow negative years: -1000-01-23
+		if(pos1 == -1) throw new IllegalArgumentException("Invalid datetime: " + dateTime);
+		int pos2 = dateTime.indexOf('-', pos1 + 1);
+		if(pos2 == -1) throw new IllegalArgumentException("Invalid datetime: " + dateTime);
+		year = Integer.parseInt(dateTime.substring(0, pos1).trim());
+		month = Integer.parseInt(dateTime.substring(pos1 + 1, pos2).trim());
+		int pos3 = dateTime.indexOf(' ', pos2 + 1);
+		if(pos3 == -1) {
+			day = Integer.parseInt(dateTime.substring(pos2 + 1).trim());
+			hour = minute = second = millisecond = 0;
+		} else {
+			day = Integer.parseInt(dateTime.substring(pos2 + 1, pos3).trim());
+			int pos4 = dateTime.indexOf(':', pos3 + 1);
+			if(pos4 == -1) throw new IllegalArgumentException("Invalid datetime: " + dateTime);
+			hour = Integer.parseInt(dateTime.substring(pos3 + 1, pos4).trim());
+			int pos5 = dateTime.indexOf(':', pos4 + 1);
+			if(pos5 == -1) {
+				minute = Integer.parseInt(dateTime.substring(pos4 + 1).trim());
+				second = millisecond = 0;
+			} else {
+				minute = Integer.parseInt(dateTime.substring(pos4 + 1, pos5).trim());
+				int pos6 = dateTime.indexOf('.', pos5 + 1);
+				if(pos6 == -1) {
+					String secondString = dateTime.substring(pos5 + 1).trim();
+					second = secondString.isEmpty() ? 0 : Integer.parseInt(secondString);
+					millisecond = 0;
+				} else {
+					second = Integer.parseInt(dateTime.substring(pos5 + 1, pos6).trim());
+					String milliString = dateTime.substring(pos6 + 1).trim();
+					int len = milliString.length();
+					if(len == 0) {
+						millisecond = 0;
+					} else if(len == 1) {
+						millisecond = 100 * Integer.parseInt(milliString);
+					} else if(len == 2) {
+						millisecond = 10 * Integer.parseInt(milliString);
+					} else {
+						millisecond = Integer.parseInt(milliString);
+					}
+				}
+			}
+		}
+
+		GregorianCalendar gcal = timeZone == null ? new GregorianCalendar() : new GregorianCalendar(timeZone);
+		if(month < 1 || month > 12) throw new IllegalArgumentException("Invalid month: " + dateTime);
+		if(day < 1 || day > gcal.getActualMaximum(Calendar.DATE)) throw new IllegalArgumentException("Invalid day of month: " + dateTime);
+		if(hour < 0 || hour > 23) throw new IllegalArgumentException("Invalid hour: " + dateTime);
+		if(minute < 0 || minute > 59) throw new IllegalArgumentException("Invalid minute: " + dateTime);
+		if(second < 0 || second > 59) throw new IllegalArgumentException("Invalid second: " + dateTime);
+		if(millisecond < 0 || millisecond > 999) throw new IllegalArgumentException("Invalid millisecond: " + dateTime);
+
+		gcal.set(Calendar.YEAR, year);
+		gcal.set(Calendar.MONTH, month - 1);
+		gcal.set(Calendar.DATE, day);
+		gcal.set(Calendar.HOUR_OF_DAY, hour);
+		gcal.set(Calendar.MINUTE, minute);
+		gcal.set(Calendar.SECOND, second);
+		gcal.set(Calendar.MILLISECOND, millisecond);
+		return gcal;
+	}
+
+	/**
+	 * Gets the date and time from the "YYYY-MM-DD[ HH:MM[:SS[.MMM]]]" format in the default time zone or {@code null} if the parameter is {@code null}.
+	 * Allows negative years like "-344-01-23".
+	 * Allows shorter months, days, hours, minutes, and millis like "1976-1-9 1:2:3.1".
+	 */
+	public static GregorianCalendar parseDateTime(String dateTime) throws IllegalArgumentException {
+		return parseDateTime(dateTime, null);
 	}
 
 	/**
