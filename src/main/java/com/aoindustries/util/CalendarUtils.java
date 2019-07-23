@@ -38,13 +38,11 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * Gets the date from the YYYY-MM-DD format in the given time zone or {@code null} if the parameter is {@code null}.
+	 * Gets the date from the "YYYY-MM-DD" format in the given time zone or {@code null} if the parameter is {@code null}.
 	 * Allows negative years like "-344-01-23".
 	 * Allows shorter months and days like "1976-1-9".
 	 *
 	 * @param timeZone  The time zone to use or {@code null} to use the default time zone
-	 *
-	 * @see  #parseDate(java.lang.String)
 	 */
 	public static GregorianCalendar parseDate(String yyyy_mm_dd, TimeZone timeZone) throws IllegalArgumentException {
 		if(yyyy_mm_dd == null) return null;
@@ -69,18 +67,16 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * Gets the date from the YYYY-MM-DD format in the default time zone or {@code null} if the parameter is {@code null}.
+	 * Gets the date from the "YYYY-MM-DD" format in the default time zone or {@code null} if the parameter is {@code null}.
 	 * Allows negative years like "-344-01-23".
 	 * Allows shorter months and days like "1976-1-9".
-	 *
-	 * @see  #parseDate(java.lang.String, java.util.TimeZone)
 	 */
 	public static GregorianCalendar parseDate(String yyyy_mm_dd) throws IllegalArgumentException {
 		return parseDate(yyyy_mm_dd, null);
 	}
 
 	/**
-	 * Formats a date in YYYY-MM-DD format.
+	 * Formats a date in "YYYY-MM-DD" format.
 	 *
 	 * @return  the formatted date or {@code null} if the parameter is {@code null}
 	 */
@@ -96,14 +92,18 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * Formats a date in YYYY-MM-DD format.
+	 * Formats a date in "YYYY-MM-DD" format.
 	 */
 	public static void formatDate(Calendar cal, Appendable out) throws IOException {
 		if(cal != null) {
-			GregorianCalendar gcal;
-			if(cal instanceof GregorianCalendar) gcal = (GregorianCalendar)cal;
-			else gcal = new GregorianCalendar(cal.getTimeZone());
-			// year
+			Calendar gcal;
+			if(UnmodifiableCalendar.isInstanceOf(cal, GregorianCalendar.class)) {
+				gcal = cal;
+			} else {
+				gcal = new GregorianCalendar(cal.getTimeZone());
+				gcal.setTimeInMillis(cal.getTimeInMillis());
+			}
+			// Year
 			out.append(Integer.toString(gcal.get(Calendar.YEAR)));
 			out.append('-');
 			// Month
@@ -119,11 +119,81 @@ public class CalendarUtils {
 	}
 
 	/**
+	 * Formats a time in "HH:MM:SS" format.
+	 *
+	 * @return  the formatted time or {@code null} if the parameter is {@code null}
+	 */
+	public static String formatTime(Calendar cal) {
+		if(cal == null) return null;
+		try {
+			StringBuilder result = new StringBuilder("HH:MM:SS".length());
+			formatTime(cal, result);
+			return result.toString();
+		} catch(IOException e) {
+			throw new AssertionError("IOException should never occur on StringBuilder", e);
+		}
+	}
+
+	/**
+	 * Formats a time in "HH:MM:SS" format.
+	 */
+	public static void formatTime(Calendar cal, Appendable out) throws IOException {
+		if(cal != null) {
+			Calendar gcal;
+			if(UnmodifiableCalendar.isInstanceOf(cal, GregorianCalendar.class)) {
+				gcal = cal;
+			} else {
+				gcal = new GregorianCalendar(cal.getTimeZone());
+				gcal.setTimeInMillis(cal.getTimeInMillis());
+			}
+			// Hour
+			int hour = gcal.get(Calendar.HOUR_OF_DAY);
+			if(hour < 10) out.append('0');
+			out.append(Integer.toString(hour));
+			out.append(':');
+			// Minute
+			int minute = gcal.get(Calendar.MINUTE);
+			if(minute < 10) out.append('0');
+			out.append(Integer.toString(minute));
+			out.append(':');
+			// Second
+			int second = gcal.get(Calendar.SECOND);
+			if(second < 10) out.append('0');
+			out.append(Integer.toString(second));
+		}
+	}
+
+	/**
+	 * Formats a date and time in "YYYY-MM-DD HH:MM:SS" format.
+	 *
+	 * @return  the formatted date and time or {@code null} if the parameter is {@code null}
+	 */
+	public static String formatDateTime(Calendar cal) {
+		if(cal == null) return null;
+		try {
+			StringBuilder result = new StringBuilder("YYYY-MM-DD HH:MM:SS".length());
+			formatDateTime(cal, result);
+			return result.toString();
+		} catch(IOException e) {
+			throw new AssertionError("IOException should never occur on StringBuilder", e);
+		}
+	}
+
+	/**
+	 * Formats a date and time in "YYYY-MM-DD HH:MM:SS" format.
+	 */
+	public static void formatDateTime(Calendar cal, Appendable out) throws IOException {
+		if(cal != null) {
+			formatDate(cal, out);
+			out.append(' ');
+			formatTime(cal, out);
+		}
+	}
+
+	/**
 	 * Gets today's date in the given time zone.  Hour, minute, second, and millisecond are all set to zero.
 	 *
 	 * @param timeZone  The time zone to use or {@code null} to use the default time zone
-	 *
-	 * @see  #getToday()
 	 */
 	public static GregorianCalendar getToday(TimeZone timeZone) {
 		GregorianCalendar gcal = timeZone == null ? new GregorianCalendar() : new GregorianCalendar(timeZone);
@@ -136,8 +206,6 @@ public class CalendarUtils {
 
 	/**
 	 * Gets today's date in the default time zone.  Hour, minute, second, and millisecond are all set to zero.
-	 *
-	 * @see  #getToday(java.util.TimeZone)
 	 */
 	public static GregorianCalendar getToday() {
 		return getToday(null);

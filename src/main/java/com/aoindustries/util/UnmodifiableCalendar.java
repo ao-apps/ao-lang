@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2013, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -71,11 +71,33 @@ final public class UnmodifiableCalendar extends Calendar {
 		}
 		return (Calendar)cal.clone();
 	}
+
+	/**
+	 * Checks if the calendar is an instance of the given class or is a wrapper
+	 * around an instance of the given class.
+	 */
+	public static boolean isInstanceOf(Calendar cal, Class<? extends Calendar> clazz) {
+		if(cal == null) return false;
+		if(clazz.isInstance(cal)) return true;
+		if(cal instanceof UnmodifiableCalendar) {
+			if(clazz.isInstance(((UnmodifiableCalendar)cal).wrapped)) return true;
+		}
+		return false;
+	}
+
 	private final Calendar wrapped;
 
 	private UnmodifiableCalendar(Calendar wrapped) {
 		assert !(wrapped instanceof UnmodifiableCalendar);
 		this.wrapped = wrapped;
+	}
+
+	/**
+	 * Checks if the calendar is an instance of the given class or is a wrapper
+	 * around an instance of the given class.
+	 */
+	public boolean isInstanceOf(Class<? extends Calendar> clazz) {
+		return isInstanceOf(wrapped, clazz);
 	}
 
 	@Override
