@@ -197,7 +197,7 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * Gets the date and time from the "YYYY-MM-DD[ HH:MM[:SS[.MMM]]]" format in the given time zone or {@code null} if the parameter is {@code null}.
+	 * Gets the date and time from the "YYYY-MM-DD[ HH:MM[:SS[.mmm]]]" format in the given time zone or {@code null} if the parameter is {@code null}.
 	 * Allows negative years like "-344-01-23".
 	 * Allows shorter months, days, hours, minutes, and millis like "1976-1-9 1:2:3.1".
 	 *
@@ -271,7 +271,7 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * Gets the date and time from the "YYYY-MM-DD[ HH:MM[:SS[.MMM]]]" format in the default time zone or {@code null} if the parameter is {@code null}.
+	 * Gets the date and time from the "YYYY-MM-DD[ HH:MM[:SS[.mmm]]]" format in the default time zone or {@code null} if the parameter is {@code null}.
 	 * Allows negative years like "-344-01-23".
 	 * Allows shorter months, days, hours, minutes, and millis like "1976-1-9 1:2:3.1".
 	 */
