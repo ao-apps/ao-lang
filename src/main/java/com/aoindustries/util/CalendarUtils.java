@@ -196,17 +196,25 @@ public class CalendarUtils {
 		}
 	}
 
+	public static interface DateTimeProducer<T> {
+		/**
+		 * @param gcal  Has the full millisecond precision set
+		 * @param nano  The fully parsed nanoseconds
+		 */
+		T createDateTime(GregorianCalendar gcal, int nano);
+	}
+
 	/**
-	 * Gets the date and time from the "YYYY-MM-DD[ HH:MM[:SS[.mmm]]]" format in the given time zone or {@code null} if the parameter is {@code null}.
+	 * Gets the date and time from the "YYYY-MM-DD[ HH:MM[:SS[.nnnnnnnnn]]]" format in the given time zone or {@code null} if the parameter is {@code null}.
 	 * Allows negative years like "-344-01-23".
 	 * Allows shorter months, days, hours, minutes, and millis like "1976-1-9 1:2:3.1".
 	 *
 	 * @param timeZone  The time zone to use or {@code null} to use the default time zone
 	 */
-	public static GregorianCalendar parseDateTime(String dateTime, TimeZone timeZone) throws IllegalArgumentException {
+	public static <T> T parseDateTime(String dateTime, TimeZone timeZone, DateTimeProducer<T> producer) throws IllegalArgumentException {
 		if(dateTime == null) return null;
 
-		final int year, month, day, hour, minute, second, millisecond;
+		final int year, month, day, hour, minute, second, nano;
 
 		dateTime = dateTime.trim();
 		int pos1 = dateTime.indexOf('-', 1); // Start search at second character to allow negative years: -1000-01-23
@@ -218,7 +226,7 @@ public class CalendarUtils {
 		int pos3 = dateTime.indexOf(' ', pos2 + 1);
 		if(pos3 == -1) {
 			day = Integer.parseInt(dateTime.substring(pos2 + 1).trim());
-			hour = minute = second = millisecond = 0;
+			hour = minute = second = nano = 0;
 		} else {
 			day = Integer.parseInt(dateTime.substring(pos2 + 1, pos3).trim());
 			int pos4 = dateTime.indexOf(':', pos3 + 1);
@@ -227,26 +235,38 @@ public class CalendarUtils {
 			int pos5 = dateTime.indexOf(':', pos4 + 1);
 			if(pos5 == -1) {
 				minute = Integer.parseInt(dateTime.substring(pos4 + 1).trim());
-				second = millisecond = 0;
+				second = nano = 0;
 			} else {
 				minute = Integer.parseInt(dateTime.substring(pos4 + 1, pos5).trim());
 				int pos6 = dateTime.indexOf('.', pos5 + 1);
 				if(pos6 == -1) {
 					String secondString = dateTime.substring(pos5 + 1).trim();
 					second = secondString.isEmpty() ? 0 : Integer.parseInt(secondString);
-					millisecond = 0;
+					nano = 0;
 				} else {
 					second = Integer.parseInt(dateTime.substring(pos5 + 1, pos6).trim());
-					String milliString = dateTime.substring(pos6 + 1).trim();
-					int len = milliString.length();
+					String nanoString = dateTime.substring(pos6 + 1).trim();
+					int len = nanoString.length();
 					if(len == 0) {
-						millisecond = 0;
+						nano = 0;
 					} else if(len == 1) {
-						millisecond = 100 * Integer.parseInt(milliString);
+						nano = 100000000 * Integer.parseInt(nanoString);
 					} else if(len == 2) {
-						millisecond = 10 * Integer.parseInt(milliString);
+						nano = 10000000 * Integer.parseInt(nanoString);
+					} else if(len == 3) {
+						nano = 1000000 * Integer.parseInt(nanoString);
+					} else if(len == 4) {
+						nano = 100000 * Integer.parseInt(nanoString);
+					} else if(len == 5) {
+						nano = 10000 * Integer.parseInt(nanoString);
+					} else if(len == 6) {
+						nano = 1000 * Integer.parseInt(nanoString);
+					} else if(len == 7) {
+						nano = 100 * Integer.parseInt(nanoString);
+					} else if(len == 8) {
+						nano = 10 * Integer.parseInt(nanoString);
 					} else {
-						millisecond = Integer.parseInt(milliString);
+						nano = Integer.parseInt(nanoString);
 					}
 				}
 			}
@@ -258,7 +278,7 @@ public class CalendarUtils {
 		if(hour < 0 || hour > 23) throw new IllegalArgumentException("Invalid hour: " + dateTime);
 		if(minute < 0 || minute > 59) throw new IllegalArgumentException("Invalid minute: " + dateTime);
 		if(second < 0 || second > 59) throw new IllegalArgumentException("Invalid second: " + dateTime);
-		if(millisecond < 0 || millisecond > 999) throw new IllegalArgumentException("Invalid millisecond: " + dateTime);
+		if(nano < 0 || nano > 999999999) throw new IllegalArgumentException("Invalid nano: " + dateTime);
 
 		gcal.set(Calendar.YEAR, year);
 		gcal.set(Calendar.MONTH, month - 1);
@@ -266,8 +286,29 @@ public class CalendarUtils {
 		gcal.set(Calendar.HOUR_OF_DAY, hour);
 		gcal.set(Calendar.MINUTE, minute);
 		gcal.set(Calendar.SECOND, second);
-		gcal.set(Calendar.MILLISECOND, millisecond);
-		return gcal;
+		gcal.set(Calendar.MILLISECOND, nano / 1000000);
+		return producer.createDateTime(gcal, nano);
+	}
+
+	/**
+	 * Gets the date and time from the "YYYY-MM-DD[ HH:MM[:SS[.mmm]]]" format in the given time zone or {@code null} if the parameter is {@code null}.
+	 * Allows negative years like "-344-01-23".
+	 * Allows shorter months, days, hours, minutes, and millis like "1976-1-9 1:2:3.1".
+	 *
+	 * @param timeZone  The time zone to use or {@code null} to use the default time zone
+	 */
+	public static GregorianCalendar parseDateTime(String dateTime, TimeZone timeZone) throws IllegalArgumentException {
+		return parseDateTime(
+			dateTime,
+			timeZone,
+			new DateTimeProducer<GregorianCalendar>() {
+				@Override
+				public GregorianCalendar createDateTime(GregorianCalendar gcal, int nano) {
+					if((nano % 1000000) != 0) throw new IllegalArgumentException("Only millisecond precision supported: nano: " + nano);
+					return gcal;
+				}
+			}
+		);
 	}
 
 	/**
