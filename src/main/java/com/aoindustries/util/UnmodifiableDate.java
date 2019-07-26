@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2012, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -29,7 +29,7 @@ import java.util.Date;
  *
  * @author  AO Industries, Inc.
  */
-final public class UnmodifiableDate extends Date {
+final public class UnmodifiableDate extends Date implements Cloneable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,6 +40,14 @@ final public class UnmodifiableDate extends Date {
 	public UnmodifiableDate(long date) {
 		super(date);
 	}
+
+    /**
+     * Return a copy of this object.
+     */
+	@Override
+    public UnmodifiableDate clone() {
+        return (UnmodifiableDate)super.clone();
+    }
 
 	@Deprecated
 	@Override
