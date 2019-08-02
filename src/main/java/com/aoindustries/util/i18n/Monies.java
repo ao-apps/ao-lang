@@ -134,7 +134,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 
 	/**
 	 * Compares two {@link Monies} by comparing each value matched by {@link Currency}.
-	 * During comparison, any currency not set is handles as zero.
+	 * During comparison, any currency not set is handled as zero.
 	 * <p>
 	 * Two {@link Monies} are not comparable when they have a conflict where one currency is higher
 	 * and a different currency is lower.
