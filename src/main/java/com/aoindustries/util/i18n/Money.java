@@ -33,6 +33,7 @@ import java.io.ObjectOutput;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Currency;
+import java.util.Locale;
 
 /**
  * Stores a monetary value as a combination of currency and amount.  It supports
@@ -43,6 +44,38 @@ import java.util.Currency;
  * @author  AO Industries, Inc.
  */
 final public class Money implements FastExternalizable, ObjectInputValidation, Comparable<Money> {
+
+	/**
+	 * Parses a monetary amount with an optional symbol prefix.
+	 * Trims, strips the prefix, trims, removes any commas.
+	 * <p>
+	 * TODO: A future version should be more locale-aware regarding assumption comma is used for group separator.
+	 * </p>
+	 *
+	 * @param symbol  The optional currency prefix to strip (see {@link CurrencyUtil#getSymbol(java.util.Currency, java.util.Locale)})
+	 * @param value  The value to parse
+	 *
+	 * @return  The monetary amount or {@code null} if empty
+	 *
+	 * @throws  NumberFormatException when not a value amount after filtering
+	 */
+	public static BigDecimal parseMoneyAmount(String symbol, String value) throws NumberFormatException {
+		if(value == null) return null;
+		value = value.trim();
+		if(symbol != null && !symbol.isEmpty()) {
+			while(value.startsWith(symbol)) value = value.substring(symbol.length()).trim();
+		}
+		value = value.replace(",", "").trim();
+		return value.isEmpty() ? null : new BigDecimal(value);
+	}
+
+	/**
+	 * @see  #parseMoneyAmount(java.lang.String, java.lang.String)
+	 */
+	public static Money parseMoney(Currency currency, Locale locale, String value) {
+		BigDecimal amount = parseMoneyAmount(CurrencyUtil.getSymbol(currency, locale), value);
+		return amount == null ? null : new Money(currency, amount);
+	}
 
 	private Currency currency;
 	private long value;
