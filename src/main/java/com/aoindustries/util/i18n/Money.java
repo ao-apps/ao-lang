@@ -73,7 +73,7 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 	 * @see  #parseMoneyAmount(java.lang.String, java.lang.String)
 	 */
 	public static Money parseMoney(Currency currency, Locale locale, String value) {
-		BigDecimal amount = parseMoneyAmount(CurrencyUtil.getSymbol(currency, locale), value);
+		BigDecimal amount = parseMoneyAmount(currency == null ? null : CurrencyUtil.getSymbol(currency, locale), value);
 		return amount == null ? null : new Money(currency, amount);
 	}
 
