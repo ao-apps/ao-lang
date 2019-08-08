@@ -59,21 +59,32 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 	 *
 	 * @throws  NumberFormatException when not a value amount after filtering
 	 */
-	public static BigDecimal parseMoneyAmount(String symbol, String value) throws NumberFormatException {
+	public static BigDecimal parseMoneyAmount(Locale locale, String symbol, String value) throws NumberFormatException {
 		if(value == null) return null;
 		value = value.trim();
+		value = value.replace('\u00A0', ' '); // non-breaking space
 		if(symbol != null && !symbol.isEmpty()) {
-			while(value.startsWith(symbol)) value = value.substring(symbol.length()).trim();
+			symbol = symbol.replace('\u00A0', ' '); // non-breaking space
+			while(value.startsWith(symbol)) {
+				value = value.substring(symbol.length()).trim();
+			}
+			while(value.endsWith(symbol)) {
+				value = value.substring(0, value.length() - symbol.length()).trim();
+			}
 		}
-		value = value.replace(",", "").trim();
+		if(Locale.FRENCH.getLanguage().equals(locale.getLanguage())) {
+			value = value.replace(".", "").replace(',', '.').trim();
+		} else {
+			value = value.replace(",", "").trim();
+		}
 		return value.isEmpty() ? null : new BigDecimal(value);
 	}
 
 	/**
-	 * @see  #parseMoneyAmount(java.lang.String, java.lang.String)
+	 * @see  #parseMoneyAmount(java.util.Locale, java.lang.String, java.lang.String)
 	 */
 	public static Money parseMoney(Currency currency, Locale locale, String value) {
-		BigDecimal amount = parseMoneyAmount(currency == null ? null : CurrencyUtil.getSymbol(currency, locale), value);
+		BigDecimal amount = parseMoneyAmount(locale, currency == null ? null : CurrencyUtil.getSymbol(currency, locale), value);
 		return amount == null ? null : new Money(currency, amount);
 	}
 
@@ -180,14 +191,22 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 	}
 
 	/**
-	 * Displays the monetary value as currency symbol (in Locale-specific display) followed by value, such as $100.00
-	 * or $-100.50.
+	 * Displays the monetary value as currency symbol (in Locale-specific display) either proceeding or following the value, such as {@code "$100.00"},
+	 * {@code "Can$-100.50"}, {@code "100,00 $ CA"} (with non-breaking spaces).
 	 *
 	 * @see  CurrencyUtil#getSymbol(java.util.Currency, java.util.Locale)
+	 * @see  ThreadLocale
 	 */
 	@Override
 	public String toString() {
-		return CurrencyUtil.getSymbol(currency, ThreadLocale.get()) + getValue().toPlainString();
+		Locale locale = ThreadLocale.get();
+		String symbol = CurrencyUtil.getSymbol(currency, locale);
+		String amount = getValue().toPlainString();
+		if(Locale.FRENCH.getLanguage().equals(locale.getLanguage())) {
+			return amount.replace('.', ',') + '\u00A0' + symbol; // non-breaking space
+		} else {
+			return symbol + amount;
+		}
 	}
 
 	public Money add(Money addend) throws ArithmeticException {
