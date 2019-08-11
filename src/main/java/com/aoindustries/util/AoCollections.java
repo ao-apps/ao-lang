@@ -632,36 +632,15 @@ public class AoCollections {
 		return Collections.unmodifiableSortedMap(copy);
 	}
 
-	static class EmptyIterator<E> implements Iterator<E> {
-
-		static final EmptyIterator<?> instance = new EmptyIterator<>();
-
-		private EmptyIterator() {
-		}
-
-		@Override
-		public boolean hasNext() {
-			return false;
-		}
-
-		@Override
-		public E next() {
-			throw new NoSuchElementException();
-		}
-
-		@Override
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-	}
-
 	/**
 	 * Gets the empty iterator.
+	 *
+	 * @deprecated  Use {@link Collections#emptyIterator()} as of Java 1.7.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public static <E> Iterator<E> emptyIterator() {
-		// TODO: java.util.Collections.emptyIterator()
-		return (Iterator<E>)EmptyIterator.instance;
+		return Collections.emptyIterator();
 	}
 
 	/**
@@ -740,7 +719,8 @@ public class AoCollections {
 			(iter instanceof UnmodifiableIterator)
 			|| (iter instanceof EnumerationIterator)
 			|| (iter instanceof SingletonIterator)
-			|| (iter==EmptyIterator.instance)
+			|| (iter == Collections.emptyIterator())
+			|| (iter == Collections.emptyListIterator())
 		) {
 			// Safe change of generic bounds only because returned iterator is unmodifiable
 			@SuppressWarnings("unchecked")
