@@ -39,9 +39,6 @@ import java.util.ServiceLoader;
  * Prints errors with more detail than a standard printStackTrace() call.  Is also able to
  * capture the error into a <code>String</code>.
  * <p>
- * TODO: Also print {@link Throwable#getSuppressed()}.
- * </p>
- * <p>
  * TODO: Avoid repetitive sequences of stack traces to reduce total output length.
  * </p>
  * <p>
@@ -348,6 +345,14 @@ public class ErrorPrinter {
 						printThrowables(nextSQL, out, indent, closed);
 					}
 				}
+			}
+		}
+		for(Throwable suppressed : thrown.getSuppressed()) {
+			if(!isClosed(suppressed, closed)) {
+				closed.add(suppressed);
+				for(int c=0;c<(indent+4);c++) append(' ', out);
+				appendln("Suppressed", out);
+				printThrowables(suppressed, out, indent+8, closed);
 			}
 		}
 	}

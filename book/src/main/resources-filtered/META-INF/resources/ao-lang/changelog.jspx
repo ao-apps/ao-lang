@@ -75,6 +75,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 					</li>
 					<li>Created <code>TimeZone</code> variants of date/time conversion methods.</li>
 					<li>Deprecated <code>AoCollections.emptyIterator()</code> in favor of <code>Collections.emptyIterator()</code> available since Java 1.7.</li>
+					<li><code>ErrorPrinter</code> now includes all suppressed exceptions from <code>Throwable.getSuppressed()</code>.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
