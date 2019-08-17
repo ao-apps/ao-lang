@@ -247,6 +247,7 @@ public final class XmlUtils {
 		Transformer transformer = transformerFactory.newTransformer();
 		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		// TODO: Do this? transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
 		StringWriter writer = new StringWriter();
 		try {
 			transformer.transform(
