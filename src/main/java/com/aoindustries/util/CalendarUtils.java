@@ -102,11 +102,11 @@ public class CalendarUtils {
 		day = Integer.parseInt(yyyy_mm_dd.substring(pos2 + 1).trim());
 
 		GregorianCalendar gcal = timeZone == null ? new GregorianCalendar() : new GregorianCalendar(timeZone);
-		if(month < 1 || month > 12) throw new IllegalArgumentException("Invalid month: " + yyyy_mm_dd);
-		if(day < 1 || day > gcal.getActualMaximum(Calendar.DATE)) throw new IllegalArgumentException("Invalid day of month: " + yyyy_mm_dd);
-
 		gcal.set(Calendar.YEAR, year);
+		if(month < 1 || month > 12) throw new IllegalArgumentException("Invalid month: " + yyyy_mm_dd);
 		gcal.set(Calendar.MONTH, month - 1);
+		gcal.set(Calendar.DATE, 1);
+		if(day < 1 || day > gcal.getActualMaximum(Calendar.DATE)) throw new IllegalArgumentException("Invalid day of month: " + yyyy_mm_dd);
 		gcal.set(Calendar.DATE, day);
 		gcal.set(Calendar.HOUR_OF_DAY, 0);
 		gcal.set(Calendar.MINUTE, 0);
@@ -273,15 +273,15 @@ public class CalendarUtils {
 		}
 
 		GregorianCalendar gcal = timeZone == null ? new GregorianCalendar() : new GregorianCalendar(timeZone);
+		gcal.set(Calendar.YEAR, year);
 		if(month < 1 || month > 12) throw new IllegalArgumentException("Invalid month: " + dateTime);
+		gcal.set(Calendar.MONTH, month - 1);
+		gcal.set(Calendar.DATE, 1);
 		if(day < 1 || day > gcal.getActualMaximum(Calendar.DATE)) throw new IllegalArgumentException("Invalid day of month: " + dateTime);
 		if(hour < 0 || hour > 23) throw new IllegalArgumentException("Invalid hour: " + dateTime);
 		if(minute < 0 || minute > 59) throw new IllegalArgumentException("Invalid minute: " + dateTime);
 		if(second < 0 || second > 59) throw new IllegalArgumentException("Invalid second: " + dateTime);
 		if(nanos < 0 || nanos > 999999999) throw new IllegalArgumentException("Invalid nanos: " + dateTime);
-
-		gcal.set(Calendar.YEAR, year);
-		gcal.set(Calendar.MONTH, month - 1);
 		gcal.set(Calendar.DATE, day);
 		gcal.set(Calendar.HOUR_OF_DAY, hour);
 		gcal.set(Calendar.MINUTE, minute);
