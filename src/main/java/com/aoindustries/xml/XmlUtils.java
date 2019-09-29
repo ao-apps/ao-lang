@@ -22,6 +22,7 @@
  */
 package com.aoindustries.xml;
 
+import com.aoindustries.lang.NullArgumentException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -262,5 +263,168 @@ public final class XmlUtils {
 			}
 		}
 		return writer.toString();
+	}
+
+	/**
+	 * See <a href="https://www.w3.org/TR/REC-xml/#NT-NameStartChar">Names and Tokens: NameStartChar</a>
+	 */
+	private static boolean isNameStartChar(int codePoint) {
+		return
+			codePoint == ':'
+			|| (codePoint >= 'A' && codePoint <= 'Z')
+			|| codePoint == '_'
+			|| (codePoint >= 'a' && codePoint <= 'z')
+			|| (codePoint >= 0xC0 && codePoint <= 0xD6)
+			|| (codePoint >= 0xD8 && codePoint <= 0xF6)
+			|| (codePoint >= 0xF8 && codePoint <= 0x2FF)
+			|| (codePoint >= 0x370 && codePoint <= 0x37D)
+			|| (codePoint >= 0x37F && codePoint <= 0x1FFF)
+			|| (codePoint >= 0x200C && codePoint <= 0x200D)
+			|| (codePoint >= 0x2070 && codePoint <= 0x218F)
+			|| (codePoint >= 0x2C00 && codePoint <= 0x2FEF)
+			|| (codePoint >= 0x3001 && codePoint <= 0xD7FF)
+			|| (codePoint >= 0xF900 && codePoint <= 0xFDCF)
+			|| (codePoint >= 0xFDF0 && codePoint <= 0xFFFD)
+			|| (codePoint >= 0x10000 && codePoint <= 0xEFFFF);
+	}
+
+	/**
+	 * See <a href="https://www.w3.org/TR/REC-xml/#NT-NameChar">Names and Tokens: NameChar</a>
+	 */
+	private static boolean isNameChar(int codePoint) {
+		return
+			isNameStartChar(codePoint)
+			|| codePoint == '-'
+			|| codePoint == '.'
+			|| (codePoint >= '0' && codePoint <= '9')
+			|| codePoint == 0xB7
+			|| (codePoint >= 0x0300 && codePoint <= 0x036F)
+			|| (codePoint >= 0x203F && codePoint <= 0x2040);
+	}
+
+	/**
+	 * Makes sure an ID is valid.
+	 *
+	 * <ol>
+	 * <li>See <a href="https://www.w3.org/TR/xhtml1/#C_8">C.8. Fragment Identifiers</a></li>
+	 * <li>See <a href="https://www.w3.org/TR/REC-xml/#id">Validity constraint: ID</a></li>
+	 * <li>See <a href="https://www.w3.org/TR/REC-xml/#NT-Name">Names and Tokens: Name</a></li>
+	 * </ol>
+	 */
+	public static boolean isValidId(String id) {
+		if(id == null) return false;
+		int len = id.length();
+		if(len == 0) return false;
+		int pos = 0;
+		int codePoint = id.codePointAt(pos);
+		pos += Character.charCount(codePoint);
+		if(!isNameStartChar(codePoint)) {
+			return false;
+		}
+		while(pos < len) {
+			codePoint = id.codePointAt(pos);
+			pos += Character.charCount(codePoint);
+			if(!isNameChar(codePoint)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Convert a couple other types of hyphens.
+	 * <a href="http://jkorpela.fi/dashes.html">http://jkorpela.fi/dashes.html</a>,
+	 * <a href="http://www.unicode.org/versions/Unicode12.0.0/ch06.pdf">Table 6-3</a>.
+	 */
+	private static boolean isHyphen(int codePoint) {
+		return
+			codePoint == 0x002D
+			|| codePoint == 0x007E
+			// Not in PDF: || codePoint == 0x00AD
+			|| codePoint == 0x058A
+			|| codePoint == 0x05BE
+			|| codePoint == 0x1400
+			|| codePoint == 0x1806
+			|| (codePoint >= 0x2010 && codePoint <= 0x2015)
+			|| codePoint == 0x2053
+			|| codePoint == 0x207B
+			|| codePoint == 0x208B
+			|| codePoint == 0x2212
+			|| codePoint == 0x2E17
+			// Not in PDF: || codePoint == 0x2E3A
+			// Not in PDF: || codePoint == 0x2E3B
+			|| codePoint == 0x301C
+			|| codePoint == 0x3030
+			|| codePoint == 0x30A0
+			|| codePoint == 0xFE31
+			|| codePoint == 0xFE32
+			|| codePoint == 0xFE58
+			|| codePoint == 0xFE63
+			|| codePoint == 0xFF0D;
+	}
+
+	/**
+	 * Generates a valid ID from an arbitrary string.
+	 * <p>
+	 * Strips all character not matching <a href="https://www.w3.org/TR/REC-xml/#NT-Name">Names and Tokens: Name</a>:
+	 * </p>
+	 *
+	 * @param  template   The preferred text to base the id on
+	 * @param  defaultId  The base used when template is unusable (must be a valid id or invalid ID's may be generated)
+	 *
+	 * <p>
+	 * See <a href="https://www.w3.org/TR/REC-xml/#NT-Name">Names and Tokens: Name</a>
+	 * </p>
+	 */
+	public static StringBuilder generateId(String template, String defaultId) {
+		NullArgumentException.checkNotNull(template, "template");
+		NullArgumentException.checkNotNull(defaultId, "defaultId");
+		assert isValidId(defaultId);
+		final int len = template.length();
+		// First character must be [A-Za-z]
+		int pos = 0;
+		while(pos < len) {
+			int codePoint = template.codePointAt(pos);
+			if(isNameStartChar(codePoint)) {
+				break;
+			}
+			pos += Character.charCount(codePoint);
+		}
+		StringBuilder id;
+		if(pos == len) {
+			// No usable characters from label
+			id = new StringBuilder(defaultId);
+		} else {
+			// Get remaining usable characters from label
+			id = new StringBuilder(len - pos);
+			int lastCodePoint = Integer.MIN_VALUE;
+			while(pos < len) {
+				int codePoint = template.codePointAt(pos);
+				pos += Character.charCount(codePoint);
+				if(
+					isNameChar(codePoint)
+					// Fall-through to hyphen coalesce
+					&& codePoint != '-'
+				) {
+					id.appendCodePoint(codePoint);
+					lastCodePoint = codePoint;
+				} else if(
+					// Convert space to '-'
+					Character.isWhitespace(codePoint)
+					// Convert other types of hyphens
+					|| isHyphen(codePoint)
+				) {
+					if(!isHyphen(lastCodePoint)) {
+						id.append('-');
+						lastCodePoint = '-';
+					}
+				}
+			}
+			// Trim any trailing hyphens (note: there are no surrage hyphens, so this is OK without code points)
+			int trimLen = id.length();
+			while(trimLen > 1 && isHyphen(id.charAt(trimLen - 1))) id.setLength(--trimLen);
+		}
+		assert isValidId(id.toString());
+		return id;
 	}
 }
