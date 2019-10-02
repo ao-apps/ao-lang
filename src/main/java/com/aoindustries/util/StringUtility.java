@@ -25,6 +25,7 @@ package com.aoindustries.util;
 import com.aoindustries.io.Encoder;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -348,6 +349,34 @@ public final class StringUtility {
 		for(int c=start;c<Slen;c++) {
 			char ch=S.charAt(c);
 			for(int d=0;d<clen;d++) if(ch==chars[d]) return c;
+		}
+		return -1;
+	}
+
+	/**
+	 * Finds the first occurrence of any of the supplied characters
+	 *
+	 * @param  S  the <code>String</code> to search
+	 * @param  chars  the characters to look for
+	 *
+	 * @return  the index of the first occurrence of <code>-1</code> if none found
+	 */
+	public static int indexOf(String S, BitSet chars) {
+		return indexOf(S, chars, 0);
+	}
+
+	/**
+	 * Finds the first occurrence of any of the supplied characters starting at the specified index.
+	 *
+	 * @param  S  the <code>String</code> to search
+	 * @param  chars  the characters to look for
+	 * @param  start  the starting index.
+	 *
+	 * @return  the index of the first occurrence of <code>-1</code> if none found
+	 */
+	public static int indexOf(String S, BitSet chars, int start) {
+		for(int c = start, len = S.length(); c < len; c++) {
+			if(chars.get(S.charAt(c))) return c;
 		}
 		return -1;
 	}
