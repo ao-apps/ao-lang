@@ -32,9 +32,15 @@ import java.util.TreeSet;
 
 /**
  * A Properties implementation that returns and writes its keys in alphabetical ({@code Locale.ROOT}) order.
- * 
+ *
+ * @deprecated  Please use {@link org.apache.commons.collections4.properties.SortedProperties} from
+ *              <a href="https://commons.apache.org/proper/commons-collections/">Apache Commons Collections</a>.
+ *              Please note that this version sorts by {@link String#compareTo(java.lang.String)} instead of
+ *              {@link Collator}, so will exhibit case-sensitive sorting.
+ *
  * @author  AO Industries, Inc.
  */
+@Deprecated
 public class SortedProperties extends Properties {
 
 	private static final long serialVersionUID = 1L;
