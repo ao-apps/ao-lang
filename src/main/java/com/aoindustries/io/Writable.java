@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2015, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -88,4 +88,14 @@ public interface Writable  {
 	 * @param  encoder  if null, no encoding is performed and will be the same as a call to {@link #writeTo(java.io.Writer, long, long)}
 	 */
 	void writeTo(Encoder encoder, Writer out, long off, long len) throws IOException;
+
+	/**
+	 * Trims the contents of this writable, returning the instance that represents this writable trimmed.
+	 * <p>
+	 * It will most likely be faster to check {@link #isFastToString()} and then trim the result
+	 * of {@link #toString()}.  However, for non-fast-toString writables, this trim will be more
+	 * efficient.
+	 * </p>
+	 */
+	Writable trim() throws IOException;
 }
