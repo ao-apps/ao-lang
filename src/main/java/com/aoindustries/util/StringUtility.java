@@ -1178,4 +1178,15 @@ public final class StringUtility {
 	public static String nullIfEmpty(String value) {
 		return value==null || value.isEmpty() ? null : value;
 	}
+
+	/**
+	 * Trims a value, returning {@code null} if empty after trimming.
+	 */
+	public static String trimNullIfEmpty(String value) {
+		if(value != null) {
+			value = value.trim();
+			if(value.isEmpty()) value = null;
+		}
+		return value;
+	}
 }
