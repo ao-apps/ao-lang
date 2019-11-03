@@ -196,6 +196,7 @@ public class CalendarUtils {
 		}
 	}
 
+	@FunctionalInterface
 	public static interface DateTimeProducer<T> {
 		/**
 		 * @param gcal  Has the full millisecond precision set
@@ -301,12 +302,9 @@ public class CalendarUtils {
 		return parseDateTime(
 			dateTime,
 			timeZone,
-			new DateTimeProducer<GregorianCalendar>() {
-				@Override
-				public GregorianCalendar createDateTime(GregorianCalendar gcal, int nanos) {
-					if((nanos % 1000000) != 0) throw new IllegalArgumentException("Only millisecond precision supported: nanos: " + nanos);
-					return gcal;
-				}
+			(GregorianCalendar gcal, int nanos) -> {
+				if((nanos % 1000000) != 0) throw new IllegalArgumentException("Only millisecond precision supported: nanos: " + nanos);
+				return gcal;
 			}
 		);
 	}

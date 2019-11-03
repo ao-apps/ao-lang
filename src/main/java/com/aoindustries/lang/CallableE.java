@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2018  AO Industries, Inc.
+ * Copyright (C) 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -25,7 +25,7 @@ package com.aoindustries.lang;
 /**
  * Callable interface that allows any arbitrary exception type.
  */
-// Java 1.8: FunctionalInterface
+@FunctionalInterface
 public interface CallableE<V,E extends Exception> {
 
 	V call() throws E;

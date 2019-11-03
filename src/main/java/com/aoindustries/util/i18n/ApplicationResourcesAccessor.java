@@ -60,6 +60,7 @@ public class ApplicationResourcesAccessor implements Serializable {
 	 * Listeners may be registered to be notified as messages are looked-up.
 	 * This is a hook used for in-context translation tools.
 	 */
+	@FunctionalInterface
 	public static interface Listener {
 		/**
 		 * Called during {@link #getMessage(java.util.Locale, java.lang.String, java.lang.Object...)} when a lookup is performed and the key found.

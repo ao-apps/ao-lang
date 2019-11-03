@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2018  AO Industries, Inc.
+ * Copyright (C) 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,16 +22,13 @@
  */
 package com.aoindustries.util.function;
 
-// Java 8: Extend standard Predicate interface and deprecate this
-// Java 8: @FunctionalInterface
-public interface Predicate<T> {
+/**
+ * @deprecated  Please use {@link java.util.function.Predicate} directly.
+ */
+@Deprecated
+@FunctionalInterface
+public interface Predicate<T> extends java.util.function.Predicate<T> {
 
-	/**
-	 * Evaluates this predicate on the given argument.
-	 *
-	 * @param t the input argument
-	 * @return {@code true} if the input argument matches the predicate,
-	 * otherwise {@code false}
-	 */
+	@Override
 	boolean test(T t);
 }

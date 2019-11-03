@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -87,18 +87,10 @@ final public class ThreadLocale {
 	}
 
 	/**
-	 * Java 1.8: Deprecate and use java.util.function.Supplier instead
-	 */
-	public static interface Supplier<T> {
-		T get();
-	}
-	/**
 	 * Changes the current thread locale and calls the Callable.  The locale is
 	 * automatically restored.
-	 *
-	 * Java 1.8: Deprecate and use java.util.function.Supplier instead
 	 */
-	public static <V> V set(Locale locale, Supplier<V> supplier) {
+	public static <V> V set(Locale locale, java.util.function.Supplier<V> supplier) {
 		Locale oldLocale = get();
 		try {
 			set(locale);
@@ -108,5 +100,21 @@ final public class ThreadLocale {
 		}
 	}
 
-	// Java 1.8: Create a version of set taking Supplier<V> for lambdas
+	/**
+	 * @deprecated  Please use {@link java.util.function.Supplier} directly.
+	 */
+	@Deprecated
+	@FunctionalInterface
+	public static interface Supplier<T> extends java.util.function.Supplier<T> {
+		@Override
+		T get();
+	}
+
+	/**
+	 * @deprecated  Please use {@link #set(java.util.Locale, java.util.function.Supplier)} directly.
+	 */
+	@Deprecated
+	public static <V> V set(Locale locale, Supplier<V> supplier) {
+		return set(locale, (java.util.function.Supplier<V>)supplier);
+	}
 }
