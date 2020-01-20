@@ -22,6 +22,8 @@
  */
 package com.aoindustries.io;
 
+import java.io.Closeable;
+import java.io.Flushable;
 import java.io.IOException;
 import java.io.Writer;
 import javax.swing.text.Segment;
@@ -106,11 +108,15 @@ public class AppendableWriter extends Writer {
 
 	@Override
 	public void flush() throws IOException {
-		// Do nothing
+		if(out instanceof Flushable) {
+			((Flushable)out).flush();
+		}
 	}
 
 	@Override
 	public void close() throws IOException {
-		// Do nothing
+		if(out instanceof Closeable) {
+			((Closeable)out).close();
+		}
 	}
 }
