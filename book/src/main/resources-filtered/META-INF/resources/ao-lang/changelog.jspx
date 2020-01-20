@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-lang - Minimal Java library with no external dependencies shared by many other projects.
-Copyright (C) 2017, 2018, 2019  AO Industries, Inc.
+Copyright (C) 2017, 2018, 2019, 2020  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -36,7 +36,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-0500"
-		dateModified="2019-11-03T02:12:52-0600"
+		dateModified="2020-01-19T22:01:45-0600"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-lang:pom.version}" />
@@ -55,6 +55,15 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				<ul>
 					<li>Minimum Java version changed from 1.7 to 1.8.</li>
 					<li>New wrappers to avoid closing streams and writers.</li>
+					<li>
+						New <code>appendTo(…)</code> methods on <ao:a href="apidocs/com/aoindustries/io/Writable.html">Writable</ao:a>
+						for use with <code>Appendable</code>.  Reasonably efficient default interface methods
+						are provided, but implementations may provide more optimal solutions.
+					</li>
+					<li>
+						New class <ao:a href="apidocs/com/aoindustries/io/AppendableWriter.html">AppendableWriter</ao:a>
+						that adapts <code>Writer</code> to <code>Appendable</code>.
+					</li>
 				</ul>
 			</changelog:release>
 		</c:if>
