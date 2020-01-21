@@ -42,7 +42,7 @@ public class AppendableWriter extends Writer {
 	 * Wraps the given {@link Appendable} if it is not already
 	 * a {@link Writer}.
 	 *
-	 * @return  The given out, if it is already a {@link Writer}, otherwise a
+	 * @return  The given out, if it is already a {@link Writer}, otherwise an
 	 *          {@link AppendableWriter} wrapping out.
 	 */
 	public static Writer wrap(Appendable out) {
