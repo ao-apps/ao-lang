@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -1180,12 +1180,83 @@ public final class StringUtility {
 	}
 
 	/**
-	 * Trims a value, returning {@code null} if empty after trimming.
+	 * Determines if a character is whitespace.
+	 * A character is considered whitespace if it is either &lt;= (space) or
+	 * matches {@link Character#isWhitespace(char)}.
+	 */
+	public static boolean isWhitespace(char ch) {
+		return ch <= ' ' || Character.isWhitespace(ch);
+	}
+
+	/**
+	 * Determines if a code point is whitespace.
+	 * A character is considered whitespace if it is either &lt;= (space) or
+	 * matches {@link Character#isWhitespace(char)}.
+	 */
+	public static boolean isWhitespace(int codePoint) {
+		return codePoint <= ' ' || Character.isWhitespace(codePoint);
+	}
+
+	/**
+	 * Trims a value, as per rules of {@link #isWhitespace(int)}.
+	 *
+	 * @return  The value trimmed or {@code null} when was {@code null}
+	 */
+	public static String trim(String value) {
+		if(value == null) return null;
+        int len = value.length();
+        int st = 0;
+
+		int cp;
+        while ((st < len) && isWhitespace(cp = value.codePointAt(st))) {
+			st += Character.charCount(cp);
+        }
+        while ((st < len) && isWhitespace(cp = value.codePointBefore(len))) {
+            len -= Character.charCount(cp);
+			if(len < st) len = st; // Just in case strangely overlapping invalid code points
+        }
+        return ((st > 0) || (len < value.length())) ? value.substring(st, len) : value;
+	}
+
+	/**
+	 * Trims a value, as per rules of {@link #isWhitespace(int)}.
+	 *
+	 * @return  The value trimmed or {@code null} when was {@code null}
+	 */
+	public static CharSequence trim(CharSequence value) {
+		if(value == null) return null;
+        int len = value.length();
+        int st = 0;
+
+		int cp;
+        while ((st < len) && isWhitespace(cp = Character.codePointAt(value, st))) {
+			st += Character.charCount(cp);
+        }
+        while ((st < len) && isWhitespace(cp = Character.codePointBefore(value, len))) {
+            len -= Character.charCount(cp);
+			if(len < st) len = st; // Just in case strangely overlapping invalid code points
+        }
+        return ((st > 0) || (len < value.length())) ? value.subSequence(st, len) : value;
+	}
+
+	/**
+	 * Trims a value, as per rules of {@link #isWhitespace(int)}, returning {@code null} if empty after trimming.
 	 */
 	public static String trimNullIfEmpty(String value) {
 		if(value != null) {
-			value = value.trim();
+			value = trim(value);
 			if(value.isEmpty()) value = null;
+		}
+		return value;
+	}
+
+	/**
+	 * Trims a value, as per rules of {@link #isWhitespace(int)}, returning {@code null} if empty after trimming.
+	 */
+	public static CharSequence trimNullIfEmpty(CharSequence value) {
+		if(value != null) {
+			value = trim(value);
+			if(value.length() == 0) value = null;
 		}
 		return value;
 	}
