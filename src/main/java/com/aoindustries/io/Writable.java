@@ -174,7 +174,8 @@ public interface Writable  {
 	}
 
 	/**
-	 * Trims the contents of this writable, returning the instance that represents this writable trimmed.
+	 * Trims the contents of this writable, as per rules of {@link StringUtility#isWhitespace(int)},
+	 * returning the instance that represents this writable trimmed.
 	 * <p>
 	 * It will most likely be faster to check {@link #isFastToString()} and then trim the result
 	 * of {@link #toString()}.  However, for non-fast-toString writables, this trim will be more
