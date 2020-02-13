@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -35,7 +35,10 @@ import java.io.Serializable;
  * </p>
  *
  * @author  AO Industries, Inc.
+ *
+ * @deprecated  Please use standard Java 8 classes.
  */
+@Deprecated
 public class Duration implements Comparable<Duration>, Serializable, ObjectInputValidation {
 
 	public static final Duration ZERO = new Duration(0, 0);
