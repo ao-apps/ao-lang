@@ -22,6 +22,7 @@
  */
 package com.aoindustries.io;
 
+import com.aoindustries.util.StringUtility;
 import java.io.IOException;
 import java.io.Writer;
 
