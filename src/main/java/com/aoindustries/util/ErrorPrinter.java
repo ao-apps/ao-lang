@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -113,6 +113,7 @@ public class ErrorPrinter {
 	 * Synchronizes on out to make sure concurrently reported errors will not be mixed.
 	 * If out is {@link Flushable}, will flush the output.
 	 */
+	// TODO: This Object[] might be best as varargs.  Review this and others
 	public static void printStackTraces(Throwable thrown, Appendable out, Object[] extraInfo) {
 
 		synchronized(out) {
