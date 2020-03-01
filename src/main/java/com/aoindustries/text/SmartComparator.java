@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -44,6 +44,11 @@ import java.util.Objects;
  * @author  AO Industries, Inc.
  */
 public class SmartComparator implements Comparator<Object> {
+
+	/**
+	 * The smart comparator for the {@linkplain Locale#ROOT root locale.
+	 */
+	public static final SmartComparator ROOT = new SmartComparator(Locale.ROOT);
 
 	private final Collator collator;
 
