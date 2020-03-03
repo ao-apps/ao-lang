@@ -46,7 +46,7 @@ import java.util.Objects;
 public class SmartComparator implements Comparator<Object> {
 
 	/**
-	 * The smart comparator for the {@linkplain Locale#ROOT root locale.
+	 * The smart comparator for the {@linkplain Locale#ROOT root locale}.
 	 */
 	public static final SmartComparator ROOT = new SmartComparator(Locale.ROOT);
 
