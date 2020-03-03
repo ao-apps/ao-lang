@@ -1282,8 +1282,9 @@ public final class StringUtility {
 
 	/**
 	 * Determines if a character is whitespace.
-	 * A character is considered whitespace if it is either &lt;= (space) or
-	 * matches {@link Character#isWhitespace(char)}.
+	 * A character is considered whitespace if it is either <code>&lt;= '\u0020'</code>
+	 * (for compatibility with {@link String#trim()})
+	 * or matches {@link Character#isWhitespace(char)}.
 	 */
 	public static boolean isWhitespace(char ch) {
 		return ch <= ' ' || Character.isWhitespace(ch);
@@ -1291,8 +1292,9 @@ public final class StringUtility {
 
 	/**
 	 * Determines if a code point is whitespace.
-	 * A character is considered whitespace if it is either &lt;= (space) or
-	 * matches {@link Character#isWhitespace(char)}.
+	 * A code point is considered whitespace if it is either <code>&lt;= '\u0020'</code>
+	 * (for compatibility with {@link String#trim()})
+	 * or matches {@link Character#isWhitespace(int)}.
 	 */
 	public static boolean isWhitespace(int codePoint) {
 		return codePoint <= ' ' || Character.isWhitespace(codePoint);
