@@ -64,6 +64,8 @@ public final class StringUtility {
 		return MONTHS[month];
 	}
 
+	// TODO: This list is probably not very complete from a Unicode perspective.
+	// TDOO: What does the Character class offer?
 	private static final char[] wordWrapChars = { ' ', '\t', '-', '=', ',', ';' };
 
 	private static final String lineSeparator = System.getProperty("line.separator");
@@ -562,30 +564,55 @@ public final class StringUtility {
 
 	/**
 	 * Splits a <code>String</code> into a <code>String[]</code>.
+	 *
+	 * @see  #isWhitespace(int)
 	 */
+	// TODO: Just return List<String> instead or processing in two passes.
 	public static String[] splitString(String line) {
-		int len=line.length();
-		int wordCount=0;
-		int pos=0;
-		while(pos<len) {
+		int len = line.length();
+		int wordCount = 0;
+		int pos = 0;
+		while(pos < len) {
 			// Skip past blank space
-			while(pos<len&&line.charAt(pos)<=' ') pos++;
-			int start=pos;
+			int cp;
+			while(
+				pos < len
+				&& isWhitespace(cp = line.codePointAt(pos))
+			) {
+				pos += Character.charCount(cp);
+			}
+			int start = pos;
 			// Skip to the next blank space
-			while(pos<len&&line.charAt(pos)>' ') pos++;
-			if(pos>start) wordCount++;
+			while(
+				pos < len
+				&& !isWhitespace(cp = line.codePointAt(pos))
+			) {
+				pos += Character.charCount(cp);
+			}
+			if(pos > start) wordCount++;
 		}
 
-		String[] words=new String[wordCount];
+		String[] words = new String[wordCount];
 
-		int wordPos=0;
-		pos=0;
-		while(pos<len) {
+		int wordPos = 0;
+		pos = 0;
+		while(pos < len) {
 			// Skip past blank space
-			while(pos<len&&line.charAt(pos)<=' ') pos++;
-			int start=pos;
+			int cp;
+			while(
+				pos < len
+				&& isWhitespace(cp = line.codePointAt(pos))
+			) {
+				pos += Character.charCount(cp);
+			}
+			int start = pos;
 			// Skip to the next blank space
-			while(pos<len&&line.charAt(pos)>' ') pos++;
+			while(
+				pos < len
+				&& !isWhitespace(cp = line.codePointAt(pos))
+			) {
+				pos += Character.charCount(cp);
+			}
 			if(pos>start) words[wordPos++]=line.substring(start,pos);
 		}
 
@@ -594,35 +621,61 @@ public final class StringUtility {
 
 	/**
 	 * Splits a <code>String</code> into a <code>String[]</code>.
+	 *
+	 * @see  #isWhitespace(int)
+	 *
+	 * @deprecated  It is highly unlikely this method is still used
 	 */
+	@Deprecated
 	public static int splitString(String line, char[][][] buff) {
-		int len=line.length();
-		int wordCount=0;
-		int pos=0;
-		while(pos<len) {
+		int len = line.length();
+		int wordCount = 0;
+		int pos = 0;
+		while(pos < len) {
 			// Skip past blank space
-			while(pos<len&&line.charAt(pos)<=' ') pos++;
-			int start=pos;
+			int cp;
+			while(
+				pos < len
+				&& isWhitespace(cp = line.codePointAt(pos))
+			) {
+				pos += Character.charCount(cp);
+			}
+			int start = pos;
 			// Skip to the next blank space
-			while(pos<len&&line.charAt(pos)>' ') pos++;
+			while(
+				pos < len
+				&& !isWhitespace(cp = line.codePointAt(pos))
+			) {
+				pos += Character.charCount(cp);
+			}
 			if(pos>start) wordCount++;
 		}
 
-		char[][] words=buff[0];
-		if(words==null || words.length<wordCount) buff[0]=words=new char[wordCount][];
+		char[][] words = buff[0];
+		if(words == null || words.length < wordCount) buff[0] = words = new char[wordCount][];
 
-		int wordPos=0;
-		pos=0;
-		while(pos<len) {
+		int wordPos = 0;
+		pos = 0;
+		while(pos < len) {
 			// Skip past blank space
-			while(pos<len&&line.charAt(pos)<=' ') pos++;
-			int start=pos;
+			int cp;
+			while(
+				pos < len
+				&& isWhitespace(cp = line.codePointAt(pos))
+			) {
+				pos += Character.charCount(cp);
+			}
+			int start = pos;
 			// Skip to the next blank space
-			while(pos<len&&line.charAt(pos)>' ') pos++;
-			if(pos>start) {
-				int chlen=pos-start;
-				char[] tch=words[wordPos++]=new char[chlen];
-				System.arraycopy(line.toCharArray(), start, tch, 0, chlen);
+			while(
+				pos < len
+				&& !isWhitespace(cp = line.codePointAt(pos))
+			) {
+				pos += Character.charCount(cp);
+			}
+			if(pos > start) {
+				char[] tch = words[wordPos++] = new char[pos - start];
+				line.getChars(start, pos, tch, 0);
 			}
 		}
 
@@ -631,32 +684,59 @@ public final class StringUtility {
 
 	/**
 	 * Splits a <code>String</code> into a <code>String[]</code>.
+	 *
+	 * @see  #isWhitespace(int)
+	 *
+	 * @deprecated  It is highly unlikely this method is still used
 	 */
+	@Deprecated
 	public static int splitString(String line, String[][] buff) {
-		int len=line.length();
-		int wordCount=0;
-		int pos=0;
-		while(pos<len) {
+		int len = line.length();
+		int wordCount = 0;
+		int pos = 0;
+		while(pos < len) {
 			// Skip past blank space
-			while(pos<len&&line.charAt(pos)<=' ') pos++;
-			int start=pos;
+			int cp;
+			while(
+				pos < len
+				&& isWhitespace(cp = line.codePointAt(pos))
+			) {
+				pos += Character.charCount(cp);
+			}
+			int start = pos;
 			// Skip to the next blank space
-			while(pos<len&&line.charAt(pos)>' ') pos++;
-			if(pos>start) wordCount++;
+			while(
+				pos < len
+				&& !isWhitespace(cp = line.codePointAt(pos))
+			) {
+				pos += Character.charCount(cp);
+			}
+			if(pos > start) wordCount++;
 		}
 
-		String[] words=buff[0];
-		if(words==null || words.length<wordCount) buff[0]=words=new String[wordCount];
+		String[] words = buff[0];
+		if(words == null || words.length < wordCount) buff[0] = words = new String[wordCount];
 
-		int wordPos=0;
-		pos=0;
-		while(pos<len) {
+		int wordPos = 0;
+		pos = 0;
+		while(pos < len) {
 			// Skip past blank space
-			while(pos<len&&line.charAt(pos)<=' ') pos++;
-			int start=pos;
+			int cp;
+			while(
+				pos < len
+				&& isWhitespace(cp = line.codePointAt(pos))
+			) {
+				pos += Character.charCount(cp);
+			}
+			int start = pos;
 			// Skip to the next blank space
-			while(pos<len&&line.charAt(pos)>' ') pos++;
-			if(pos>start) words[wordPos++]=line.substring(start, pos);
+			while(
+				pos < len
+				&& !isWhitespace(cp = line.codePointAt(pos))
+			) {
+				pos += Character.charCount(cp);
+			}
+			if(pos > start) words[wordPos++] = line.substring(start, pos);
 		}
 
 		return wordCount;
@@ -668,8 +748,9 @@ public final class StringUtility {
 	 *
 	 * @return  the modifiable list from the split
 	 */
+	// TODO: Deprecate in favor of a codepoint version
 	public static List<String> splitString(String line, char delim) {
-		return splitString(line, 0, line.length(), delim, new ArrayList<String>());
+		return splitString(line, 0, line.length(), delim, new ArrayList<>());
 	}
 
 	/**
@@ -680,6 +761,7 @@ public final class StringUtility {
 	 *
 	 * @return  the collection provided in words parameter
 	 */
+	// TODO: Deprecate in favor of a codepoint version
 	public static <C extends Collection<String>> C splitString(String line, char delim, C words) {
 		return splitString(line, 0, line.length(), delim, words);
 	}
@@ -690,8 +772,9 @@ public final class StringUtility {
 	 *
 	 * @return  the modifiable list from the split
 	 */
+	// TODO: Deprecate in favor of a codepoint version
 	public static List<String> splitString(String line, int begin, int end, char delim) {
-		return splitString(line, begin, end, delim, new ArrayList<String>());
+		return splitString(line, begin, end, delim, new ArrayList<>());
 	}
 
 	/**
@@ -702,6 +785,7 @@ public final class StringUtility {
 	 *
 	 * @return  the collection provided in words parameter
 	 */
+	// TODO: Deprecate in favor of a codepoint version
 	public static <C extends Collection<String>> C splitString(String line, int begin, int end, char delim, C words) {
 		int pos = begin;
 		while (pos < end) {
@@ -718,7 +802,7 @@ public final class StringUtility {
 
 	public static List<String> splitString(String line, String delim) {
 		int delimLen = delim.length();
-		if(delimLen==0) throw new IllegalArgumentException("Delimiter may not be empty");
+		if(delimLen == 0) throw new IllegalArgumentException("Delimiter may not be empty");
 		List<String> words = new ArrayList<>();
 		int len = line.length();
 		int pos = 0;
@@ -734,28 +818,44 @@ public final class StringUtility {
 			}
 		}
 		// If ending in a delimeter, add the empty string
-		if(len>=delimLen && line.endsWith(delim)) words.add("");
+		if(len >= delimLen && line.endsWith(delim)) words.add("");
 
 		return words;
 	}
 
 	/**
-	 * Splits a string into multiple words on either whitespace or commas
-	 * @return java.lang.String[]
-	 * @param line java.lang.String
+	 * Splits a string into multiple words on either whitespace or commas.
+	 *
+	 * @return  The list of non-empty strings.
+	 *
+	 * @see  #isWhitespace(int)
 	 */
 	public static List<String> splitStringCommaSpace(String line) {
-		List<String> words=new ArrayList<>();
-		int len=line.length();
-		int pos=0;
-		while(pos<len) {
+		List<String> words = new ArrayList<>();
+		int len = line.length();
+		int pos = 0;
+		while(pos < len) {
 			// Skip past blank space
-			char ch;
-			while(pos<len && ((ch=line.charAt(pos))<=' ' || ch==',')) pos++;
-			int start=pos;
+			int cp;
+			while(
+				pos < len
+				&& (
+					(cp = line.codePointAt(pos)) == ','
+					|| isWhitespace(cp)
+				)
+			) {
+				pos += Character.charCount(cp);
+			}
+			int start = pos;
 			// Skip to the next blank space
-			while(pos<len && (ch=line.charAt(pos))>' ' && ch!=',') pos++;
-			if(pos>start) words.add(line.substring(start,pos));
+			while(
+				pos < len
+				&& (cp = line.codePointAt(pos)) != ','
+				&& !isWhitespace(cp)
+			) {
+				pos += Character.charCount(cp);
+			}
+			if(pos > start) words.add(line.substring(start, pos));
 		}
 		return words;
 	}
