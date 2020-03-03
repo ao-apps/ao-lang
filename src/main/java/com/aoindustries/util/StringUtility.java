@@ -33,6 +33,7 @@ import java.util.List;
 /**
  * @author  AO Industries, Inc.
  */
+// TODO: Move to the com.aoindustries.text package, along with other text-related classes (ao-lang 4.0.0)
 public final class StringUtility {
 
 	/**
