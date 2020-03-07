@@ -32,7 +32,6 @@ final public class ContentType {
 	 */
 	private ContentType() {}
 
-
 	/**
 	 * A CSS stylesheet.
 	 */
