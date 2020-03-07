@@ -32,13 +32,6 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 	<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>3.4.0-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
-	<properties>
-		<javaVersion>1.8</javaVersion>
-		<compiler.bootclasspath>${bootclasspath.jdk8}</compiler.bootclasspath>
-		<javac.bootclasspath>${bootclasspath.jdk8}</javac.bootclasspath>
-		<javac.link.javaApi>${javac.link.javaApi.jdk8}</javac.link.javaApi>
-	</properties>
-
 	<name>AO Lang</name>
 	<url>https://aoindustries.com/ao-lang/</url>
 	<description>Minimal Java library with no external dependencies shared by many other projects.</description>
@@ -61,7 +54,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 						<groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId>
 						<configuration>
 							<links>
-								<link>${javac.link.javaApi}</link>
+								<link>${javadoc.link.javase}</link>
 								<!-- Javadoc-only -->
 								<link>https://commons.apache.org/proper/commons-collections/javadocs/api-4.4/</link>
 								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.9/</link>

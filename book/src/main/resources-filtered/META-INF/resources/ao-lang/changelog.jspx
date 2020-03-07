@@ -105,12 +105,12 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 					<li>
 						<p>
 							New class <code><ao:a href="apidocs/com/aoindustries/lang/Iterables.html">Iterables</ao:a></code> with
-							a set of various <code><ao:a rel="nofollow" href="@{javac.link.javaApi}java/util/Iterable.html">Iterable</ao:a></code> over common Java types,
+							a set of various <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Iterable.html">Iterable</ao:a></code> over common Java types,
 							useful to avoid conflict after type erasure.
 						</p>
 						<p>
 							Sometimes different method overloads want to accept different types of
-							<code><ao:a rel="nofollow" href="@{javac.link.javaApi}java/util/Iterable.html">Iterable</ao:a></code>, but they cannot due to conflict after type erasure.
+							<code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Iterable.html">Iterable</ao:a></code>, but they cannot due to conflict after type erasure.
 						</p>
 					</li>
 				</ul>
@@ -144,7 +144,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 			<ul>
 				<li>
 					Added new variants of <code>StringUtility.indexOf(…)</code> that
-					accept a <code><ao:a rel="nofollow" href="@{javac.link.javaApi}java/util/BitSet.html">BitSet</ao:a></code>
+					accept a <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/BitSet.html">BitSet</ao:a></code>
 					of the characters to find.
 				</li>
 			</ul>
@@ -259,18 +259,18 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				</li>
 				<li>
 					<code><ao:a href="apidocs/com/aoindustries/util/MinimalList.html">MinimalList</ao:a></code> now represents
-					an empty list as using <code><ao:a rel="nofollow" href="@{javac.link.javaApi}java/util/Collections.html#emptyList()">Collections.emptyList()</ao:a></code>
+					an empty list as using <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Collections.html#emptyList()">Collections.emptyList()</ao:a></code>
 					instead of <code>null</code>.
 				</li>
 				<li>
 					<code><ao:a href="apidocs/com/aoindustries/util/MinimalMap.html">MinimalMap</ao:a></code> now represents
-					an empty map as using <code><ao:a rel="nofollow" href="@{javac.link.javaApi}java/util/Collections.html#emptyMap()">Collections.emptyMap()</ao:a></code>
+					an empty map as using <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Collections.html#emptyMap()">Collections.emptyMap()</ao:a></code>
 					instead of <code>null</code>.
 				</li>
 				<li>
 					New methods in <code><ao:a href="apidocs/com/aoindustries/util/AoCollections.html">AoCollections</ao:a></code> to assist
-					in efficiently converting <code><ao:a rel="nofollow" href="@{javac.link.javaApi}java/lang/Iterable.html">Iterable</ao:a></code>
-					to different types of <code><ao:a rel="nofollow" href="@{javac.link.javaApi}java/util/Collection.html">Collection</ao:a></code>.
+					in efficiently converting <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Iterable.html">Iterable</ao:a></code>
+					to different types of <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Collection.html">Collection</ao:a></code>.
 				</li>
 				<li>
 					<p>
@@ -294,7 +294,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				</li>
 				<li>
 					New class <code><ao:a href="apidocs/com/aoindustries/lang/reflect/Classes.html">Classes</ao:a></code> to help when
-					dealing with <code><ao:a rel="nofollow" href="@{javac.link.javaApi}java/lang/Class.html">Class</ao:a></code>.
+					dealing with <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Class.html">Class</ao:a></code>.
 				</li>
 				<li>
 					New classes <code><ao:a href="apidocs/com/aoindustries/util/PolymorphicRegistry.html">PolymorphicRegistry</ao:a></code>
