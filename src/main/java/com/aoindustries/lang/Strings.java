@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.util;
+package com.aoindustries.lang;
 
 import com.aoindustries.io.Encoder;
 import java.io.IOException;
@@ -33,13 +33,12 @@ import java.util.List;
 /**
  * @author  AO Industries, Inc.
  */
-// TODO: Move to the com.aoindustries.text package, along with other text-related classes (ao-lang 4.0.0)
-public final class StringUtility {
+public final class Strings {
 
 	/**
 	 * Make no instances.
 	 */
-	private StringUtility() {
+	private Strings() {
 	}
 
 	private static final String[] MONTHS = {
@@ -569,6 +568,7 @@ public final class StringUtility {
 	 * @see  #isWhitespace(int)
 	 */
 	// TODO: Just return List<String> instead or processing in two passes.
+	// TODO: Rename just "split", and other methods shortened, too
 	public static String[] splitString(String line) {
 		int len = line.length();
 		int wordCount = 0;

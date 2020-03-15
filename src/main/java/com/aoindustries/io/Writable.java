@@ -22,7 +22,7 @@
  */
 package com.aoindustries.io;
 
-import com.aoindustries.util.StringUtility;
+import com.aoindustries.lang.Strings;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -175,7 +175,7 @@ public interface Writable  {
 	}
 
 	/**
-	 * Trims the contents of this writable, as per rules of {@link StringUtility#isWhitespace(int)},
+	 * Trims the contents of this writable, as per rules of {@link Strings#isWhitespace(int)},
 	 * returning the instance that represents this writable trimmed.
 	 * <p>
 	 * It will most likely be faster to check {@link #isFastToString()} and then trim the result

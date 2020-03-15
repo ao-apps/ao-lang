@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -124,11 +124,11 @@ public class HashedPassword {
 		/* Do not leak hash
 		return
 			'('
-			+ StringUtility.convertToHex(passwordSalt)
+			+ Strings.convertToHex(passwordSalt)
 			+ ", "
 			+ passwordIterations
 			+ ", "
-			+ StringUtility.convertToHex(passwordHash)
+			+ Strings.convertToHex(passwordHash)
 			+ ')'
 		;
 		 */
