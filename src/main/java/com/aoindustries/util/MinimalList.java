@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2014, 2016, 2017, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -32,8 +32,8 @@ import java.util.List;
  * MinimalList is most suited for building list-based data structures that use less
  * heap space than a pure ArrayList-based solution.
  * <p>
- * size=0: {@link Collections#emptyList()}<br />
- * size=1: {@link Collections#singletonList(java.lang.Object)}<br />
+ * size=0: {@link Collections#emptyList()}<br>
+ * size=1: {@link Collections#singletonList(java.lang.Object)}<br>
  * size=2: {@link ArrayList}
  * </p>
  *

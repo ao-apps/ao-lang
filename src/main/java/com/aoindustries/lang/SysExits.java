@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -43,7 +43,7 @@ package com.aoindustries.lang;
  *		the wrong number of arguments, a bad flag, a bad
  *		syntax in a parameter, or whatever.
  *	EX_DATAERR -- The input data was incorrect in some way.
- *		This should only be used for user's data & not
+ *		This should only be used for user's data &amp; not
  *		system files.
  *	EX_NOINPUT -- An input file (not a system file) did not
  *		exist or was not readable.  This could also include

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2014, 2016, 2017, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -38,8 +38,8 @@ import java.util.Objects;
  * Insertion order is maintained.
  * </p>
  * <p>
- * size=0: {@link Collections#emptyMap()}<br />
- * size=1: {@link Collections#singletonMap(java.lang.Object, java.lang.Object)}<br />
+ * size=0: {@link Collections#emptyMap()}<br>
+ * size=1: {@link Collections#singletonMap(java.lang.Object, java.lang.Object)}<br>
  * size=2: {@link LinkedHashMap}
  * </p>
  *

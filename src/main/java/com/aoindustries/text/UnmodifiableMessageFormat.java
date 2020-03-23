@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2011, 2016, 2017, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -50,7 +50,7 @@ public class UnmodifiableMessageFormat extends MessageFormat {
 	}
 
 	/**
-	 * @throws UnsupportedOperationException
+	 * @throws UnsupportedOperationException always
 	 */
 	@Override
 	public void setLocale(Locale locale) throws UnsupportedOperationException {
@@ -67,7 +67,7 @@ public class UnmodifiableMessageFormat extends MessageFormat {
 	}
 
 	/**
-	 * @throws UnsupportedOperationException
+	 * @throws UnsupportedOperationException always
 	 */
 	@Override
 	public void setFormatsByArgumentIndex(Format[] newFormats) throws UnsupportedOperationException {
@@ -75,7 +75,7 @@ public class UnmodifiableMessageFormat extends MessageFormat {
 	}
 
 	/**
-	 * @throws UnsupportedOperationException
+	 * @throws UnsupportedOperationException always
 	 */
 	@Override
 	public void setFormats(Format[] newFormats) throws UnsupportedOperationException {
@@ -83,7 +83,7 @@ public class UnmodifiableMessageFormat extends MessageFormat {
 	}
 
 	/**
-	 * @throws UnsupportedOperationException
+	 * @throws UnsupportedOperationException always
 	 */
 	@Override
 	public void setFormatByArgumentIndex(int argumentIndex, Format newFormat) throws UnsupportedOperationException {
@@ -91,7 +91,7 @@ public class UnmodifiableMessageFormat extends MessageFormat {
 	}
 
 	/**
-	 * @throws UnsupportedOperationException
+	 * @throws UnsupportedOperationException always
 	 */
 	@Override
 	public void setFormat(int formatElementIndex, Format newFormat) throws UnsupportedOperationException {

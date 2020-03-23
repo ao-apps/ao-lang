@@ -103,7 +103,7 @@ public class HashedPassword {
 
 	/**
 	 * @param salt  The provided parameter is zeroed
-	 * @param iterations
+	 * @param iterations  The number of has iterations
 	 * @param hash  The provided parameter is zeroed 
 	 */
 	public HashedPassword(
