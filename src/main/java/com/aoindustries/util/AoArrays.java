@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2013, 2014, 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -187,12 +187,7 @@ public class AoArrays {
 			// 3+ collections, use priority queue
 			PriorityQueue<AoCollections.PeekIterator<? extends V>> pq = new PriorityQueue<>(
 				numCollections,
-				new Comparator<AoCollections.PeekIterator<? extends V>>() {
-					@Override
-					public int compare(PeekIterator<? extends V> i1, PeekIterator<? extends V> i2) {
-						return comparator.compare(i1.peek(), i2.peek());
-					}
-				}
+				(i1, i2) -> comparator.compare(i1.peek(), i2.peek())
 			);
 			int totalSize = 0;
 			for(Collection<? extends V> collection : collections) {

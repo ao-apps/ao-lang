@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -82,31 +82,26 @@ public final class XmlUtils {
 	 * Iterates over a NodeList.
 	 */
 	public static Iterable<Node> iterableNodes(final NodeList nodeList) {
-		return new Iterable<Node>() {
+		return () -> new Iterator<Node>() {
+			int index = 0;
+
 			@Override
-			public Iterator<Node> iterator() {
-				return new Iterator<Node>() {
-					int index = 0;
+			public boolean hasNext() {
+				return index < nodeList.getLength();
+			}
 
-					@Override
-					public boolean hasNext() {
-						return index < nodeList.getLength();
-					}
+			@Override
+			public Node next() {
+				if(hasNext()) {
+					return nodeList.item(index++);
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
 
-					@Override
-					public Node next() {
-						if(hasNext()) {
-							return nodeList.item(index++);
-						} else {
-							throw new NoSuchElementException();
-						}
-					}
-
-					@Override
-					public void remove() throws UnsupportedOperationException {
-						throw new UnsupportedOperationException();
-					}
-				};
+			@Override
+			public void remove() throws UnsupportedOperationException {
+				throw new UnsupportedOperationException();
 			}
 		};
 	}
@@ -115,38 +110,33 @@ public final class XmlUtils {
 	 * Iterates over a NodeList, only returning Elements.
 	 */
 	public static Iterable<Element> iterableElements(final NodeList nodeList) {
-		return new Iterable<Element>() {
+		return () -> new Iterator<Element>() {
+			int index = 0;
+
 			@Override
-			public Iterator<Element> iterator() {
-				return new Iterator<Element>() {
-					int index = 0;
+			public boolean hasNext() {
+				// Skip past any non-elements
+				while(
+					index < nodeList.getLength()
+					&& !(nodeList.item(index) instanceof Element)
+				) {
+					index++;
+				}
+				return index < nodeList.getLength();
+			}
 
-					@Override
-					public boolean hasNext() {
-						// Skip past any non-elements
-						while(
-							index < nodeList.getLength()
-							&& !(nodeList.item(index) instanceof Element)
-						) {
-							index++;
-						}
-						return index < nodeList.getLength();
-					}
+			@Override
+			public Element next() {
+				if(hasNext()) {
+					return (Element)nodeList.item(index++);
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
 
-					@Override
-					public Element next() {
-						if(hasNext()) {
-							return (Element)nodeList.item(index++);
-						} else {
-							throw new NoSuchElementException();
-						}
-					}
-
-					@Override
-					public void remove() throws UnsupportedOperationException {
-						throw new UnsupportedOperationException();
-					}
-				};
+			@Override
+			public void remove() throws UnsupportedOperationException {
+				throw new UnsupportedOperationException();
 			}
 		};
 	}
@@ -156,43 +146,38 @@ public final class XmlUtils {
 	 * returning only returning child elements of the given name.
 	 */
 	public static Iterable<Element> iterableChildElementsByTagName(final Element element, final String childTagName) {
-		return new Iterable<Element>() {
+		return () -> new Iterator<Element>() {
+			NodeList children = element.getChildNodes();
+			int index = 0;
+
 			@Override
-			public Iterator<Element> iterator() {
-				return new Iterator<Element>() {
-					NodeList children = element.getChildNodes();
-					int index = 0;
-
-					@Override
-					public boolean hasNext() {
-						// Skip past any non-elements
-						while(index < children.getLength()) {
-							Node child = children.item(index);
-							if(child instanceof Element) {
-								Element childElem = (Element)child;
-								if(childTagName.equals(childElem.getTagName())) {
-									break;
-								}
-							}
-							index++;
-						}
-						return index < children.getLength();
-					}
-
-					@Override
-					public Element next() {
-						if(hasNext()) {
-							return (Element)children.item(index++);
-						} else {
-							throw new NoSuchElementException();
+			public boolean hasNext() {
+				// Skip past any non-elements
+				while(index < children.getLength()) {
+					Node child = children.item(index);
+					if(child instanceof Element) {
+						Element childElem = (Element)child;
+						if(childTagName.equals(childElem.getTagName())) {
+							break;
 						}
 					}
+					index++;
+				}
+				return index < children.getLength();
+			}
 
-					@Override
-					public void remove() throws UnsupportedOperationException {
-						throw new UnsupportedOperationException();
-					}
-				};
+			@Override
+			public Element next() {
+				if(hasNext()) {
+					return (Element)children.item(index++);
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+
+			@Override
+			public void remove() throws UnsupportedOperationException {
+				throw new UnsupportedOperationException();
 			}
 		};
 	}

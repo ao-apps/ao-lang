@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -67,38 +67,33 @@ public class ProcessResult {
 		// Read stderr in background thread
 		final String[] stderrWrapper = new String[1];
 		final IOException[] stderrException = new IOException[1];
-		Thread stderrThread = new Thread(
-			new Runnable() {
-				@Override
-				public void run() {
-					StringBuilder stderrBuilder = null; // Instantiated when first needed
+		Thread stderrThread = new Thread(() -> {
+			StringBuilder stderrBuilder = null; // Instantiated when first needed
+			try {
+				try (Reader stderrIn = new InputStreamReader(process.getErrorStream(), charset)) {
+					char[] buff = BufferManager.getChars();
 					try {
-						try (Reader stderrIn = new InputStreamReader(process.getErrorStream(), charset)) {
-							char[] buff = BufferManager.getChars();
-							try {
-								int count;
-								while((count = stderrIn.read(buff, 0, BufferManager.BUFFER_SIZE)) != -1) {
-									if(count > 0) {
-										if(stderrBuilder == null) stderrBuilder = new StringBuilder(Math.max(count, 16));
-										stderrBuilder.append(buff, 0, count);
-									}
-								}
-							} finally {
-								BufferManager.release(buff, false);
+						int count;
+						while((count = stderrIn.read(buff, 0, BufferManager.BUFFER_SIZE)) != -1) {
+							if(count > 0) {
+								if(stderrBuilder == null) stderrBuilder = new StringBuilder(Math.max(count, 16));
+								stderrBuilder.append(buff, 0, count);
 							}
 						}
-					} catch(IOException exc) {
-						synchronized(stderrException) {
-							stderrException[0] = exc;
-						}
 					} finally {
-						synchronized(stderrWrapper) {
-							stderrWrapper[0] = stderrBuilder==null ? "" : stderrBuilder.toString();
-						}
+						BufferManager.release(buff, false);
 					}
 				}
+			} catch(IOException exc) {
+				synchronized(stderrException) {
+					stderrException[0] = exc;
+				}
+			} finally {
+				synchronized(stderrWrapper) {
+					stderrWrapper[0] = stderrBuilder==null ? "" : stderrBuilder.toString();
+				}
 			}
-		);
+		});
 		stderrThread.start();
 
 		try {

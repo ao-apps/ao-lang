@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2013, 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2012, 2013, 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -138,16 +138,13 @@ public class ZipUtils {
 		unzip(sourceFile, "", destination, null);
 	}
 
-	private static final Comparator<File> reverseFileComparator = new Comparator<File>() {
-		@Override
-		public int compare(File o1, File o2) {
-			try {
-				String path1 = o1.getCanonicalPath();
-				String path2 = o2.getCanonicalPath();
-				return path2.compareTo(path1);
-			} catch(IOException e) {
-				throw new WrappedException(e);
-			}
+	private static final Comparator<File> reverseFileComparator = (f1, f2) -> {
+		try {
+			String path1 = f1.getCanonicalPath();
+			String path2 = f2.getCanonicalPath();
+			return path2.compareTo(path1);
+		} catch(IOException e) {
+			throw new WrappedException(e);
 		}
 	};
 
