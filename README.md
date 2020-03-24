@@ -27,7 +27,7 @@ Minimal Java library with no external dependencies shared by many other projects
 * [Project Home](https://aoindustries.com/ao-lang/)
 * [Changelog](https://aoindustries.com/ao-lang/changelog)
 * [API Docs](https://aoindustries.com/ao-lang/apidocs/)
-* [Maven Central Repository](https://search.maven.org/#search%7Cgav%7C1%7Cg:%22com.aoindustries%22%20AND%20a:%22ao-lang%22)
+* [Maven Central Repository](https://search.maven.org/artifact/com.aoindustries/ao-lang)
 * [GitHub](https://github.com/aoindustries/ao-lang)
 
 ## Features
