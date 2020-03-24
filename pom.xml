@@ -56,13 +56,9 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 							<links>
 								<link>${javadoc.link.javase}</link>
 								<!-- Javadoc-only -->
-								<link>https://commons.apache.org/proper/commons-collections/javadocs/api-4.4/</link>
 								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.9/</link>
 							</links>
 							<additionalDependencies>
-								<additionalDependency>
-									<groupId>org.apache.commons</groupId><artifactId>commons-collections4</artifactId><version>4.4</version>
-								</additionalDependency>
 								<additionalDependency>
 									<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.9</version>
 								</additionalDependency>

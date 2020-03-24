@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2016, 2017, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,7 +22,7 @@
  */
 package com.aoindustries.io;
 
-import com.aoindustries.util.AoArrays;
+import com.aoindustries.lang.EmptyArrays;
 import com.aoindustries.util.i18n.ApplicationResourcesAccessor;
 import java.io.IOException;
 import java.io.Serializable;
@@ -44,7 +44,7 @@ public class LocalizedIOException extends IOException {
 		super(accessor.getMessage(key));
 		this.accessor = accessor;
 		this.key = key;
-		this.args = AoArrays.EMPTY_SERIALIZABLE_ARRAY;
+		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
 	public LocalizedIOException(ApplicationResourcesAccessor accessor, String key, Serializable... args) {
@@ -58,7 +58,7 @@ public class LocalizedIOException extends IOException {
 		super(accessor.getMessage(key), cause);
 		this.accessor = accessor;
 		this.key = key;
-		this.args = AoArrays.EMPTY_SERIALIZABLE_ARRAY;
+		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
 	public LocalizedIOException(Throwable cause, ApplicationResourcesAccessor accessor, String key, Serializable... args) {

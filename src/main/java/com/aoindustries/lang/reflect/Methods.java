@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2014, 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,7 +22,7 @@
  */
 package com.aoindustries.lang.reflect;
 
-import com.aoindustries.util.AoArrays;
+import com.aoindustries.lang.EmptyArrays;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -45,7 +45,7 @@ public final class Methods {
 	 * us the full reflection API.
 	 */
 	public static <T> T invoke(Class<T> returnType, Object target, String methodName) throws ReflectionException {
-		return invoke(returnType, target, methodName, AoArrays.EMPTY_CLASS_ARRAY, AoArrays.EMPTY_OBJECT_ARRAY);
+		return invoke(returnType, target, methodName, EmptyArrays.EMPTY_CLASS_ARRAY, EmptyArrays.EMPTY_OBJECT_ARRAY);
 	}
 
 	/**

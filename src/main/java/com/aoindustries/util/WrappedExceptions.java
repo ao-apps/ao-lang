@@ -23,6 +23,7 @@
 package com.aoindustries.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -47,7 +48,8 @@ public class WrappedExceptions extends RuntimeException {
 		for(Throwable cause : causes) {
 			if(cause!=null && !uniqueCauses.contains(cause)) uniqueCauses.add(cause);
 		}
-		return AoCollections.optimalUnmodifiableList(uniqueCauses);
+		// return AoCollections.optimalUnmodifiableList(uniqueCauses);
+		return Collections.unmodifiableList(uniqueCauses);
 	}
 
 	private final List<Throwable> causes;

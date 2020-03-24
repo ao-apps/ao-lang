@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2018  AO Industries, Inc.
+ * Copyright (C) 2018, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,7 +22,7 @@
  */
 package com.aoindustries.util.concurrent;
 
-import com.aoindustries.util.AoArrays;
+import com.aoindustries.lang.EmptyArrays;
 import com.aoindustries.util.i18n.ApplicationResourcesAccessor;
 import java.io.Serializable;
 import java.util.concurrent.TimeoutException;
@@ -44,7 +44,7 @@ public class LocalizedTimeoutException extends TimeoutException {
 		super(accessor.getMessage(key));
 		this.accessor = accessor;
 		this.key = key;
-		this.args = AoArrays.EMPTY_SERIALIZABLE_ARRAY;
+		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
 	public LocalizedTimeoutException(ApplicationResourcesAccessor accessor, String key, Serializable... args) {

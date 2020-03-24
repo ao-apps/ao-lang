@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,39 +20,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.util;
+package com.aoindustries.lang;
 
 import java.io.Serializable;
-import java.util.Comparator;
 
 /**
- * Orders objects by hashCode.
+ * Various empty array constants.
  *
  * @author  AO Industries, Inc.
  */
-final public class HashCodeComparator implements Comparator<Object>, Serializable {
+public class EmptyArrays {
 
-	private static final long serialVersionUID = 5468576960399075645L;
-
-	private static final HashCodeComparator singleton = new HashCodeComparator();
-
-	public static HashCodeComparator getInstance() {
-		return singleton;
+	private EmptyArrays() {
 	}
 
-	private HashCodeComparator() {
-	}
-
-	private Object readResolve() {
-		return singleton;
-	}
-
-	@Override
-	public int compare(Object o1, Object o2) {
-		int hash1 = o1.hashCode();
-		int hash2 = o2.hashCode();
-		if(hash1<hash2) return -1;
-		if(hash1>hash2) return 1;
-		return 0;
-	}
+	public static final byte[] EMPTY_BYTE_ARRAY = {};
+	public static final char[] EMPTY_CHAR_ARRAY = {};
+	public static final int[] EMPTY_INT_ARRAY = {};
+	public static final long[] EMPTY_LONG_ARRAY = {};
+	public static final Class<?>[] EMPTY_CLASS_ARRAY = {};
+	public static final Object[] EMPTY_OBJECT_ARRAY = {};
+	public static final Serializable[] EMPTY_SERIALIZABLE_ARRAY = {};
+	public static final String[] EMPTY_STRING_ARRAY = {};
 }

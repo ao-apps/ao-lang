@@ -34,7 +34,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		title="@{documented.name}"
 		description="@{documented.description}"
 		datePublished="2017-03-12T18:35:33-0500"
-		dateModified="2019-06-01T18:51:51-0500"
+		dateModified="2020-03-24T00:13:55-05:00"
 	>
 		<core:child page="changelog.jspx" />
 		<core:child page="apidocs/index.jspx" />
@@ -66,7 +66,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				<li>Small, simple, unfocused utilities that are generally extensions to the standard Java libraries.</li>
 				<li>Shared by many other projects and can be used to glue them together.</li>
 				<li>Small footprint, self-contained, no transitive dependencies - not part of a big monolithic package.</li>
-				<li>Java 1.7 implementation:
+				<li>Java 1.8 implementation:
 					<ul>
 						<li>Android compatible.</li>
 						<li>Java EE 6+ compatible.</li>
