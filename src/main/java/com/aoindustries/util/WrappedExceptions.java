@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2009, 2010, 2011, 2013, 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -33,6 +33,7 @@ import java.util.List;
  *
  * @author  AO Industries, Inc.
  */
+// TODO: Move to com.aoindustries.exception
 public class WrappedExceptions extends RuntimeException {
 
 	private static final long serialVersionUID = -3938902089134728394L;
