@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-0500"
-		dateModified="2020-03-25T01:39:42-05:00"
+		dateModified="2020-03-25T02:22:42-05:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-lang:pom.version}" />
@@ -52,87 +52,96 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				groupId="@{project.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
-			>
-				<ul>
-					<li>Minimum Java version changed from 1.7 to 1.8.</li>
-					<li>
-						Reduced use of property substitutions in <code>pom.xml</code>.
-						This is to help 3rd-party parsers that fail to perform full Maven-compatible substitutions.
-					</li>
-					<li>New wrappers to avoid closing streams and writers.</li>
-					<li>
-						New <code>appendTo(…)</code> methods on <code><ao:a href="apidocs/com/aoindustries/io/Writable.html">Writable</ao:a></code>
-						for use with <code>Appendable</code>.  Reasonably efficient default interface methods
-						are provided, but implementations may provide more optimal solutions.
-					</li>
-					<li>
-						New class <code><ao:a href="apidocs/com/aoindustries/io/AppendableWriter.html">AppendableWriter</ao:a></code>
-						that adapts <code>Writer</code> to <code>Appendable</code>.
-					</li>
-					<li>
-						Added support for trimming <code>String</code> and <code>CharSequence</code> based on
-						code points, with a value considered whitespace when it is either
-						<code>&lt;= '\u0020'</code> (for compatibility with <code>String.trim()</code>)
-						or <code>Character.isWhitespace(int)</code>.
-					</li>
-					<li>
-						<code>Writable</code> now trims based on
-						code points, with a value considered whitespace when it is either
-						<code>&lt;= '\u0020'</code> (for compatibility with <code>String.trim()</code>)
-						or <code>Character.isWhitespace(int)</code>.
-					</li>
-					<li>New static constants for various common content-type: <code>ContentType</code>.</li>
-					<li>Deprecated <code>com.aoindustries.time</code> package since now redundant with Java 8.</li>
-					<li>New package <code>com.aoindustries.exceptions</code>.</li>
-					<li>New static <code>SmartComparator.ROOT</code> for comparisons done in <code>Locale.ROOT</code>.</li>
-					<li>
-						<code>Strings</code> now splits based on
-						code points, with a value considered whitespace when it is either
-						<code>&lt;= '\u0020'</code> (for compatibility with <code>String.trim()</code>)
-						or <code>Character.isWhitespace(int)</code>.
-					</li>
-					<li>
-						New <code>@FunctionalInterface</code> interface <code>SerializableFunction</code>,
-						that unions <code>Function</code> and <code>Serializable</code>.
-					</li>
-					<li>
-						<p>
-							New class <code><ao:a href="apidocs/com/aoindustries/lang/Iterables.html">Iterables</ao:a></code> with
-							a set of various <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Iterable.html">Iterable</ao:a></code> over common Java types,
-							useful to avoid conflict after type erasure.
-						</p>
-						<p>
-							Sometimes different method overloads want to accept different types of
-							<code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Iterable.html">Iterable</ao:a></code>, but they cannot due to conflict after type erasure.
-						</p>
-					</li>
-					<li>Updated dependencies.</li>
-					<li>Moved and renamed classes:
-						<ol>
-							<li><code>com.aoindustries.util.StringUtility</code> → <code><ao:a href="apidocs/com/aoindustries/lang/Strings.html">Strings</ao:a></code></li>
-						</ol>
-					</li>
-					<li>
-						<code>com.aoindustries.security.NotAuthenticatedException</code> moved here from the old
-						<core:link book="/aocode-public" page="/index.jspx" /> project.
-						Resolves this split-package with <core:link book="/aocode-public" page="/index.jspx" />.
-					</li>
-					<li>Split collection-related utilities into new <core:link book="/ao-collections" page="/index.jspx" /> project.</li>
-					<li>Moved a few general-purpose exceptions to the new <code>com.aoindustries.exception</code> package:
-						<ol>
-							<li><code><ao:a href="apidocs/com/aoindustries/exception/NotImplementedException.html">NotImplementedException</ao:a></code></li>
-							<li><code><ao:a href="apidocs/com/aoindustries/exception/WrappedException.html">WrappedException</ao:a></code></li>
-							<li><code><ao:a href="apidocs/com/aoindustries/exception/WrappedExceptions.html">WrappedExceptions</ao:a></code></li>
-						</ol>
-					</li>
-					<li>Renamed <code>Strings.splitString(…)</code> to <code>Strings.split(…)</code>.</li>
-					<li>
-						Deprecated <code>SafeMath.multiply(long, long)</code>, please use
-						<code>Math.multiplyExact(long, long)</code>.</li>
-					</li>
-				</ul>
-			</changelog:release>
+			/>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="4.0.0"
+			datePublished="2020-03-25T02:22:42-05:00"
+			groupId="@{project.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{project.scm.url}"
+		>
+			<ul>
+				<li>Minimum Java version changed from 1.7 to 1.8.</li>
+				<li>
+					Reduced use of property substitutions in <code>pom.xml</code>.
+					This is to help 3rd-party parsers that fail to perform full Maven-compatible substitutions.
+				</li>
+				<li>New wrappers to avoid closing streams and writers.</li>
+				<li>
+					New <code>appendTo(…)</code> methods on <code><ao:a href="apidocs/com/aoindustries/io/Writable.html">Writable</ao:a></code>
+					for use with <code>Appendable</code>.  Reasonably efficient default interface methods
+					are provided, but implementations may provide more optimal solutions.
+				</li>
+				<li>
+					New class <code><ao:a href="apidocs/com/aoindustries/io/AppendableWriter.html">AppendableWriter</ao:a></code>
+					that adapts <code>Writer</code> to <code>Appendable</code>.
+				</li>
+				<li>
+					Added support for trimming <code>String</code> and <code>CharSequence</code> based on
+					code points, with a value considered whitespace when it is either
+					<code>&lt;= '\u0020'</code> (for compatibility with <code>String.trim()</code>)
+					or <code>Character.isWhitespace(int)</code>.
+				</li>
+				<li>
+					<code>Writable</code> now trims based on
+					code points, with a value considered whitespace when it is either
+					<code>&lt;= '\u0020'</code> (for compatibility with <code>String.trim()</code>)
+					or <code>Character.isWhitespace(int)</code>.
+				</li>
+				<li>New static constants for various common content-type: <code>ContentType</code>.</li>
+				<li>Deprecated <code>com.aoindustries.time</code> package since now redundant with Java 8.</li>
+				<li>New package <code>com.aoindustries.exceptions</code>.</li>
+				<li>New static <code>SmartComparator.ROOT</code> for comparisons done in <code>Locale.ROOT</code>.</li>
+				<li>
+					<code>Strings</code> now splits based on
+					code points, with a value considered whitespace when it is either
+					<code>&lt;= '\u0020'</code> (for compatibility with <code>String.trim()</code>)
+					or <code>Character.isWhitespace(int)</code>.
+				</li>
+				<li>
+					New <code>@FunctionalInterface</code> interface <code>SerializableFunction</code>,
+					that unions <code>Function</code> and <code>Serializable</code>.
+				</li>
+				<li>
+					<p>
+						New class <code><ao:a href="apidocs/com/aoindustries/lang/Iterables.html">Iterables</ao:a></code> with
+						a set of various <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Iterable.html">Iterable</ao:a></code> over common Java types,
+						useful to avoid conflict after type erasure.
+					</p>
+					<p>
+						Sometimes different method overloads want to accept different types of
+						<code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Iterable.html">Iterable</ao:a></code>, but they cannot due to conflict after type erasure.
+					</p>
+				</li>
+				<li>Updated dependencies.</li>
+				<li>Moved and renamed classes:
+					<ol>
+						<li><code>com.aoindustries.util.StringUtility</code> → <code><ao:a href="apidocs/com/aoindustries/lang/Strings.html">Strings</ao:a></code></li>
+					</ol>
+				</li>
+				<li>
+					<code>com.aoindustries.security.NotAuthenticatedException</code> moved here from the old
+					<core:link book="/aocode-public" page="/index.jspx" /> project.
+					Resolves this split-package with <core:link book="/aocode-public" page="/index.jspx" />.
+				</li>
+				<li>Split collection-related utilities into new <core:link book="/ao-collections" page="/index.jspx" /> project.</li>
+				<li>Moved a few general-purpose exceptions to the new <code>com.aoindustries.exception</code> package:
+					<ol>
+						<li><code><ao:a href="apidocs/com/aoindustries/exception/NotImplementedException.html">NotImplementedException</ao:a></code></li>
+						<li><code><ao:a href="apidocs/com/aoindustries/exception/WrappedException.html">WrappedException</ao:a></code></li>
+						<li><code><ao:a href="apidocs/com/aoindustries/exception/WrappedExceptions.html">WrappedExceptions</ao:a></code></li>
+					</ol>
+				</li>
+				<li>Renamed <code>Strings.splitString(…)</code> to <code>Strings.split(…)</code>.</li>
+				<li>
+					Deprecated <code>SafeMath.multiply(long, long)</code>, please use
+					<code>Math.multiplyExact(long, long)</code>.</li>
+				</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
