@@ -32,6 +32,11 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 	<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.0.0-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
+	<properties>
+		<!-- Dependencies -->
+		<org.apache.commons:commons-lang3:version>3.9</org.apache.commons:commons-lang3:version>
+	</properties>
+
 	<name>AO Lang</name>
 	<url>https://aoindustries.com/ao-lang/</url>
 	<description>Minimal Java library with no external dependencies shared by many other projects.</description>
@@ -56,11 +61,11 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 							<links>
 								<link>${javadoc.link.javase}</link>
 								<!-- Javadoc-only -->
-								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.9/</link>
+								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-${org.apache.commons:commons-lang3:version}/</link>
 							</links>
 							<additionalDependencies>
 								<additionalDependency>
-									<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.9</version>
+									<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${org.apache.commons:commons-lang3:version}</version>
 								</additionalDependency>
 							</additionalDependencies>
 						</configuration>
