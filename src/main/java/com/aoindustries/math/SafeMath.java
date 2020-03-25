@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2013, 2014, 2016, 2017, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2013, 2014, 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -24,7 +24,6 @@ package com.aoindustries.math;
 
 /**
  * Math routines that check for overflow conditions.
- * TODO: In Java 8, there are methods like addExact that should be used instead.
  *
  * @author  AO Industries, Inc.
  */
@@ -67,7 +66,7 @@ public class SafeMath {
 	}
 
 	/**
-	 * Casts lng to short, looking for any underflow or overflow.
+	 * Casts long to short, looking for any underflow or overflow.
 	 *
 	 * @exception  ArithmeticException  for underflow or overflow
 	 */
@@ -92,29 +91,12 @@ public class SafeMath {
 	 * Multiplies two longs, looking for any overflow.
 	 *
 	 * @exception  ArithmeticException  for overflow
+	 *
+	 * @deprecated  Please use {@link Math#multiplyExact(long, long)}
 	 */
+	@Deprecated
 	public static long multiply(long value1, long value2) {
-		if(value1 > value2) {
-			long t = value1;
-			value1 = value2;
-			value2 = t;
-		}
-		if(value1 < 0) {
-			if(value2 < 0) {
-				if(value1 > (Long.MAX_VALUE/value2)) throw new ArithmeticException("long*long overflow");
-			} else if(value2 > 0) {
-				if(value1 < (Long.MIN_VALUE/value2)) throw new ArithmeticException("long*long overflow");
-			} else {
-				// value2==0
-				return 0;
-			}
-		} else if(value1 > 0) {
-			if(value1 > (Long.MAX_VALUE/value2)) throw new ArithmeticException("long*long overflow");
-		} else {
-			// value1==0
-			return 0;
-		}
-		return value1 * value2;
+		return Math.multiplyExact(value1, value2);
 	}
 
 	/**
@@ -124,11 +106,13 @@ public class SafeMath {
 	 *
 	 * @return  The product or {@code 1} when no values
 	 *
-	 * @see #multiply(long, long)
+	 * @see Math#multiplyExact(long, long)
 	 */
 	public static long multiply(long ... values) {
 		long product = 1;
-		for(long value : values) product = multiply(product, value);
+		for(long value : values) {
+			product = Math.multiplyExact(product, value);
+		}
 		return product;
 	}
 
@@ -154,43 +138,4 @@ public class SafeMath {
 		for(int value : values) sum += value;
 		return (int)(sum / values.length);
 	}
-
-	/*
-	 * The following is an attempt to accomplish overflow checks using bit trickery only (no division)
-	public static void main(String[] args) {
-		for(int value1=1; value1<=16; value1++) {
-			int zeros1 = Integer.numberOfLeadingZeros(value1);
-			int bitCount1 = Integer.bitCount(value1);
-			for(int value2=1; value2<=16; value2++) {
-				int product = value1 * value2;
-				int zeros2 = Integer.numberOfLeadingZeros(value2);
-				int bitCount2 = Integer.bitCount(value2);
-				int calcZeros = Integer.numberOfLeadingZeros(value1+1) + Integer.numberOfLeadingZeros(value2+1) + 2;
-				//if(value1!=1 && (bitCount1+zeros1)==32) calcZeros--;
-				//if(value2!=1 && (bitCount2+zeros2)==32) calcZeros--;
-				int actualZeros = 32 + Integer.numberOfLeadingZeros(product);
-				System.out.println(Integer.toBinaryString(value1)+"*"+Integer.toBinaryString(value2)+"="+Integer.toBinaryString(product)+": "+calcZeros+"->"+actualZeros);
-				if(calcZeros!=actualZeros) {
-					System.out.flush();
-					try {
-						Thread.sleep(1000);
-					} catch(InterruptedException err) {
-						err.printStackTrace();
-					}
-					System.err.println("Check failed");
-					System.err.println("value1="+Integer.toBinaryString(value1));
-					System.err.println("value2="+Integer.toBinaryString(value2));
-					System.err.println("calcZeros="+calcZeros);
-					System.err.println("actualZeros="+actualZeros);
-					System.err.flush();
-					try {
-						Thread.sleep(1000);
-					} catch(InterruptedException err) {
-						err.printStackTrace();
-					}
-					//System.exit(1);
-				}
-			}
-		}
-	}*/
 }
