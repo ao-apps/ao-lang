@@ -20,21 +20,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.util;
+package com.aoindustries.exception;
 
+import com.aoindustries.util.ErrorPrinter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Wraps multiple exceptions into one.  ErrorPrinter will unwrap each exception
+ * Wraps multiple exceptions into one.  {@link ErrorPrinter} will unwrap each exception
  * into a single exception report.  Any exception provided more than once will
- * only be stored once.  The first exception is also passed to <code>initCause</code>.
- * Any null exception is ignored.
+ * only be stored once.  The first exception is also passed to {@link Throwable#initCause(java.lang.Throwable)}.
+ * Any {@code null} exception is ignored.
  *
  * @author  AO Industries, Inc.
  */
-// TODO: Move to com.aoindustries.exception
 public class WrappedExceptions extends RuntimeException {
 
 	private static final long serialVersionUID = -3938902089134728394L;

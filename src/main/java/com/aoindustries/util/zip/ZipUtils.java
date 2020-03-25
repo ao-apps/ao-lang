@@ -22,8 +22,8 @@
  */
 package com.aoindustries.util.zip;
 
+import com.aoindustries.exception.WrappedException;
 import com.aoindustries.io.IoUtils;
-import com.aoindustries.util.WrappedException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -223,7 +223,7 @@ public class ZipUtils {
 			if(zipFiles.length==1) {
 				unzip(zipFiles[0], "", destination, filter);
 			} else {
-				throw new com.aoindustries.lang.NotImplementedException("Implement merge feature when first needed");
+				throw new com.aoindustries.exception.NotImplementedException("Implement merge feature when first needed");
 			}
 		}
 	}

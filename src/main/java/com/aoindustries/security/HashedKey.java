@@ -22,8 +22,8 @@
  */
 package com.aoindustries.security;
 
+import com.aoindustries.exception.WrappedException;
 import com.aoindustries.io.IoUtils;
-import com.aoindustries.util.WrappedException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

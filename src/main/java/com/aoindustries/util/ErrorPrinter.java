@@ -22,6 +22,8 @@
  */
 package com.aoindustries.util;
 
+import com.aoindustries.exception.WrappedException;
+import com.aoindustries.exception.WrappedExceptions;
 import com.aoindustries.sql.WrappedSQLException;
 import java.io.Flushable;
 import java.io.IOException;

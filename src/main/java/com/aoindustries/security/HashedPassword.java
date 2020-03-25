@@ -22,7 +22,7 @@
  */
 package com.aoindustries.security;
 
-import com.aoindustries.util.WrappedException;
+import com.aoindustries.exception.WrappedException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;

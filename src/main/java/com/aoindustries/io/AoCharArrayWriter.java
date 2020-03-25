@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2015, 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -107,6 +107,6 @@ public class AoCharArrayWriter
 
 	@Override
 	public Writable trim() throws IOException {
-		throw new UnsupportedOperationException("TODO: Not supported yet.");
+		throw new com.aoindustries.exception.NotImplementedException("TODO: Not supported yet.");
 	}
 }

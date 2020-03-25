@@ -20,12 +20,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.util;
+package com.aoindustries.exception;
 
 /**
+ * <p>
+ * A wrapped exception may be used to rethrow checked exceptions in a context
+ * where they are otherwise not allowed.
+ * </p>
+ * <p>
+ * This could be accomplished by
+ * rethrowing with {@link RuntimeException} directly, but having this distinct
+ * class provides more meaning as well as the ability to catch wrapped
+ * exceptions while letting all other runtime exceptions go through directly.
+ * </p>
+ * <p>
+ * Catching wrapped exceptions may be used to unwrapped expected exception types.
+ * </p>
+ *
  * @author  AO Industries, Inc.
  */
-// TODO: Move to com.aoindustries.exception
 public class WrappedException extends RuntimeException {
 
 	private static final long serialVersionUID = -987777760527780052L;
