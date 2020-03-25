@@ -68,7 +68,7 @@ public class WrappedException extends RuntimeException {
 		this.extraInfo=null;
 	}
 
-	public WrappedException(Throwable cause, Object[] extraInfo) {
+	public WrappedException(Throwable cause, Object... extraInfo) {
 		super(cause);
 		this.extraInfo=extraInfo;
 	}
@@ -78,7 +78,7 @@ public class WrappedException extends RuntimeException {
 		this.extraInfo=null;
 	}
 
-	public WrappedException(String message, Throwable cause, Object[] extraInfo) {
+	public WrappedException(String message, Throwable cause, Object... extraInfo) {
 		super(message, cause);
 		this.extraInfo=extraInfo;
 	}

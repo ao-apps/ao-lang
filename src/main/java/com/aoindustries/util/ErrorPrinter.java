@@ -58,15 +58,15 @@ public class ErrorPrinter {
 	private ErrorPrinter() {}
 
 	public static void printStackTraces(Throwable T) {
-		printStackTraces(T, System.err, null);
+		printStackTraces(T, System.err, (Object[])null);
 	}
 
-	public static void printStackTraces(Throwable T, Object[] extraInfo) {
+	public static void printStackTraces(Throwable T, Object... extraInfo) {
 		printStackTraces(T, System.err, extraInfo);
 	}
 
 	public static void printStackTraces(Throwable T, Appendable out) {
-		printStackTraces(T, out, null);
+		printStackTraces(T, out, (Object[])null);
 	}
 
 	private static void appendln(Appendable out) {
@@ -115,8 +115,7 @@ public class ErrorPrinter {
 	 * Synchronizes on out to make sure concurrently reported errors will not be mixed.
 	 * If out is {@link Flushable}, will flush the output.
 	 */
-	// TODO: This Object[] might be best as varargs.  Review this and others
-	public static void printStackTraces(Throwable thrown, Appendable out, Object[] extraInfo) {
+	public static void printStackTraces(Throwable thrown, Appendable out, Object... extraInfo) {
 
 		synchronized(out) {
 			appendln(out);
@@ -393,14 +392,14 @@ public class ErrorPrinter {
 	 * as efficient as directly writing the report due to the extra buffering.
 	 */
 	public static String getStackTraces(Throwable T) {
-		return getStackTraces(T, null);
+		return getStackTraces(T, (Object[])null);
 	}
 
 	/**
 	 * Gets the entire exception report as a <code>String</code>.  This is not
 	 * as efficient as directly writing the report due to the extra buffering.
 	 */
-	public static String getStackTraces(Throwable thrown, Object[] extraInfo) {
+	public static String getStackTraces(Throwable thrown, Object... extraInfo) {
 		StringBuilder out = new StringBuilder();
 		printStackTraces(thrown, out, extraInfo);
 		return out.toString();
