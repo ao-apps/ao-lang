@@ -568,8 +568,7 @@ public final class Strings {
 	 * @see  #isWhitespace(int)
 	 */
 	// TODO: Just return List<String> instead or processing in two passes.
-	// TODO: Rename just "split", and other methods shortened, too
-	public static String[] splitString(String line) {
+	public static String[] split(String line) {
 		int len = line.length();
 		int wordCount = 0;
 		int pos = 0;
@@ -628,7 +627,7 @@ public final class Strings {
 	 * @deprecated  It is highly unlikely this method is still used
 	 */
 	@Deprecated
-	public static int splitString(String line, char[][][] buff) {
+	public static int split(String line, char[][][] buff) {
 		int len = line.length();
 		int wordCount = 0;
 		int pos = 0;
@@ -691,7 +690,7 @@ public final class Strings {
 	 * @deprecated  It is highly unlikely this method is still used
 	 */
 	@Deprecated
-	public static int splitString(String line, String[][] buff) {
+	public static int split(String line, String[][] buff) {
 		int len = line.length();
 		int wordCount = 0;
 		int pos = 0;
@@ -750,8 +749,8 @@ public final class Strings {
 	 * @return  the modifiable list from the split
 	 */
 	// TODO: Deprecate in favor of a codepoint version
-	public static List<String> splitString(String line, char delim) {
-		return splitString(line, 0, line.length(), delim, new ArrayList<>());
+	public static List<String> split(String line, char delim) {
+		return split(line, 0, line.length(), delim, new ArrayList<>());
 	}
 
 	/**
@@ -763,8 +762,8 @@ public final class Strings {
 	 * @return  the collection provided in words parameter
 	 */
 	// TODO: Deprecate in favor of a codepoint version
-	public static <C extends Collection<String>> C splitString(String line, char delim, C words) {
-		return splitString(line, 0, line.length(), delim, words);
+	public static <C extends Collection<String>> C split(String line, char delim, C words) {
+		return split(line, 0, line.length(), delim, words);
 	}
 
 	/**
@@ -774,8 +773,8 @@ public final class Strings {
 	 * @return  the modifiable list from the split
 	 */
 	// TODO: Deprecate in favor of a codepoint version
-	public static List<String> splitString(String line, int begin, int end, char delim) {
-		return splitString(line, begin, end, delim, new ArrayList<>());
+	public static List<String> split(String line, int begin, int end, char delim) {
+		return split(line, begin, end, delim, new ArrayList<>());
 	}
 
 	/**
@@ -787,7 +786,7 @@ public final class Strings {
 	 * @return  the collection provided in words parameter
 	 */
 	// TODO: Deprecate in favor of a codepoint version
-	public static <C extends Collection<String>> C splitString(String line, int begin, int end, char delim, C words) {
+	public static <C extends Collection<String>> C split(String line, int begin, int end, char delim, C words) {
 		int pos = begin;
 		while (pos < end) {
 			int start = pos;
@@ -801,7 +800,7 @@ public final class Strings {
 		return words;
 	}
 
-	public static List<String> splitString(String line, String delim) {
+	public static List<String> split(String line, String delim) {
 		int delimLen = delim.length();
 		if(delimLen == 0) throw new IllegalArgumentException("Delimiter may not be empty");
 		List<String> words = new ArrayList<>();
@@ -831,7 +830,7 @@ public final class Strings {
 	 *
 	 * @see  #isWhitespace(int)
 	 */
-	public static List<String> splitStringCommaSpace(String line) {
+	public static List<String> splitCommaSpace(String line) {
 		List<String> words = new ArrayList<>();
 		int len = line.length();
 		int pos = 0;
