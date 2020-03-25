@@ -106,6 +106,7 @@ public class AoCharArrayWriter
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public Writable trim() throws IOException {
 		throw new com.aoindustries.exception.NotImplementedException("TODO: Not supported yet.");
 	}
