@@ -104,6 +104,11 @@ final public class ContentType {
 	public static final String PNG = "image/png";
 
 	/**
+	 * A WebP image.
+	 */
+	public static final String WEBP = "image/webp";
+
+	/**
 	 * The PostgreSQL <code>psql</code> command line.
 	 */
 	public static final String PSQL = "text/x-psql";
