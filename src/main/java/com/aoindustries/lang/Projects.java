@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Utilities that help when working with {@link Package} and/or Maven projects.
@@ -37,6 +39,8 @@ import java.util.function.Function;
  * @author  AO Industries, Inc.
  */
 public final class Projects {
+
+	private static final Logger logger = Logger.getLogger(Projects.class.getName());
 
 	/**
 	 * Make no instances.
@@ -49,11 +53,25 @@ public final class Projects {
 	 */
 	public static String readVersion(Function<String,InputStream> getResourceAsStream, String groupId, String artifactId) throws IOException {
 		String version = null;
-		try (InputStream in = getResourceAsStream.apply("/META-INF/maven/" + groupId + '/' + artifactId + "/pom.properties")) {
+		String resource = "/META-INF/maven/" + groupId + '/' + artifactId + "/pom.properties";
+		try (InputStream in = getResourceAsStream.apply(resource)) {
 			if(in != null) {
 				Properties p = new Properties();
 				p.load(in);
 				version = p.getProperty("version");
+				if(version != null) {
+					if(logger.isLoggable(Level.FINE)) {
+						logger.log(Level.FINE, "Version \"" + version + "\" found from resource: " + resource);
+					}
+				} else {
+					if(logger.isLoggable(Level.WARNING)) {
+						logger.log(Level.WARNING, "Resource does not contain \"version\": " + resource);
+					}
+				}
+			} else {
+				if(logger.isLoggable(Level.FINE)) {
+					logger.log(Level.FINE, "Resource not found: " + resource);
+				}
 			}
 		}
 		return version;
@@ -87,7 +105,14 @@ public final class Projects {
 	 */
 	public static String getVersion(ClassLoader cl, String groupId, String artifactId, String def) {
 		String version = getVersion(cl, groupId, artifactId);
-		return (version != null) ? version : def;
+		if(version == null) {
+			if(logger.isLoggable(Level.FINE)) {
+				logger.log(Level.FINE, "Using provided default version for project \"" + groupId + ":" + artifactId + "\": " + def);
+			}
+			return def;
+		} else {
+			return version;
+		}
 	}
 
 	/**
@@ -112,7 +137,14 @@ public final class Projects {
 	 */
 	public static String getVersion(String groupId, String artifactId, String def) {
 		String version = getVersion(groupId, artifactId);
-		return (version != null) ? version : def;
+		if(version == null) {
+			if(logger.isLoggable(Level.FINE)) {
+				logger.log(Level.FINE, "Using provided default version for project \"" + groupId + ":" + artifactId + "\": " + def);
+			}
+			return def;
+		} else {
+			return version;
+		}
 	}
 
 	/**
@@ -122,12 +154,30 @@ public final class Projects {
 	 * @return  The version or {@code null} when not found.
 	 */
 	public static String getVersion(Package pk) {
-		if(pk == null) return null;
-		String version = pk.getImplementationVersion();
-		if(version == null) {
-			version = pk.getSpecificationVersion();
+		if(pk == null) {
+			if(logger.isLoggable(Level.FINE)) {
+				logger.log(Level.FINE, "No package provided");
+			}
+			return null;
 		}
-		return version;
+		String version = pk.getImplementationVersion();
+		if(version != null) {
+			if(logger.isLoggable(Level.FINE)) {
+				logger.log(Level.FINE, "Using implementation version \"" + version + "\" for package: " + pk);
+			}
+			return version;
+		}
+		version = pk.getSpecificationVersion();
+		if(version != null) {
+			if(logger.isLoggable(Level.FINE)) {
+				logger.log(Level.FINE, "Using specification version \"" + version + "\" for package: " + pk);
+			}
+			return version;
+		}
+		if(logger.isLoggable(Level.FINE)) {
+			logger.log(Level.FINE, "Did not find any version information for package: " + pk);
+		}
+		return null;
 	}
 
 	/**
@@ -138,7 +188,14 @@ public final class Projects {
 	 */
 	public static String getVersion(Package pk, String def) {
 		String version = getVersion(pk);
-		return (version != null) ? version : def;
+		if(version == null) {
+			if(logger.isLoggable(Level.FINE)) {
+				logger.log(Level.FINE, "Using provided default version for package \"" + pk + "\": " + def);
+			}
+			return def;
+		} else {
+			return version;
+		}
 	}
 
 	/**
@@ -179,6 +236,13 @@ public final class Projects {
 	 */
 	public static String getVersion(Class<?> clazz, String groupId, String artifactId, String def) {
 		String version = getVersion(clazz, groupId, artifactId);
-		return (version != null) ? version : def;
+		if(version == null) {
+			if(logger.isLoggable(Level.FINE)) {
+				logger.log(Level.FINE, "Using provided default version for project \"" + groupId + ":" + artifactId + "\" or class \"" + clazz + "\": " + def);
+			}
+			return def;
+		} else {
+			return version;
+		}
 	}
 }
