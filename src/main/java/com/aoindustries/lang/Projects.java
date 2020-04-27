@@ -97,7 +97,8 @@ public final class Projects {
 	}
 
 	/**
-	 * Gets the version from a Maven <code>pom.properties</code> file and the given classloader.
+	 * Gets the version from a Maven <code>pom.properties</code> file and the given classloader,
+	 * falling back to the provided default.
 	 *
 	 * @param  cl  The classloader to use.  When {@code null}, will use {@link ClassLoader#getSystemResourceAsStream(java.lang.String)}.
 	 *
@@ -128,7 +129,8 @@ public final class Projects {
 	}
 
 	/**
-	 * Gets the version from a Maven <code>pom.properties</code> file.
+	 * Gets the version from a Maven <code>pom.properties</code> file,
+	 * falling back to the provided default.
 	 * <p>
 	 * Searches the unnamed module via {@link ClassLoader#getResourceAsStream(java.lang.String)}.
 	 * </p>
@@ -182,7 +184,7 @@ public final class Projects {
 
 	/**
 	 * Gets the version from {@link Package#getImplementationVersion()}, falling back
-	 * to {@link Package#getSpecificationVersion()}.
+	 * to {@link Package#getSpecificationVersion()} then the provided default.
 	 *
 	 * @return  The version or {@code null} when not found.
 	 */
@@ -227,7 +229,7 @@ public final class Projects {
 	/**
 	 * Gets the version from a Maven <code>pom.properties</code> file,
 	 * falling back to {@link Package#getImplementationVersion()} then
-	 * {@link Package#getSpecificationVersion()}.
+	 * {@link Package#getSpecificationVersion()} then the provided default.
 	 * <p>
 	 * Supports named modules via {@link Class#getResourceAsStream(java.lang.String)}.
 	 * </p>
