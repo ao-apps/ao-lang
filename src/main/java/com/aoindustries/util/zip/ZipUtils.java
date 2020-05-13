@@ -23,6 +23,7 @@
 package com.aoindustries.util.zip;
 
 import com.aoindustries.exception.WrappedException;
+import com.aoindustries.io.FileUtils;
 import com.aoindustries.io.IoUtils;
 import java.io.File;
 import java.io.FileInputStream;
@@ -153,7 +154,7 @@ public class ZipUtils {
 	 */
 	public static void unzip(File sourceFile, String sourcePrefix, File destination, ZipEntryFilter filter) throws IOException {
 		// Destination directory must exist
-		if(!destination.isDirectory()) throw new IOException("Not a directory: "+destination.getPath());
+		if(!destination.isDirectory()) throw new IOException("Not a directory: " + destination.getPath());
 		// Add trailing / to sourcePrefix if missing
 		if(!sourcePrefix.isEmpty() && !sourcePrefix.endsWith("/")) sourcePrefix += "/";
 		try (ZipFile zipFile = new ZipFile(sourceFile)) {
@@ -164,30 +165,30 @@ public class ZipUtils {
 			while(entries.hasMoreElements()) {
 				ZipEntry entry = entries.nextElement();
 				String name = entry.getName();
-				if(sourcePrefix.isEmpty() || name.startsWith(sourcePrefix)) {
+				if(name.startsWith(sourcePrefix)) {
 					name = name.substring(sourcePrefix.length());
 					if(!name.isEmpty()) {
 						if(filter==null || filter.accept(entry)) {
 							long entryTime = getZipEntryTime(entry);
 							if(entry.isDirectory()) {
-								name = name.substring(0, name.length()-1);
-								//System.out.println("Directory: "+name);
+								name = name.substring(0, name.length() - 1); // Strip trailing '/'
+								//System.out.println("Directory: " + name);
 								File directory = new File(destination, name);
-								if(!directory.exists()) directory.mkdirs();
-								if(entryTime!=-1) directoryModifyTimes.put(directory, entryTime);
+								if(!directory.exists()) FileUtils.mkdirs(directory);
+								if(entryTime != -1) directoryModifyTimes.put(directory, entryTime);
 							} else {
-								//System.out.println("File: "+name);
+								//System.out.println("File: " + name);
 								File file = new File(destination, name);
 								File directory = file.getParentFile();
-								if(!directory.exists()) directory.mkdirs();
-								if(file.exists()) throw new IOException("File exists: "+file.getPath());
+								if(!directory.exists()) FileUtils.mkdirs(directory);
+								if(file.exists()) throw new IOException("File exists: " + file.getPath());
 								try (InputStream in = zipFile.getInputStream(entry)) {
 									try (OutputStream out = new FileOutputStream(file)) {
 										long copyBytes = IoUtils.copy(in, out);
 										long size = entry.getSize();
-										if(size!=-1 && copyBytes!=size) throw new IOException("copyBytes!=size: "+copyBytes+"!="+size);
+										if(size != -1 && copyBytes != size) throw new IOException("copyBytes != size: " + copyBytes + " != " + size);
 									}
-									if(entryTime!=-1) file.setLastModified(entryTime);
+									if(entryTime != -1) file.setLastModified(entryTime);
 								}
 							}
 						}
@@ -197,7 +198,7 @@ public class ZipUtils {
 
 			// Pass two: go backwards through directories, setting the modification times
 			for(Map.Entry<File,Long> entry : directoryModifyTimes.entrySet()) {
-				//System.out.println("File: "+entry.getKey()+", mtime="+entry.getValue());
+				//System.out.println("File: " + entry.getKey() + ", mtime = " + entry.getValue());
 				entry.getKey().setLastModified(entry.getValue());
 			}
 		}
