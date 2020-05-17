@@ -64,6 +64,8 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 						<configuration>
 							<links>
 								<link>${javadoc.link.javase}</link>
+								<!-- Test Direct -->
+								<link>https://junit.org/junit4/javadoc/latest/</link>
 								<!-- Javadoc-only -->
 								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-${org.apache.commons.commons-lang3.version}/</link>
 							</links>
