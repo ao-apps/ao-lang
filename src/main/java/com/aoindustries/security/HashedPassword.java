@@ -39,7 +39,7 @@ import javax.crypto.spec.PBEKeySpec;
 public class HashedPassword {
 
 	/** From http://crackstation.net/hashing-security.htm */
-	private static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
+	private static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1"; // TODO: Change to PBKDF2WithHmacSHA512?
 
 	/** The number of bytes in the random salt. */
 	public static final int SALT_BYTES = 256 / 8;
