@@ -41,7 +41,6 @@ import java.util.concurrent.Callable;
  *
  * @author  AO Industries, Inc.
  */
-// TODO: Review uses of this class and convert to wrapChecked where cleaner
 public class WrappedException extends RuntimeException {
 
 	private static final long serialVersionUID = -987777760527780052L;
