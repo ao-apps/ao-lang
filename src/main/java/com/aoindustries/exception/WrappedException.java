@@ -22,6 +22,8 @@
  */
 package com.aoindustries.exception;
 
+import java.util.concurrent.Callable;
+
 /**
  * <p>
  * A wrapped exception may be used to rethrow checked exceptions in a context
@@ -39,9 +41,50 @@ package com.aoindustries.exception;
  *
  * @author  AO Industries, Inc.
  */
+// TODO: Review uses of this class and convert to wrapChecked where cleaner
 public class WrappedException extends RuntimeException {
 
 	private static final long serialVersionUID = -987777760527780052L;
+
+	public static <V> V wrapChecked(Callable<V> callable) {
+		try {
+			return callable.call();
+		} catch(Error | RuntimeException e) {
+			throw e;
+		} catch(Throwable t) {
+			throw new WrappedException(t);
+		}
+	}
+
+	public static <V> V wrapChecked(Callable<V> callable, Object... extraInfo) {
+		try {
+			return callable.call();
+		} catch(Error | RuntimeException e) {
+			throw e;
+		} catch(Throwable t) {
+			throw new WrappedException(t, extraInfo);
+		}
+	}
+
+	public static <V> V wrapChecked(Callable<V> callable, String message) {
+		try {
+			return callable.call();
+		} catch(Error | RuntimeException e) {
+			throw e;
+		} catch(Throwable t) {
+			throw new WrappedException(message, t);
+		}
+	}
+
+	public static <V> V wrapChecked(Callable<V> callable, String message, Object... extraInfo) {
+		try {
+			return callable.call();
+		} catch(Error | RuntimeException e) {
+			throw e;
+		} catch(Throwable t) {
+			throw new WrappedException(message, t, extraInfo);
+		}
+	}
 
 	private final Object[] extraInfo;
 
