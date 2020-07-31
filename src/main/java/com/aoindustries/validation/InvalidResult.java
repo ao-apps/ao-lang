@@ -60,4 +60,16 @@ final public class InvalidResult implements ValidationResult {
 	public String toString() {
 		return accessor.getMessage(key, (Object[])args);
 	}
+
+	public ApplicationResourcesAccessor getAccessor() {
+		return accessor;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public Serializable[] getArgs() {
+		return args;
+	}
 }
