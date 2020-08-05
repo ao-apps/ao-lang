@@ -253,7 +253,7 @@ public final class XmlUtils {
 	/**
 	 * See <a href="https://www.w3.org/TR/REC-xml/#NT-NameStartChar">Names and Tokens: NameStartChar</a>
 	 */
-	private static boolean isNameStartChar(int codePoint) {
+	public static boolean isNameStartChar(int codePoint) {
 		return
 			codePoint == ':'
 			|| (codePoint >= 'A' && codePoint <= 'Z')
@@ -276,7 +276,7 @@ public final class XmlUtils {
 	/**
 	 * See <a href="https://www.w3.org/TR/REC-xml/#NT-NameChar">Names and Tokens: NameChar</a>
 	 */
-	private static boolean isNameChar(int codePoint) {
+	public static boolean isNameChar(int codePoint) {
 		return
 			isNameStartChar(codePoint)
 			|| codePoint == '-'
@@ -288,26 +288,23 @@ public final class XmlUtils {
 	}
 
 	/**
-	 * Makes sure an ID is valid.
+	 * Makes sure a valid Name.
 	 *
 	 * <ol>
-	 * <li>See <a href="https://www.w3.org/TR/xhtml1/#C_8">C.8. Fragment Identifiers</a></li>
-	 * <li>See <a href="https://www.w3.org/TR/REC-xml/#id">Validity constraint: ID</a></li>
 	 * <li>See <a href="https://www.w3.org/TR/REC-xml/#NT-Name">Names and Tokens: Name</a></li>
 	 * </ol>
 	 */
-	public static boolean isValidId(String id) {
-		if(id == null) return false;
-		int len = id.length();
-		if(len == 0) return false;
-		int pos = 0;
-		int codePoint = id.codePointAt(pos);
+	public static boolean isValidName(String name, int begin, int end) {
+		if(name == null) return false;
+		if(begin >= end) return false;
+		int pos = begin;
+		int codePoint = name.codePointAt(pos);
 		pos += Character.charCount(codePoint);
 		if(!isNameStartChar(codePoint)) {
 			return false;
 		}
-		while(pos < len) {
-			codePoint = id.codePointAt(pos);
+		while(pos < end) {
+			codePoint = name.codePointAt(pos);
 			pos += Character.charCount(codePoint);
 			if(!isNameChar(codePoint)) {
 				return false;
@@ -317,11 +314,38 @@ public final class XmlUtils {
 	}
 
 	/**
+	 * Makes sure a valid Name.
+	 *
+	 * <ol>
+	 * <li>See <a href="https://www.w3.org/TR/REC-xml/#NT-Name">Names and Tokens: Name</a></li>
+	 * </ol>
+	 */
+	public static boolean isValidName(String name) {
+		return name != null && isValidName(name, 0, name.length());
+	}
+
+	/**
+	 * Makes sure an ID is valid.
+	 *
+	 * <ol>
+	 * <li>See <a href="https://www.w3.org/TR/xhtml1/#C_8">C.8. Fragment Identifiers</a></li>
+	 * <li>See <a href="https://www.w3.org/TR/REC-xml/#id">Validity constraint: ID</a></li>
+	 * </ol>
+	 *
+	 * @deprecated  Please use {@link #isValidName(java.lang.String)}, since
+	 *              "Values of type ID MUST match the Name production."
+	 */
+	@Deprecated
+	public static boolean isValidId(String id) {
+		return isValidName(id);
+	}
+
+	/**
 	 * Convert a couple other types of hyphens.
 	 * <a href="http://jkorpela.fi/dashes.html">http://jkorpela.fi/dashes.html</a>,
 	 * <a href="http://www.unicode.org/versions/Unicode12.0.0/ch06.pdf">Table 6-3</a>.
 	 */
-	private static boolean isHyphen(int codePoint) {
+	public static boolean isHyphen(int codePoint) {
 		return
 			codePoint == 0x002D
 			|| codePoint == 0x007E
@@ -364,7 +388,7 @@ public final class XmlUtils {
 	public static StringBuilder generateId(String template, String defaultId) {
 		NullArgumentException.checkNotNull(template, "template");
 		NullArgumentException.checkNotNull(defaultId, "defaultId");
-		assert isValidId(defaultId);
+		assert isValidName(defaultId);
 		final int len = template.length();
 		// First character must be [A-Za-z]
 		int pos = 0;
@@ -409,7 +433,7 @@ public final class XmlUtils {
 			int trimLen = id.length();
 			while(trimLen > 1 && isHyphen(id.charAt(trimLen - 1))) id.setLength(--trimLen);
 		}
-		assert isValidId(id.toString());
+		assert isValidName(id.toString());
 		return id;
 	}
 }
