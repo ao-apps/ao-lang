@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010-2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2010-2013, 2016, 2017, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -29,6 +29,7 @@ import com.aoindustries.lang.LocalizedIllegalArgumentException;
  *
  * @author  AO Industries, Inc.
  */
+// TODO: Extend IllegalArgumentException?  Would be major-version increment.
 public class ValidationException extends Exception {
 
 	private static final long serialVersionUID = -1153407618428602416L;
