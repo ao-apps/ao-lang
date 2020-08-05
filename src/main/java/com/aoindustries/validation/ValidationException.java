@@ -30,6 +30,7 @@ import com.aoindustries.lang.LocalizedIllegalArgumentException;
  * @author  AO Industries, Inc.
  */
 // TODO: Extend IllegalArgumentException?  Would be major-version increment.
+// TODO: Or extend javax.validation.ValidationException and deprecate this.
 public class ValidationException extends Exception {
 
 	private static final long serialVersionUID = -1153407618428602416L;
