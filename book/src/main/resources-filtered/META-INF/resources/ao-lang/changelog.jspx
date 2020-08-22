@@ -76,6 +76,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 							</li>
 						</ol>
 					</li>
+					<li>Additional utility methods for working with project version numbers.</li>
 				</ul>
 			</changelog:release>
 		</c:if>

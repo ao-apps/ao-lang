@@ -29,6 +29,8 @@ import java.util.Properties;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Utilities that help when working with {@link Package} and/or Maven projects.
@@ -246,5 +248,27 @@ public final class Projects {
 		} else {
 			return version;
 		}
+	}
+
+	private static final Pattern RELEASE = Pattern.compile("(.+)-([0-9]+)$");
+
+	/**
+	 * Some projects are packaged with an additional release beyond their effective version number,
+	 * separated by a single hypen.
+	 * This release is optional, and expected to be numeric only.
+	 */
+	public static String stripRelease(String version) {
+		Matcher matcher = RELEASE.matcher(version);
+		return matcher.matches() ? matcher.group(1) : version;
+	}
+
+	/**
+	 * Some projects are packaged with an additional release beyond their effective version number,
+	 * separated by a single hypen.
+	 * This release is optional, and expected to be numeric only.
+	 */
+	public static String getRelease(String version) {
+		Matcher matcher = RELEASE.matcher(version);
+		return matcher.matches() ? matcher.group(2) : null;
 	}
 }
