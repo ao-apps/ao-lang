@@ -25,6 +25,13 @@ package com.aoindustries.io;
 /**
  * Some content-type constants for use by various projects.
  */
+// Related to LocaleFilter.java
+// Related to NoSessionFilter.java
+// Related to SessionResponseWrapper.java
+// Related to LastModifiedServlet.java
+// Related to ao-mime-mappings/…/web-fragment.xml
+// Is ContentType.java
+// Related to MimeType.java
 final public class ContentType {
 
 	/**
@@ -150,4 +157,14 @@ final public class ContentType {
 	 */
 	@Deprecated
 	public static final String XML_OLD = "text/xml";
+
+	/**
+	 * See <a href="https://stackoverflow.com/a/40893366">css - MIME type as text/plain for Sass stylesheet in chrome - Stack Overflow</a>
+	 */
+	public static final String SASS = "text/x-sass";
+	
+	/**
+	 * See <a href="https://stackoverflow.com/a/40893366">css - MIME type as text/plain for Sass stylesheet in chrome - Stack Overflow</a>
+	 */
+	public static final String SCSS = "text/x-scss";
 }
