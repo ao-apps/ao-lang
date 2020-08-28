@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-0500"
-		dateModified="2020-08-24T01:21:45-05:00"
+		dateModified="2020-08-27T21:34:45-05:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-lang:pom.version}" />
@@ -52,38 +52,47 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				groupId="@{project.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
-			>
-				<ul>
-					<li>
-						New getter methods on <code>InvalidResult</code>, which can be used to defer message bundle
-						lookups.  For example, the invalid result may be converted to any of the various
-						<code>Localized*Exception</code> exceptions.
-					</li>
-					<li>Moved <code>Freezable</code> and <code>FrozenException</code> from <ao:a href="https://semanticcms.com/core/model/">SemanticCMS Core Model</ao:a>.</li>
-					<li><code>XmlUtils</code> improvements:
-						<ol>
-							<li>
-								Made <code>isNameStartChar(int)</code>, <code>isNameChar(int)</code>, and
-								<code>isHyphen(int)</code> public.
-							</li>
-							<li>
-								Renamed <code>isValidId(String)</code> to <code>isValidName(String)</code>, since
-								IDs are defined as being valid Name.
-							</li>
-							<li>
-								Created variant of <code>isValidName(String,int,int)</code> to validate a substring
-								without allocation.
-							</li>
-						</ol>
-					</li>
-					<li>Additional utility methods for working with project version numbers.</li>
-					<li>
-						Added Web development MIME types <code>text/x-sass</code> and <code>text/x-scss</code>,
-						per <ao:a href="https://stackoverflow.com/a/40893366">css - MIME type as text/plain for Sass stylesheet in chrome - Stack Overflow</ao:a>.
-					</li>
-				</ul>
-			</changelog:release>
+			/>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="4.5.0"
+			datePublished="2020-08-27T21:34:45-05:00"
+			groupId="@{project.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{project.scm.url}"
+		>
+			<ul>
+				<li>
+					New getter methods on <code>InvalidResult</code>, which can be used to defer message bundle
+					lookups.  For example, the invalid result may be converted to any of the various
+					<code>Localized*Exception</code> exceptions.
+				</li>
+				<li>Moved <code>Freezable</code> and <code>FrozenException</code> from <ao:a href="https://semanticcms.com/core/model/">SemanticCMS Core Model</ao:a>.</li>
+				<li><code>XmlUtils</code> improvements:
+					<ol>
+						<li>
+							Made <code>isNameStartChar(int)</code>, <code>isNameChar(int)</code>, and
+							<code>isHyphen(int)</code> public.
+						</li>
+						<li>
+							Renamed <code>isValidId(String)</code> to <code>isValidName(String)</code>, since
+							IDs are defined as being valid Name.
+						</li>
+						<li>
+							Created variant of <code>isValidName(String,int,int)</code> to validate a substring
+							without allocation.
+						</li>
+					</ol>
+				</li>
+				<li>Additional utility methods for working with project version numbers.</li>
+				<li>
+					Added Web development MIME types <code>text/x-sass</code> and <code>text/x-scss</code>,
+					per <ao:a href="https://stackoverflow.com/a/40893366">css - MIME type as text/plain for Sass stylesheet in chrome - Stack Overflow</ao:a>.
+				</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
