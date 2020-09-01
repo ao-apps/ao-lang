@@ -291,7 +291,7 @@ public class ErrorPrinter {
 					}
 				}
 			}
-		} catch(
+		} catch( // TODO: ReflectiveOperationException
 			// OK, future versions of JspException might not have getRootCause
 			NoSuchMethodException
 			// OK, future versions of JspException could make it private
@@ -318,7 +318,7 @@ public class ErrorPrinter {
 					}
 				}
 			}
-		} catch(
+		} catch( // TODO: ReflectiveOperationException
 			// OK, future versions of ServletException might not have getRootCause
 			NoSuchMethodException
 			// OK, future versions of ServletException could make it private

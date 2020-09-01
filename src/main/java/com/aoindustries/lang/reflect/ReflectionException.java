@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2013, 2016, 2017, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -25,6 +25,7 @@ package com.aoindustries.lang.reflect;
 /**
  * @author  AO Industries, Inc.
  */
+// TODO: Deprecate in favor of ReflectiveOperationException, which is a checked exception?
 public class ReflectionException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;

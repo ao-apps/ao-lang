@@ -92,7 +92,7 @@ public class GetOpt {
 		try {
 			Constructor<T> constructor = type.getConstructor(parseParamTypes);
 			return constructor.newInstance(value);
-		} catch(NoSuchMethodException | InstantiationException | IllegalAccessException err) {
+		} catch(NoSuchMethodException | InstantiationException | IllegalAccessException err) { // TODO: ReflectiveOperationException
 			throw new IllegalArgumentException(err);
 		} catch(InvocationTargetException err) {
 			throw new WrappedException(err);
