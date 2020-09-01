@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2015, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2013, 2015, 2016, 2017, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -171,7 +171,7 @@ final public class IoUtils {
 	 */
 	public static byte[] readFully(InputStream in) throws IOException {
 		ByteArrayOutputStream bout = new ByteArrayOutputStream();
-		IoUtils.copy(in, bout);
+		copy(in, bout);
 		return bout.toByteArray();
 	}
 
@@ -180,7 +180,7 @@ final public class IoUtils {
 	 */
 	public static String readFully(Reader in) throws IOException {
 		StringBuilder sb = new StringBuilder();
-		IoUtils.copy(in, sb);
+		copy(in, sb);
 		return sb.toString();
 	}
 

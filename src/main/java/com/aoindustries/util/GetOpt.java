@@ -70,7 +70,7 @@ public class GetOpt {
 		if(type==Character.TYPE || type==Character.class) {
 			int len = value.length();
 			if(value.length()!=1) throw new IllegalArgumentException("value.length!=1: "+len);
-			return (T)Character.valueOf(value.charAt(0));
+			return (T)(Character)value.charAt(0);
 		}
 		// public static valueOf(String) method
 		try {
