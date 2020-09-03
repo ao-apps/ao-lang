@@ -45,6 +45,7 @@ public class WrappedException extends RuntimeException {
 
 	private static final long serialVersionUID = -987777760527780052L;
 
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 	public static <V> V wrapChecked(Callable<V> callable) {
 		try {
 			return callable.call();
@@ -55,6 +56,7 @@ public class WrappedException extends RuntimeException {
 		}
 	}
 
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 	public static <V> V wrapChecked(Callable<V> callable, Object... extraInfo) {
 		try {
 			return callable.call();
@@ -65,6 +67,7 @@ public class WrappedException extends RuntimeException {
 		}
 	}
 
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 	public static <V> V wrapChecked(Callable<V> callable, String message) {
 		try {
 			return callable.call();
@@ -75,6 +78,7 @@ public class WrappedException extends RuntimeException {
 		}
 	}
 
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 	public static <V> V wrapChecked(Callable<V> callable, String message, Object... extraInfo) {
 		try {
 			return callable.call();
@@ -93,7 +97,7 @@ public class WrappedException extends RuntimeException {
 	@Deprecated
 	public WrappedException() {
 		super();
-		this.extraInfo=null;
+		this.extraInfo = null;
 	}
 
 	/**
@@ -102,29 +106,39 @@ public class WrappedException extends RuntimeException {
 	@Deprecated
 	public WrappedException(String message) {
 		super(message);
-		this.extraInfo=null;
+		this.extraInfo = null;
 	}
 
 	public WrappedException(Throwable cause) {
 		super(cause);
-		this.extraInfo=null;
+		this.extraInfo = null;
 	}
 
+	/**
+	 * @param  extraInfo No defensive copy
+	 */
 	public WrappedException(Throwable cause, Object... extraInfo) {
 		super(cause);
-		this.extraInfo=extraInfo;
+		this.extraInfo = extraInfo;
 	}
 
 	public WrappedException(String message, Throwable cause) {
 		super(message, cause);
-		this.extraInfo=null;
+		this.extraInfo = null;
 	}
 
+	/**
+	 * @param  extraInfo No defensive copy
+	 */
 	public WrappedException(String message, Throwable cause, Object... extraInfo) {
 		super(message, cause);
-		this.extraInfo=extraInfo;
+		this.extraInfo = extraInfo;
 	}
 
+	/**
+	 * @return  No defensive copy
+	 */
+	@SuppressWarnings("ReturnOfCollectionOrArrayField")
 	public Object[] getExtraInfo() {
 		return extraInfo;
 	}
