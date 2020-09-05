@@ -53,7 +53,7 @@ import java.util.ServiceLoader;
  */
 public class ErrorPrinter {
 
-	private static final String EOL = System.getProperty("line.separator");
+	private static final String EOL = System.lineSeparator();
 
 	private ErrorPrinter() {}
 

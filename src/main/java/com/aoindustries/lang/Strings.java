@@ -68,7 +68,7 @@ public final class Strings {
 	// TDOO: What does the Character class offer?
 	private static final char[] wordWrapChars = { ' ', '\t', '-', '=', ',', ';' };
 
-	private static final String lineSeparator = System.getProperty("line.separator");
+	private static final String lineSeparator = System.lineSeparator();
 
 	/**
 	 * Joins the string representation of objects on the provided delimiter.
