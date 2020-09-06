@@ -32,7 +32,6 @@ import java.lang.reflect.Method;
 import java.security.AccessControlException;
 import java.security.Permission;
 import java.sql.SQLException;
-import java.sql.SQLWarning;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
@@ -57,10 +56,12 @@ public class ErrorPrinter {
 
 	private ErrorPrinter() {}
 
+	@SuppressWarnings("UseOfSystemOutOrSystemErr")
 	public static void printStackTraces(Throwable T) {
 		printStackTraces(T, System.err, (Object[])null);
 	}
 
+	@SuppressWarnings("UseOfSystemOutOrSystemErr")
 	public static void printStackTraces(Throwable T, Object... extraInfo) {
 		printStackTraces(T, System.err, extraInfo);
 	}
@@ -199,28 +200,35 @@ public class ErrorPrinter {
 		}
 		return false;
 	}
+
+	private static void indent(Appendable out, int indent) {
+		for(int c = 0; c < indent; c++) {
+			append(' ', out);
+		}
+	}
+
 	private static void printThrowables(Throwable thrown, Appendable out, int indent, List<Throwable> closed) {
-		for(int c=0;c<indent;c++) append(' ', out);
+		indent(out, indent);
 		appendln(thrown.getClass().getName(), out);
 		printMessage(out, indent+4, "Message...........: ", thrown.getMessage());
 		printMessage(out, indent+4, "Localized Message.: ", thrown.getLocalizedMessage());
 		if(thrown instanceof SQLException) {
 			SQLException sql=(SQLException)thrown;
 			if(sql instanceof WrappedSQLException) printMessage(out, indent+4, "SQL Statement.....: ", ((WrappedSQLException)sql).getSqlString());
-			for(int c=0;c<(indent+4);c++) append(' ', out);
+			indent(out, indent + 4);
 			append("SQL Error Code....: ", out);
 			appendln(sql.getErrorCode(), out);
-			for(int c=0;c<(indent+4);c++) append(' ', out);
+			indent(out, indent + 4);
 			append("SQL State.........: ", out);
 			appendln(sql.getSQLState(), out);
 		} else if(thrown instanceof WrappedException) {
 			WrappedException wrapped=(WrappedException)thrown;
 			Object[] wrappedInfo=wrapped.getExtraInfo();
 			if(wrappedInfo!=null && wrappedInfo.length>0) {
-				for(int c=0;c<(indent+4);c++) append(' ', out);
+				indent(out, indent + 4);
 				appendln("Extra Information", out);
 				for (Object wi : wrappedInfo) {
-					for(int d=0;d<(indent+8);d++) append(' ', out);
+					indent(out, indent + 8);
 					appendln(wi, out);
 				}
 			}
@@ -228,19 +236,19 @@ public class ErrorPrinter {
 			try {
 				AccessControlException ace = (AccessControlException)thrown;
 				Permission permission = ace.getPermission();
-				for(int c=0;c<(indent+4);c++) append(' ', out);
+				indent(out, indent + 4);
 				append("Permission........: ", out);
 				appendln(permission, out);
 				if(permission!=null) {
-					for(int c=0;c<(indent+4);c++) append(' ', out);
+					indent(out, indent + 4);
 					append("Permission Class..: ", out);
 					appendln(permission.getClass().getName(), out);
 
-					for(int c=0;c<(indent+4);c++) append(' ', out);
+					indent(out, indent + 4);
 					append("Permission Name...: ", out);
 					appendln(permission.getName(), out);
 
-					for(int c=0;c<(indent+4);c++) append(' ', out);
+					indent(out, indent + 4);
 					append("Permission Actions: ", out);
 					appendln(permission.getActions(), out);
 				}
@@ -248,11 +256,11 @@ public class ErrorPrinter {
 				appendln("Permission........: Unable to get permission details: ", out); append(err.toString(), out);
 			}
 		}
-		for(int c=0;c<(indent+4);c++) append(' ', out);
+		indent(out, indent + 4);
 		appendln("Stack Trace", out);
 		StackTraceElement[] stack=thrown.getStackTrace();
 		for (StackTraceElement ste : stack) {
-			for(int d=0;d<(indent+8);d++) append(' ', out);
+			indent(out, indent + 8);
 			append("at ", out);
 			appendln(ste.toString(), out);
 		}
@@ -260,9 +268,9 @@ public class ErrorPrinter {
 			for(Throwable cause : ((WrappedExceptions)thrown).getCauses()) {
 				if(!isClosed(cause, closed)) {
 					closed.add(cause);
-					for(int c=0;c<(indent+4);c++) append(' ', out);
+					indent(out, indent + 4);
 					appendln("Caused By", out);
-					printThrowables(cause, out, indent+8, closed);
+					printThrowables(cause, out, indent + 8, closed);
 				}
 			}
 		} else {
@@ -270,9 +278,9 @@ public class ErrorPrinter {
 			if(cause!=null) {
 				if(!isClosed(cause, closed)) {
 					closed.add(cause);
-					for(int c=0;c<(indent+4);c++) append(' ', out);
+					indent(out, indent + 4);
 					appendln("Caused By", out);
-					printThrowables(cause, out, indent+8, closed);
+					printThrowables(cause, out, indent + 8, closed);
 				}
 			}
 		}
@@ -285,13 +293,13 @@ public class ErrorPrinter {
 				if(rootCause!=null) {
 					if(!isClosed(rootCause, closed)) {
 						closed.add(rootCause);
-						for(int c=0;c<(indent+4);c++) append(' ', out);
+						indent(out, indent + 4);
 						appendln("Caused By", out);
-						printThrowables(rootCause, out, indent+8, closed);
+						printThrowables(rootCause, out, indent + 8, closed);
 					}
 				}
 			}
-		} catch( // TODO: ReflectiveOperationException
+		} catch(
 			// OK, future versions of JspException might not have getRootCause
 			NoSuchMethodException
 			// OK, future versions of JspException could make it private
@@ -299,7 +307,7 @@ public class ErrorPrinter {
 			// Ignored because we are dealing with one exception at a time
 			// Afterall, this is the exception handling code
 			| InvocationTargetException
-			err
+			ignored
 		) {
 			// Do nothing
 		}
@@ -312,13 +320,13 @@ public class ErrorPrinter {
 				if(rootCause!=null) {
 					if(!isClosed(rootCause, closed)) {
 						closed.add(rootCause);
-						for(int c=0;c<(indent+4);c++) append(' ', out);
+						indent(out, indent + 4);
 						appendln("Caused By", out);
-						printThrowables(rootCause, out, indent+8, closed);
+						printThrowables(rootCause, out, indent + 8, closed);
 					}
 				}
 			}
-		} catch( // TODO: ReflectiveOperationException
+		} catch(
 			// OK, future versions of ServletException might not have getRootCause
 			NoSuchMethodException
 			// OK, future versions of ServletException could make it private
@@ -326,41 +334,37 @@ public class ErrorPrinter {
 			// Ignored because we are dealing with one exception at a time
 			// Afterall, this is the exception handling code
 			| InvocationTargetException
-			err
+			ignored
 		) {
 			// Do nothing
-		}
-		if(thrown instanceof SQLException) {
-			if(thrown instanceof SQLWarning) {
-				SQLWarning nextSQL=((SQLWarning)thrown).getNextWarning();
-				if(nextSQL!=null) {
-					if(!isClosed(nextSQL, closed)) {
-						closed.add(nextSQL);
-						printThrowables(nextSQL, out, indent, closed);
-					}
-				}
-			} else {
-				SQLException nextSQL=((SQLException)thrown).getNextException();
-				if(nextSQL!=null) {
-					if(!isClosed(nextSQL, closed)) {
-						closed.add(nextSQL);
-						printThrowables(nextSQL, out, indent, closed);
-					}
-				}
-			}
 		}
 		for(Throwable suppressed : thrown.getSuppressed()) {
 			if(!isClosed(suppressed, closed)) {
 				closed.add(suppressed);
-				for(int c=0;c<(indent+4);c++) append(' ', out);
+				indent(out, indent + 4);
 				appendln("Suppressed", out);
-				printThrowables(suppressed, out, indent+8, closed);
+				printThrowables(suppressed, out, indent + 8, closed);
+			}
+		}
+		if(thrown instanceof SQLException) {
+			SQLException nextSQL = ((SQLException)thrown).getNextException();
+			if(nextSQL != null) {
+				List<SQLException> nextSQLs = new ArrayList<>();
+				do {
+					if(!isClosed(nextSQL, closed)) {
+						nextSQLs.add(nextSQL);
+					}
+				} while ((nextSQL = nextSQL.getNextException()) != null);
+				closed.addAll(nextSQLs);
+				for(SQLException next : nextSQLs) {
+					printThrowables(next, out, indent, closed);
+				}
 			}
 		}
 	}
 
 	private static void printMessage(Appendable out, int indent, String label, String message) {
-		for(int c=0;c<indent;c++) append(' ', out);
+		indent(out, indent);
 		append(label, out);
 		if(message==null) {
 			appendln("null", out);
@@ -370,9 +374,9 @@ public class ErrorPrinter {
 			for(int c=0;c<messageLen;c++) {
 				char ch=message.charAt(c);
 				if(ch=='\n') {
-					int lineIndent=indent+label.length();
+					int lineIndent = indent + label.length();
 					appendln(out);
-					for(int d=0;d<lineIndent;d++) append(' ', out);
+					indent(out, lineIndent);
 				} else if(ch!='\r') append(ch, out);
 			}
 			appendln(out);

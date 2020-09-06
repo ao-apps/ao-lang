@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2009, 2010, 2011, 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2016, 2017, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -45,8 +45,8 @@ public class LocalesTest extends TestCase {
 		for(Locale locale : Locale.getAvailableLocales()) {
 			// Ignore locales with script or extensions for preload, since the rest of this API is unaware of them
 			if(
-				Locales.getScript(locale).isEmpty()
-				&& Locales.getExtensionKeys(locale).isEmpty()
+				locale.getScript().isEmpty()
+				&& locale.getExtensionKeys().isEmpty()
 			) {
 				Locale parsed = Locales.parseLocale(locale.toString());
 				//System.out.println(locale+"->"+parsed);

@@ -62,13 +62,22 @@ public final class Methods {
 	 * This is convenient, but not so fast.  Where repeated calls will be made to the method,
 	 * us the full reflection API.
 	 */
+	// TODO: varargs?
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 	public static <T> T invoke(Class<T> returnType, Object target, String methodName, Class<?>[] parameterTypes, Object[] parameterValues) throws ReflectionException {
 		try {
 			Method method = target.getClass().getMethod(methodName, parameterTypes);
 			Object result = method.invoke(target, parameterValues);
 			return returnType.cast(result);
-		} catch(NoSuchMethodException | IllegalAccessException | InvocationTargetException e) { // TODO: ReflectiveOperationException
-			throw new ReflectionException(e);
+		} catch(InvocationTargetException e) {
+			Throwable cause = e.getCause();
+			if(cause instanceof Error) throw (Error)cause;
+			if(cause instanceof RuntimeException) throw (RuntimeException)cause;
+			throw new ReflectionException(cause == null ? e : cause);
+		} catch(Error | RuntimeException e) {
+			throw e;
+		} catch(Throwable t) {
+			throw new ReflectionException(t);
 		}
 	}
 }

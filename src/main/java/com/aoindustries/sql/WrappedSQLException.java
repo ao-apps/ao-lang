@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2016, 2017, 2018, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -36,6 +36,7 @@ public class WrappedSQLException extends SQLException {
 
 	final private String sqlString;
 
+	// TODO: Deprecate in favor of a static wrapper method that will not wrap exceptions that are already WrappedSQLException
 	public WrappedSQLException(
 		SQLException initCause,
 		PreparedStatement pstmt

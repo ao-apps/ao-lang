@@ -23,7 +23,6 @@
 package com.aoindustries.util;
 
 import com.aoindustries.exception.WrappedException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -43,8 +42,6 @@ public class GetOpt {
 
 	private GetOpt() {
 	}
-
-	private static final Class<?>[] parseParamTypes = {String.class};
 
 	/**
 	 * Parses a String value to the provided type.
@@ -74,28 +71,31 @@ public class GetOpt {
 		}
 		// public static valueOf(String) method
 		try {
-			Method method = type.getMethod("valueOf", parseParamTypes);
+			Method method = type.getMethod("valueOf", String.class);
 			int modifiers = method.getModifiers();
 			if(Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers)) {
 				T result = (T)method.invoke(null, value);
 				if(result==null) throw new AssertionError("result==null");
 				return result;
 			}
-		} catch(NoSuchMethodException err) {
+		} catch(InvocationTargetException e) {
+			Throwable cause = e.getCause();
+			if(cause instanceof Error) throw (Error)cause;
+			if(cause instanceof RuntimeException) throw (RuntimeException)cause;
+			throw new WrappedException(cause == null ? e : cause);
+		} catch(NoSuchMethodException | IllegalAccessException e) {
 			// Fall-through to try constructor
-		} catch(IllegalAccessException err) {
-			throw new AssertionError(err);
-		} catch(InvocationTargetException err) {
-			throw new WrappedException(err);
 		}
 		// public constructor with single String parameter
 		try {
-			Constructor<T> constructor = type.getConstructor(parseParamTypes);
-			return constructor.newInstance(value);
-		} catch(NoSuchMethodException | InstantiationException | IllegalAccessException err) { // TODO: ReflectiveOperationException
-			throw new IllegalArgumentException(err);
-		} catch(InvocationTargetException err) {
-			throw new WrappedException(err);
+			return type.getConstructor(String.class).newInstance(value);
+		} catch(InvocationTargetException e) {
+			Throwable cause = e.getCause();
+			if(cause instanceof Error) throw (Error)cause;
+			if(cause instanceof RuntimeException) throw (RuntimeException)cause;
+			throw new WrappedException(cause == null ? e : cause);
+		} catch(NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+			throw new IllegalArgumentException(e);
 		}
 	}
 

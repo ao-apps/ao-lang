@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,11 +22,7 @@
  */
 package com.aoindustries.util.i18n;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Collections;
 import java.util.Locale;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -38,47 +34,6 @@ import java.util.concurrent.ConcurrentMap;
 public class Locales {
 
 	private Locales() {}
-
-	/**
-	 * Gets the script if Java 1.8 or "" if not Java 1.8.
-	 *
-	 * Java 1.8: Get rid of this and just call directly
-	 *
-	 * @see  Locale#getScript()
-	 */
-	static String getScript(Locale locale) {
-		try {
-			Method method = Locale.class.getMethod("getScript");
-			return (String)method.invoke(locale);
-		} catch(NoSuchMethodException e) {
-			return "";
-		} catch(IllegalAccessException e) {
-			throw new AssertionError("getScript() should be accessible", e);
-		} catch(InvocationTargetException e) {
-			throw new AssertionError("getScript() should not throw any exceptions", e);
-		}
-	}
-
-	/**
-	 * Gets the extension keys if Java 1.8 or "" if not Java 1.8.
-	 *
-	 * Java 1.8: Get rid of this and just call directly
-	 *
-	 * @see  Locale#getExtensionKeys()
-	 */
-	@SuppressWarnings("unchecked")
-	static Set<Character> getExtensionKeys(Locale locale) {
-		try {
-			Method method = Locale.class.getMethod("getExtensionKeys");
-			return (Set<Character>)method.invoke(locale);
-		} catch(NoSuchMethodException e) {
-			return Collections.emptySet();
-		} catch(IllegalAccessException e) {
-			throw new AssertionError("getExtensionKeys() should be accessible", e);
-		} catch(InvocationTargetException e) {
-			throw new AssertionError("getExtensionKeys() should not throw any exceptions", e);
-		}
-	}
 
 	// Was getting NullPointerException on class init, trying cache in separate class.
 	// It might have been due to memory exhausted in Tomcat, but this won't hurt.
@@ -142,8 +97,8 @@ public class Locales {
 			for(Locale locale : Locale.getAvailableLocales()) {
 				// Ignore locales with script or extensions for preload, since the rest of this API is unaware of them
 				if(
-					getScript(locale).isEmpty()
-					&& getExtensionKeys(locale).isEmpty()
+					locale.getScript().isEmpty()
+					&& locale.getExtensionKeys().isEmpty()
 				) {
 					//System.out.println("preload: " + locale.toString());
 					//System.out.println("preload.language     : " + locale.getLanguage());
