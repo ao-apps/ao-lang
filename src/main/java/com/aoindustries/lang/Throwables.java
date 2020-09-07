@@ -40,7 +40,6 @@ final public class Throwables {
 	 *
 	 * @return  {@code t1} when not null, otherwise {@code suppressed}.
 	 */
-	// TODO: Use this many place where makes code more robust
 	public static Throwable addSuppressed(Throwable t1, Throwable suppressed) {
 		if(suppressed != null) {
 			if(t1 == null) {
