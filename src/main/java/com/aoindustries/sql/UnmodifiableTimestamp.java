@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2013, 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2011, 2013, 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -63,13 +63,13 @@ final public class UnmodifiableTimestamp extends Timestamp implements Cloneable 
 		super(year, month, date, hour, minute, second, nano);
 	}
 
-    /**
-     * Return a copy of this object.
-     */
+	/**
+	 * Return a copy of this object.
+	 */
 	@Override
-    public UnmodifiableTimestamp clone() {
-        return (UnmodifiableTimestamp)super.clone();
-    }
+	public UnmodifiableTimestamp clone() {
+		return (UnmodifiableTimestamp)super.clone();
+	}
 
 	/**
 	 * @deprecated As of JDK version 1.1,

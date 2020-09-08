@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2012, 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -41,13 +41,13 @@ final public class UnmodifiableDate extends Date implements Cloneable {
 		super(date);
 	}
 
-    /**
-     * Return a copy of this object.
-     */
+	/**
+	 * Return a copy of this object.
+	 */
 	@Override
-    public UnmodifiableDate clone() {
-        return (UnmodifiableDate)super.clone();
-    }
+	public UnmodifiableDate clone() {
+		return (UnmodifiableDate)super.clone();
+	}
 
 	@Deprecated
 	@Override
