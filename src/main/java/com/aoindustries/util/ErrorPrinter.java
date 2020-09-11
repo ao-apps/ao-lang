@@ -59,11 +59,19 @@ public class ErrorPrinter {
 
 	private ErrorPrinter() {}
 
+	/**
+	 * @deprecated  Please use {@link #printStackTraces(java.lang.Throwable, java.lang.Appendable)} with {@link System#err}
+	 */
+	@Deprecated
 	@SuppressWarnings("UseOfSystemOutOrSystemErr")
 	public static void printStackTraces(Throwable T) {
 		printStackTraces(T, System.err, (Object[])null);
 	}
 
+	/**
+	 * @deprecated  Please use {@link #printStackTraces(java.lang.Throwable, java.lang.Appendable, java.lang.Object...)} with {@link System#err}
+	 */
+	@Deprecated
 	@SuppressWarnings("UseOfSystemOutOrSystemErr")
 	public static void printStackTraces(Throwable T, Object... extraInfo) {
 		printStackTraces(T, System.err, extraInfo);
