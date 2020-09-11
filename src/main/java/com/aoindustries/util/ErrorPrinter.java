@@ -50,6 +50,9 @@ import java.util.ServiceLoader;
  *
  * @author  AO Industries, Inc.
  */
+// TODO: Move to com.aoindustries.lang.Throwables?
+// TODO: Support SQLClientInfoException
+// TODO: Support MessagingException.getNextException?
 public class ErrorPrinter {
 
 	private static final String EOL = System.lineSeparator();
