@@ -22,6 +22,14 @@
  */
 package com.aoindustries.lang;
 
+import java.io.IOError;
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import javax.security.auth.login.AccountNotFoundException;
+import javax.security.auth.login.LoginException;
+
 /**
  * POSIX-compatible process exit values.
  *
@@ -139,6 +147,44 @@ public final class SysExits {
 
 	/* maximum listed value */
 	public static final int EX__MAX = 78;
+
+	/**
+	 * Gets a sysexit value for common exception types.
+	 *
+	 * @return  When {@code t} is null, returns {@link #EX_OK}, otherwise returns a non-zero sys exit best matching the
+	 *          given throwable.
+	 */
+	// TODO: Add more as-needed.  This is just off the top of my head.
+	public static int getSysExit(Throwable t) {
+		if(t == null) {
+			return EX_OK;
+		}
+		if(
+			t instanceof UnknownHostException
+			|| t instanceof java.rmi.UnknownHostException
+		) {
+			return EX_NOHOST;
+		}
+		if(t instanceof IOError || t instanceof IOException) {
+			return EX_IOERR;
+		}
+		if(t instanceof SQLException) {
+			return EX_DATAERR;
+		}
+		if(t instanceof AccountNotFoundException) {
+			return EX_NOUSER;
+		}
+		if(t instanceof RemoteException) {
+			return EX_PROTOCOL;
+		}
+		if(
+			t instanceof LoginException
+			|| t instanceof SecurityException
+		) {
+			return EX_NOPERM;
+		}
+		return EX_SOFTWARE;
+	}
 
 	/**
 	 * Make no instances.
