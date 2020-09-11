@@ -34,7 +34,7 @@ final public class AutoCloseables {
 	private AutoCloseables() {}
 
 	/**
-	 * Closes the given {@link AutoCloseable}, catching all {@link Throwable} except {@link ThreadDeath}.
+	 * Closes the given {@link AutoCloseable}, catching all {@link Throwable}.
 	 *
 	 * @param  t1  If not {@code null}, any new throwables will be added via {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
 	 *
@@ -45,8 +45,6 @@ final public class AutoCloseables {
 		if(closeable != null) {
 			try {
 				closeable.close();
-			} catch(ThreadDeath td) {
-				throw td;
 			} catch(Throwable t) {
 				t1 = Throwables.addSuppressed(t1, t);
 			}
@@ -55,7 +53,7 @@ final public class AutoCloseables {
 	}
 
 	/**
-	 * Closes the given {@link AutoCloseable}, catching all {@link Throwable} except {@link ThreadDeath}.
+	 * Closes the given {@link AutoCloseable}, catching all {@link Throwable}.
 	 *
 	 * @return  A new throwable or {@code null}
 	 */
@@ -64,7 +62,7 @@ final public class AutoCloseables {
 	}
 
 	/**
-	 * Closes all of the given {@link AutoCloseable} in order, catching all {@link Throwable} except {@link ThreadDeath}.
+	 * Closes all of the given {@link AutoCloseable} in order, catching all {@link Throwable}.
 	 *
 	 * @param  t1  If not {@code null}, any new throwables will be added via {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
 	 *
@@ -80,7 +78,7 @@ final public class AutoCloseables {
 	}
 
 	/**
-	 * Closes all of the given {@link AutoCloseable} in order, catching all {@link Throwable} except {@link ThreadDeath}.
+	 * Closes all of the given {@link AutoCloseable} in order, catching all {@link Throwable} except.
 	 *
 	 * @return  A new throwable or {@code null}
 	 */

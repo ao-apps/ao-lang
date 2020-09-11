@@ -34,6 +34,11 @@ final public class Throwables {
 
 	/**
 	 * Adds a suppressed exception, unless already in the list of suppressed exceptions.
+	 * <p>
+	 * When {@code suppressed} is a {@link ThreadDeath} and {@code t1} is not itself a {@link ThreadDeath},
+	 * {@code suppressed} will be returned instead, with {@code t1} added to it as suppressed.
+	 * This is to maintain the precedence of {@link ThreadDeath} for fail-fast behavior.
+	 * </p>
 	 *
 	 * @param  t1  The throwable to add to.  When {@code null}, {@code suppressed} is returned instead.
 	 * @param  suppressed  The suppressed throwable, skipped when {@code null}
@@ -45,6 +50,15 @@ final public class Throwables {
 			if(t1 == null) {
 				t1 = suppressed;
 			} else {
+				if(
+					suppressed instanceof ThreadDeath
+					&& !(t1 instanceof ThreadDeath)
+				) {
+					// Swap order to maintain fail-fast ThreadDeath
+					Throwable t = t1;
+					t1 = suppressed;
+					suppressed = t;
+				}
 				boolean found = false;
 				for(Throwable t : t1.getSuppressed()) {
 					if(t == suppressed) {
