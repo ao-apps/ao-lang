@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2016, 2017, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -26,7 +26,10 @@ package com.aoindustries.lang;
  * A method has been invoked on a disposed object.
  *
  * @see Disposable
+ *
+ * @deprecated  Please use {@link IllegalStateException}
  */
+@Deprecated
 public class DisposedException extends IllegalStateException {
 
 	private static final long serialVersionUID = 2L;
