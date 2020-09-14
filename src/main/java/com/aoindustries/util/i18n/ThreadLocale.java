@@ -22,6 +22,7 @@
  */
 package com.aoindustries.util.i18n;
 
+import com.aoindustries.lang.RunnableE;
 import com.aoindustries.util.concurrent.CallableE;
 import java.util.Locale;
 import java.util.concurrent.Callable;
@@ -109,6 +110,34 @@ final public class ThreadLocale {
 		try {
 			set(locale);
 			return callable.call();
+		} finally {
+			set(oldLocale);
+		}
+	}
+
+	/**
+	 * Changes the current thread locale and runs the Runnable.  The locale is
+	 * automatically restored.
+	 */
+	public static void run(Locale locale, Runnable runnable) {
+		Locale oldLocale = get();
+		try {
+			set(locale);
+			runnable.run();
+		} finally {
+			set(oldLocale);
+		}
+	}
+
+	/**
+	 * Changes the current thread locale and runs the RunnableE.  The locale is
+	 * automatically restored.
+	 */
+	public static <E extends Throwable> void run(Locale locale, RunnableE<E> runnable) throws E {
+		Locale oldLocale = get();
+		try {
+			set(locale);
+			runnable.run();
 		} finally {
 			set(oldLocale);
 		}
