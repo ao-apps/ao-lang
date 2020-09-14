@@ -22,6 +22,7 @@
  */
 package com.aoindustries.exception;
 
+import com.aoindustries.lang.Throwables;
 import java.util.concurrent.Callable;
 
 /**
@@ -45,47 +46,54 @@ public class WrappedException extends RuntimeException {
 
 	private static final long serialVersionUID = -987777760527780052L;
 
+	/**
+	 * Invokes the given callable, wrapping any checked exceptions.
+	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 	public static <V> V wrapChecked(Callable<V> callable) {
 		try {
 			return callable.call();
-		} catch(Error | RuntimeException e) {
-			throw e;
 		} catch(Throwable t) {
-			throw new WrappedException(t);
+			throw Throwables.wrap(t, WrappedException.class, WrappedException::new);
 		}
 	}
 
+	/**
+	 * Invokes the given callable, wrapping any checked exceptions.
+	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 	public static <V> V wrapChecked(Callable<V> callable, Object... extraInfo) {
 		try {
 			return callable.call();
-		} catch(Error | RuntimeException e) {
-			throw e;
 		} catch(Throwable t) {
-			throw new WrappedException(t, extraInfo);
+			throw Throwables.wrap(t, WrappedException.class,
+				cause -> new WrappedException(cause, extraInfo));
 		}
 	}
 
+	/**
+	 * Invokes the given callable, wrapping any checked exceptions.
+	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 	public static <V> V wrapChecked(Callable<V> callable, String message) {
 		try {
 			return callable.call();
-		} catch(Error | RuntimeException e) {
-			throw e;
 		} catch(Throwable t) {
-			throw new WrappedException(message, t);
+			throw Throwables.wrap(t, WrappedException.class,
+				cause -> new WrappedException(message, cause));
 		}
 	}
 
+	/**
+	 * Invokes the given callable, wrapping any checked exceptions.
+	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 	public static <V> V wrapChecked(Callable<V> callable, String message, Object... extraInfo) {
 		try {
 			return callable.call();
-		} catch(Error | RuntimeException e) {
-			throw e;
 		} catch(Throwable t) {
-			throw new WrappedException(message, t, extraInfo);
+			throw Throwables.wrap(t, WrappedException.class,
+				cause -> new WrappedException(message, cause, extraInfo));
 		}
 	}
 

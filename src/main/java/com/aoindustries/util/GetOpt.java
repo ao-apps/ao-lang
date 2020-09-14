@@ -23,6 +23,7 @@
 package com.aoindustries.util;
 
 import com.aoindustries.exception.WrappedException;
+import com.aoindustries.lang.Throwables;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -79,10 +80,9 @@ public class GetOpt {
 				return result;
 			}
 		} catch(InvocationTargetException e) {
+			// Unwrap cause for more direct stack traces
 			Throwable cause = e.getCause();
-			if(cause instanceof Error) throw (Error)cause;
-			if(cause instanceof RuntimeException) throw (RuntimeException)cause;
-			throw new WrappedException(cause == null ? e : cause);
+			throw Throwables.wrap((cause == null) ? e : cause, WrappedException.class, WrappedException::new);
 		} catch(NoSuchMethodException | IllegalAccessException e) {
 			// Fall-through to try constructor
 		}
@@ -90,10 +90,9 @@ public class GetOpt {
 		try {
 			return type.getConstructor(String.class).newInstance(value);
 		} catch(InvocationTargetException e) {
+			// Unwrap cause for more direct stack traces
 			Throwable cause = e.getCause();
-			if(cause instanceof Error) throw (Error)cause;
-			if(cause instanceof RuntimeException) throw (RuntimeException)cause;
-			throw new WrappedException(cause == null ? e : cause);
+			throw Throwables.wrap((cause == null) ? e : cause, WrappedException.class, WrappedException::new);
 		} catch(NoSuchMethodException | InstantiationException | IllegalAccessException e) {
 			throw new IllegalArgumentException(e);
 		}

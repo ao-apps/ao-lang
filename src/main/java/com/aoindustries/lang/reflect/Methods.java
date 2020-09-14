@@ -23,6 +23,7 @@
 package com.aoindustries.lang.reflect;
 
 import com.aoindustries.lang.EmptyArrays;
+import com.aoindustries.lang.Throwables;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -66,18 +67,17 @@ public final class Methods {
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 	public static <T> T invoke(Class<T> returnType, Object target, String methodName, Class<?>[] parameterTypes, Object[] parameterValues) throws ReflectionException {
 		try {
-			Method method = target.getClass().getMethod(methodName, parameterTypes);
-			Object result = method.invoke(target, parameterValues);
-			return returnType.cast(result);
-		} catch(InvocationTargetException e) {
-			Throwable cause = e.getCause();
-			if(cause instanceof Error) throw (Error)cause;
-			if(cause instanceof RuntimeException) throw (RuntimeException)cause;
-			throw new ReflectionException(cause == null ? e : cause);
-		} catch(Error | RuntimeException e) {
-			throw e;
+			try {
+				Method method = target.getClass().getMethod(methodName, parameterTypes);
+				Object result = method.invoke(target, parameterValues);
+				return returnType.cast(result);
+			} catch(InvocationTargetException e) {
+				// Unwrap cause for more direct stack traces
+				Throwable cause = e.getCause();
+				throw (cause == null) ? e : cause;
+			}
 		} catch(Throwable t) {
-			throw new ReflectionException(t);
+			throw Throwables.wrap(t, ReflectionException.class, ReflectionException::new);
 		}
 	}
 }

@@ -38,22 +38,27 @@ public class WrappedSQLException extends SQLException {
 
 	// TODO: Deprecate in favor of a static wrapper method that will not wrap exceptions that are already WrappedSQLException
 	public WrappedSQLException(
-		SQLException initCause,
+		SQLException cause,
 		PreparedStatement pstmt
 	) {
-		this(initCause, pstmt.toString());
+		this(cause, pstmt.toString());
 	}
 
 	public WrappedSQLException(
-		SQLException initCause,
+		SQLException cause,
 		String sqlString
 	) {
-		super(
-			initCause.getMessage() + "\nSQL:\n" + sqlString,
-			initCause.getSQLState(),
-			initCause.getErrorCode(),
-			initCause
+		this(
+			cause.getMessage() + System.lineSeparator() + "SQL:" + System.lineSeparator() + sqlString,
+			cause.getSQLState(),
+			cause.getErrorCode(),
+			cause,
+			sqlString
 		);
+	}
+
+	public WrappedSQLException(String reason, String sqlState, int vendorCode, Throwable cause, String sqlString) {
+		super(reason, sqlState, vendorCode, cause);
 		this.sqlString = sqlString;
 	}
 
