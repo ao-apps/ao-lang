@@ -20,16 +20,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.lang;
+package com.aoindustries.util.concurrent;
 
 /**
  * Callable interface with a bounded exception type.
- *
- * @deprecated  Please use {@link com.aoindustries.util.concurrent.CallableE}
  */
-@Deprecated
 @FunctionalInterface
-public interface CallableE<V,E extends Exception> {
+@SuppressWarnings("deprecation")
+public interface CallableE<V,E extends Throwable> {
 
 	V call() throws E;
 }
