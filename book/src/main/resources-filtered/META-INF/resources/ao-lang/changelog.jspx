@@ -74,6 +74,12 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 						must be able to throw checked exceptions.
 					</li>
 					<li>Added methods for <code>Runnable</code> and <code>RunnableE</code> to <code>ThreadLocale</code>.</li>
+					<li>
+						New utility class <code>ExecutionExceptions</code> for working with <code>ExecutionException</code>.
+						Currently provides functions to selectively wrap <code>ExecutionException</code> based on its
+						cause.  This way the exception types may be maintained without losing full stack traces, which
+						happens when rethrowing the cause directly.
+					</li>
 				</ul>
 			</changelog:release>
 		</c:if>
