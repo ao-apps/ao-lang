@@ -22,7 +22,9 @@
  */
 package com.aoindustries.exception;
 
+import com.aoindustries.lang.RunnableE;
 import com.aoindustries.lang.Throwables;
+import com.aoindustries.util.concurrent.CallableE;
 import java.util.concurrent.Callable;
 
 /**
@@ -50,7 +52,98 @@ public class WrappedException extends RuntimeException {
 	 * Invokes the given callable, wrapping any checked exceptions.
 	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+	public static <V> V call(Callable<V> callable) {
+		try {
+			return callable.call();
+		} catch(Throwable t) {
+			throw Throwables.wrap(t, WrappedException.class, WrappedException::new);
+		}
+	}
+
+	/**
+	 * Invokes the given callable, wrapping any checked exceptions.
+	 *
+	 * @deprecated  Please use {@link #call(java.util.concurrent.Callable)}
+	 */
+	@Deprecated
 	public static <V> V wrapChecked(Callable<V> callable) {
+		return call(callable);
+	}
+
+	/**
+	 * Invokes the given callable, wrapping any checked exceptions.
+	 */
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+	public static <V> V call(Callable<V> callable, Object... extraInfo) {
+		try {
+			return callable.call();
+		} catch(Throwable t) {
+			throw Throwables.wrap(t, WrappedException.class,
+				cause -> new WrappedException(cause, extraInfo));
+		}
+	}
+
+	/**
+	 * Invokes the given callable, wrapping any checked exceptions.
+	 *
+	 * @deprecated  Please use {@link #call(java.util.concurrent.Callable, java.lang.Object...)}
+	 */
+	@Deprecated
+	public static <V> V wrapChecked(Callable<V> callable, Object... extraInfo) {
+		return call(callable, extraInfo);
+	}
+
+	/**
+	 * Invokes the given callable, wrapping any checked exceptions.
+	 */
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+	public static <V> V call(Callable<V> callable, String message) {
+		try {
+			return callable.call();
+		} catch(Throwable t) {
+			throw Throwables.wrap(t, WrappedException.class,
+				cause -> new WrappedException(message, cause));
+		}
+	}
+
+	/**
+	 * Invokes the given callable, wrapping any checked exceptions.
+	 *
+	 * @deprecated  Please use {@link #call(java.util.concurrent.Callable, java.lang.String)}
+	 */
+	@Deprecated
+	public static <V> V wrapChecked(Callable<V> callable, String message) {
+		return call(callable, message);
+	}
+
+	/**
+	 * Invokes the given callable, wrapping any checked exceptions.
+	 */
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+	public static <V> V call(Callable<V> callable, String message, Object... extraInfo) {
+		try {
+			return callable.call();
+		} catch(Throwable t) {
+			throw Throwables.wrap(t, WrappedException.class,
+				cause -> new WrappedException(message, cause, extraInfo));
+		}
+	}
+
+	/**
+	 * Invokes the given callable, wrapping any checked exceptions.
+	 *
+	 * @deprecated  Please use {@link #call(java.util.concurrent.Callable, java.lang.String, java.lang.Object...)}
+	 */
+	@Deprecated
+	public static <V> V wrapChecked(Callable<V> callable, String message, Object... extraInfo) {
+		return call(callable, message, extraInfo);
+	}
+
+	/**
+	 * Invokes the given callable, wrapping any checked exceptions.
+	 */
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+	public static <V> V call(CallableE<V,?> callable) {
 		try {
 			return callable.call();
 		} catch(Throwable t) {
@@ -62,7 +155,7 @@ public class WrappedException extends RuntimeException {
 	 * Invokes the given callable, wrapping any checked exceptions.
 	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V wrapChecked(Callable<V> callable, Object... extraInfo) {
+	public static <V> V call(CallableE<V,?> callable, Object... extraInfo) {
 		try {
 			return callable.call();
 		} catch(Throwable t) {
@@ -75,7 +168,7 @@ public class WrappedException extends RuntimeException {
 	 * Invokes the given callable, wrapping any checked exceptions.
 	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V wrapChecked(Callable<V> callable, String message) {
+	public static <V> V call(CallableE<V,?> callable, String message) {
 		try {
 			return callable.call();
 		} catch(Throwable t) {
@@ -88,9 +181,60 @@ public class WrappedException extends RuntimeException {
 	 * Invokes the given callable, wrapping any checked exceptions.
 	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V wrapChecked(Callable<V> callable, String message, Object... extraInfo) {
+	public static <V> V call(CallableE<V,?> callable, String message, Object... extraInfo) {
 		try {
 			return callable.call();
+		} catch(Throwable t) {
+			throw Throwables.wrap(t, WrappedException.class,
+				cause -> new WrappedException(message, cause, extraInfo));
+		}
+	}
+
+	/**
+	 * Invokes the given runnable, wrapping any checked exceptions.
+	 */
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+	public static void run(RunnableE<?> runnable) {
+		try {
+			runnable.run();
+		} catch(Throwable t) {
+			throw Throwables.wrap(t, WrappedException.class, WrappedException::new);
+		}
+	}
+
+	/**
+	 * Invokes the given runnable, wrapping any checked exceptions.
+	 */
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+	public static void run(RunnableE<?> runnable, Object... extraInfo) {
+		try {
+			runnable.run();
+		} catch(Throwable t) {
+			throw Throwables.wrap(t, WrappedException.class,
+				cause -> new WrappedException(cause, extraInfo));
+		}
+	}
+
+	/**
+	 * Invokes the given runnable, wrapping any checked exceptions.
+	 */
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+	public static void run(RunnableE<?> runnable, String message) {
+		try {
+			runnable.run();
+		} catch(Throwable t) {
+			throw Throwables.wrap(t, WrappedException.class,
+				cause -> new WrappedException(message, cause));
+		}
+	}
+
+	/**
+	 * Invokes the given runnable, wrapping any checked exceptions.
+	 */
+	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+	public static void run(RunnableE<?> runnable, String message, Object... extraInfo) {
+		try {
+			runnable.run();
 		} catch(Throwable t) {
 			throw Throwables.wrap(t, WrappedException.class,
 				cause -> new WrappedException(message, cause, extraInfo));

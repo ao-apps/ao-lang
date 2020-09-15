@@ -80,6 +80,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 						cause.  This way the exception types may be maintained without losing full stack traces, which
 						happens when rethrowing the cause directly.
 					</li>
+					<li>Added methods for <code>CallableE</code> and <code>RunnableE</code> to <code>WrappedException</code>.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
