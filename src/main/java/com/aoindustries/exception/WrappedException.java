@@ -143,7 +143,7 @@ public class WrappedException extends RuntimeException {
 	 * Invokes the given callable, wrapping any checked exceptions.
 	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V call(CallableE<V,?> callable) {
+	public static <V> V callE(CallableE<V,?> callable) {
 		try {
 			return callable.call();
 		} catch(Throwable t) {
@@ -155,7 +155,7 @@ public class WrappedException extends RuntimeException {
 	 * Invokes the given callable, wrapping any checked exceptions.
 	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V call(CallableE<V,?> callable, Object... extraInfo) {
+	public static <V> V callE(CallableE<V,?> callable, Object... extraInfo) {
 		try {
 			return callable.call();
 		} catch(Throwable t) {
@@ -168,7 +168,7 @@ public class WrappedException extends RuntimeException {
 	 * Invokes the given callable, wrapping any checked exceptions.
 	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V call(CallableE<V,?> callable, String message) {
+	public static <V> V callE(CallableE<V,?> callable, String message) {
 		try {
 			return callable.call();
 		} catch(Throwable t) {
@@ -181,7 +181,7 @@ public class WrappedException extends RuntimeException {
 	 * Invokes the given callable, wrapping any checked exceptions.
 	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V call(CallableE<V,?> callable, String message, Object... extraInfo) {
+	public static <V> V callE(CallableE<V,?> callable, String message, Object... extraInfo) {
 		try {
 			return callable.call();
 		} catch(Throwable t) {
@@ -194,7 +194,7 @@ public class WrappedException extends RuntimeException {
 	 * Invokes the given runnable, wrapping any checked exceptions.
 	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static void run(RunnableE<?> runnable) {
+	public static void runE(RunnableE<?> runnable) {
 		try {
 			runnable.run();
 		} catch(Throwable t) {
@@ -206,7 +206,7 @@ public class WrappedException extends RuntimeException {
 	 * Invokes the given runnable, wrapping any checked exceptions.
 	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static void run(RunnableE<?> runnable, Object... extraInfo) {
+	public static void runE(RunnableE<?> runnable, Object... extraInfo) {
 		try {
 			runnable.run();
 		} catch(Throwable t) {
@@ -219,7 +219,7 @@ public class WrappedException extends RuntimeException {
 	 * Invokes the given runnable, wrapping any checked exceptions.
 	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static void run(RunnableE<?> runnable, String message) {
+	public static void runE(RunnableE<?> runnable, String message) {
 		try {
 			runnable.run();
 		} catch(Throwable t) {
@@ -232,7 +232,7 @@ public class WrappedException extends RuntimeException {
 	 * Invokes the given runnable, wrapping any checked exceptions.
 	 */
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static void run(RunnableE<?> runnable, String message, Object... extraInfo) {
+	public static void runE(RunnableE<?> runnable, String message, Object... extraInfo) {
 		try {
 			runnable.run();
 		} catch(Throwable t) {
