@@ -22,11 +22,15 @@
  */
 package com.aoindustries.util.concurrent;
 
+import java.util.concurrent.Callable;
+
 /**
  * Callable interface with a bounded exception type.
+ * <p>
+ * Furthermore, unlike {@link Callable}, can throw any {@link Throwable}.
+ * </p>
  */
 @FunctionalInterface
-@SuppressWarnings("deprecation")
 public interface CallableE<V,E extends Throwable> {
 
 	V call() throws E;
