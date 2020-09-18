@@ -44,7 +44,7 @@ final public class ThreadLocale {
 	};
 
 	/**
-	 * Gets the current thread's locale or the system default if not yet set.
+	 * Gets the current thread's locale or {@linkplain Locale#getDefault() the system default} if not yet set.
 	 */
 	public static Locale get() {
 		return locale.get();
@@ -52,7 +52,7 @@ final public class ThreadLocale {
 
 	/**
 	 * Sets the current thread's locale.  The locale is not automatically
-	 * restored.
+	 * restored and should be restored in a try/finally or equivalent.
 	 */
 	public static void set(Locale locale) {
 		if(locale==null) throw new IllegalArgumentException("locale==null");
@@ -60,10 +60,10 @@ final public class ThreadLocale {
 	}
 
 	/**
-	 * Changes the current thread locale and calls the Callable.  The locale is
+	 * Changes the current thread locale then calls the Callable.  The locale is
 	 * automatically restored.
 	 */
-	public static <V> V call(Locale locale, Callable<V> callable) throws Exception {
+	public static <V> V call(Locale locale, Callable<? extends V> callable) throws Exception {
 		Locale oldLocale = get();
 		try {
 			set(locale);
@@ -74,7 +74,7 @@ final public class ThreadLocale {
 	}
 
 	/**
-	 * Changes the current thread locale and calls the Callable.  The locale is
+	 * Changes the current thread locale then calls the Callable.  The locale is
 	 * automatically restored.
 	 *
 	 * @deprecated  Please use {@link #call(java.util.Locale, java.util.concurrent.Callable)}
@@ -85,10 +85,10 @@ final public class ThreadLocale {
 	}
 
 	/**
-	 * Changes the current thread locale and calls the Callable.  The locale is
+	 * Changes the current thread locale then calls the Callable.  The locale is
 	 * automatically restored.
 	 */
-	public static <V,E extends Throwable> V call(Locale locale, CallableE<V,E> callable) throws E {
+	public static <V,E extends Throwable> V call(Locale locale, CallableE<? extends V,? extends E> callable) throws E {
 		Locale oldLocale = get();
 		try {
 			set(locale);
@@ -99,7 +99,7 @@ final public class ThreadLocale {
 	}
 
 	/**
-	 * Changes the current thread locale and calls the Callable.  The locale is
+	 * Changes the current thread locale then calls the Callable.  The locale is
 	 * automatically restored.
 	 *
 	 * @deprecated  Please use {@link #call(java.util.Locale, com.aoindustries.util.concurrent.CallableE)}
@@ -116,7 +116,7 @@ final public class ThreadLocale {
 	}
 
 	/**
-	 * Changes the current thread locale and runs the Runnable.  The locale is
+	 * Changes the current thread locale then runs the Runnable.  The locale is
 	 * automatically restored.
 	 */
 	public static void run(Locale locale, Runnable runnable) {
@@ -130,10 +130,10 @@ final public class ThreadLocale {
 	}
 
 	/**
-	 * Changes the current thread locale and runs the RunnableE.  The locale is
+	 * Changes the current thread locale then runs the RunnableE.  The locale is
 	 * automatically restored.
 	 */
-	public static <E extends Throwable> void run(Locale locale, RunnableE<E> runnable) throws E {
+	public static <E extends Throwable> void run(Locale locale, RunnableE<? extends E> runnable) throws E {
 		Locale oldLocale = get();
 		try {
 			set(locale);
@@ -144,10 +144,14 @@ final public class ThreadLocale {
 	}
 
 	/**
-	 * Changes the current thread locale and calls the Supplier.  The locale is
+	 * Changes the current thread locale then gets the result from the Supplier.  The locale is
 	 * automatically restored.
+	 *
+	 * @deprecated  Please use {@link #call(java.util.Locale, com.aoindustries.util.concurrent.CallableE)} with
+	 *              {@link RuntimeException}
 	 */
-	public static <V> V supply(Locale locale, java.util.function.Supplier<V> supplier) {
+	@Deprecated
+	public static <V> V set(Locale locale, java.util.function.Supplier<V> supplier) {
 		Locale oldLocale = get();
 		try {
 			set(locale);
@@ -155,17 +159,6 @@ final public class ThreadLocale {
 		} finally {
 			set(oldLocale);
 		}
-	}
-
-	/**
-	 * Changes the current thread locale and calls the Supplier.  The locale is
-	 * automatically restored.
-	 *
-	 * @deprecated  Please use {@link #supply(java.util.Locale, java.util.function.Supplier)}
-	 */
-	@Deprecated
-	public static <V> V set(Locale locale, java.util.function.Supplier<V> supplier) {
-		return supply(locale, supplier);
 	}
 
 	/**
@@ -179,10 +172,11 @@ final public class ThreadLocale {
 	}
 
 	/**
-	 * @deprecated  Please use {@link #supply(java.util.Locale, java.util.function.Supplier)} directly.
+	 * @deprecated  Please use {@link #call(java.util.Locale, com.aoindustries.util.concurrent.CallableE)} with
+	 *              {@link RuntimeException}
 	 */
 	@Deprecated
 	public static <V> V set(Locale locale, Supplier<V> supplier) {
-		return supply(locale, (java.util.function.Supplier<V>)supplier);
+		return set(locale, (java.util.function.Supplier<V>)supplier);
 	}
 }
