@@ -63,7 +63,18 @@ final public class ThreadLocale {
 	 * Changes the current thread locale then calls the Callable.  The locale is
 	 * automatically restored.
 	 */
-	public static <V> V call(Locale locale, Callable<? extends V> callable) throws Exception {
+	public static <V> V call(Locale locale, CallableE<? extends V,? extends RuntimeException> callable) {
+		return call(locale, RuntimeException.class, callable);
+	}
+
+	/**
+	 * Changes the current thread locale then calls the Callable.  The locale is
+	 * automatically restored.
+	 *
+	 * @deprecated  Please use {@link #call(java.util.Locale, com.aoindustries.util.concurrent.CallableE)}
+	 */
+	@Deprecated
+	public static <V> V set(Locale locale, Callable<V> callable) throws Exception {
 		Locale oldLocale = get();
 		try {
 			set(locale);
@@ -76,19 +87,8 @@ final public class ThreadLocale {
 	/**
 	 * Changes the current thread locale then calls the Callable.  The locale is
 	 * automatically restored.
-	 *
-	 * @deprecated  Please use {@link #call(java.util.Locale, java.util.concurrent.Callable)}
 	 */
-	@Deprecated
-	public static <V> V set(Locale locale, Callable<V> callable) throws Exception {
-		return call(locale, callable);
-	}
-
-	/**
-	 * Changes the current thread locale then calls the Callable.  The locale is
-	 * automatically restored.
-	 */
-	public static <V,E extends Throwable> V call(Locale locale, CallableE<? extends V,? extends E> callable) throws E {
+	public static <V,E extends Throwable> V call(Locale locale, Class<? extends E> eClass, CallableE<? extends V,? extends E> callable) throws E {
 		Locale oldLocale = get();
 		try {
 			set(locale);
@@ -133,7 +133,7 @@ final public class ThreadLocale {
 	 * Changes the current thread locale then runs the RunnableE.  The locale is
 	 * automatically restored.
 	 */
-	public static <E extends Throwable> void run(Locale locale, RunnableE<? extends E> runnable) throws E {
+	public static <E extends Throwable> void run(Locale locale, Class<? extends E> eClass, RunnableE<? extends E> runnable) throws E {
 		Locale oldLocale = get();
 		try {
 			set(locale);
