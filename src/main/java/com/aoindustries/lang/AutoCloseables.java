@@ -98,6 +98,36 @@ final public class AutoCloseables {
 	}
 
 	/**
+	 * Closes all of the given {@link AutoCloseable} in order, catching all {@link Throwable}.
+	 *
+	 * @param  t0  If not {@code null}, any new throwables will be combined via
+	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
+	 *
+	 * @param  closeable  The set of all closeables, which will be closed in order
+	 *
+	 * @return  {@code t0}, a new throwable, or {@code null} when none given and none new
+	 */
+	public static Throwable closeAndCatch(Throwable t0, Iterable<? extends AutoCloseable> closeable) {
+		if(closeable != null) {
+			for(AutoCloseable ac : closeable) {
+				t0 = closeAndCatch(t0, ac);
+			}
+		}
+		return t0;
+	}
+
+	/**
+	 * Closes all of the given {@link AutoCloseable} in order, catching all {@link Throwable}.
+	 *
+	 * @param  closeable  The set of all closeables, which will be closed in order
+	 *
+	 * @return  A new throwable or {@code null}
+	 */
+	public static Throwable closeAndCatch(Iterable<? extends AutoCloseable> closeable) {
+		return closeAndCatch(null, closeable);
+	}
+
+	/**
 	 * Closes the given {@link AutoCloseable} in order, throwing all {@link Throwable}, wrapping when needed.
 	 * <p>
 	 * Only returns when {@code t0} is {@code null} and no new throwables.
@@ -225,6 +255,72 @@ final public class AutoCloseables {
 		Class<? extends X> xClass,
 		Function<? super Throwable, ? extends X> xSupplier,
 		AutoCloseable ... closeable
+	) throws Error, RuntimeException, X {
+		closeAndThrow(null, xClass, xSupplier, closeable);
+	}
+
+	/**
+	 * Closes all of the given {@link AutoCloseable} in order, throwing all {@link Throwable}, wrapping when needed.
+	 * <p>
+	 * Only returns when {@code t0} is {@code null} and no new throwables.
+	 * </p>
+	 *
+	 * @param  t0  If not {@code null}, any new throwables will be combined via
+	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
+	 *
+	 * @param  xClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
+	 *                 are thrown directly.
+	 *
+	 * @param  xSupplier  Other throwables are wrapped via this function, then thrown
+	 *
+	 * @param  closeable  The set of all closeables, which will be closed in order
+	 *
+	 * @throws  Error  When resolved throwable is an {@link Error}
+	 *
+	 * @throws  RuntimeException  When resolved throwable is a {@link RuntimeException}
+	 *
+	 * @throws  X      When resolved throwable is an instance of {@code xClass}, otherwise
+	 *                 wrapped via {@code xSupplier}
+	 */
+	public static <X extends Throwable> void closeAndThrow(
+		Throwable t0,
+		Class<? extends X> xClass,
+		Function<? super Throwable, ? extends X> xSupplier,
+		Iterable<? extends AutoCloseable> closeable
+	) throws Error, RuntimeException, X {
+		Throwable t = closeAndCatch(t0, closeable);
+		if(t != null) {
+			if(t instanceof Error) throw (Error)t;
+			if(t instanceof RuntimeException) throw (RuntimeException)t;
+			if(xClass.isInstance(t)) throw xClass.cast(t);
+			throw xSupplier.apply(t);
+		}
+	}
+
+	/**
+	 * Closes all of the given {@link AutoCloseable} in order, throwing all {@link Throwable}, wrapping when needed.
+	 * <p>
+	 * Only returns when no throwables.
+	 * </p>
+	 *
+	 * @param  xClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
+	 *                 are thrown directly.
+	 *
+	 * @param  xSupplier  Other throwables are wrapped via this function, then thrown
+	 *
+	 * @param  closeable  The set of all closeables, which will be closed in order
+	 *
+	 * @throws  Error  When resolved throwable is an {@link Error}
+	 *
+	 * @throws  RuntimeException  When resolved throwable is a {@link RuntimeException}
+	 *
+	 * @throws  X      When resolved throwable is an instance of {@code xClass}, otherwise
+	 *                 wrapped via {@code xSupplier}
+	 */
+	public static <X extends Throwable> void closeAndThrow(
+		Class<? extends X> xClass,
+		Function<? super Throwable, ? extends X> xSupplier,
+		Iterable<? extends AutoCloseable> closeable
 	) throws Error, RuntimeException, X {
 		closeAndThrow(null, xClass, xSupplier, closeable);
 	}
@@ -321,6 +417,56 @@ final public class AutoCloseables {
 		Class<? extends X> xClass,
 		Function<? super Throwable, ? extends X> xSupplier,
 		AutoCloseable ... closeable
+	) {
+		return Throwables.wrap(
+			closeAndCatch(t0, closeable),
+			xClass,
+			xSupplier
+		);
+	}
+
+	/**
+	 * Closes all of the given {@link AutoCloseable} in order, catching all {@link Throwable}.
+	 * Wraps any resulting throwable, unless is an instance of {@code xClass}, {@link Error}, or {@link RuntimeException}.
+	 * <ol>
+	 * <li>When {@code null}, returns {@code null}.</li>
+	 * <li>When is an instance of {@code xClass}, returns the exception.</li>
+	 * <li>When is {@link Error} or {@link RuntimeException}, throws the exception directly.</li>
+	 * <li>Otherwise, returns the exception wrapped via {@code xSupplier}.</li>
+	 * </ol>
+	 * <p>
+	 * This is expected to typically used within a catch block, to throw a narrower scope:
+	 * </p>
+	 * <pre>try {
+	 *   …
+	 * } catch(Throwable t) {
+	 *   throw AutoCloseables.closeAndWrap(t, SQLException.class, SQLException::new, closeable);
+	 * }</pre>
+	 *
+	 * @param  t0  If not {@code null}, any new throwables will be combined via
+	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
+	 *
+	 * @param  xClass  Throwables of this class are returned directly.
+	 *
+	 * @param  xSupplier  Throwables that a not returned directly, and are not {@link Error} or
+	 *                    {@link RuntimeException}, are wrapped via this function, then returned.
+	 *
+	 * @param  closeable  The set of all closeables, which will be closed in order
+	 *
+	 * @return  {@code null} when {@code t0} is {@code null} and no new throwables,
+	 *          resulting throwable when is an instance of {@code xClass},
+	 *          otherwise wrapped via {@code xSupplier}.
+	 *
+	 * @throws  Error             When resulting throwable is an {@link Error}
+	 * @throws  RuntimeException  When resulting throwable is a {@link RuntimeException}
+	 *
+	 * @see  Throwables#wrap(java.lang.Throwable, java.lang.Class, java.util.function.Function)
+	 */
+	public static <X extends Throwable> X closeAndWrap(
+		Throwable t0,
+		Class<? extends X> xClass,
+		Function<? super Throwable, ? extends X> xSupplier,
+		Iterable<? extends AutoCloseable> closeable
 	) {
 		return Throwables.wrap(
 			closeAndCatch(t0, closeable),
