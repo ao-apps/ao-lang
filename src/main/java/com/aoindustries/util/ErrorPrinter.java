@@ -24,7 +24,6 @@ package com.aoindustries.util;
 
 import com.aoindustries.exception.WrappedException;
 import com.aoindustries.exception.WrappedExceptions;
-import com.aoindustries.sql.WrappedSQLException;
 import java.io.Flushable;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -218,14 +217,51 @@ public class ErrorPrinter {
 		}
 	}
 
+	@FunctionalInterface
+	public static interface CustomMessageHandler {
+		static void printMessage(Appendable out, int indent, String label, String message) {
+			indent(out, indent);
+			append(label, out);
+			if(message==null) {
+				appendln("null", out);
+			} else {
+				message=message.trim();
+				int messageLen=message.length();
+				for(int c=0;c<messageLen;c++) {
+					char ch=message.charAt(c);
+					if(ch=='\n') {
+						int lineIndent = indent + label.length();
+						appendln(out);
+						indent(out, lineIndent);
+					} else if(ch!='\r') append(ch, out);
+				}
+				appendln(out);
+			}
+		}
+
+		void printCustomMessages(Throwable thrown, Appendable out, int indent);
+	}
+
+	private static final List<CustomMessageHandler> customMessageHandlers = new ArrayList<>();
+
+	public static void addCustomMessageHandler(CustomMessageHandler handler) {
+		synchronized(customMessageHandlers) {
+			customMessageHandlers.add(handler);
+		}
+	}
+
 	private static void printThrowables(Throwable thrown, Appendable out, int indent, List<Throwable> closed) {
 		indent(out, indent);
 		appendln(thrown.getClass().getName(), out);
-		printMessage(out, indent+4, "Message...........: ", thrown.getMessage());
-		printMessage(out, indent+4, "Localized Message.: ", thrown.getLocalizedMessage());
+		CustomMessageHandler.printMessage(out, indent+4, "Message...........: ", thrown.getMessage());
+		CustomMessageHandler.printMessage(out, indent+4, "Localized Message.: ", thrown.getLocalizedMessage());
+		synchronized(customMessageHandlers) {
+			for(CustomMessageHandler handler : customMessageHandlers) {
+				handler.printCustomMessages(thrown, out, indent + 4);
+			}
+		}
 		if(thrown instanceof SQLException) {
 			SQLException sql=(SQLException)thrown;
-			if(sql instanceof WrappedSQLException) printMessage(out, indent+4, "SQL Statement.....: ", ((WrappedSQLException)sql).getSqlString());
 			indent(out, indent + 4);
 			append("SQL Error Code....: ", out);
 			appendln(sql.getErrorCode(), out);
@@ -371,26 +407,6 @@ public class ErrorPrinter {
 					printThrowables(next, out, indent, closed);
 				}
 			}
-		}
-	}
-
-	private static void printMessage(Appendable out, int indent, String label, String message) {
-		indent(out, indent);
-		append(label, out);
-		if(message==null) {
-			appendln("null", out);
-		} else {
-			message=message.trim();
-			int messageLen=message.length();
-			for(int c=0;c<messageLen;c++) {
-				char ch=message.charAt(c);
-				if(ch=='\n') {
-					int lineIndent = indent + label.length();
-					appendln(out);
-					indent(out, lineIndent);
-				} else if(ch!='\r') append(ch, out);
-			}
-			appendln(out);
 		}
 	}
 
