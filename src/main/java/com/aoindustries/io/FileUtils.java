@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -38,6 +38,7 @@ import java.io.Writer;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.Arrays;
 
 /**
@@ -127,14 +128,22 @@ final public class FileUtils {
 
 	/**
 	 * Creates a temporary directory.
+	 *
+	 * @deprecated  Please use {@link Files#createTempDirectory(java.lang.String, java.nio.file.attribute.FileAttribute...)},
+	 *              which does not suffer from any race conditions.
 	 */
+	@Deprecated
 	public static File createTempDirectory(String prefix, String suffix) throws IOException {
 		return createTempDirectory(prefix, suffix, null);
 	}
 
 	/**
 	 * Creates a temporary directory.
+	 *
+	 * @deprecated  Please use {@link Files#createTempDirectory(java.nio.file.Path, java.lang.String, java.nio.file.attribute.FileAttribute...)},
+	 *              which does not suffer from any race conditions.
 	 */
+	@Deprecated
 	public static File createTempDirectory(String prefix, String suffix, File directory) throws IOException {
 		while(true) {
 			File tempFile = File.createTempFile(prefix, suffix, directory);
@@ -153,9 +162,13 @@ final public class FileUtils {
 
 	/**
 	 * Copies a stream to a newly created temporary file.
+	 * <p>
+	 * The file is created with the default permissions via
+	 * {@link Files#createTempFile(java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute...)}.
+	 * </p>
 	 */
 	public static File copyToTempFile(InputStream in, String prefix, String suffix, File directory) throws IOException {
-		File tmpFile = File.createTempFile("cache_", null);
+		File tmpFile = Files.createTempFile("cache_", null).toFile();
 		boolean successful = false;
 		try {
 			try (OutputStream out = new FileOutputStream(tmpFile)) {
@@ -305,6 +318,10 @@ final public class FileUtils {
 
 	/**
 	 * Gets a File for a URL, retrieving the contents into a temporary file if needed.
+	 * <p>
+	 * The file is created with the default permissions via
+	 * {@link Files#createTempFile(java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute...)}.
+	 * </p>
 	 *
 	 * @param  deleteOnExit  when <code>true</code>, any newly created temp file will be flagged for {@link File#deleteOnExit() delete on exit}
 	 *
@@ -320,7 +337,7 @@ final public class FileUtils {
 				if(file.exists() && file.isFile()) return file;
 			}
 		}
-		File file = File.createTempFile("url", null);
+		File file = Files.createTempFile("url", null).toFile();
 		boolean successful = false;
 		try {
 			if(deleteOnExit) file.deleteOnExit();
