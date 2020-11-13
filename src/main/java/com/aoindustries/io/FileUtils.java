@@ -38,7 +38,12 @@ import java.io.Writer;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 
 /**
@@ -60,17 +65,31 @@ final public class FileUtils {
 
 	/**
 	 * Recursively deletes the provided file, being careful to not follow symbolic links (but there are still unavoidable race conditions).
+	 *
+	 * @deprecated  Please use {@link org.apache.commons.io.FileUtils#deleteDirectory(java.io.File)} or
+	 *              {@link org.apache.commons.io.FileUtils#forceDelete(java.io.File)}from
+	 *              <a href="https://commons.apache.org/proper/commons-io/">Apache Commons IO</a>.
 	 */
+	@Deprecated
 	public static void deleteRecursive(File file) throws IOException {
-		if(
-			file.isDirectory()
-			// Don't recursively travel across symbolic links (still a race condition here, though)
-			&& file.getCanonicalPath().equals(file.getAbsolutePath())
-		) {
-			File afile[] = file.listFiles();
-			if(afile != null) for(File f : afile) deleteRecursive(f);
-		}
-		delete(file);
+		Path deleteMe = file.toPath();
+		Files.walkFileTree(
+			deleteMe,
+			new SimpleFileVisitor<Path>() {
+				@Override
+				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+					Files.delete(file);
+					return FileVisitResult.CONTINUE;
+				}
+				@Override
+				public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+					if(exc != null) throw exc;
+					Files.delete(dir);
+					return FileVisitResult.CONTINUE;
+				}
+			}
+		);
+		assert !Files.exists(deleteMe, LinkOption.NOFOLLOW_LINKS);
 	}
 
 	/**

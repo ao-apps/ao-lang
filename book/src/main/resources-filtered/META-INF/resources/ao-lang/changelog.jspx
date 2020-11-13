@@ -94,6 +94,11 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 						conditions.
 					</li>
 					<li>Temporary files are now created with more secure default permissions.</li>
+					<li>
+						Improved <code>FileUtils.deleteRecursive(File)</code> implementation to now use
+						<code>java.nio.file.Files.walkFileTree(…)</code>.  Also deprecated it in favor of similar
+						methods in <ao:a href="https://commons.apache.org/proper/commons-io/">Apache Commons IO</ao:a>.
+					</li>
 				</ul>
 			</changelog:release>
 		</c:if>
