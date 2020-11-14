@@ -26,11 +26,11 @@ import com.aoindustries.exception.WrappedException;
 import com.aoindustries.io.FileUtils;
 import com.aoindustries.io.IoUtils;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Map;
@@ -96,8 +96,10 @@ public class ZipUtils {
 	 */
 	public static void createZipFile(File sourceDirectory, ZipOutputStream zipOut) throws IOException {
 		File[] list = sourceDirectory.listFiles();
-		if(list!=null) {
-			for(File file : list) createZipFile(file, zipOut, "");
+		if(list != null) {
+			for(File file : list) {
+				createZipFile(file, zipOut, "");
+			}
 		}
 	}
 
@@ -115,17 +117,17 @@ public class ZipUtils {
 			zipOut.closeEntry();
 			// Add all children
 			File[] list = file.listFiles();
-			if(list!=null) {
-				for(File child : list) createZipFile(child, zipOut, newPath);
+			if(list != null) {
+				for(File child : list) {
+					createZipFile(child, zipOut, newPath);
+				}
 			}
 		} else {
 			ZipEntry zipEntry = new ZipEntry(newPath);
 			setZipEntryTime(zipEntry, file.lastModified());
 			zipOut.putNextEntry(zipEntry);
 			try {
-				try (InputStream in = new FileInputStream(file)) {
-					IoUtils.copy(in, zipOut);
-				}
+				FileUtils.copy(file, zipOut);
 			} finally {
 				zipOut.closeEntry();
 			}
@@ -168,26 +170,24 @@ public class ZipUtils {
 				if(name.startsWith(sourcePrefix)) {
 					name = name.substring(sourcePrefix.length());
 					if(!name.isEmpty()) {
-						if(filter==null || filter.accept(entry)) {
+						if(filter == null || filter.accept(entry)) {
 							long entryTime = getZipEntryTime(entry);
 							if(entry.isDirectory()) {
 								name = name.substring(0, name.length() - 1); // Strip trailing '/'
 								//System.out.println("Directory: " + name);
 								File directory = new File(destination, name);
-								if(!directory.exists()) FileUtils.mkdirs(directory);
+								if(!directory.exists()) Files.createDirectories(directory.toPath());
 								if(entryTime != -1) directoryModifyTimes.put(directory, entryTime);
 							} else {
 								//System.out.println("File: " + name);
 								File file = new File(destination, name);
 								File directory = file.getParentFile();
-								if(!directory.exists()) FileUtils.mkdirs(directory);
+								if(!directory.exists()) Files.createDirectories(directory.toPath());
 								if(file.exists()) throw new IOException("File exists: " + file.getPath());
 								try (InputStream in = zipFile.getInputStream(entry)) {
-									try (OutputStream out = new FileOutputStream(file)) {
-										long copyBytes = IoUtils.copy(in, out);
-										long size = entry.getSize();
-										if(size != -1 && copyBytes != size) throw new IOException("copyBytes != size: " + copyBytes + " != " + size);
-									}
+									long copyBytes = FileUtils.copyToFile(in, file);
+									long size = entry.getSize();
+									if(size != -1 && copyBytes != size) throw new IOException("copyBytes != size: " + copyBytes + " != " + size);
 									if(entryTime != -1) file.setLastModified(entryTime);
 								}
 							}
@@ -259,7 +259,7 @@ public class ZipUtils {
 		Enumeration<? extends ZipEntry> entries = zipFile.entries();
 		while(entries.hasMoreElements()) {
 			ZipEntry entry = entries.nextElement();
-			if(filter==null || filter.accept(entry)) {
+			if(filter == null || filter.accept(entry)) {
 				ZipEntry newEntry = new ZipEntry(entry.getName());
 				long time = entry.getTime();
 				if(time!=-1) newEntry.setTime(time);

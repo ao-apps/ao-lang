@@ -58,9 +58,12 @@ final public class FileUtils {
 
 	/**
 	 * Deletes the provided file, throwing IOException if unsuccessful.
+	 *
+	 * @deprecated  Please use {@link Files#delete(java.nio.file.Path)}
 	 */
+	@Deprecated
 	public static void delete(File file) throws IOException {
-		if(!file.delete()) throw new IOException("Unable to delete: " + file);
+		Files.delete(file.toPath());
 	}
 
 	/**
@@ -71,6 +74,7 @@ final public class FileUtils {
 	 *              <a href="https://commons.apache.org/proper/commons-io/">Apache Commons IO</a>.
 	 */
 	@Deprecated
+	// Note: This is copied to TempFile to avoid dependency
 	public static void deleteRecursive(File file) throws IOException {
 		Path deleteMe = file.toPath();
 		Files.walkFileTree(
@@ -166,14 +170,35 @@ final public class FileUtils {
 	public static File createTempDirectory(String prefix, String suffix, File directory) throws IOException {
 		while(true) {
 			File tempFile = File.createTempFile(prefix, suffix, directory);
-			delete(tempFile);
+			Files.delete(tempFile.toPath());
 			// Check result of mkdir to catch race condition
 			if(tempFile.mkdir()) return tempFile;
 		}
 	}
 
 	/**
-	 * Copies a stream to a newly created temporary file.
+	 * Copies a stream to a file.
+	 *
+	 * @return  the number of bytes copied
+	 */
+	public static long copyToFile(InputStream in, File file) throws IOException {
+		try (OutputStream out = new FileOutputStream(file)) {
+			return IoUtils.copy(in, out);
+		}
+	}
+
+	/**
+	 * Copies a stream to a newly created temporary file in the given directory.
+	 * <p>
+	 * The file is created with the default permissions via
+	 * {@link Files#createTempFile(java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute...)}.
+	 * </p>
+	 * <p>
+	 * The file is not {@linkplain File#deleteOnExit() deleted on exit}.  If this is required, we recommend creating the
+	 * temp file with the <a href="https://aoindustries.com/ao-tempfiles/">AO TempFiles</a> project, then using
+	 * {@link #copyToFile(java.io.InputStream, java.io.File)}.  This avoids the memory leak of the implementation
+	 * of {@link File#deleteOnExit()}.
+	 * </p>
 	 */
 	public static File copyToTempFile(InputStream in, String prefix, String suffix) throws IOException {
 		return copyToTempFile(in, prefix, suffix, null);
@@ -185,18 +210,23 @@ final public class FileUtils {
 	 * The file is created with the default permissions via
 	 * {@link Files#createTempFile(java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute...)}.
 	 * </p>
+	 * <p>
+	 * The file is not {@linkplain File#deleteOnExit() deleted on exit}.  If this is required, we recommend creating the
+	 * temp file with the <a href="https://aoindustries.com/ao-tempfiles/">AO TempFiles</a> project, then using
+	 * {@link #copyToFile(java.io.InputStream, java.io.File)}.  This avoids the memory leak of the implementation
+	 * of {@link File#deleteOnExit()}.
+	 * </p>
 	 */
 	public static File copyToTempFile(InputStream in, String prefix, String suffix, File directory) throws IOException {
-		File tmpFile = Files.createTempFile("cache_", null).toFile();
+		Path tmpPath = Files.createTempFile("cache_", null);
+		File tmpFile = tmpPath.toFile();
 		boolean successful = false;
 		try {
-			try (OutputStream out = new FileOutputStream(tmpFile)) {
-				IoUtils.copy(in, out);
-			}
+			copyToFile(in, tmpFile);
 			successful = true;
 			return tmpFile;
 		} finally {
-			if(!successful) delete(tmpFile);
+			if(!successful) Files.delete(tmpPath);
 		}
 	}
 
@@ -206,22 +236,26 @@ final public class FileUtils {
 	 * @return  The directory itself.
 	 *
 	 * @exception  IOException  if mkdir fails.
+	 *
+	 * @deprecated  Please use {@link Files#createDirectory(java.nio.file.Path, java.nio.file.attribute.FileAttribute...)}.
 	 */
+	@Deprecated
 	public static File mkdir(File directory) throws IOException {
-		if(!directory.mkdir()) throw new IOException("Unable to create directory: "+directory.getPath());
-		return directory;
+		return Files.createDirectory(directory.toPath()).toFile();
 	}
 
 	/**
-	 * Makes a directory and all of its parents.  The directory must not already exist.
+	 * Makes a directory and all of its parents.  The directory may optionally already exist.
 	 *
 	 * @return  The directory itself.
 	 *
 	 * @exception  IOException  if mkdirs fails.
+	 *
+	 * @deprecated  Please use {@link Files#createDirectories(java.nio.file.Path, java.nio.file.attribute.FileAttribute...)}
 	 */
+	@Deprecated
 	public static File mkdirs(File directory) throws IOException {
-		if(!directory.mkdirs()) throw new IOException("Unable to create directory or one of its parents: "+directory.getPath());
-		return directory;
+		return Files.createDirectories(directory.toPath()).toFile();
 	}
 
 	/**
@@ -243,12 +277,9 @@ final public class FileUtils {
 	 */
 	public static long copy(File from, File to) throws IOException {
 		try (InputStream in = new FileInputStream(from)) {
-			long bytes;
 			long modified = from.lastModified();
-			try (OutputStream out = new FileOutputStream(to)) {
-				bytes = IoUtils.copy(in, out);
-			}
-			if(modified!=0) to.setLastModified(modified);
+			long bytes = copyToFile(in, to);
+			if(modified != 0) to.setLastModified(modified);
 			return bytes;
 		}
 	}
@@ -301,7 +332,7 @@ final public class FileUtils {
 			if(from.isDirectory()) {
 				if(to.exists()) throw new IOException("Directory exists: "+to);
 				long modified = from.lastModified();
-				mkdir(to);
+				Files.createDirectory(to.toPath()).toFile();
 				String[] list = from.list();
 				if(list!=null) {
 					for(String child : list) {
@@ -312,7 +343,7 @@ final public class FileUtils {
 						);
 					}
 				}
-				if(modified!=0) to.setLastModified(modified);
+				if(modified != 0) to.setLastModified(modified);
 			} else if(from.isFile()) {
 				if(to.exists()) throw new IOException("File exists: "+to);
 				copy(from, to);
@@ -356,17 +387,18 @@ final public class FileUtils {
 				if(file.exists() && file.isFile()) return file;
 			}
 		}
-		File file = Files.createTempFile("url", null).toFile();
+		Path tmpPath = Files.createTempFile("url", null);
+		File tmpFile = tmpPath.toFile();
 		boolean successful = false;
 		try {
-			if(deleteOnExit) file.deleteOnExit();
-			try (InputStream in = url.openStream(); OutputStream out = new FileOutputStream(file)) {
-				IoUtils.copy(in, out);
+			if(deleteOnExit) tmpFile.deleteOnExit();
+			try (InputStream in = url.openStream()) {
+				copyToFile(in, tmpFile);
 			}
 			successful = true;
-			return file;
+			return tmpFile;
 		} finally {
-			if(!successful) delete(file);
+			if(!successful) Files.delete(tmpPath);
 		}
 	}
 
@@ -388,7 +420,7 @@ final public class FileUtils {
 			try {
 				// Try overwrite in-place for Windows
 				copy(from, to);
-				delete(from);
+				Files.delete(from.toPath());
 			} catch(IOException e) {
 				throw new IOException("Unable to non-atomically rename \""+from+"\" to \""+to+'"', e);
 			}
