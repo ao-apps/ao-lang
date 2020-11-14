@@ -378,6 +378,7 @@ final public class FileUtils {
 	 * @deprecated  Please use <a href="https://aoindustries.com/ao-tempfiles/apidocs/com/aoindustries/tempfiles/TempFileContext.html">TempFileContext</a>
 	 *              as {@link File#deleteOnExit()} is prone to memory leaks in long-running applications.
 	 */
+	// TODO: Is it worth having a non-deprecated version that does not delete on exit?
 	@Deprecated
 	public static File getFile(URL url, String urlEncoding, boolean deleteOnExit) throws IOException {
 		if("file".equalsIgnoreCase(url.getProtocol())) {
