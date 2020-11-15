@@ -29,4 +29,25 @@ public class FrozenException extends IllegalStateException {
 
 	private static final long serialVersionUID = 1L;
 
+	public FrozenException() {
+		super();
+	}
+
+	public FrozenException(String message) {
+		super(message);
+	}
+
+	public FrozenException(Throwable cause) {
+		super(cause);
+	}
+
+	public FrozenException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(FrozenException.class, (template, cause) ->
+			new FrozenException(template.getMessage(), cause)
+		);
+	}
 }

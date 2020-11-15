@@ -22,6 +22,8 @@
  */
 package com.aoindustries.exception;
 
+import com.aoindustries.lang.Throwables;
+
 /**
  * <p>
  * An invalid configuration has been detected.
@@ -53,5 +55,11 @@ public class ConfigurationException extends RuntimeException {
 
 	public ConfigurationException(String message, Throwable cause) {
 		super(message, cause);
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(ConfigurationException.class, (template, cause) ->
+			new ConfigurationException(template.getMessage(), cause)
+		);
 	}
 }

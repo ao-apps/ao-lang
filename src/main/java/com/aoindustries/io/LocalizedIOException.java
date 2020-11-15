@@ -23,6 +23,7 @@
 package com.aoindustries.io;
 
 import com.aoindustries.lang.EmptyArrays;
+import com.aoindustries.lang.Throwables;
 import com.aoindustries.util.i18n.ApplicationResourcesAccessor;
 import java.io.IOException;
 import java.io.Serializable;
@@ -36,9 +37,9 @@ public class LocalizedIOException extends IOException {
 
 	private static final long serialVersionUID = -8061894547736048986L;
 
-	private final ApplicationResourcesAccessor accessor;
-	private final String key;
-	private final Serializable[] args;
+	protected final ApplicationResourcesAccessor accessor;
+	protected final String key;
+	protected final Serializable[] args;
 
 	public LocalizedIOException(ApplicationResourcesAccessor accessor, String key) {
 		super(accessor.getMessage(key));
@@ -71,5 +72,11 @@ public class LocalizedIOException extends IOException {
 	@Override
 	public String getLocalizedMessage() {
 		return accessor.getMessage(key, (Object[])args);
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(LocalizedIOException.class, (template, cause) ->
+			new LocalizedIOException(cause, template.accessor, template.key, template.args)
+		);
 	}
 }

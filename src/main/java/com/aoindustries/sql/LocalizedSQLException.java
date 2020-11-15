@@ -23,6 +23,7 @@
 package com.aoindustries.sql;
 
 import com.aoindustries.lang.EmptyArrays;
+import com.aoindustries.lang.Throwables;
 import com.aoindustries.util.i18n.ApplicationResourcesAccessor;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -36,9 +37,37 @@ public class LocalizedSQLException extends SQLException {
 
 	private static final long serialVersionUID = -1408809336417451976L;
 
-	private final ApplicationResourcesAccessor accessor;
-	private final String key;
-	private final Serializable[] args;
+	protected final ApplicationResourcesAccessor accessor;
+	protected final String key;
+	protected final Serializable[] args;
+
+	public LocalizedSQLException(String SQLState, int vendorCode, ApplicationResourcesAccessor accessor, String key) {
+		super(accessor.getMessage(key), SQLState, vendorCode);
+		this.accessor = accessor;
+		this.key = key;
+		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
+	}
+
+	public LocalizedSQLException(String SQLState, int vendorCode, ApplicationResourcesAccessor accessor, String key, Serializable... args) {
+		super(accessor.getMessage(key, (Object[])args), SQLState, vendorCode);
+		this.accessor = accessor;
+		this.key = key;
+		this.args = args;
+	}
+
+	public LocalizedSQLException(String SQLState, ApplicationResourcesAccessor accessor, String key) {
+		super(accessor.getMessage(key), SQLState);
+		this.accessor = accessor;
+		this.key = key;
+		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
+	}
+
+	public LocalizedSQLException(String SQLState, ApplicationResourcesAccessor accessor, String key, Serializable... args) {
+		super(accessor.getMessage(key, (Object[])args), SQLState);
+		this.accessor = accessor;
+		this.key = key;
+		this.args = args;
+	}
 
 	public LocalizedSQLException(ApplicationResourcesAccessor accessor, String key) {
 		super(accessor.getMessage(key));
@@ -68,8 +97,49 @@ public class LocalizedSQLException extends SQLException {
 		this.args = args;
 	}
 
+	public LocalizedSQLException(String sqlState, Throwable cause, ApplicationResourcesAccessor accessor, String key) {
+		super(accessor.getMessage(key), sqlState, cause);
+		this.accessor = accessor;
+		this.key = key;
+		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
+	}
+
+	public LocalizedSQLException(String sqlState, Throwable cause, ApplicationResourcesAccessor accessor, String key, Serializable... args) {
+		super(accessor.getMessage(key, (Object[])args), sqlState, cause);
+		this.accessor = accessor;
+		this.key = key;
+		this.args = args;
+	}
+
+	public LocalizedSQLException(String sqlState, int vendorCode, Throwable cause, ApplicationResourcesAccessor accessor, String key) {
+		super(accessor.getMessage(key), sqlState, vendorCode, cause);
+		this.accessor = accessor;
+		this.key = key;
+		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
+	}
+
+	public LocalizedSQLException(String sqlState, int vendorCode, Throwable cause, ApplicationResourcesAccessor accessor, String key, Serializable... args) {
+		super(accessor.getMessage(key, (Object[])args), sqlState, vendorCode, cause);
+		this.accessor = accessor;
+		this.key = key;
+		this.args = args;
+	}
+
 	@Override
 	public String getLocalizedMessage() {
 		return accessor.getMessage(key, (Object[])args);
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(LocalizedSQLException.class, (template, cause) ->
+			new LocalizedSQLException(
+				template.getSQLState(),
+				template.getErrorCode(),
+				cause,
+				template.accessor,
+				template.key,
+				template.args
+			)
+		);
 	}
 }

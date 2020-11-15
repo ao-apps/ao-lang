@@ -22,6 +22,8 @@
  */
 package com.aoindustries.exception;
 
+import com.aoindustries.lang.Throwables;
+
 /**
  * Indicates some part of the code has not been implemented yet.
  *
@@ -49,5 +51,11 @@ public class NotImplementedException extends RuntimeException {
 
 	public NotImplementedException(String message, Throwable cause) {
 		super(message, cause);
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(NotImplementedException.class, (template, cause) ->
+			new NotImplementedException(template.getMessage(), cause)
+		);
 	}
 }

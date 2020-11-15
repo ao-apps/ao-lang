@@ -22,6 +22,8 @@
  */
 package com.aoindustries.lang.reflect;
 
+import com.aoindustries.lang.Throwables;
+
 /**
  * @author  AO Industries, Inc.
  */
@@ -32,5 +34,27 @@ public class ReflectionException extends RuntimeException {
 
 	public ReflectionException(Throwable cause) {
 		super(cause);
+	}
+
+	protected ReflectionException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	@Override
+	public String getMessage() {
+		String message = super.getMessage();
+		return (message != null) ? message : getCause().getMessage();
+	}
+
+	@Override
+	public String getLocalizedMessage() {
+		String message = super.getMessage();
+		return (message != null) ? message : getCause().getLocalizedMessage();
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(ReflectionException.class, (template, cause) ->
+			new ReflectionException(template.getMessage(), cause)
+		);
 	}
 }

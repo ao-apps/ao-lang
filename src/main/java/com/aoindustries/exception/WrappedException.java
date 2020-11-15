@@ -39,12 +39,12 @@ import java.util.concurrent.Callable;
  * exceptions while letting all other runtime exceptions go through directly.
  * </p>
  * <p>
- * Catching wrapped exceptions may be used to unwrapped expected exception types.
+ * Catching {@link WrappedException} may be used to unwrap expected throwable types.
  * </p>
  *
  * @author  AO Industries, Inc.
  */
-public class WrappedException extends RuntimeException {
+public class WrappedException extends RuntimeException implements ExtraInfo {
 
 	private static final long serialVersionUID = -987777760527780052L;
 
@@ -261,9 +261,12 @@ public class WrappedException extends RuntimeException {
 		this.extraInfo = null;
 	}
 
+	/**
+	 * Uses extra info of the original cause when it is an {@link ExtraInfo}.
+	 */
 	public WrappedException(Throwable cause) {
 		super(cause);
-		this.extraInfo = null;
+		this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
 	}
 
 	/**
@@ -274,9 +277,12 @@ public class WrappedException extends RuntimeException {
 		this.extraInfo = extraInfo;
 	}
 
+	/**
+	 * Uses extra info of the original cause when it is an {@link ExtraInfo}.
+	 */
 	public WrappedException(String message, Throwable cause) {
 		super(message, cause);
-		this.extraInfo = null;
+		this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
 	}
 
 	/**
@@ -287,11 +293,30 @@ public class WrappedException extends RuntimeException {
 		this.extraInfo = extraInfo;
 	}
 
+	@Override
+	public String getMessage() {
+		String message = super.getMessage();
+		return (message != null) ? message : getCause().getMessage();
+	}
+
+	@Override
+	public String getLocalizedMessage() {
+		String message = super.getMessage();
+		return (message != null) ? message : getCause().getLocalizedMessage();
+	}
+
 	/**
 	 * @return  No defensive copy
 	 */
+	@Override
 	@SuppressWarnings("ReturnOfCollectionOrArrayField")
 	public Object[] getExtraInfo() {
 		return extraInfo;
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(WrappedException.class, (template, cause) ->
+			new WrappedException(template.getMessage(), cause, template.extraInfo)
+		);
 	}
 }

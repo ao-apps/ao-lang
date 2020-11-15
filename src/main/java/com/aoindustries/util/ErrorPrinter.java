@@ -22,7 +22,7 @@
  */
 package com.aoindustries.util;
 
-import com.aoindustries.exception.WrappedException;
+import com.aoindustries.exception.ExtraInfo;
 import com.aoindustries.exception.WrappedExceptions;
 import java.io.Flushable;
 import java.io.IOException;
@@ -220,22 +220,24 @@ public class ErrorPrinter {
 	@FunctionalInterface
 	public static interface CustomMessageHandler {
 		static void printMessage(Appendable out, int indent, String label, String message) {
-			indent(out, indent);
-			append(label, out);
-			if(message==null) {
-				appendln("null", out);
-			} else {
-				message=message.trim();
-				int messageLen=message.length();
-				for(int c=0;c<messageLen;c++) {
-					char ch=message.charAt(c);
-					if(ch=='\n') {
-						int lineIndent = indent + label.length();
-						appendln(out);
-						indent(out, lineIndent);
-					} else if(ch!='\r') append(ch, out);
+			if(label != null || message != null) {
+				indent(out, indent);
+				if(label != null) append(label, out);
+				if(message == null) {
+					assert label != null;
+					appendln("null", out);
+				} else {
+					message = message.trim();
+					int messageLen = message.length();
+					for(int c = 0; c < messageLen; c++) {
+						char ch = message.charAt(c);
+						if(ch == '\n') {
+							appendln(out);
+							indent(out, indent + (label == null ? 0 : label.length()));
+						} else if(ch != '\r') append(ch, out);
+					}
+					appendln(out);
 				}
-				appendln(out);
 			}
 		}
 
@@ -260,6 +262,17 @@ public class ErrorPrinter {
 				handler.printCustomMessages(thrown, out, indent + 4);
 			}
 		}
+		if(thrown instanceof ExtraInfo) {
+			Object[] extraInfo = ((ExtraInfo)thrown).getExtraInfo();
+			if(extraInfo != null && extraInfo.length > 0) {
+				indent(out, indent + 4);
+				appendln("Extra Information", out);
+				for (Object wi : extraInfo) {
+					indent(out, indent + 8);
+					appendln(wi, out);
+				}
+			}
+		}
 		if(thrown instanceof SQLException) {
 			SQLException sql=(SQLException)thrown;
 			indent(out, indent + 4);
@@ -268,17 +281,6 @@ public class ErrorPrinter {
 			indent(out, indent + 4);
 			append("SQL State.........: ", out);
 			appendln(sql.getSQLState(), out);
-		} else if(thrown instanceof WrappedException) {
-			WrappedException wrapped=(WrappedException)thrown;
-			Object[] wrappedInfo=wrapped.getExtraInfo();
-			if(wrappedInfo!=null && wrappedInfo.length>0) {
-				indent(out, indent + 4);
-				appendln("Extra Information", out);
-				for (Object wi : wrappedInfo) {
-					indent(out, indent + 8);
-					appendln(wi, out);
-				}
-			}
 		} else if(thrown instanceof AccessControlException) {
 			try {
 				AccessControlException ace = (AccessControlException)thrown;

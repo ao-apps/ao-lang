@@ -34,9 +34,9 @@ public class LocalizedIllegalStateException extends IllegalStateException {
 
 	private static final long serialVersionUID = 1L;
 
-	private final ApplicationResourcesAccessor accessor;
-	private final String key;
-	private final Serializable[] args;
+	protected final ApplicationResourcesAccessor accessor;
+	protected final String key;
+	protected final Serializable[] args;
 
 	public LocalizedIllegalStateException(ApplicationResourcesAccessor accessor, String key) {
 		super(accessor.getMessage(key));
@@ -69,5 +69,11 @@ public class LocalizedIllegalStateException extends IllegalStateException {
 	@Override
 	public String getLocalizedMessage() {
 		return accessor.getMessage(key, (Object[])args);
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(LocalizedIllegalStateException.class, (template, cause) ->
+			new LocalizedIllegalStateException(cause, template.accessor, template.key, template.args)
+		);
 	}
 }

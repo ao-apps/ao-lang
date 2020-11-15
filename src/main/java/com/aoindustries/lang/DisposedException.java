@@ -49,4 +49,10 @@ public class DisposedException extends IllegalStateException {
 	public DisposedException(String message, Throwable cause) {
 		super(message, cause);
 	}
+
+	static {
+		Throwables.registerSurrogateFactory(DisposedException.class, (template, cause) ->
+			new DisposedException(template.getMessage(), cause)
+		);
+	}
 }

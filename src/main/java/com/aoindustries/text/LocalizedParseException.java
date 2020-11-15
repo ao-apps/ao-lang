@@ -23,6 +23,7 @@
 package com.aoindustries.text;
 
 import com.aoindustries.lang.EmptyArrays;
+import com.aoindustries.lang.Throwables;
 import com.aoindustries.util.i18n.ApplicationResourcesAccessor;
 import java.io.Serializable;
 import java.text.ParseException;
@@ -36,9 +37,9 @@ public class LocalizedParseException extends ParseException {
 
 	private static final long serialVersionUID = 1L;
 
-	private final ApplicationResourcesAccessor accessor;
-	private final String key;
-	private final Serializable[] args;
+	protected final ApplicationResourcesAccessor accessor;
+	protected final String key;
+	protected final Serializable[] args;
 
 	public LocalizedParseException(int errorOffset, ApplicationResourcesAccessor accessor, String key) {
 		super(accessor.getMessage(key), errorOffset);
@@ -57,5 +58,15 @@ public class LocalizedParseException extends ParseException {
 	@Override
 	public String getLocalizedMessage() {
 		return accessor.getMessage(key, (Object[])args);
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(LocalizedParseException.class, (template, cause) -> {
+			LocalizedParseException newEx = new LocalizedParseException(
+				template.getErrorOffset(), template.accessor, template.key, template.args
+			);
+			newEx.initCause(cause);
+			return newEx;
+		});
 	}
 }

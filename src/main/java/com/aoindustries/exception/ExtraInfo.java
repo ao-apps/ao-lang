@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2016, 2020  AO Industries, Inc.
+ * Copyright (C) 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,39 +20,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.security;
-
-import com.aoindustries.lang.Throwables;
+package com.aoindustries.exception;
 
 /**
- * Thrown when code that requires authentication is invoked in a context
- * that doesn't have an authenticated user.
+ * Provides optional extra information related to an exception.
  *
  * @author  AO Industries, Inc.
  */
-public class NotAuthenticatedException extends SecurityException {
+public interface ExtraInfo {
 
-	private static final long serialVersionUID = 1L;
-
-	public NotAuthenticatedException() {
-		super();
-	}
-
-	public NotAuthenticatedException(String message) {
-		super(message);
-	}
-
-	public NotAuthenticatedException(Throwable cause) {
-		super(cause);
-	}
-
-	public NotAuthenticatedException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	static {
-		Throwables.registerSurrogateFactory(NotAuthenticatedException.class, (template, cause) ->
-			new NotAuthenticatedException(template.getMessage(), cause)
-		);
-	}
+	/**
+	 * Gets the optional extra info associated with an exception.
+	 *
+	 * @return  No defensive copy is guaranteed or necessary
+	 */
+	Object[] getExtraInfo();
 }

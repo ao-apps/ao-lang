@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2011, 2016, 2017, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -65,5 +65,13 @@ public class NullArgumentException extends IllegalArgumentException {
 	 */
 	public String getArgument() {
 		return argument;
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(NullArgumentException.class, (template, cause) -> {
+			NullArgumentException newEx = new NullArgumentException(template.argument);
+			newEx.initCause(cause);
+			return newEx;
+		});
 	}
 }

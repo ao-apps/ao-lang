@@ -34,9 +34,9 @@ public class LocalizedIllegalArgumentException extends IllegalArgumentException 
 
 	private static final long serialVersionUID = -4941714282849295887L;
 
-	private final ApplicationResourcesAccessor accessor;
-	private final String key;
-	private final Serializable[] args;
+	protected final ApplicationResourcesAccessor accessor;
+	protected final String key;
+	protected final Serializable[] args;
 
 	public LocalizedIllegalArgumentException(ApplicationResourcesAccessor accessor, String key) {
 		super(accessor.getMessage(key));
@@ -69,5 +69,11 @@ public class LocalizedIllegalArgumentException extends IllegalArgumentException 
 	@Override
 	public String getLocalizedMessage() {
 		return accessor.getMessage(key, (Object[])args);
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(LocalizedIllegalArgumentException.class, (template, cause) ->
+			new LocalizedIllegalArgumentException(cause, template.accessor, template.key, template.args)
+		);
 	}
 }

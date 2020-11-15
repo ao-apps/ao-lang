@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2016, 2020  AO Industries, Inc.
+ * Copyright (C) 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,39 +20,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.security;
+package com.aoindustries.lang;
 
-import com.aoindustries.lang.Throwables;
+import java.util.ServiceLoader;
 
 /**
- * Thrown when code that requires authentication is invoked in a context
- * that doesn't have an authenticated user.
- *
- * @author  AO Industries, Inc.
+ * Registers {@link ThrowableSurrogateFactory} implementations via
+ * {@link Throwables#registerSurrogateFactory(java.lang.Class, com.aoindustries.lang.ThrowableSurrogateFactory)},
+ * loaded by {@link ServiceLoader}.
  */
-public class NotAuthenticatedException extends SecurityException {
+public interface ThrowableSurrogateFactoryInitializer extends Runnable {
 
-	private static final long serialVersionUID = 1L;
-
-	public NotAuthenticatedException() {
-		super();
-	}
-
-	public NotAuthenticatedException(String message) {
-		super(message);
-	}
-
-	public NotAuthenticatedException(Throwable cause) {
-		super(cause);
-	}
-
-	public NotAuthenticatedException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	static {
-		Throwables.registerSurrogateFactory(NotAuthenticatedException.class, (template, cause) ->
-			new NotAuthenticatedException(template.getMessage(), cause)
-		);
-	}
+	/**
+	 * @see  Throwables#registerSurrogateFactory(java.lang.Class, com.aoindustries.lang.ThrowableSurrogateFactory)
+	 */
+	@Override
+	void run();
 }

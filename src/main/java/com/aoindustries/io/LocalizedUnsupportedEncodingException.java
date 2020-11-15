@@ -23,6 +23,7 @@
 package com.aoindustries.io;
 
 import com.aoindustries.lang.EmptyArrays;
+import com.aoindustries.lang.Throwables;
 import com.aoindustries.util.i18n.ApplicationResourcesAccessor;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -36,9 +37,9 @@ public class LocalizedUnsupportedEncodingException extends UnsupportedEncodingEx
 
 	private static final long serialVersionUID = 1L;
 
-	private final ApplicationResourcesAccessor accessor;
-	private final String key;
-	private final Serializable[] args;
+	protected final ApplicationResourcesAccessor accessor;
+	protected final String key;
+	protected final Serializable[] args;
 
 	public LocalizedUnsupportedEncodingException(ApplicationResourcesAccessor accessor, String key) {
 		super(accessor.getMessage(key));
@@ -54,24 +55,32 @@ public class LocalizedUnsupportedEncodingException extends UnsupportedEncodingEx
 		this.args = args;
 	}
 
+	@SuppressWarnings("OverridableMethodCallInConstructor")
 	public LocalizedUnsupportedEncodingException(Throwable cause, ApplicationResourcesAccessor accessor, String key) {
 		super(accessor.getMessage(key));
 		this.accessor = accessor;
 		this.key = key;
 		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
-		initCause(cause);
+		if(cause != null) initCause(cause);
 	}
 
+	@SuppressWarnings("OverridableMethodCallInConstructor")
 	public LocalizedUnsupportedEncodingException(Throwable cause, ApplicationResourcesAccessor accessor, String key, Serializable... args) {
 		super(accessor.getMessage(key, (Object[])args));
 		this.accessor = accessor;
 		this.key = key;
 		this.args = args;
-		initCause(cause);
+		if(cause != null) initCause(cause);
 	}
 
 	@Override
 	public String getLocalizedMessage() {
 		return accessor.getMessage(key, (Object[])args);
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(LocalizedUnsupportedEncodingException.class, (template, cause) ->
+			new LocalizedUnsupportedEncodingException(cause, template.accessor, template.key, template.args)
+		);
 	}
 }

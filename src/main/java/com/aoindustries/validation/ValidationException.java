@@ -23,6 +23,7 @@
 package com.aoindustries.validation;
 
 import com.aoindustries.lang.LocalizedIllegalArgumentException;
+import com.aoindustries.lang.Throwables;
 
 /**
  * Thrown when internal object validation fails.
@@ -56,5 +57,11 @@ public class ValidationException extends Exception {
 
 	public ValidationResult getResult() {
 		return result;
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(ValidationException.class, (template, cause) ->
+			new ValidationException(cause, template.result)
+		);
 	}
 }

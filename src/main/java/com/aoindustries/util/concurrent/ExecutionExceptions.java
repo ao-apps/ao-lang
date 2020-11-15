@@ -22,15 +22,13 @@
  */
 package com.aoindustries.util.concurrent;
 
+import com.aoindustries.lang.Throwables;
 import java.util.concurrent.ExecutionException;
 import java.util.function.BiFunction;
 
 /**
  * Utilities for working with {@link ExecutionException}.
  */
-// TODO: Instead of this approach, is it possible to merge the stack traces in a meaningful way?
-// TODO: Can we copy the stack trace from the ExecutionException, and discard it?
-// TODO: Is this all overkill?
 final public class ExecutionExceptions {
 
 	/**
@@ -41,6 +39,14 @@ final public class ExecutionExceptions {
 	/**
 	 * Wraps and throws an {@link ExecutionException} when its {@linkplain ExecutionException#getCause() cause} is an
 	 * instance of {@code xClass}.
+	 * This is compatible with Lambda method references on common throwable constructors that take
+	 * {@code (String message, Throwable cause)}.
+	 * <p>
+	 * First, an attempt is made to create a surrogate of the cause via
+	 * {@link Throwables#newSurrogate(java.lang.Throwable, java.lang.Throwable)}, with the execution exception being the
+	 * cause of the new surrogate.  When a surrogate cannot be created, uses the provided function {@code xSupplier} to
+	 * create a new wrapper.
+	 * </p>
 	 * <p>
 	 * When an {@link ExecutionException} occurs, unwrapping the {@linkplain ExecutionException#getCause() cause} may
 	 * lose important stack trace information, since the cause is likely processed on a different thread and will not
@@ -64,9 +70,11 @@ final public class ExecutionExceptions {
 	 *
 	 * @param  xClass  Exceptions with causes of this class are wrapped and thrown.
 	 *
-	 * @param  xSupplier  Performs wrapping of the execution exception.
+	 * @param  xSupplier  Performs wrapping of the execution exception itself when a surrogate cannot be created.
 	 *
 	 * @throws  X  When cause is an instance of {@code xClass}, throws {@code ee} wrapped via {@code xSupplier}.
+	 *
+	 * @see  Throwables#newSurrogate(java.lang.Throwable, java.lang.Throwable)
 	 */
 	public static <X extends Throwable> void wrapAndThrow(
 		ExecutionException ee,
@@ -75,13 +83,23 @@ final public class ExecutionExceptions {
 	) throws X {
 		if(ee != null) {
 			Throwable cause = ee.getCause();
-			if(xClass.isInstance(cause)) throw xSupplier.apply(cause.getMessage(), ee);
+			if(xClass.isInstance(cause)) {
+				X template = xClass.cast(cause);
+				X surrogate = Throwables.newSurrogate(template, ee);
+				throw (surrogate != template) ? surrogate : xSupplier.apply(template.getMessage(), ee);
+			}
 		}
 	}
 
 	/**
 	 * Wraps and throws an {@link ExecutionException} when its {@linkplain ExecutionException#getCause() cause} is an
 	 * instance of {@code xClass}.
+	 * <p>
+	 * First, an attempt is made to create a surrogate of the cause via
+	 * {@link Throwables#newSurrogate(java.lang.Throwable, java.lang.Throwable)}, with the execution exception being the
+	 * cause of the new surrogate.  When a surrogate cannot be created, uses the provided function {@code xSupplier} to
+	 * create a new wrapper.
+	 * </p>
 	 * <p>
 	 * When an {@link ExecutionException} occurs, unwrapping the {@linkplain ExecutionException#getCause() cause} may
 	 * lose important stack trace information, since the cause is likely processed on a different thread and will not
@@ -99,27 +117,31 @@ final public class ExecutionExceptions {
 	 *   …
 	 *   return future.get();
 	 * } catch(ExecutionException ee) {
-	 *   wrapAndThrowWithCause(ee, SQLException.class, (orig, cause)
-	 *     -&gt; new SQLException(cause.getMessage(), cause.getSQLState(), cause.getErrorCode(), orig)));
+	 *   wrapAndThrowWithCause(ee, SQLException.class, (template, cause)
+	 *     -&gt; new SQLException(template.getMessage(), template.getSQLState(), template.getErrorCode(), cause)));
 	 *   throw ee;
 	 * }</pre>
 	 *
 	 * @param  xClass  Exceptions with causes of this class are wrapped and thrown.
 	 *
-	 * @param  xSupplier  Performs wrapping of the execution exception.
+	 * @param  xSupplier  Performs wrapping of the execution exception itself when a surrogate cannot be created.
 	 *
 	 * @throws  X  When cause is an instance of {@code xClass}, throws {@code ee} wrapped via {@code xSupplier}.
+	 *
+	 * @see  Throwables#newSurrogate(java.lang.Throwable, java.lang.Throwable)
 	 */
-	public static <X extends Throwable> void wrapAndThrowWithCause(
+	public static <X extends Throwable> void wrapAndThrowWithTemplate(
 		ExecutionException ee,
 		Class<? extends X> xClass,
 		BiFunction<? super X, ? super ExecutionException, ? extends X> xSupplier
 	) throws X {
 		if(ee != null) {
 			Throwable cause = ee.getCause();
-			if(xClass.isInstance(cause)) throw xSupplier.apply(xClass.cast(cause), ee);
+			if(xClass.isInstance(cause)) {
+				X template = xClass.cast(cause);
+				X surrogate = Throwables.newSurrogate(template, ee);
+				throw (surrogate != template) ? surrogate : xSupplier.apply(template, ee);
+			}
 		}
 	}
-
-	// TODO: wrapAndThrowIOException, maintaining common types?
 }
