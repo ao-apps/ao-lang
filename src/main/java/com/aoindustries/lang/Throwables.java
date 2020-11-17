@@ -200,7 +200,7 @@ final public class Throwables {
 	 * </p>
 	 * <p>
 	 * This current implementation has registered all possible Java SE 8 throwable types, except those that have been
-	 * removed in Java 11.  Additionally, various throwable implementations
+	 * removed through Java 14.  Additionally, various throwable implementations
 	 * {@link #registerSurrogateFactory(java.lang.Class, com.aoindustries.lang.ThrowableSurrogateFactory) register themselves}
 	 * in static blocks, while other APIs may be registered via the {@link ServiceLoader} mechanism on the
 	 * {@link ThrowableSurrogateFactoryInitializer} interface.
@@ -245,7 +245,7 @@ final public class Throwables {
 	 * </p>
 	 * <p>
 	 * This current implementation has registered all possible Java SE 8 throwable types, except those that have been
-	 * removed in Java 11.  Additionally, various throwable implementations
+	 * removed through Java 14.  Additionally, various throwable implementations
 	 * {@link #registerSurrogateFactory(java.lang.Class, com.aoindustries.lang.ThrowableSurrogateFactory) register themselves}
 	 * in static blocks, while other APIs may be registered via the {@link ServiceLoader} mechanism on the
 	 * {@link ThrowableSurrogateFactoryInitializer} interface.
@@ -326,7 +326,7 @@ final public class Throwables {
 					registerSurrogateFactory(java.lang.StackOverflowError.class, (template, cause) -> initCause(new java.lang.StackOverflowError(template.getMessage()), cause));
 					registerSurrogateFactory(java.lang.UnknownError.class, (template, cause) -> initCause(new java.lang.UnknownError(template.getMessage()), cause));
 			registerSurrogateFactory(java.lang.Exception.class, (template, cause) -> new java.lang.Exception(template.getMessage(), cause));
-				registerSurrogateFactory(java.security.acl.AclNotFoundException.class, (template, cause) -> initCause(new java.security.acl.AclNotFoundException(), cause)); // Does not accept message
+				// java.security.acl.AclNotFoundException: Not in Java SE 14+
 				registerSurrogateFactory(java.rmi.activation.ActivationException.class, (template, cause) -> new java.rmi.activation.ActivationException(template.getMessage(), cause));
 					// java.rmi.activation.UnknownGroupException: No way to set cause
 					// java.rmi.activation.UnknownObjectException: No way to set cause
@@ -518,7 +518,7 @@ final public class Throwables {
 						registerSurrogateFactory(javax.management.relation.RoleNotFoundException.class, (template, cause) -> initCause(new javax.management.relation.RoleNotFoundException(template.getMessage()), cause));
 				registerSurrogateFactory(javax.xml.crypto.KeySelectorException.class, (template, cause) -> new javax.xml.crypto.KeySelectorException(template.getMessage(), cause));
 				registerSurrogateFactory(java.lang.invoke.LambdaConversionException.class, (template, cause) -> new java.lang.invoke.LambdaConversionException(template.getMessage(), cause));
-				registerSurrogateFactory(java.security.acl.LastOwnerException.class, (template, cause) -> initCause(new java.security.acl.LastOwnerException(), cause)); // Does not accept message
+				// java.security.acl.LastOwnerException: Not in Java SE 14+
 				registerSurrogateFactory(javax.sound.sampled.LineUnavailableException.class, (template, cause) -> initCause(new javax.sound.sampled.LineUnavailableException(template.getMessage()), cause));
 				registerSurrogateFactory(javax.xml.crypto.MarshalException.class, (template, cause) -> new javax.xml.crypto.MarshalException(template.getMessage(), cause));
 				registerSurrogateFactory(javax.sound.midi.MidiUnavailableException.class, (template, cause) -> initCause(new javax.sound.midi.MidiUnavailableException(template.getMessage()), cause));
@@ -562,7 +562,7 @@ final public class Throwables {
 					// javax.naming.ServiceUnavailableException: Has fields
 				registerSurrogateFactory(java.awt.geom.NoninvertibleTransformException.class, (template, cause) -> initCause(new java.awt.geom.NoninvertibleTransformException(template.getMessage()), cause));
 				registerSurrogateFactory(java.rmi.NotBoundException.class, (template, cause) -> initCause(new java.rmi.NotBoundException(template.getMessage()), cause));
-				registerSurrogateFactory(java.security.acl.NotOwnerException.class, (template, cause) -> initCause(new java.security.acl.NotOwnerException(), cause)); // Does not accept message
+				// java.security.acl.NotOwnerException: Not in Java SE 14+
 				registerSurrogateFactory(java.text.ParseException.class, (template, cause) -> initCause(new java.text.ParseException(template.getMessage(), template.getErrorOffset()), cause));
 				registerSurrogateFactory(javax.xml.parsers.ParserConfigurationException.class, (template, cause) -> initCause(new javax.xml.parsers.ParserConfigurationException(template.getMessage()), cause));
 				registerSurrogateFactory(java.awt.print.PrinterException.class, (template, cause) -> initCause(new java.awt.print.PrinterException(template.getMessage()), cause));
