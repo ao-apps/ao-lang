@@ -82,13 +82,17 @@ public class WrappedError extends Error implements ExtraInfo {
 	@Override
 	public String getMessage() {
 		String message = super.getMessage();
-		return (message != null) ? message : getCause().getMessage();
+		if(message != null) return message;
+		Throwable cause = getCause();
+		return (cause == null) ? null : cause.getMessage();
 	}
 
 	@Override
 	public String getLocalizedMessage() {
 		String message = super.getMessage();
-		return (message != null) ? message : getCause().getLocalizedMessage();
+		if(message != null) return message;
+		Throwable cause = getCause();
+		return (cause == null) ? null : cause.getLocalizedMessage();
 	}
 
 	/**

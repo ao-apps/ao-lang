@@ -169,7 +169,7 @@ final public class Throwables {
 	public static <X extends Throwable> X wrap(
 		Throwable t,
 		Class<? extends X> xClass,
-		Function<? super Throwable, ? extends X> xSupplier // TODO: Take message, too?
+		Function<? super Throwable, ? extends X> xSupplier
 	) throws Error, RuntimeException {
 		if(t == null) return null;
 		if(t instanceof Error) throw (Error)t;
