@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-0500"
-		dateModified="2020-11-16T15:36:53-06:00"
+		dateModified="2020-11-17T13:15:03-06:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-lang:pom.version}" />
@@ -52,84 +52,93 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				groupId="@{project.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
-			>
-				<ul>
-					<li>
-						New utility classes <code>AutoCloseables</code>, <code>Runnables</code>, and
-						<code>Throwables</code>.
-					</li>
-					<li>
-						New method <code>SysExits.getSysExit(Throwable)</code> that provides sysexit values matching
-						common exception types.
-					</li>
-					<li>
-						Deprecated <code>Disposable</code> and <code>DisposedException</code> in favor of
-						<code>AutoCloseable</code> and <code>IllegalStateException</code>.
-					</li>
-					<li>
-						Moved <code>CallableE</code> from package <code>com.aoindustries.lang</code> to package
-						<code>com.aoindustries.util.concurrent</code>, so that the package structure better matches
-						the standard Java API.
-					</li>
-					<li><code>CallableE</code> now has upper-bound generic <code>Throwable</code>.</li>
-					<li>
-						New interface <code>RunnableE</code>, intended for uses like <code>Runnable</code>, but that
-						must be able to throw checked exceptions.
-					</li>
-					<li>Added methods for <code>Runnable</code> and <code>RunnableE</code> to <code>ThreadLocale</code>.</li>
-					<li>
-						New utility class <code>ExecutionExceptions</code> for working with <code>ExecutionException</code>.
-						Currently provides functions to selectively wrap <code>ExecutionException</code> based on its
-						cause.  This way the exception types may be maintained without losing full stack traces, which
-						happens when rethrowing the cause directly.
-					</li>
-					<li>Added methods for <code>CallableE</code> and <code>RunnableE</code> to <code>WrappedException</code>.</li>
-					<li>
-						Moved the <code>com.aoindustries.sql</code> to package to the new
-						<core:link book="/ao-sql" page="/index.jspx" /> project.
-					</li>
-					<li>
-						Deprecated methods of <code>FileUtils</code> that are now reasonably handled by the standard
-						Java API:
-						<ul>
-							<li><code>createTempDirectory(…)</code></li>
-							<li><code>delete(…)</code></li>
-							<li><code>deleteRecursive(…)</code></li>
-							<li><code>mkdir(…)</code></li>
-							<li><code>mkdirs(…)</code></li>
-						</ul>
-					</li>
-					<li>Temporary files are now created with more secure default permissions.</li>
-					<li>
-						<code>WrappedException</code> and <code>ReflectionException</code> now use the message of the
-						cause when no message has been provided.
-					</li>
-					<li>
-						New class <code>WrappedError</code> that is much like <code>WrappedException</code>, except for
-						use in the rare contexts <code>Error</code> is required (such as wrapping arbitrary
-						<code>Throwable</code> as causes to exception types that only allow <code>Error</code>).
-					</li>
-					<li>
-						New interface <code>ExtraInfo</code> that any type of throwable may implement to provide extra
-						information lines to <code>ErrorPrinter</code>.  <code>WrappedException</code> implements this
-						new interface, as does the new <code>WrappedError</code> class.
-					</li>
-					<li>
-						<p>
-							New method <code>Throwables.newSurrogate(Throwable)</code> that supports creating new instances
-							of throwables in order to have caller stack trace.  When wrapped, the new throwable has a
-							state compatible with the original, and the original throwable is the cause of the new
-							throwable.  When not wrapped, the original throwable is used directly and caller stack trace
-							is lost.
-						</p>
-						<p>
-							This is used to maintain exception types and states across thread boundaries, such as when
-							an exception cause is obtained from an <code>ExecutionException</code>.
-						</p>
-					</li>
-				</ul>
-			</changelog:release>
+			/>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="4.6.0"
+			datePublished="2020-11-17T13:15:03-06:00"
+			groupId="@{project.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{project.scm.url}"
+		>
+			<ul>
+				<li>
+					New utility classes <code>AutoCloseables</code>, <code>Runnables</code>, and
+					<code>Throwables</code>.
+				</li>
+				<li>
+					New method <code>SysExits.getSysExit(Throwable)</code> that provides sysexit values matching
+					common exception types.
+				</li>
+				<li>
+					Deprecated <code>Disposable</code> and <code>DisposedException</code> in favor of
+					<code>AutoCloseable</code> and <code>IllegalStateException</code>.
+				</li>
+				<li>
+					Moved <code>CallableE</code> from package <code>com.aoindustries.lang</code> to package
+					<code>com.aoindustries.util.concurrent</code>, so that the package structure better matches
+					the standard Java API.
+				</li>
+				<li><code>CallableE</code> now has upper-bound generic <code>Throwable</code>.</li>
+				<li>
+					New interface <code>RunnableE</code>, intended for uses like <code>Runnable</code>, but that
+					must be able to throw checked exceptions.
+				</li>
+				<li>Added methods for <code>Runnable</code> and <code>RunnableE</code> to <code>ThreadLocale</code>.</li>
+				<li>
+					New utility class <code>ExecutionExceptions</code> for working with <code>ExecutionException</code>.
+					Currently provides functions to selectively wrap <code>ExecutionException</code> based on its
+					cause.  This way the exception types may be maintained without losing full stack traces, which
+					happens when rethrowing the cause directly.
+				</li>
+				<li>Added methods for <code>CallableE</code> and <code>RunnableE</code> to <code>WrappedException</code>.</li>
+				<li>
+					Moved the <code>com.aoindustries.sql</code> to package to the new
+					<core:link book="/ao-sql" page="/index.jspx" /> project.
+				</li>
+				<li>
+					Deprecated methods of <code>FileUtils</code> that are now reasonably handled by the standard
+					Java API:
+					<ul>
+						<li><code>createTempDirectory(…)</code></li>
+						<li><code>delete(…)</code></li>
+						<li><code>deleteRecursive(…)</code></li>
+						<li><code>mkdir(…)</code></li>
+						<li><code>mkdirs(…)</code></li>
+					</ul>
+				</li>
+				<li>Temporary files are now created with more secure default permissions.</li>
+				<li>
+					<code>WrappedException</code> and <code>ReflectionException</code> now use the message of the
+					cause when no message has been provided.
+				</li>
+				<li>
+					New class <code>WrappedError</code> that is much like <code>WrappedException</code>, except for
+					use in the rare contexts <code>Error</code> is required (such as wrapping arbitrary
+					<code>Throwable</code> as causes to exception types that only allow <code>Error</code>).
+				</li>
+				<li>
+					New interface <code>ExtraInfo</code> that any type of throwable may implement to provide extra
+					information lines to <code>ErrorPrinter</code>.  <code>WrappedException</code> implements this
+					new interface, as does the new <code>WrappedError</code> class.
+				</li>
+				<li>
+					<p>
+						New method <code>Throwables.newSurrogate(Throwable)</code> that supports creating new instances
+						of throwables in order to have caller stack trace.  When wrapped, the new throwable has a
+						state compatible with the original, and the original throwable is the cause of the new
+						throwable.  When not wrapped, the original throwable is used directly and caller stack trace
+						is lost.
+					</p>
+					<p>
+						This is used to maintain exception types and states across thread boundaries, such as when
+						an exception cause is obtained from an <code>ExecutionException</code>.
+					</p>
+				</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
