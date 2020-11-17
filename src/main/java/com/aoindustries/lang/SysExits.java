@@ -24,6 +24,7 @@ package com.aoindustries.lang;
 
 import java.io.IOError;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
@@ -165,7 +166,11 @@ public final class SysExits {
 		) {
 			return EX_NOHOST;
 		}
-		if(t instanceof IOError || t instanceof IOException) {
+		if(
+			t instanceof IOError
+			|| t instanceof IOException
+			|| t instanceof UncheckedIOException
+		) {
 			return EX_IOERR;
 		}
 		if(t instanceof SQLException) {
