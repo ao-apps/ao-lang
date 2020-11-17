@@ -29,7 +29,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		<relativePath>../../ao-oss-parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.aoindustries</groupId><artifactId>ao-lang-book</artifactId><version>4.6.0</version>
+	<groupId>com.aoindustries</groupId><artifactId>ao-lang-book</artifactId><version>4.6.0-POST-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<properties>
@@ -50,7 +50,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		<connection>scm:git:git://github.com/aoindustries/ao-lang.git</connection>
 		<developerConnection>scm:git:git@github.com:aoindustries/ao-lang.git</developerConnection>
 		<url>https://github.com/aoindustries/ao-lang</url>
-		<tag>ao-lang-book-4.6.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<issueManagement>
