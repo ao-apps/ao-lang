@@ -25,6 +25,8 @@ package com.aoindustries.exception;
 import com.aoindustries.lang.RunnableE;
 import com.aoindustries.lang.Throwables;
 import com.aoindustries.util.concurrent.CallableE;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.concurrent.Callable;
 
 /**
@@ -270,11 +272,27 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
 	}
 
 	/**
+	 * @deprecated  Please use {@link UncheckedIOException}.
+	 */
+	@Deprecated
+	public WrappedException(IOException cause) {
+		this((Throwable)cause);
+	}
+
+	/**
 	 * @param  extraInfo No defensive copy
 	 */
 	public WrappedException(Throwable cause, Object... extraInfo) {
 		super(cause);
 		this.extraInfo = extraInfo;
+	}
+
+	/**
+	 * @deprecated  Please use {@link UncheckedIOException}.
+	 */
+	@Deprecated
+	public WrappedException(IOException cause, Object... extraInfo) {
+		this((Throwable)cause, extraInfo);
 	}
 
 	/**
@@ -286,11 +304,27 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
 	}
 
 	/**
+	 * @deprecated  Please use {@link UncheckedIOException}.
+	 */
+	@Deprecated
+	public WrappedException(String message, IOException cause) {
+		this(message, (Throwable)cause);
+	}
+
+	/**
 	 * @param  extraInfo No defensive copy
 	 */
 	public WrappedException(String message, Throwable cause, Object... extraInfo) {
 		super(message, cause);
 		this.extraInfo = extraInfo;
+	}
+
+	/**
+	 * @deprecated  Please use {@link UncheckedIOException}.
+	 */
+	@Deprecated
+	public WrappedException(String message, IOException cause, Object... extraInfo) {
+		this(message, (Throwable)cause, extraInfo);
 	}
 
 	@Override

@@ -22,7 +22,6 @@
  */
 package com.aoindustries.util.zip;
 
-import com.aoindustries.exception.WrappedException;
 import com.aoindustries.io.FileUtils;
 import com.aoindustries.io.IoUtils;
 import java.io.File;
@@ -30,6 +29,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -147,7 +147,7 @@ public class ZipUtils {
 			String path2 = f2.getCanonicalPath();
 			return path2.compareTo(path1);
 		} catch(IOException e) {
-			throw new WrappedException(e);
+			throw new UncheckedIOException(e);
 		}
 	};
 

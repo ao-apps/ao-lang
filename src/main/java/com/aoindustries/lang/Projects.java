@@ -22,9 +22,9 @@
  */
 package com.aoindustries.lang;
 
-import com.aoindustries.exception.WrappedException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.util.Properties;
 import java.util.function.Function;
 import java.util.logging.Level;
@@ -94,7 +94,7 @@ public final class Projects {
 				artifactId
 			);
 		} catch(IOException e) {
-			throw new WrappedException(e);
+			throw new UncheckedIOException(e);
 		}
 	}
 
@@ -224,7 +224,7 @@ public final class Projects {
 			}
 			return version;
 		} catch(IOException e) {
-			throw new WrappedException(e);
+			throw new UncheckedIOException(e);
 		}
 	}
 
