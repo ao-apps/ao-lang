@@ -43,6 +43,18 @@ final public class Throwables {
 	private Throwables() {}
 
 	/**
+	 * Checks if a throwable is already suppressed.
+	 */
+	public static boolean isSuppressed(Throwable t0, Throwable suppressed) {
+		for(Throwable t : t0.getSuppressed()) {
+			if(t == suppressed) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Adds a suppressed exception, unless already in the list of suppressed exceptions.
 	 * <p>
 	 * When {@code suppressed} is a {@link ThreadDeath} and {@code t0} is not itself a {@link ThreadDeath},
@@ -73,14 +85,7 @@ final public class Throwables {
 					t0 = suppressed;
 					suppressed = t;
 				}
-				boolean found = false;
-				for(Throwable t : t0.getSuppressed()) {
-					if(t == suppressed) {
-						found = true;
-						break;
-					}
-				}
-				if(!found) {
+				if(!isSuppressed(t0, suppressed)) {
 					t0.addSuppressed(suppressed);
 				}
 			}
