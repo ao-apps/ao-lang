@@ -425,8 +425,16 @@ final public class Throwables {
 					registerSurrogateFactory(javax.imageio.IIOException.class, (template, cause) -> new javax.imageio.IIOException(template.getMessage(), cause));
 						registerSurrogateFactory(javax.imageio.metadata.IIOInvalidTreeException.class, (template, cause) -> new javax.imageio.metadata.IIOInvalidTreeException(template.getMessage(), cause, template.getOffendingNode()));
 					registerSurrogateFactory(java.nio.channels.InterruptedByTimeoutException.class, (template, cause) -> initCause(new java.nio.channels.InterruptedByTimeoutException(), cause)); // Does not accept message
-					registerSurrogateFactory(java.io.InterruptedIOException.class, (template, cause) -> initCause(new java.io.InterruptedIOException(template.getMessage()), cause));
-						registerSurrogateFactory(java.net.SocketTimeoutException.class, (template, cause) -> initCause(new java.net.SocketTimeoutException(template.getMessage()), cause));
+					registerSurrogateFactory(java.io.InterruptedIOException.class, (template, cause) -> {
+						java.io.InterruptedIOException newEx = initCause(new java.io.InterruptedIOException(template.getMessage()), cause);
+						newEx.bytesTransferred = template.bytesTransferred;
+						return newEx;
+					});
+						registerSurrogateFactory(java.net.SocketTimeoutException.class, (template, cause) -> {
+							java.net.SocketTimeoutException newEx = initCause(new java.net.SocketTimeoutException(template.getMessage()), cause);
+							newEx.bytesTransferred = template.bytesTransferred;
+							return newEx;
+						});
 					registerSurrogateFactory(java.util.InvalidPropertiesFormatException.class, (template, cause) -> initCause(new java.util.InvalidPropertiesFormatException(template.getMessage()), cause));
 					registerSurrogateFactory(javax.management.remote.JMXProviderException.class, (template, cause) -> new javax.management.remote.JMXProviderException(template.getMessage(), cause));
 					registerSurrogateFactory(javax.management.remote.JMXServerErrorException.class, (template, cause) -> (cause instanceof Error) ? new javax.management.remote.JMXServerErrorException(template.getMessage(), (Error)cause) : new javax.management.remote.JMXServerErrorException(template.getMessage(), new WrappedError(cause)));
