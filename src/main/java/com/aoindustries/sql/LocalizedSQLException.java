@@ -69,6 +69,10 @@ public class LocalizedSQLException extends SQLException {
 		this.args = args;
 	}
 
+	/**
+	 * @deprecated  Please provide SQLSTATE to {@link #LocalizedSQLException(java.lang.String, com.aoindustries.util.i18n.ApplicationResourcesAccessor, java.lang.String)}
+	 */
+	@Deprecated
 	public LocalizedSQLException(ApplicationResourcesAccessor accessor, String key) {
 		super(accessor.getMessage(key));
 		this.accessor = accessor;
@@ -76,6 +80,10 @@ public class LocalizedSQLException extends SQLException {
 		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
+	/**
+	 * @deprecated  Please provide SQLSTATE to {@link #LocalizedSQLException(java.lang.String, com.aoindustries.util.i18n.ApplicationResourcesAccessor, java.lang.String, java.io.Serializable...)}
+	 */
+	@Deprecated
 	public LocalizedSQLException(ApplicationResourcesAccessor accessor, String key, Serializable... args) {
 		super(accessor.getMessage(key, (Object[])args));
 		this.accessor = accessor;
@@ -83,6 +91,10 @@ public class LocalizedSQLException extends SQLException {
 		this.args = args;
 	}
 
+	/**
+	 * @deprecated  Please provide SQLSTATE to {@link #LocalizedSQLException(java.lang.String, java.lang.Throwable, com.aoindustries.util.i18n.ApplicationResourcesAccessor, java.lang.String)}
+	 */
+	@Deprecated
 	public LocalizedSQLException(Throwable cause, ApplicationResourcesAccessor accessor, String key) {
 		super(accessor.getMessage(key), cause);
 		this.accessor = accessor;
@@ -90,6 +102,10 @@ public class LocalizedSQLException extends SQLException {
 		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
+	/**
+	 * @deprecated  Please provide SQLSTATE to {@link #LocalizedSQLException(java.lang.String, java.lang.Throwable, com.aoindustries.util.i18n.ApplicationResourcesAccessor, java.lang.String, java.io.Serializable...)}
+	 */
+	@Deprecated
 	public LocalizedSQLException(Throwable cause, ApplicationResourcesAccessor accessor, String key, Serializable... args) {
 		super(accessor.getMessage(key, (Object[])args), cause);
 		this.accessor = accessor;
