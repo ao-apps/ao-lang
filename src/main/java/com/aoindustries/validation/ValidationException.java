@@ -22,6 +22,7 @@
  */
 package com.aoindustries.validation;
 
+import com.aoindustries.i18n.Resources;
 import com.aoindustries.lang.LocalizedIllegalArgumentException;
 import com.aoindustries.lang.Throwables;
 
@@ -34,19 +35,21 @@ import com.aoindustries.lang.Throwables;
 // TODO: Or extend javax.validation.ValidationException and deprecate this.
 public class ValidationException extends Exception {
 
+	private static final Resources RESOURCES = Resources.getResources(ValidationException.class.getPackage());
+
 	private static final long serialVersionUID = -1153407618428602416L;
 
 	private final ValidationResult result;
 
 	public ValidationException(ValidationResult result) {
 		super(result.toString()); // Conversion done in server
-		if(result.isValid()) throw new LocalizedIllegalArgumentException(ApplicationResourcesAccessor.accessor, "ValidationException.init.validResult");
+		if(result.isValid()) throw new LocalizedIllegalArgumentException(RESOURCES, "ValidationException.init.validResult");
 		this.result = result;
 	}
 
 	public ValidationException(Throwable cause, ValidationResult result) {
 		super(result.toString(), cause); // Conversion done in server
-		if(result.isValid()) throw new LocalizedIllegalArgumentException(ApplicationResourcesAccessor.accessor, "ValidationException.init.validResult");
+		if(result.isValid()) throw new LocalizedIllegalArgumentException(RESOURCES, "ValidationException.init.validResult");
 		this.result = result;
 	}
 

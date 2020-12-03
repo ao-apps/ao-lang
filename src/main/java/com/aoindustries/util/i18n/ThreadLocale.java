@@ -32,6 +32,7 @@ import java.util.concurrent.Callable;
  *
  * @author  AO Industries, Inc.
  */
+// TODO: Move to com.aoindustries.i18n
 final public class ThreadLocale {
 
 	private ThreadLocale() {}

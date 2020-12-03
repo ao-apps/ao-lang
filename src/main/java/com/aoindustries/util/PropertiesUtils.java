@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2015, 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,8 +22,8 @@
  */
 package com.aoindustries.util;
 
+import com.aoindustries.i18n.Resources;
 import com.aoindustries.io.LocalizedIOException;
-import static com.aoindustries.util.ApplicationResourcesAccessor.accessor;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,6 +38,8 @@ import java.util.Properties;
  * </p>
  */
 final public class PropertiesUtils {
+
+	public static final Resources RESOURCES = Resources.getResources(PropertiesUtils.class.getPackage());
 
 	/**
 	 * Make no instances.
@@ -61,7 +63,7 @@ final public class PropertiesUtils {
 	public static Properties loadFromResource(Class<?> clazz, String resource) throws IOException {
 		Properties props = new Properties();
 		InputStream in = clazz.getResourceAsStream(resource);
-		if(in==null) throw new LocalizedIOException(accessor, "PropertiesUtils.readProperties.resourceNotFound", resource);
+		if(in==null) throw new LocalizedIOException(RESOURCES, "PropertiesUtils.readProperties.resourceNotFound", resource);
 		try {
 			props.load(in);
 		} finally {

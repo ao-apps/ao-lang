@@ -22,9 +22,9 @@
  */
 package com.aoindustries.text;
 
+import com.aoindustries.i18n.Resources;
 import com.aoindustries.lang.EmptyArrays;
 import com.aoindustries.lang.Throwables;
-import com.aoindustries.util.i18n.ApplicationResourcesAccessor;
 import java.io.Serializable;
 import java.text.ParseException;
 
@@ -35,35 +35,58 @@ import java.text.ParseException;
  */
 public class LocalizedParseException extends ParseException {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
-	protected final ApplicationResourcesAccessor accessor;
+	/**
+	 * @deprecated  Please use {@link #resources} directly.
+	 */
+	@Deprecated
+	protected final com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor;
+	protected final Resources resources;
 	protected final String key;
 	protected final Serializable[] args;
 
-	public LocalizedParseException(int errorOffset, ApplicationResourcesAccessor accessor, String key) {
-		super(accessor.getMessage(key), errorOffset);
-		this.accessor = accessor;
+	public LocalizedParseException(int errorOffset, Resources resources, String key) {
+		super(resources.getMessage(key), errorOffset);
+		this.accessor = resources;
+		this.resources = resources;
 		this.key = key;
 		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
-	public LocalizedParseException(int errorOffset, ApplicationResourcesAccessor accessor, String key, Serializable... args) {
-		super(accessor.getMessage(key, (Object[])args), errorOffset);
-		this.accessor = accessor;
+	/**
+	 * @deprecated  Please use {@link #LocalizedParseException(int, com.aoindustries.i18n.Resources, java.lang.String)} directly.
+	 */
+	@Deprecated
+	public LocalizedParseException(int errorOffset, com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key) {
+		this(errorOffset, (Resources)accessor, key);
+	}
+
+	public LocalizedParseException(int errorOffset, Resources resources, String key, Serializable... args) {
+		super(resources.getMessage(key, (Object[])args), errorOffset);
+		this.accessor = resources;
+		this.resources = resources;
 		this.key = key;
 		this.args = args;
 	}
 
+	/**
+	 * @deprecated  Please use {@link #LocalizedParseException(int, com.aoindustries.i18n.Resources, java.lang.String, java.io.Serializable...)} directly.
+	 */
+	@Deprecated
+	public LocalizedParseException(int errorOffset, com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key, Serializable... args) {
+		this(errorOffset, (Resources)accessor, key, args);
+	}
+
 	@Override
 	public String getLocalizedMessage() {
-		return accessor.getMessage(key, (Object[])args);
+		return resources.getMessage(key, (Object[])args);
 	}
 
 	static {
 		Throwables.registerSurrogateFactory(LocalizedParseException.class, (template, cause) -> {
 			LocalizedParseException newEx = new LocalizedParseException(
-				template.getErrorOffset(), template.accessor, template.key, template.args
+				template.getErrorOffset(), template.resources, template.key, template.args
 			);
 			newEx.initCause(cause);
 			return newEx;

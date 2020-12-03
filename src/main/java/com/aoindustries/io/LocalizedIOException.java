@@ -22,9 +22,9 @@
  */
 package com.aoindustries.io;
 
+import com.aoindustries.i18n.Resources;
 import com.aoindustries.lang.EmptyArrays;
 import com.aoindustries.lang.Throwables;
-import com.aoindustries.util.i18n.ApplicationResourcesAccessor;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -35,48 +35,89 @@ import java.io.Serializable;
  */
 public class LocalizedIOException extends IOException {
 
-	private static final long serialVersionUID = -8061894547736048986L;
+	private static final long serialVersionUID = 2L;
 
-	protected final ApplicationResourcesAccessor accessor;
+	/**
+	 * @deprecated  Please use {@link #resources} directly.
+	 */
+	@Deprecated
+	protected final com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor;
+	protected final Resources resources;
 	protected final String key;
 	protected final Serializable[] args;
 
-	public LocalizedIOException(ApplicationResourcesAccessor accessor, String key) {
-		super(accessor.getMessage(key));
-		this.accessor = accessor;
+	public LocalizedIOException(Resources resources, String key) {
+		super(resources.getMessage(key));
+		this.accessor = resources;
+		this.resources = resources;
 		this.key = key;
 		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
-	public LocalizedIOException(ApplicationResourcesAccessor accessor, String key, Serializable... args) {
-		super(accessor.getMessage(key, (Object[])args));
-		this.accessor = accessor;
+	/**
+	 * @deprecated  Please use {@link #LocalizedIOException(com.aoindustries.i18n.Resources, java.lang.String)} directly.
+	 */
+	@Deprecated
+	public LocalizedIOException(com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key) {
+		this((Resources)accessor, key);
+	}
+
+	public LocalizedIOException(Resources resources, String key, Serializable... args) {
+		super(resources.getMessage(key, (Object[])args));
+		this.accessor = resources;
+		this.resources = resources;
 		this.key = key;
 		this.args = args;
 	}
 
-	public LocalizedIOException(Throwable cause, ApplicationResourcesAccessor accessor, String key) {
-		super(accessor.getMessage(key), cause);
-		this.accessor = accessor;
+	/**
+	 * @deprecated  Please use {@link #LocalizedIOException(com.aoindustries.i18n.Resources, java.lang.String, java.io.Serializable...)} directly.
+	 */
+	@Deprecated
+	public LocalizedIOException(com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key, Serializable... args) {
+		this((Resources)accessor, key, args);
+	}
+
+	public LocalizedIOException(Throwable cause, Resources resources, String key) {
+		super(resources.getMessage(key), cause);
+		this.accessor = resources;
+		this.resources = resources;
 		this.key = key;
 		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
-	public LocalizedIOException(Throwable cause, ApplicationResourcesAccessor accessor, String key, Serializable... args) {
-		super(accessor.getMessage(key, (Object[])args), cause);
-		this.accessor = accessor;
+	/**
+	 * @deprecated  Please use {@link #LocalizedIOException(java.lang.Throwable, com.aoindustries.i18n.Resources, java.lang.String)} directly.
+	 */
+	@Deprecated
+	public LocalizedIOException(Throwable cause, com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key) {
+		this(cause, (Resources)accessor, key);
+	}
+
+	public LocalizedIOException(Throwable cause, Resources resources, String key, Serializable... args) {
+		super(resources.getMessage(key, (Object[])args), cause);
+		this.accessor = resources;
+		this.resources = resources;
 		this.key = key;
 		this.args = args;
+	}
+
+	/**
+	 * @deprecated  Please use {@link #LocalizedIOException(java.lang.Throwable, com.aoindustries.i18n.Resources, java.lang.String, java.io.Serializable...)} directly.
+	 */
+	@Deprecated
+	public LocalizedIOException(Throwable cause, com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key, Serializable... args) {
+		this(cause, (Resources)accessor, key, args);
 	}
 
 	@Override
 	public String getLocalizedMessage() {
-		return accessor.getMessage(key, (Object[])args);
+		return resources.getMessage(key, (Object[])args);
 	}
 
 	static {
 		Throwables.registerSurrogateFactory(LocalizedIOException.class, (template, cause) ->
-			new LocalizedIOException(cause, template.accessor, template.key, template.args)
+			new LocalizedIOException(cause, template.resources, template.key, template.args)
 		);
 	}
 }

@@ -24,7 +24,6 @@ package com.aoindustries.text;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Locale;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,18 +20,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.util;
+package com.aoindustries.validation;
+
+import com.aoindustries.util.i18n.EditableResourceBundle;
+import java.util.Locale;
 
 /**
- * Provides a simplified interface for obtaining localized values from the ApplicationResources.properties files.
+ * Is also an editable resource bundle.
  *
  * @author  AO Industries, Inc.
  */
-public final class ApplicationResourcesAccessor {
+public final class ApplicationResources_ja extends EditableResourceBundle {
 
-	public static final com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor = com.aoindustries.util.i18n.ApplicationResourcesAccessor.getInstance(
-		ApplicationResourcesAccessor.class.getPackage().getName() + ".ApplicationResources"
-	);
-
-	private ApplicationResourcesAccessor() {}
+	public ApplicationResources_ja() {
+		super(
+			Locale.JAPANESE,
+			ApplicationResources.bundleSet,
+			ApplicationResources.getSourceFile("ApplicationResources_ja.properties")
+		);
+	}
 }

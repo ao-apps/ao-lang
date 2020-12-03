@@ -22,7 +22,7 @@
  */
 package com.aoindustries.lang;
 
-import static com.aoindustries.lang.ApplicationResourcesAccessor.accessor;
+import com.aoindustries.i18n.Resources;
 
 /**
  * Indicates a null argument was passed where not allowed.
@@ -30,6 +30,8 @@ import static com.aoindustries.lang.ApplicationResourcesAccessor.accessor;
  * @author  AO Industries, Inc.
  */
 public class NullArgumentException extends IllegalArgumentException {
+
+	private static final Resources RESOURCES = Resources.getResources(NullArgumentException.class.getPackage());
 
 	private static final long serialVersionUID = 1L;
 
@@ -51,13 +53,13 @@ public class NullArgumentException extends IllegalArgumentException {
 	private final String argument;
 
 	public NullArgumentException(String argument) {
-		super(argument==null ? accessor.getMessage("NullArgumentException.message.noName") : accessor.getMessage("NullArgumentException.message", argument));
+		super(argument==null ? RESOURCES.getMessage("NullArgumentException.message.noName") : RESOURCES.getMessage("NullArgumentException.message", argument));
 		this.argument = argument;
 	}
 
 	@Override
 	public String getLocalizedMessage() {
-		return argument==null ? accessor.getMessage("NullArgumentException.message.noName") : accessor.getMessage("NullArgumentException.message", argument);
+		return argument==null ? RESOURCES.getMessage("NullArgumentException.message.noName") : RESOURCES.getMessage("NullArgumentException.message", argument);
 	}
 
 	/**

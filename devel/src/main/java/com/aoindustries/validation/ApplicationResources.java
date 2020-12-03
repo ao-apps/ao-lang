@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010-2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,15 +22,29 @@
  */
 package com.aoindustries.validation;
 
+import com.aoindustries.util.i18n.EditableResourceBundle;
+import com.aoindustries.util.i18n.EditableResourceBundleSet;
+import java.io.File;
+import java.util.Locale;
+
 /**
- * Provides a simplified interface for obtaining localized values from the ApplicationResources.properties files.
+ * Is also an editable resource bundle.
  *
  * @author  AO Industries, Inc.
  */
-final class ApplicationResourcesAccessor {
+public final class ApplicationResources extends EditableResourceBundle {
 
-	static final com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor = com.aoindustries.util.i18n.ApplicationResourcesAccessor.getInstance(ApplicationResourcesAccessor.class.getPackage().getName() + ".ApplicationResources"
+	static final EditableResourceBundleSet bundleSet = new EditableResourceBundleSet(
+		ApplicationResources.class,
+		Locale.ROOT,
+		Locale.JAPANESE
 	);
 
-	private ApplicationResourcesAccessor() {}
+	static File getSourceFile(String filename) {
+		return new File(System.getProperty("user.home") + "/maven2/ao/ao-lang/src/main/resources/com/aoindustries/validation", filename);
+	}
+
+	public ApplicationResources() {
+		super(Locale.ROOT, bundleSet, getSourceFile("ApplicationResources.properties"));
+	}
 }

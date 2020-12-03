@@ -22,8 +22,8 @@
  */
 package com.aoindustries.validation;
 
+import com.aoindustries.i18n.Resources;
 import com.aoindustries.lang.EmptyArrays;
-import com.aoindustries.util.i18n.ApplicationResourcesAccessor;
 import java.io.Serializable;
 
 /**
@@ -35,20 +35,39 @@ final public class InvalidResult implements ValidationResult {
 
 	private static final long serialVersionUID = -105878200149461063L;
 
-	private final ApplicationResourcesAccessor accessor;
+	private final Resources resources;
 	private final String key;
 	private final Serializable[] args;
 
-	public InvalidResult(ApplicationResourcesAccessor accessor, String key) {
-		this.accessor = accessor;
+	public InvalidResult(Resources resources, String key) {
+		this.resources = resources;
 		this.key = key;
 		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
-	public InvalidResult(ApplicationResourcesAccessor accessor, String key, Serializable... args) {
-		this.accessor = accessor;
+	/**
+	 * @deprecated  Please use {@link #InvalidResult(com.aoindustries.i18n.Resources, java.lang.String)} directly.
+	 */
+	@Deprecated
+	public InvalidResult(com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key) {
+		this((Resources)accessor, key);
+	}
+
+	/**
+	 * @param  args  No defensive copy
+	 */
+	public InvalidResult(Resources resources, String key, Serializable... args) {
+		this.resources = resources;
 		this.key = key;
 		this.args = args;
+	}
+
+	/**
+	 * @deprecated  Please use {@link #InvalidResult(com.aoindustries.i18n.Resources, java.lang.String, java.io.Serializable...)} directly.
+	 */
+	@Deprecated
+	public InvalidResult(com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key, Serializable... args) {
+		this((Resources)accessor, key, args);
 	}
 
 	@Override
@@ -58,17 +77,29 @@ final public class InvalidResult implements ValidationResult {
 
 	@Override
 	public String toString() {
-		return accessor.getMessage(key, (Object[])args);
+		return resources.getMessage(key, (Object[])args);
 	}
 
-	public ApplicationResourcesAccessor getAccessor() {
-		return accessor;
+	public Resources getResources() {
+		return resources;
+	}
+
+	/**
+	 * @deprecated  Please use {@link #getResources()} directly.
+	 */
+	@Deprecated
+	public com.aoindustries.util.i18n.ApplicationResourcesAccessor getAccessor() {
+		return resources;
 	}
 
 	public String getKey() {
 		return key;
 	}
 
+	/**
+	 * @return  No defensive copy.
+	 */
+	@SuppressWarnings("ReturnOfCollectionOrArrayField")
 	public Serializable[] getArgs() {
 		return args;
 	}

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011-2013, 2016, 2017, 2020  AO Industries, Inc.
+ * Copyright (C) 2013, 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,41 +20,31 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.validation;
+package com.aoindustries.util;
 
-import com.aoindustries.i18n.Resources;
+import com.aoindustries.util.i18n.EditableResourceBundle;
+import com.aoindustries.util.i18n.EditableResourceBundleSet;
+import java.io.File;
+import java.util.Locale;
 
 /**
- * A valid result singleton.
+ * Is also an editable resource bundle.
  *
  * @author  AO Industries, Inc.
  */
-final public class ValidResult implements ValidationResult {
+public final class ApplicationResources extends EditableResourceBundle {
 
-	private static final Resources RESOURCES = Resources.getResources(ValidResult.class.getPackage());
+	static final EditableResourceBundleSet bundleSet = new EditableResourceBundleSet(
+		ApplicationResources.class,
+		Locale.ROOT,
+		Locale.JAPANESE
+	);
 
-	private static final long serialVersionUID = -5742207860354792003L;
-
-	private static final ValidResult singleton = new ValidResult();
-
-	public static ValidResult getInstance() {
-		return singleton;
+	static File getSourceFile(String filename) {
+		return new File(System.getProperty("user.home") + "/maven2/ao/ao-lang/src/main/resources/com/aoindustries/util", filename);
 	}
 
-	private ValidResult() {
-	}
-
-	private Object readResolve() {
-		return singleton;
-	}
-
-	@Override
-	public boolean isValid() {
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return RESOURCES.getMessage("ValidResult.toString");
+	public ApplicationResources() {
+		super(Locale.ROOT, bundleSet, getSourceFile("ApplicationResources.properties"));
 	}
 }

@@ -22,9 +22,9 @@
  */
 package com.aoindustries.util.concurrent;
 
+import com.aoindustries.i18n.Resources;
 import com.aoindustries.lang.EmptyArrays;
 import com.aoindustries.lang.Throwables;
-import com.aoindustries.util.i18n.ApplicationResourcesAccessor;
 import java.io.Serializable;
 import java.util.concurrent.TimeoutException;
 
@@ -35,35 +35,58 @@ import java.util.concurrent.TimeoutException;
  */
 public class LocalizedTimeoutException extends TimeoutException {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
-	protected final ApplicationResourcesAccessor accessor;
+	/**
+	 * @deprecated  Please use {@link #resources} directly.
+	 */
+	@Deprecated
+	protected final com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor;
+	protected final Resources resources;
 	protected final String key;
 	protected final Serializable[] args;
 
-	public LocalizedTimeoutException(ApplicationResourcesAccessor accessor, String key) {
-		super(accessor.getMessage(key));
-		this.accessor = accessor;
+	public LocalizedTimeoutException(Resources resources, String key) {
+		super(resources.getMessage(key));
+		this.accessor = resources;
+		this.resources = resources;
 		this.key = key;
 		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
-	public LocalizedTimeoutException(ApplicationResourcesAccessor accessor, String key, Serializable... args) {
-		super(accessor.getMessage(key, (Object[])args));
-		this.accessor = accessor;
+	/**
+	 * @deprecated  Please use {@link #LocalizedTimeoutException(com.aoindustries.i18n.Resources, java.lang.String)} directly.
+	 */
+	@Deprecated
+	public LocalizedTimeoutException(com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key) {
+		this((Resources)accessor, key);
+	}
+
+	public LocalizedTimeoutException(Resources resources, String key, Serializable... args) {
+		super(resources.getMessage(key, (Object[])args));
+		this.accessor = resources;
+		this.resources = resources;
 		this.key = key;
 		this.args = args;
 	}
 
+	/**
+	 * @deprecated  Please use {@link #LocalizedTimeoutException(com.aoindustries.i18n.Resources, java.lang.String, java.io.Serializable...)} directly.
+	 */
+	@Deprecated
+	public LocalizedTimeoutException(com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key, Serializable... args) {
+		this((Resources)accessor, key, args);
+	}
+
 	@Override
 	public String getLocalizedMessage() {
-		return accessor.getMessage(key, (Object[])args);
+		return resources.getMessage(key, (Object[])args);
 	}
 
 	static {
 		Throwables.registerSurrogateFactory(LocalizedTimeoutException.class, (template, cause) -> {
 			LocalizedTimeoutException newEx = new LocalizedTimeoutException(
-				template.accessor, template.key, template.args
+				template.resources, template.key, template.args
 			);
 			newEx.initCause(cause);
 			return newEx;

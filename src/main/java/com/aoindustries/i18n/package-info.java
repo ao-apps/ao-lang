@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,18 +20,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.lang;
 
 /**
- * Provides a simplified interface for obtaining localized values from the ApplicationResources.properties files.
- *
- * @author  AO Industries, Inc.
+ * Internationalization (i18n) utilities shared by many projects.
+ * <p>
+ * We are consolidating classes into this package.  Once consolidated, this package will be split into its own "ao-18n"
+ * project.  Some features will go into sub-projects, such as in-context translation becoming "ao-i18n-editor" and its
+ * related servlets going into something like "ao-i18n-editor-servlet".
+ * </p>
  */
-final class ApplicationResourcesAccessor {
-
-	static final com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor = com.aoindustries.util.i18n.ApplicationResourcesAccessor.getInstance(
-		ApplicationResourcesAccessor.class.getPackage().getName() + ".ApplicationResources"
-	);
-
-	private ApplicationResourcesAccessor() {}
-}
+package com.aoindustries.i18n;

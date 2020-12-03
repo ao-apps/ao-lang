@@ -22,7 +22,7 @@
  */
 package com.aoindustries.lang;
 
-import com.aoindustries.util.i18n.ApplicationResourcesAccessor;
+import com.aoindustries.i18n.Resources;
 import java.io.Serializable;
 
 /**
@@ -32,48 +32,89 @@ import java.io.Serializable;
  */
 public class LocalizedIllegalArgumentException extends IllegalArgumentException {
 
-	private static final long serialVersionUID = -4941714282849295887L;
+	private static final long serialVersionUID = 2L;
 
-	protected final ApplicationResourcesAccessor accessor;
+	/**
+	 * @deprecated  Please use {@link #resources} directly.
+	 */
+	@Deprecated
+	protected final com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor;
+	protected final Resources resources;
 	protected final String key;
 	protected final Serializable[] args;
 
-	public LocalizedIllegalArgumentException(ApplicationResourcesAccessor accessor, String key) {
-		super(accessor.getMessage(key));
-		this.accessor = accessor;
+	public LocalizedIllegalArgumentException(Resources resources, String key) {
+		super(resources.getMessage(key));
+		this.accessor = resources;
+		this.resources = resources;
 		this.key = key;
 		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
-	public LocalizedIllegalArgumentException(ApplicationResourcesAccessor accessor, String key, Serializable... args) {
-		super(accessor.getMessage(key, (Object[])args));
-		this.accessor = accessor;
+	/**
+	 * @deprecated  Please use {@link #LocalizedIllegalArgumentException(com.aoindustries.i18n.Resources, java.lang.String)} directly.
+	 */
+	@Deprecated
+	public LocalizedIllegalArgumentException(com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key) {
+		this((Resources)accessor, key);
+	}
+
+	public LocalizedIllegalArgumentException(Resources resources, String key, Serializable... args) {
+		super(resources.getMessage(key, (Object[])args));
+		this.accessor = resources;
+		this.resources = resources;
 		this.key = key;
 		this.args = args;
 	}
 
-	public LocalizedIllegalArgumentException(Throwable cause, ApplicationResourcesAccessor accessor, String key) {
-		super(accessor.getMessage(key), cause);
-		this.accessor = accessor;
+	/**
+	 * @deprecated  Please use {@link #LocalizedIllegalArgumentException(com.aoindustries.i18n.Resources, java.lang.String, java.io.Serializable...)} directly.
+	 */
+	@Deprecated
+	public LocalizedIllegalArgumentException(com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key, Serializable... args) {
+		this((Resources)accessor, key, args);
+	}
+
+	public LocalizedIllegalArgumentException(Throwable cause, Resources resources, String key) {
+		super(resources.getMessage(key), cause);
+		this.accessor = resources;
+		this.resources = resources;
 		this.key = key;
 		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
-	public LocalizedIllegalArgumentException(Throwable cause, ApplicationResourcesAccessor accessor, String key, Serializable... args) {
-		super(accessor.getMessage(key, (Object[])args), cause);
-		this.accessor = accessor;
+	/**
+	 * @deprecated  Please use {@link #LocalizedIllegalArgumentException(java.lang.Throwable, com.aoindustries.i18n.Resources, java.lang.String)} directly.
+	 */
+	@Deprecated
+	public LocalizedIllegalArgumentException(Throwable cause, com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key) {
+		this(cause, (Resources)accessor, key);
+	}
+
+	public LocalizedIllegalArgumentException(Throwable cause, Resources resources, String key, Serializable... args) {
+		super(resources.getMessage(key, (Object[])args), cause);
+		this.accessor = resources;
+		this.resources = resources;
 		this.key = key;
 		this.args = args;
+	}
+
+	/**
+	 * @deprecated  Please use {@link #LocalizedIllegalArgumentException(java.lang.Throwable, com.aoindustries.i18n.Resources, java.lang.String, java.io.Serializable...)} directly.
+	 */
+	@Deprecated
+	public LocalizedIllegalArgumentException(Throwable cause, com.aoindustries.util.i18n.ApplicationResourcesAccessor accessor, String key, Serializable... args) {
+		this(cause, (Resources)accessor, key, args);
 	}
 
 	@Override
 	public String getLocalizedMessage() {
-		return accessor.getMessage(key, (Object[])args);
+		return resources.getMessage(key, (Object[])args);
 	}
 
 	static {
 		Throwables.registerSurrogateFactory(LocalizedIllegalArgumentException.class, (template, cause) ->
-			new LocalizedIllegalArgumentException(cause, template.accessor, template.key, template.args)
+			new LocalizedIllegalArgumentException(cause, template.resources, template.key, template.args)
 		);
 	}
 }
