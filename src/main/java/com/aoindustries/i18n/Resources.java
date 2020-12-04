@@ -24,6 +24,7 @@ package com.aoindustries.i18n;
 
 import com.aoindustries.text.MessageFormatFactory;
 import com.aoindustries.util.i18n.ThreadLocale;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,6 +46,11 @@ import java.util.concurrent.ConcurrentMap;
 public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAccessor {
 
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Note: If ao-collections ever a dependency, could use it's constant empty object array.
+	 */
+	private static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
 
 	private static final class Key {
 
@@ -203,6 +209,7 @@ public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAc
 		 *
 		 * @param  resource  The value received from the {@link ResourceBundle}.
 		 *                   {@code null} when the lookup failed.
+		 * @param  args      The set of arguments, may be an empty array, never {@code null}.
 		 * @param  result    The result, possibly including any message substitutions.
 		 *                   This will always be a unique String instance per call, allowing
 		 *                   listeners to match individual strings to their lookup by identity.
@@ -312,51 +319,13 @@ public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAc
 
 	/**
 	 * <p>
-	 * Gets the message.
-	 * If missing, will generate a Struts-like value including the locale and (prefix + key).
-	 * </p>
-	 *
-	 * @param  key  This will be combined with any {@link #getPrefix() prefix}
-	 */
-	@Override
-	public String getMessage(Locale locale, String key) {
-		if(prefix != null) key = prefix + key;
-		String string = null;
-		try {
-			string = getResourceBundle(locale).getString(key);
-		} catch(MissingResourceException err) {
-			// string remains null
-		}
-		if(string==null) return "???"+locale.toString()+"."+key+"???";
-		return string;
-	}
-
-	/**
-	 * <p>
-	 * Gets the message.
+	 * Gets the message with the given key in the provided locale,
+	 * optionally {@link MessageFormat#format(java.lang.Object[], java.lang.StringBuffer, java.text.FieldPosition) message-formatted}.
 	 * If missing, will generate a Struts-like value including the locale and (prefix + key).
 	 * </p>
 	 * <p>
-	 * Gets the message in the {@linkplain ThreadLocale#get() current thread's locale}.
-	 * </p>
-	 *
-	 * @param  key  This will be combined with any {@link #getPrefix() prefix}
-	 *
-	 * @see  ThreadLocale
-	 * @see  #getMessage(java.util.Locale, java.lang.String)
-	 */
-	@Override
-	public String getMessage(String key) {
-		return getMessage(ThreadLocale.get(), key);
-	}
-
-	/**
-	 * <p>
-	 * Gets the message.
-	 * If missing, will generate a Struts-like value including the locale and (prefix + key).
-	 * </p>
-	 * <p>
-	 * Substitutes arguments in the text where it finds {0}, {1}, {2}, ...
+	 * Substitutes arguments in the text where it finds {0}, {1}, {2}, …
+	 * Message formatting is not performed when {@code args} is {@code null} or empty.
 	 * </p>
 	 *
 	 * @param  key  This will be combined with any {@link #getPrefix() prefix}
@@ -364,49 +333,66 @@ public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAc
 	@Override
 	@SuppressWarnings("RedundantStringConstructorCall")
 	public String getMessage(Locale locale, String key, Object... args) {
+		if(args == null) args = EMPTY_OBJECT_ARRAY;
 		if(prefix != null) key = prefix + key;
 		String resource = null;
 		try {
 			resource = getResourceBundle(locale).getString(key);
 		} catch(MissingResourceException err) {
-			// string remains null
+			// resource remains null
 		}
-		// It is rare that the identity of a String object matters, but for correct resource bundle lookup hooks,
-		// newString must always be a unique String object instance per lookup.
-		String result;
 		if(resource == null) {
 			return "???" + locale.toString() + '.' + key + "???";
-		} else if(args.length == 0) {
-			// NOTE: Make a new string instance always, since string identity is used to know how it was looked-up
-			result = new String(resource);
 		} else {
-			// newString is a new string due to StringBuffer...toString
-			result = MessageFormatFactory.getMessageFormat(resource, locale).format(args, new StringBuffer(resource.length()<<1), null).toString();
-		}
-		// Call any listeners
-		List<Listener> myListeners;
-		synchronized(listenersLock) {
-			myListeners = listeners;
-		}
-		if(myListeners != null) {
-			for(Listener l : myListeners) {
-				l.onGetMessage(this, locale, key, args, resource, result);
+			// It is rare that the identity of a String object matters, but for correct resource bundle lookup hooks,
+			// newString must always be a unique String object instance per lookup.
+			String result;
+			if(args.length == 0) {
+				// NOTE: Make a new string instance always, since string identity is used to know how it was looked-up
+				//
+				// Should we check if translation is activated before making this new instance?
+				//     Checking thread-local might not be much faster than making the string instance, since this String
+				//     constructor only copies a few fields and not the underlying array.
+				result = new String(resource);
+			} else {
+				// newString is a new string due to StringBuffer...toString
+				result = MessageFormatFactory.getMessageFormat(resource, locale).format(args, new StringBuffer(resource.length()<<1), null).toString();
 			}
+			// Call any listeners
+			List<Listener> myListeners;
+			synchronized(listenersLock) {
+				myListeners = listeners;
+			}
+			if(myListeners != null) {
+				for(Listener l : myListeners) {
+					l.onGetMessage(this, locale, key, args, resource, result);
+				}
+			}
+			// Return result
+			return result;
 		}
-		// Return result
-		return result;
+	}
+
+	/**
+	 * Gets the message with the given key in the provided locale.
+	 * If missing, will generate a Struts-like value including the locale and (prefix + key).
+	 *
+	 * @param  key  This will be combined with any {@link #getPrefix() prefix}
+	 */
+	@Override
+	public String getMessage(Locale locale, String key) {
+		return getMessage(locale, key, EMPTY_OBJECT_ARRAY);
 	}
 
 	/**
 	 * <p>
-	 * Gets the message.
+	 * Gets the message with the given key in the {@linkplain ThreadLocale#get() current thread's locale},
+	 * optionally {@link MessageFormat#format(java.lang.Object[], java.lang.StringBuffer, java.text.FieldPosition) message-formatted}.
 	 * If missing, will generate a Struts-like value including the locale and (prefix + key).
 	 * </p>
 	 * <p>
-	 * Substitutes arguments in the text where it finds {0}, {1}, {2}, ...
-	 * </p>
-	 * <p>
-	 * Gets the message in the {@linkplain ThreadLocale#get() current thread's locale}.
+	 * Substitutes arguments in the text where it finds {0}, {1}, {2}, …
+	 * Message formatting is not performed when {@code args} is {@code null} or empty.
 	 * </p>
 	 *
 	 * @param  key  This will be combined with any {@link #getPrefix() prefix}
@@ -417,5 +403,19 @@ public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAc
 	@Override
 	public String getMessage(String key, Object... args) {
 		return getMessage(ThreadLocale.get(), key, args);
+	}
+
+	/**
+	 * Gets the message with the given key in the {@linkplain ThreadLocale#get() current thread's locale}.
+	 * If missing, will generate a Struts-like value including the locale and (prefix + key).
+	 *
+	 * @param  key  This will be combined with any {@link #getPrefix() prefix}
+	 *
+	 * @see  ThreadLocale
+	 * @see  #getMessage(java.util.Locale, java.lang.String)
+	 */
+	@Override
+	public String getMessage(String key) {
+		return getMessage(ThreadLocale.get(), key, EMPTY_OBJECT_ARRAY);
 	}
 }
