@@ -25,8 +25,7 @@ package com.aoindustries.i18n;
 import com.aoindustries.text.MessageFormatFactory;
 import com.aoindustries.util.i18n.ThreadLocale;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -34,6 +33,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Provides a simplified interface for obtaining localized and formatted values
@@ -218,14 +218,9 @@ public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAc
 	}
 
 	/**
-	 * The registered listeners.  This list will always be recreated in-full
-	 * when updated, so synchronization not needed while iterating the list
-	 * of listeners.
+	 * The registered listeners.
 	 */
-	// TODO: Replace with CopyOnWriteArrayList to avoid locking?
-	private static class ListenersLock {}
-	private static final ListenersLock listenersLock = new ListenersLock();
-	private static List<Listener> listeners;
+	private static final List<Listener> listeners = new CopyOnWriteArrayList<>();
 
 	/**
 	 * Adds a listener.  Does not check for duplicates.  If a listener is added
@@ -233,16 +228,8 @@ public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAc
 	 */
 	@SuppressWarnings("overloads") // TODO: Remove once the base class ApplicationResourcesAccessor is eliminated
 	public static void addListener(Listener listener) {
-		synchronized(listenersLock) {
-			List<Listener> newListeners;
-			if(listeners == null) {
-				newListeners = Collections.singletonList(listener);
-			} else {
-				newListeners = new ArrayList<>(listeners.size() + 1);
-				newListeners.addAll(listeners);
-				newListeners.add(listener);
-			}
-			listeners = newListeners;
+		if(listener != null) {
+			listeners.add(listener);
 		}
 	}
 
@@ -251,21 +238,9 @@ public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAc
 	 */
 	@SuppressWarnings("overloads") // TODO: Remove once the base class ApplicationResourcesAccessor is eliminated
 	public static void removeListener(Listener listener) {
-		synchronized(listenersLock) {
-			if(listeners != null) {
-				ArrayList<Listener> newListeners = new ArrayList<>(listeners.size()-1);
-				for(Listener l : listeners) {
-					if(l != listener) newListeners.add(l);
-				}
-				if(newListeners.isEmpty()) {
-					listeners = null;
-				} else if(newListeners.size() == 1) {
-					listeners = Collections.singletonList(newListeners.get(0));
-				} else {
-					newListeners.trimToSize();
-					listeners = newListeners;
-				}
-			}
+		Iterator<Listener> iter = listeners.iterator();
+		while(iter.hasNext()) {
+			if(iter.next() == listener) iter.remove();
 		}
 	}
 
@@ -359,14 +334,8 @@ public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAc
 				result = MessageFormatFactory.getMessageFormat(resource, locale).format(args, new StringBuffer(resource.length()<<1), null).toString();
 			}
 			// Call any listeners
-			List<Listener> myListeners;
-			synchronized(listenersLock) {
-				myListeners = listeners;
-			}
-			if(myListeners != null) {
-				for(Listener l : myListeners) {
-					l.onGetMessage(this, locale, key, args, resource, result);
-				}
+			for(Listener l : listeners) {
+				l.onGetMessage(this, locale, key, args, resource, result);
 			}
 			// Return result
 			return result;
