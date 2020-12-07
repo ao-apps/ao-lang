@@ -51,32 +51,41 @@ public final class Projects {
 	}
 
 	/**
-	 * Reads the <code>pom.properties</code> from the given source.
+	 * Reads the <code>pom.properties</code> from the given input stream.
 	 */
-	public static String readVersion(Function<String,InputStream> getResourceAsStream, String groupId, String artifactId) throws IOException {
+	public static String readVersion(String resource, InputStream in, String groupId, String artifactId) throws IOException {
 		String version = null;
-		String resource = "/META-INF/maven/" + groupId + '/' + artifactId + "/pom.properties";
-		try (InputStream in = getResourceAsStream.apply(resource)) {
-			if(in != null) {
-				Properties p = new Properties();
-				p.load(in);
-				version = p.getProperty("version");
-				if(version != null) {
-					if(logger.isLoggable(Level.FINE)) {
-						logger.log(Level.FINE, "Version \"" + version + "\" found from resource: " + resource);
-					}
-				} else {
-					if(logger.isLoggable(Level.WARNING)) {
-						logger.log(Level.WARNING, "Resource does not contain \"version\": " + resource);
-					}
+		if(in != null) {
+			Properties p = new Properties();
+			p.load(in);
+			assert groupId.equals(p.getProperty("groupId"));
+			assert artifactId.equals(p.getProperty("artifactId"));
+			version = p.getProperty("version");
+			if(version != null) {
+				if(logger.isLoggable(Level.FINE)) {
+					logger.log(Level.FINE, "Version \"" + version + "\" found from resource: " + resource);
 				}
 			} else {
-				if(logger.isLoggable(Level.FINE)) {
-					logger.log(Level.FINE, "Resource not found: " + resource);
+				if(logger.isLoggable(Level.WARNING)) {
+					logger.log(Level.WARNING, "Resource does not contain \"version\": " + resource);
 				}
+			}
+		} else {
+			if(logger.isLoggable(Level.FINE)) {
+				logger.log(Level.FINE, "Resource not found: " + resource);
 			}
 		}
 		return version;
+	}
+
+	/**
+	 * Reads the <code>pom.properties</code> from the given source.
+	 */
+	public static String readVersion(Function<String,InputStream> getResourceAsStream, String groupId, String artifactId) throws IOException {
+		String resource = "/META-INF/maven/" + groupId + '/' + artifactId + "/pom.properties";
+		try (InputStream in = getResourceAsStream.apply(resource)) {
+			return readVersion(resource, in, groupId, artifactId);
+		}
 	}
 
 	/**
