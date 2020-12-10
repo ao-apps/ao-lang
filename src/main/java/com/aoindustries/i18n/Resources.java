@@ -185,7 +185,7 @@ public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAc
 	 * </p>
 	 *
 	 * @param  clazz  The base name is derived as {@code clazz.getPackage().getName() + ".ApplicationResources"}.
-	 *                The prefix is obtained from {@link Class#getSimpleName()}.
+	 *                The prefix is obtained from {@link Class#getSimpleName()} as {@code clazz.getSimpleName() + '.'}.
 	 *                <p>
 	 *                This class is used for determining the package and prefix only.  It will typically be the class
 	 *                that is using the resource, not the class that implements {@link ResourceBundle}.
@@ -195,7 +195,7 @@ public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAc
 	 */
 	public static Resources getResources(Class<?> clazz) {
 		// Java 9: getPackageName()
-		return getResources(clazz.getPackage(), null, clazz.getSimpleName());
+		return getResources(clazz.getPackage(), null, clazz.getSimpleName() + '.');
 	}
 
 	/**
