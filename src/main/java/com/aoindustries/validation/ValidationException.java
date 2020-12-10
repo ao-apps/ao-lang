@@ -35,7 +35,7 @@ import com.aoindustries.lang.Throwables;
 // TODO: Or extend javax.validation.ValidationException and deprecate this.
 public class ValidationException extends Exception {
 
-	private static final Resources RESOURCES = Resources.getResources(ValidationException.class.getPackage());
+	private static final Resources RESOURCES = Resources.getResources(ValidationException.class);
 
 	private static final long serialVersionUID = -1153407618428602416L;
 
@@ -43,13 +43,13 @@ public class ValidationException extends Exception {
 
 	public ValidationException(ValidationResult result) {
 		super(result.toString()); // Conversion done in server
-		if(result.isValid()) throw new LocalizedIllegalArgumentException(RESOURCES, "ValidationException.init.validResult");
+		if(result.isValid()) throw new LocalizedIllegalArgumentException(RESOURCES, "init.validResult");
 		this.result = result;
 	}
 
 	public ValidationException(Throwable cause, ValidationResult result) {
 		super(result.toString(), cause); // Conversion done in server
-		if(result.isValid()) throw new LocalizedIllegalArgumentException(RESOURCES, "ValidationException.init.validResult");
+		if(result.isValid()) throw new LocalizedIllegalArgumentException(RESOURCES, "init.validResult");
 		this.result = result;
 	}
 

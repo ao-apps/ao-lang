@@ -39,7 +39,7 @@ import java.util.Properties;
  */
 final public class PropertiesUtils {
 
-	public static final Resources RESOURCES = Resources.getResources(PropertiesUtils.class.getPackage());
+	public static final Resources RESOURCES = Resources.getResources(PropertiesUtils.class);
 
 	/**
 	 * Make no instances.
@@ -63,7 +63,7 @@ final public class PropertiesUtils {
 	public static Properties loadFromResource(Class<?> clazz, String resource) throws IOException {
 		Properties props = new Properties();
 		InputStream in = clazz.getResourceAsStream(resource);
-		if(in==null) throw new LocalizedIOException(RESOURCES, "PropertiesUtils.readProperties.resourceNotFound", resource);
+		if(in==null) throw new LocalizedIOException(RESOURCES, "readProperties.resourceNotFound", resource);
 		try {
 			props.load(in);
 		} finally {

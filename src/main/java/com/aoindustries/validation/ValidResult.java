@@ -31,7 +31,7 @@ import com.aoindustries.i18n.Resources;
  */
 final public class ValidResult implements ValidationResult {
 
-	private static final Resources RESOURCES = Resources.getResources(ValidResult.class.getPackage());
+	private static final Resources RESOURCES = Resources.getResources(ValidResult.class);
 
 	private static final long serialVersionUID = -5742207860354792003L;
 
@@ -55,6 +55,6 @@ final public class ValidResult implements ValidationResult {
 
 	@Override
 	public String toString() {
-		return RESOURCES.getMessage("ValidResult.toString");
+		return RESOURCES.getMessage("toString");
 	}
 }

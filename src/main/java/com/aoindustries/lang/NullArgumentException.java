@@ -31,7 +31,7 @@ import com.aoindustries.i18n.Resources;
  */
 public class NullArgumentException extends IllegalArgumentException {
 
-	private static final Resources RESOURCES = Resources.getResources(NullArgumentException.class.getPackage());
+	private static final Resources RESOURCES = Resources.getResources(NullArgumentException.class);
 
 	private static final long serialVersionUID = 1L;
 
@@ -53,13 +53,13 @@ public class NullArgumentException extends IllegalArgumentException {
 	private final String argument;
 
 	public NullArgumentException(String argument) {
-		super(argument==null ? RESOURCES.getMessage("NullArgumentException.message.noName") : RESOURCES.getMessage("NullArgumentException.message", argument));
+		super(argument==null ? RESOURCES.getMessage("message.noName") : RESOURCES.getMessage("message", argument));
 		this.argument = argument;
 	}
 
 	@Override
 	public String getLocalizedMessage() {
-		return argument==null ? RESOURCES.getMessage("NullArgumentException.message.noName") : RESOURCES.getMessage("NullArgumentException.message", argument);
+		return argument==null ? RESOURCES.getMessage("message.noName") : RESOURCES.getMessage("message", argument);
 	}
 
 	/**
