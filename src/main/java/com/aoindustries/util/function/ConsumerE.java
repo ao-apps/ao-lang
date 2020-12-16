@@ -33,10 +33,10 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface ConsumerE<T, E extends Throwable> {
 
-    void accept(T t) throws E;
+	void accept(T t) throws E;
 
-    default ConsumerE<T, E> andThen(ConsumerE<? super T, ? extends E> after) throws E {
-        Objects.requireNonNull(after);
-        return (T t) -> { accept(t); after.accept(t); };
-    }
+	default ConsumerE<T, E> andThen(ConsumerE<? super T, ? extends E> after) throws E {
+		Objects.requireNonNull(after);
+		return (T t) -> { accept(t); after.accept(t); };
+	}
 }

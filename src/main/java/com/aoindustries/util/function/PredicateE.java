@@ -23,29 +23,41 @@
 package com.aoindustries.util.function;
 
 import java.util.Objects;
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
- * A function that is allowed to throw a checked exception.
+ * A predicate that is allowed to throw a checked exception.
  *
- * @see Function
+ * @see Predicate
  */
 @FunctionalInterface
-public interface FunctionE<T, R, E extends Throwable> {
+public interface PredicateE<T, E extends Throwable> {
 
-	R apply(T t) throws E;
+	boolean test(T t) throws E;
 
-	default <V> FunctionE<V, R, E> compose(FunctionE<? super V, ? extends T, ? extends E> before) throws E {
-		Objects.requireNonNull(before);
-		return (V v) -> apply(before.apply(v));
+	default PredicateE<T, E> and(PredicateE<? super T, ? extends E> other) throws E {
+		Objects.requireNonNull(other);
+		return (t) -> test(t) && other.test(t);
 	}
 
-	default <V> FunctionE<T, V, E> andThen(FunctionE<? super R, ? extends V, ? extends E> after) throws E {
-		Objects.requireNonNull(after);
-		return (T t) -> after.apply(apply(t));
+	default PredicateE<T, E> negate() throws E {
+		return (t) -> !test(t);
 	}
 
-	static <T,E extends Throwable> FunctionE<T, T, E> identity() {
-		return t -> t;
+	default PredicateE<T, E> or(PredicateE<? super T, ? extends E> other) throws E {
+		Objects.requireNonNull(other);
+		return (t) -> test(t) || other.test(t);
+	}
+
+	static <T, E extends Throwable> PredicateE<T, E> isEqual(Object targetRef) {
+		return (null == targetRef)
+			? Objects::isNull
+			: object -> targetRef.equals(object);
+	}
+
+	@SuppressWarnings("unchecked")
+	static <T, E extends Throwable> PredicateE<T, E> not(PredicateE<? super T, ? extends E> target) throws E {
+		Objects.requireNonNull(target);
+		return (PredicateE<T, E>)target.negate();
 	}
 }

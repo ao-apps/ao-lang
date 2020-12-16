@@ -22,30 +22,15 @@
  */
 package com.aoindustries.util.function;
 
-import java.util.Objects;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
- * A function that is allowed to throw a checked exception.
+ * A supplier that is allowed to throw a checked exception.
  *
- * @see Function
+ * @see Supplier
  */
 @FunctionalInterface
-public interface FunctionE<T, R, E extends Throwable> {
+public interface SupplierE<T, E extends Throwable> {
 
-	R apply(T t) throws E;
-
-	default <V> FunctionE<V, R, E> compose(FunctionE<? super V, ? extends T, ? extends E> before) throws E {
-		Objects.requireNonNull(before);
-		return (V v) -> apply(before.apply(v));
-	}
-
-	default <V> FunctionE<T, V, E> andThen(FunctionE<? super R, ? extends V, ? extends E> after) throws E {
-		Objects.requireNonNull(after);
-		return (T t) -> after.apply(apply(t));
-	}
-
-	static <T,E extends Throwable> FunctionE<T, T, E> identity() {
-		return t -> t;
-	}
+	T get() throws E;
 }
