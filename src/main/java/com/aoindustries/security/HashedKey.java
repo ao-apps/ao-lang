@@ -75,9 +75,7 @@ public class HashedKey implements Comparable<HashedKey> {
 	/**
 	 * @param hash  The provided parameter is zeroed 
 	 */
-	public HashedKey(
-		byte[] hash
-	) {
+	public HashedKey(byte[] hash) {
 		if(hash.length != HASH_BYTES) {
 			Arrays.fill(hash, (byte)0);
 			throw new IllegalArgumentException("Hash wrong length: " + hash.length);
@@ -118,13 +116,13 @@ public class HashedKey implements Comparable<HashedKey> {
 		// TODO: constant time compare here?
 		byte[] h1 = hash;
 		byte[] h2 = other.hash;
-		for(int i=0; i<HASH_BYTES; i++) {
-			byte b1 = h1[i];
-			byte b2 = h2[i];
-			if(b1 < b2) return -1;
-			if(b1 > b2) return 1;
-			// Java 8: int diff = Byte.compare(h1[i], h2[i]);
-			// Java 8: if(diff != 0) return 0;
+		for(int i = 0; i < HASH_BYTES; i++) {
+			int diff = Integer.compare(
+				Byte.toUnsignedInt(h1[i]),
+				Byte.toUnsignedInt(h2[i])
+			);
+			// Java 9: int diff = Byte.compareUnsigned(h1[i], h2[i]);
+			if(diff != 0) return 0;
 		}
 		return 0;
 	}
