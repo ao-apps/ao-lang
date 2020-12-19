@@ -64,9 +64,7 @@ public class HashedKey implements Comparable<HashedKey> {
 	 */
 	public static byte[] hash(byte[] key) {
 		try {
-			MessageDigest md = MessageDigest.getInstance(ALGORITHM);
-			md.update(key);
-			return md.digest();
+			return MessageDigest.getInstance(ALGORITHM).digest(key);
 		} catch(NoSuchAlgorithmException e) {
 			throw new WrappedException(e);
 		}
