@@ -41,14 +41,42 @@ import javax.crypto.spec.PBEKeySpec;
 public class HashedPassword implements AutoCloseable {
 
 	/**
-	 * Indicates that no password is set.
+	 * Value selected to be URL-safe and distinct from the values used by {@link Base64#getUrlEncoder()}.
 	 */
-	public static final String NO_PASSWORD = "*";
+	static final char SEPARATOR = '.';
 
 	/**
-	 * Similar to how used in <code>/etc/shadow</code>.
+	 * Indicates that no password is set.
 	 */
-	static final char SEPARATOR = '$';
+	public static final String NO_PASSWORD_VALUE = Character.valueOf(SEPARATOR).toString();
+	static {
+		assert isUrlSafe(NO_PASSWORD_VALUE);
+	}
+
+	/**
+	 * Checks that a string only contains the simplest of URL-safe characters.
+	 * See <a href="https://www.ietf.org/rfc/rfc3986.html#section-2.3">2.3.  Unreserved Characters</a>.
+	 */
+	static boolean isUrlSafe(String value) {
+		for(int i = 0, len = value.length(); i < len; i++) {
+			char ch = value.charAt(i);
+			if(
+				(ch < '0' || ch > '9')
+				&& (ch < 'A' || ch > 'Z')
+				&& (ch < 'a' || ch > 'z')
+				&& ch != '-'
+				&& ch != '.'
+				&& ch != '_'
+				&& ch != '~'
+			) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	static final Base64.Decoder DECODER = Base64.getUrlDecoder();
+	static final Base64.Encoder ENCODER = Base64.getUrlEncoder().withoutPadding();
 
 	/**
 	 * The number of milliseconds under which it will be suggested to recommend iterations from
@@ -86,6 +114,8 @@ public class HashedPassword implements AutoCloseable {
 		private final int hashBytes;
 
 		private Algorithm(String algorithmName, int saltBytes, int hashBytes) {
+			assert isUrlSafe(algorithmName);
+			assert algorithmName.indexOf(SEPARATOR) == -1;
 			this.algorithmName = algorithmName;
 			this.saltBytes = saltBytes;
 			this.hashBytes = hashBytes;
@@ -190,12 +220,15 @@ public class HashedPassword implements AutoCloseable {
 	 * A constant that may be used in places where no password is set.
 	 * This behaves as if already {@linkplain #close() closed}.
 	 */
-	public static final HashedPassword CLOSED = new HashedPassword(
+	public static final HashedPassword NO_PASSWORD = new HashedPassword(
 		RECOMMENDED_ALGORITHM,
 		new byte[RECOMMENDED_ALGORITHM.getSaltBytes()],
 		RECOMMENDED_ITERATIONS,
 		new byte[RECOMMENDED_ALGORITHM.getHashBytes()]
 	);
+	static {
+		assert isUrlSafe(NO_PASSWORD.toString());
+	}
 
 	/**
 	 * Generates a random salt of {@link Algorithm#getSaltBytes()} bytes in length.
@@ -284,8 +317,8 @@ public class HashedPassword implements AutoCloseable {
 	public static HashedPassword valueOf(String hashedPassword) {
 		if(hashedPassword == null) {
 			return null;
-		} else if(NO_PASSWORD.equals(hashedPassword)) {
-			return CLOSED;
+		} else if(NO_PASSWORD_VALUE.equals(hashedPassword)) {
+			return NO_PASSWORD;
 		} else {
 			int pos1 = hashedPassword.indexOf(SEPARATOR);
 			if(pos1 == -1) throw new IllegalArgumentException("First separator (" + SEPARATOR + ") not found");
@@ -302,14 +335,14 @@ public class HashedPassword implements AutoCloseable {
 			if(algorithm == null) throw new IllegalArgumentException("Unsupported algorithm: " + algorithmName);
 			int pos2 = hashedPassword.indexOf(SEPARATOR, pos1 + 1);
 			if(pos2 == -1) throw new IllegalArgumentException("Second separator (" + SEPARATOR + ") not found");
-			byte[] salt = Base64.getDecoder().decode(hashedPassword.substring(pos1 + 1, pos2));
-			if(allZeroes(salt)) throw new IllegalArgumentException("Salt may not represent all zeroes, which is reserved for no password (\"" + NO_PASSWORD + "\")");
+			byte[] salt = DECODER.decode(hashedPassword.substring(pos1 + 1, pos2));
+			if(allZeroes(salt)) throw new IllegalArgumentException("Salt may not represent all zeroes, which is reserved for no password (\"" + NO_PASSWORD_VALUE + "\")");
 			int pos3 = hashedPassword.indexOf(SEPARATOR, pos2 + 1);
 			if(pos3 == -1) throw new IllegalArgumentException("Third separator (" + SEPARATOR + ") not found");
 			int iterations = Integer.parseInt(hashedPassword.substring(pos2 + 1, pos3));
 			if(iterations < 1) throw new IllegalArgumentException("Invalid iterations: " + iterations);
-			byte[] hash = Base64.getDecoder().decode(hashedPassword.substring(pos3 + 1));
-			if(allZeroes(hash)) throw new IllegalArgumentException("Hash may not represent all zeroes, which is reserved for no password (\"" + NO_PASSWORD + "\")");
+			byte[] hash = DECODER.decode(hashedPassword.substring(pos3 + 1));
+			if(allZeroes(hash)) throw new IllegalArgumentException("Hash may not represent all zeroes, which is reserved for no password (\"" + NO_PASSWORD_VALUE + "\")");
 			return new HashedPassword(algorithm, salt, iterations, hash);
 		}
 	}
@@ -373,11 +406,13 @@ public class HashedPassword implements AutoCloseable {
 	 */
 	@Override
 	public String toString() {
-		if(isClosed()) return NO_PASSWORD;
-		return algorithm.name()
-			+ SEPARATOR + Base64.getEncoder().withoutPadding().encodeToString(salt)
+		if(isClosed()) return NO_PASSWORD_VALUE;
+		String str = algorithm.name()
+			+ SEPARATOR + ENCODER.withoutPadding().encodeToString(salt)
 			+ SEPARATOR + iterations
-			+ SEPARATOR + Base64.getEncoder().withoutPadding().encodeToString(hash);
+			+ SEPARATOR + ENCODER.withoutPadding().encodeToString(hash);
+		assert isUrlSafe(str);
+		return str;
 	}
 
 	/**

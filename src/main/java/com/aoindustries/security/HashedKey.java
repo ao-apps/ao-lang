@@ -24,13 +24,15 @@ package com.aoindustries.security;
 
 import com.aoindustries.exception.WrappedException;
 import com.aoindustries.io.IoUtils;
+import static com.aoindustries.security.HashedPassword.DECODER;
+import static com.aoindustries.security.HashedPassword.ENCODER;
 import static com.aoindustries.security.HashedPassword.SEPARATOR;
 import static com.aoindustries.security.HashedPassword.allZeroes;
+import static com.aoindustries.security.HashedPassword.isUrlSafe;
 import static com.aoindustries.security.HashedPassword.slowEquals;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Base64;
 
 /**
  * A hashed random key.
@@ -42,14 +44,10 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 	/**
 	 * Indicates that no key is set.
 	 */
-	public static final String NO_KEY = HashedPassword.NO_PASSWORD;
-
-	/**
-	 * @deprecated  This is the value matching {@linkplain Algorithm#SHA_256 the previous default algorithm},
-	 *              please use {@link Algorithm#getAlgorithmName()} instead.
-	 */
-	@Deprecated
-	public static final String ALGORITHM = "SHA-256";
+	public static final String NO_KEY_VALUE = HashedPassword.NO_PASSWORD_VALUE;
+	static {
+		assert isUrlSafe(NO_KEY_VALUE);
+	}
 
 	/**
 	 * See <a href="https://docs.oracle.com/en/java/javase/12/docs/specs/security/standard-names.html#messagedigest-algorithms">MessageDigest Algorithms</a>
@@ -79,6 +77,8 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 		private final int hashBytes;
 
 		private Algorithm(String algorithmName, int keyBytes, int hashBytes) {
+			assert isUrlSafe(algorithmName);
+			assert algorithmName.indexOf(SEPARATOR) == -1;
 			this.algorithmName = algorithmName;
 			this.keyBytes = keyBytes;
 			this.hashBytes = hashBytes;
@@ -123,6 +123,13 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 	}
 
 	/**
+	 * @deprecated  This is the value matching {@linkplain Algorithm#SHA_256 the previous default algorithm},
+	 *              please use {@link Algorithm#getAlgorithmName()} instead.
+	 */
+	@Deprecated
+	public static final String ALGORITHM = Algorithm.SHA_256.getAlgorithmName();
+
+	/**
 	 * The algorithm recommended for use with new keys.  This may change at any time, but previous algorithms will
 	 * remain supported.
 	 */
@@ -141,10 +148,13 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 	 * A constant that may be used in places where no key is set.
 	 * This behaves as if already {@linkplain #close() closed}.
 	 */
-	public static final HashedKey CLOSED = new HashedKey(
+	public static final HashedKey NO_KEY = new HashedKey(
 		RECOMMENDED_ALGORITHM,
 		new byte[RECOMMENDED_ALGORITHM.getHashBytes()]
 	);
+	static {
+		assert isUrlSafe(NO_KEY.toString());
+	}
 
 	/**
 	 * Generates a random plaintext key of {@link Algorithm#getKeyBytes()} bytes in length.
@@ -211,8 +221,8 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 	public static HashedKey valueOf(String hashedKey) {
 		if(hashedKey == null) {
 			return null;
-		} else if(NO_KEY.equals(hashedKey)) {
-			return CLOSED;
+		} else if(NO_KEY_VALUE.equals(hashedKey)) {
+			return NO_KEY;
 		} else {
 			int pos = hashedKey.indexOf(SEPARATOR);
 			if(pos == -1) throw new IllegalArgumentException("Separator (" + SEPARATOR + ") not found");
@@ -227,8 +237,8 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 				}
 			}
 			if(algorithm == null) throw new IllegalArgumentException("Unsupported algorithm: " + algorithmName);
-			byte[] hash = Base64.getDecoder().decode(hashedKey.substring(pos + 1));
-			if(allZeroes(hash)) throw new IllegalArgumentException("Hash may not represent all zeroes, which is reserved for no key (\"" + NO_KEY + "\")");
+			byte[] hash = DECODER.decode(hashedKey.substring(pos + 1));
+			if(allZeroes(hash)) throw new IllegalArgumentException("Hash may not represent all zeroes, which is reserved for no key (\"" + NO_KEY_VALUE + "\")");
 			return new HashedKey(algorithm, hash);
 		}
 	}
@@ -270,9 +280,11 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 	 */
 	@Override
 	public String toString() {
-		if(isClosed()) return NO_KEY;
-		return algorithm.name()
-			+ SEPARATOR + Base64.getEncoder().withoutPadding().encodeToString(hash);
+		if(isClosed()) return NO_KEY_VALUE;
+		String str = algorithm.name()
+			+ SEPARATOR + ENCODER.encodeToString(hash);
+		assert isUrlSafe(str);
+		return str;
 	}
 
 	/**
@@ -343,7 +355,7 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 	public static void main(String... args) {
 		Algorithm algorithm = RECOMMENDED_ALGORITHM;
 		byte[] key = generateKey(algorithm);
-		System.out.println(Base64.getEncoder().withoutPadding().encodeToString(key));
+		System.out.println(ENCODER.encodeToString(key));
 		System.out.println(new HashedKey(algorithm, hash(algorithm, key)));
 	}
 }

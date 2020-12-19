@@ -59,7 +59,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 								Is now <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/AutoCloseable.html">AutoCloseable</ao:a></code>.
 								When closed, zeroes the hash, and calls to <code>equals(Object)</code> will always return <code>false</code>.
 							</li>
-							<li>New constant <code>CLOSED</code> that may be used when there is no key.</li>
+							<li>New constant <code>NO_KEY</code> that may be used when there is no key.</li>
 							<li>Now supports multiple algorithms, with the recommended algorithm being "SHA-512/256".</li>
 							<li>Length-constant time equality checks</li>
 							<li><code>compareTo(HashedKey)</code> now orders unsigned</li>
@@ -83,7 +83,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 								Is now <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/AutoCloseable.html">AutoCloseable</ao:a></code>.
 								When closed, zeroes the salt and hash, and calls to <code>matches(String)</code> will always return <code>false</code>.
 							</li>
-							<li>New constant <code>CLOSED</code> that may be used when there is no password.</li>
+							<li>New constant <code>NO_PASSWORD</code> that may be used when there is no password.</li>
 							<li>Now supports multiple algorithms, with the recommended algorithm being "PBKDF2WithHmacSHA512".</li>
 							<li>
 								Recommended iterations changed from <code>1000</code> to <code>25000</code>, which is selected
