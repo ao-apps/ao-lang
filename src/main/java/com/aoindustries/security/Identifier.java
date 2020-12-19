@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2013, 2014, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2012, 2013, 2014, 2016, 2017, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -228,6 +228,7 @@ public class Identifier implements Serializable, Comparable<Identifier> {
 		return lo;
 	}
 
+	@SuppressWarnings("UseOfSystemOutOrSystemErr")
 	public static void main(String[] args) {
 		System.out.println(new Identifier());
 	}
