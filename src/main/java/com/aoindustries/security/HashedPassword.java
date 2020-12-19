@@ -63,7 +63,7 @@ public class HashedPassword {
 	private static final SecureRandom secureRandom = new SecureRandom();
 
 	/**
-	 * Generates a random salt of <code>SALT_BYTES</code> bytes in length.
+	 * Generates a random salt of {@link #SALT_BYTES} bytes in length.
 	 * 
 	 * @see  #hash(java.lang.String, byte[], int) 
 	 */

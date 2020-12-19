@@ -30,7 +30,7 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 
 /**
- * A hashed random key.
+ * A hashed 256-bit random key.
  *
  * @author  AO Industries, Inc.
  */
@@ -47,7 +47,7 @@ public class HashedKey implements Comparable<HashedKey> {
 	private static final SecureRandom secureRandom = new SecureRandom();
 
 	/**
-	 * Generates a random plaintext key of <code>HASH_BYTES</code> bytes in length.
+	 * Generates a random plaintext key of {@link #HASH_BYTES} bytes in length.
 	 *
 	 * @see  #hash(byte[])
 	 */
