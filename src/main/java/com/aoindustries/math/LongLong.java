@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2016, 2017, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -250,17 +250,12 @@ public class LongLong extends Number implements Comparable<LongLong> {
 
 	/**
 	 * Compares two longs as unsigned.
+	 *
+	 * @deprecated  Please use {@link Long#compareUnsigned(long, long)} as of Java 8.
 	 */
+	@Deprecated
 	public static int compareUnsigned(long value1, long value2) {
-		long i1 = value1 >>> 32;
-		long i2 = value2 >>> 32;
-		if(i1 < i2) return -1;
-		if(i1 > i2) return 1;
-		i1 = value1 & 0xffffffffL;
-		i2 = value2 & 0xffffffffL;
-		if(i1 < i2) return -1;
-		if(i1 > i2) return 1;
-		return 0;
+		return Long.compareUnsigned(value1, value2);
 	}
 
 	@Override
@@ -269,14 +264,14 @@ public class LongLong extends Number implements Comparable<LongLong> {
 		if(hi>other.hi) return 1;
 		//return (lo<other.lo ? -1 : (lo==other.lo ? 0 : 1));
 		// Compare lo as unsigned
-		return compareUnsigned(lo, other.lo);
+		return Long.compareUnsigned(lo, other.lo);
 	}
 
 
 	public int compareToUnsigned(LongLong other) {
-		int diff = compareUnsigned(hi, other.hi);
+		int diff = Long.compareUnsigned(hi, other.hi);
 		if(diff != 0) return diff;
-		return compareUnsigned(lo, other.lo);
+		return Long.compareUnsigned(lo, other.lo);
 	}
 
 	public static final int SIZE = 128;

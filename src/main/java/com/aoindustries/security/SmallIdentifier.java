@@ -23,7 +23,6 @@
 package com.aoindustries.security;
 
 import com.aoindustries.io.IoUtils;
-import com.aoindustries.math.LongLong;
 import static com.aoindustries.math.UnsignedLong.divide;
 import static com.aoindustries.security.Identifier.BASE;
 import java.io.Serializable;
@@ -122,7 +121,7 @@ public class SmallIdentifier implements Serializable, Comparable<SmallIdentifier
 	 */
 	@Override
 	public int compareTo(SmallIdentifier other) {
-		return LongLong.compareUnsigned(value, other.value);
+		return Long.compareUnsigned(value, other.value);
 	}
 
 	public long getValue() {

@@ -215,9 +215,9 @@ public class Identifier implements Serializable, Comparable<Identifier> {
 	 */
 	@Override
 	public int compareTo(Identifier other) {
-		int diff = LongLong.compareUnsigned(hi, other.hi);
+		int diff = Long.compareUnsigned(hi, other.hi);
 		if(diff != 0) return diff;
-		return LongLong.compareUnsigned(lo, other.lo);
+		return Long.compareUnsigned(lo, other.lo);
 	}
 
 	public long getHi() {
