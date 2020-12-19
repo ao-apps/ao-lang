@@ -96,13 +96,15 @@ public class HashedKey implements Comparable<HashedKey> {
 		 */
 	}
 
+	/**
+	 * Performs comparisons in length-constant time.
+	 * <a href="https://crackstation.net/hashing-security.htm">https://crackstation.net/hashing-security.htm</a>
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		if(!(obj instanceof HashedKey)) return false;
-		HashedKey other = (HashedKey)obj;
-		// TODO: constant time equals here?
-		//return HashedPassword.slowEquals(hash, other.hash);
-		return Arrays.equals(hash, other.hash);
+		return
+			(obj instanceof HashedKey)
+			&& HashedPassword.slowEquals(hash, ((HashedKey)obj).hash);
 	}
 
 	/**

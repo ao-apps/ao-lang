@@ -162,12 +162,16 @@ public class Identifier implements Serializable, Comparable<Identifier> {
 		return equals((Identifier)O);
 	}
 
+	/**
+	 * Performs comparisons in length-constant time.
+	 * <a href="https://crackstation.net/hashing-security.htm">https://crackstation.net/hashing-security.htm</a>
+	 */
 	public boolean equals(Identifier other) {
-		return
-			other!=null
-			&& hi==other.hi
-			&& lo==other.lo
-		;
+		if(other == null) return false;
+		int diff = 0;
+		diff |= hi ^ other.hi;
+		diff |= lo ^ other.lo;
+		return diff == 0;
 	}
 
 	@Override
