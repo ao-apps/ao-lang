@@ -24,7 +24,6 @@ package com.aoindustries.security;
 
 import com.aoindustries.exception.WrappedException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import javax.crypto.SecretKeyFactory;
@@ -60,8 +59,6 @@ public class HashedPassword {
 	 */
 	public static final int RECOMMENDED_ITERATIONS = 1000;
 
-	private static final SecureRandom secureRandom = new SecureRandom();
-
 	/**
 	 * Generates a random salt of {@link #SALT_BYTES} bytes in length.
 	 * 
@@ -69,7 +66,7 @@ public class HashedPassword {
 	 */
 	public static byte[] generateSalt() {
 		byte[] salt = new byte[SALT_BYTES];
-		secureRandom.nextBytes(salt);
+		Identifier.secureRandom.nextBytes(salt);
 		return salt;
 	}
 

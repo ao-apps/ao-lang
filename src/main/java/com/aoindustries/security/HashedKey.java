@@ -26,7 +26,6 @@ import com.aoindustries.exception.WrappedException;
 import com.aoindustries.io.IoUtils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Arrays;
 
 /**
@@ -44,8 +43,6 @@ public class HashedKey implements Comparable<HashedKey> {
 		assert HASH_BYTES >= 4 : "Hash must be at least 32-bits for hashCode implementation";
 	}
 
-	private static final SecureRandom secureRandom = new SecureRandom();
-
 	/**
 	 * Generates a random plaintext key of {@link #HASH_BYTES} bytes in length.
 	 *
@@ -53,7 +50,7 @@ public class HashedKey implements Comparable<HashedKey> {
 	 */
 	public static byte[] generateKey() {
 		byte[] key = new byte[HASH_BYTES];
-		secureRandom.nextBytes(key);
+		Identifier.secureRandom.nextBytes(key);
 		return key;
 	}
 
