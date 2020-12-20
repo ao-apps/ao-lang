@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-0500"
-		dateModified="2020-12-19T21:29:44-06:00"
+		dateModified="2020-12-20T02:44:19-06:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -46,19 +46,28 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				groupId="@{project.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
-			>
-				<ul>
-					<li>
-						Deprecated <code>LongLong.compareUnsigned(long, long)</code> in favor of Java 8's standard implementation
-						<code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Long.html#compareUnsigned-long-long-">Long.compareUnsigned(long, long)</ao:a></code>.
-					</li>
-					<li>
-						Moved the <code>com.aoindustries.security</code> package to the new
-						<core:link book="/ao-security" page="/index.jspx" /> project.
-					</li>
-				</ul>
-			</changelog:release>
+			/>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="4.11.0"
+			datePublished="2020-12-20T02:44:19-06:00"
+			groupId="@{project.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{project.scm.url}"
+		>
+			<ul>
+				<li>
+					Deprecated <code>LongLong.compareUnsigned(long, long)</code> in favor of Java 8's standard implementation
+					<code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Long.html#compareUnsigned-long-long-">Long.compareUnsigned(long, long)</ao:a></code>.
+				</li>
+				<li>
+					Moved the <code>com.aoindustries.security</code> package to the new
+					<core:link book="/ao-security" page="/index.jspx" /> project.
+				</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
