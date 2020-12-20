@@ -24,6 +24,10 @@ package com.aoindustries.security;
 
 import com.aoindustries.exception.WrappedException;
 import com.aoindustries.lang.SysExits;
+import java.io.IOException;
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -39,7 +43,7 @@ import javax.crypto.spec.PBEKeySpec;
  *
  * @author  AO Industries, Inc.
  */
-public class HashedPassword {
+public class HashedPassword implements Serializable {
 
 	/**
 	 * Value selected to be URL-safe and distinct from the values used by {@link Base64#getUrlEncoder()}.
@@ -337,6 +341,8 @@ public class HashedPassword {
 		}
 	}
 
+	private static final long serialVersionUID = 1L;
+
 	private final Algorithm algorithm;
 	private final byte[] salt;
 	private final int iterations;
@@ -367,22 +373,26 @@ public class HashedPassword {
 		int iterations,
 		byte[] hash
 	) throws IllegalArgumentException {
-		if(
-			salt.length != algorithm.getSaltBytes()
-			// Always done for length-constant time comparisons
-			| hash.length != algorithm.getHashBytes()
-		) {
+		try {
+			if(salt.length != algorithm.getSaltBytes()) {
+				throw new IllegalArgumentException(
+					"salt length mismatch: expected " + algorithm.getSaltBytes() + ", got " + salt.length
+				);
+			} else if(hash.length != algorithm.getHashBytes()) {
+				throw new IllegalArgumentException(
+					"hash length mismatch: expected " + algorithm.getHashBytes() + ", got " + hash.length
+				);
+			} else if(iterations < 1) {
+				throw new IllegalArgumentException("iterations < 1: " + iterations);
+			}
+			this.algorithm = Objects.requireNonNull(algorithm);
+			this.salt = Arrays.copyOf(salt, salt.length);
+			this.iterations = iterations;
+			this.hash = Arrays.copyOf(hash, hash.length);
+		} finally {
 			Arrays.fill(salt, (byte)0);
 			Arrays.fill(hash, (byte)0);
-			throw new IllegalArgumentException();
 		}
-		this.algorithm = Objects.requireNonNull(algorithm);
-		this.salt = Arrays.copyOf(salt, salt.length);
-		Arrays.fill(salt, (byte)0);
-		if(iterations < 1) throw new IllegalArgumentException("iterations < 1: " + iterations);
-		this.iterations = iterations;
-		this.hash = Arrays.copyOf(hash, hash.length);
-		Arrays.fill(hash, (byte)0);
 	}
 
 	/**
@@ -396,6 +406,34 @@ public class HashedPassword {
 	@Deprecated
 	public HashedPassword(byte[] salt, int iterations, byte[] hash) {
 		this(Algorithm.PBKDF2WITHHMACSHA1, salt, iterations, hash);
+	}
+
+	private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+		ois.defaultReadObject();
+		if(algorithm == null) {
+			if(salt != null) throw new InvalidObjectException("salt must be null when algorithm is null");
+			if(iterations != 0) throw new InvalidObjectException("iterations must be 0 when algorithm is null");
+			if(hash != null) throw new InvalidObjectException("hash must be null when algorithm is null");
+		} else {
+			if(salt == null) throw new InvalidObjectException("salt required when have algorithm");
+			if(hash == null) throw new InvalidObjectException("hash required when have algorithm");
+			if(salt.length != algorithm.getSaltBytes()) {
+				throw new InvalidObjectException(
+					"salt length mismatch: expected " + algorithm.getSaltBytes() + ", got " + salt.length
+				);
+			} else if(hash.length != algorithm.getHashBytes()) {
+				throw new InvalidObjectException(
+					"hash length mismatch: expected " + algorithm.getHashBytes() + ", got " + hash.length
+				);
+			} else if(iterations < 1) {
+				throw new InvalidObjectException("iterations < 1: " + iterations);
+			}
+		}
+	}
+
+	private Object readResolve() {
+		if(algorithm == null) return NO_PASSWORD;
+		return this;
 	}
 
 	/**

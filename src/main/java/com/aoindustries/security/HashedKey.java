@@ -29,6 +29,10 @@ import static com.aoindustries.security.HashedPassword.ENCODER;
 import static com.aoindustries.security.HashedPassword.SEPARATOR;
 import static com.aoindustries.security.HashedPassword.isUrlSafe;
 import static com.aoindustries.security.HashedPassword.slowEquals;
+import java.io.IOException;
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -39,7 +43,7 @@ import java.util.Objects;
  *
  * @author  AO Industries, Inc.
  */
-public class HashedKey implements Comparable<HashedKey> {
+public class HashedKey implements Comparable<HashedKey>, Serializable {
 
 	/**
 	 * Indicates that no key is set.
@@ -247,6 +251,8 @@ public class HashedKey implements Comparable<HashedKey> {
 		}
 	}
 
+	private static final long serialVersionUID = 1L;
+
 	private final Algorithm algorithm;
 	private final byte[] hash;
 
@@ -265,13 +271,17 @@ public class HashedKey implements Comparable<HashedKey> {
 	 * @throws  IllegalArgumentException  when {@code hash.length != HASH_BYTES}
 	 */
 	public HashedKey(Algorithm algorithm, byte[] hash) throws IllegalArgumentException {
-		if(hash.length != algorithm.getHashBytes()) {
+		try {
+			if(hash.length != algorithm.getHashBytes()) {
+				throw new IllegalArgumentException(
+					"hash length mismatch: expected " + algorithm.getHashBytes() + ", got " + hash.length
+				);
+			}
+			this.algorithm = Objects.requireNonNull(algorithm);
+			this.hash = Arrays.copyOf(hash, hash.length);
+		} finally {
 			Arrays.fill(hash, (byte)0);
-			throw new IllegalArgumentException();
 		}
-		this.algorithm = Objects.requireNonNull(algorithm);
-		this.hash = Arrays.copyOf(hash, hash.length);
-		Arrays.fill(hash, (byte)0);
 	}
 
 	/**
@@ -283,6 +293,25 @@ public class HashedKey implements Comparable<HashedKey> {
 	@Deprecated
 	public HashedKey(byte[] hash) {
 		this(Algorithm.SHA_256, hash);
+	}
+
+	private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+		ois.defaultReadObject();
+		if(algorithm == null) {
+			if(hash != null) throw new InvalidObjectException("hash must be null when algorithm is null");
+		} else {
+			if(hash == null) throw new InvalidObjectException("hash required when have algorithm");
+			if(hash.length != algorithm.getHashBytes()) {
+				throw new InvalidObjectException(
+					"hash length mismatch: expected " + algorithm.getHashBytes() + ", got " + hash.length
+				);
+			}
+		}
+	}
+
+	private Object readResolve() {
+		if(algorithm == null) return NO_KEY;
+		return this;
 	}
 
 	/**
