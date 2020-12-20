@@ -65,7 +65,7 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 		SHA3_224("SHA3-224", 224 / 8),
 		SHA3_256("SHA3-256", 256 / 8),
 		SHA3_384("SHA3-384", 384 / 8),
-		SHA3_512("SHA3-512", 512 / 8);
+		SHA3_512("SHA3-512", 512 / 8); // Java 9: This could become the default, although SHA2 might still be best for this application
 
 		/**
 		 * Avoid repetitive allocation.
