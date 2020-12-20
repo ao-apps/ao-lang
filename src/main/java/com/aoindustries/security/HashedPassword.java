@@ -108,7 +108,7 @@ public class HashedPassword implements Serializable {
 		 *              current {@link #RECOMMENDED_ALGORITHM}, for new passwords.
 		 */
 		@Deprecated
-		PBKDF2WITHHMACSHA1("PBKDF2WithHmacSHA1", 256 / 8),
+		PBKDF2WITHHMACSHA1("PBKDF2WithHmacSHA1", 256 / 8), // Maybe this could/should be 160 bits to match SHA-1, but we used 256 bits in the previous versions
 		PBKDF2WITHHMACSHA224("PBKDF2WithHmacSHA224", 224 / 8),
 		PBKDF2WITHHMACSHA256("PBKDF2WithHmacSHA256", 256 / 8),
 		PBKDF2WITHHMACSHA384("PBKDF2WithHmacSHA384", 384 / 8),
