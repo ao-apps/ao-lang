@@ -43,6 +43,10 @@ import java.util.Objects;
  *
  * @author  AO Industries, Inc.
  */
+// TODO: Tests
+// TODO: ResultSet constructor, that takes multiple columns?  Constant for number of columns
+//       Same for prepared statement
+//       Implement SQLData, too? (With ServiceLoader?)
 public class HashedKey implements Comparable<HashedKey>, Serializable {
 
 	/**

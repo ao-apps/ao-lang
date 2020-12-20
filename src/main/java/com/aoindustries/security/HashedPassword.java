@@ -43,6 +43,10 @@ import javax.crypto.spec.PBEKeySpec;
  *
  * @author  AO Industries, Inc.
  */
+// TODO: Tests
+// TODO: ResultSet constructor, that takes multiple columns?  Constant for number of columns
+//       Same for prepared statement
+//       Implement SQLData, too? (With ServiceLoader?)
 public class HashedPassword implements Serializable {
 
 	/**
@@ -94,6 +98,7 @@ public class HashedPassword implements Serializable {
 	 */
 	// Note: These must be ordered by relative strength, from weakest to strongest for isRehashRecommended() to work
 	public enum Algorithm {
+		// TODO: Add old UnixCrypt and SHA-1 here for backwards compatibility?  Could then remove other HashedPassword entirely.
 		@Deprecated
 		PBKDF2WITHHMACMD5("PBKDF2WithHmacMD5", 128 / 8),
 		/**
