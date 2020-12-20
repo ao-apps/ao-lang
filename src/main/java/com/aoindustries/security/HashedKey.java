@@ -286,7 +286,11 @@ public class HashedKey implements Comparable<HashedKey> {
 	}
 
 	/**
+	 * Gets the string representation of the hashed key, which will only contain
+	 * <a href="https://www.ietf.org/rfc/rfc3986.html#section-2.3">the simplest of URL-safe characters</a>.
+	 * <p>
 	 * Please see {@link #valueOf(java.lang.String)} for the inverse operation.
+	 * </p>
 	 */
 	@Override
 	public String toString() {
