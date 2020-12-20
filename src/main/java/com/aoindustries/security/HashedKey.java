@@ -27,19 +27,19 @@ import com.aoindustries.io.IoUtils;
 import static com.aoindustries.security.HashedPassword.DECODER;
 import static com.aoindustries.security.HashedPassword.ENCODER;
 import static com.aoindustries.security.HashedPassword.SEPARATOR;
-import static com.aoindustries.security.HashedPassword.allZeroes;
 import static com.aoindustries.security.HashedPassword.isUrlSafe;
 import static com.aoindustries.security.HashedPassword.slowEquals;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * A hashed random key.
  *
  * @author  AO Industries, Inc.
  */
-public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
+public class HashedKey implements Comparable<HashedKey> {
 
 	/**
 	 * Indicates that no key is set.
@@ -136,6 +136,15 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 	public static final Algorithm RECOMMENDED_ALGORITHM = Algorithm.SHA_512_256;
 
 	/**
+	 * Private dummy key array, used to keep constant time when no key available.
+	 * <p>
+	 * TODO: In theory, does sharing this array make it likely to be in cache, and thus make it clear which hashes do
+	 * not have any key set?  Would it matter if it did?
+	 * </p>
+	 */
+	private static final byte[] DUMMY_KEY = new byte[RECOMMENDED_ALGORITHM.getKeyBytes()];
+
+	/**
 	 * The number of bytes in the SHA-256 hash.
 	 *
 	 * @deprecated  This is the value matching {@linkplain Algorithm#SHA_256 the previous default algorithm},
@@ -146,12 +155,8 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 
 	/**
 	 * A constant that may be used in places where no key is set.
-	 * This behaves as if already {@linkplain #close() closed}.
 	 */
-	public static final HashedKey NO_KEY = new HashedKey(
-		RECOMMENDED_ALGORITHM,
-		new byte[RECOMMENDED_ALGORITHM.getHashBytes()]
-	);
+	public static final HashedKey NO_KEY = new HashedKey();
 	static {
 		assert isUrlSafe(NO_KEY.toString());
 	}
@@ -238,7 +243,6 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 			}
 			if(algorithm == null) throw new IllegalArgumentException("Unsupported algorithm: " + algorithmName);
 			byte[] hash = DECODER.decode(hashedKey.substring(pos + 1));
-			if(allZeroes(hash)) throw new IllegalArgumentException("Hash may not represent all zeroes, which is reserved for no key (\"" + NO_KEY_VALUE + "\")");
 			return new HashedKey(algorithm, hash);
 		}
 	}
@@ -247,9 +251,16 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 	private final byte[] hash;
 
 	/**
+	 * Special singleton for {@link #NO_KEY}.
+	 */
+	private HashedKey() {
+		algorithm = null;
+		hash = null;
+	}
+
+	/**
 	 * @param algorithm  The algorithm previously used to hash the key
 	 * @param hash       The provided parameter is zeroed.
-	 *                   When all zeroes, this behaves as if already {@linkplain #close() closed}.
 	 *
 	 * @throws  IllegalArgumentException  when {@code hash.length != HASH_BYTES}
 	 */
@@ -258,14 +269,13 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 			Arrays.fill(hash, (byte)0);
 			throw new IllegalArgumentException();
 		}
-		this.algorithm = algorithm;
+		this.algorithm = Objects.requireNonNull(algorithm);
 		this.hash = Arrays.copyOf(hash, hash.length);
 		Arrays.fill(hash, (byte)0);
 	}
 
 	/**
 	 * @param hash  The provided parameter is zeroed.
-	 *              When all zeroes, this behaves as if already {@linkplain #close() closed}.
 	 *
 	 * @deprecated  This represents a hash using {@linkplain Algorithm#SHA_256 the previous default algorithm},
 	 *              please use {@link #HashedKey(com.aoindustries.security.HashedKey.Algorithm, byte[])} instead.
@@ -280,15 +290,20 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 	 */
 	@Override
 	public String toString() {
-		if(isClosed()) return NO_KEY_VALUE;
-		String str = algorithm.name()
-			+ SEPARATOR + ENCODER.encodeToString(hash);
+		String str;
+		if(algorithm == null) {
+			assert hash == null;
+			str = NO_KEY_VALUE;
+		} else {
+			str = algorithm.name()
+				+ SEPARATOR + ENCODER.encodeToString(hash);
+		}
 		assert isUrlSafe(str);
 		return str;
 	}
 
 	/**
-	 * Checks if equal to another hashed key, always {@code false} when either is {@linkplain #close() closed}.
+	 * Checks if equal to another hashed key, always {@code false} when either is {@link #NO_KEY}.
 	 * <p>
 	 * Performs comparisons in length-constant time.
 	 * <a href="https://crackstation.net/hashing-security.htm">https://crackstation.net/hashing-security.htm</a>
@@ -298,12 +313,16 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 	public boolean equals(Object obj) {
 		if(!(obj instanceof HashedKey)) return false;
 		HashedKey other = (HashedKey)obj;
-		return
-			// All done for length-constant time comparisons
-			!isClosed()
-			& !other.isClosed()
-			& algorithm == other.algorithm
-			& slowEquals(hash, ((HashedKey)obj).hash);
+		// All done for length-constant time comparisons
+		if(algorithm == null | other.algorithm == null) {
+			// Perform an equality check with default settings, just to occupy the same amount of time as if had a key
+			slowEquals(DUMMY_KEY, DUMMY_KEY);
+			return false;
+		} else {
+			return
+				algorithm == other.algorithm
+				& slowEquals(hash, ((HashedKey)obj).hash);
+		}
 	}
 
 	/**
@@ -316,39 +335,30 @@ public class HashedKey implements Comparable<HashedKey>, AutoCloseable {
 
 	@Override
 	public int compareTo(HashedKey other) {
-		// TODO: constant time compare here?
-		int diff = algorithm.compareTo(other.algorithm);
-		if(diff != 0) return 0;
-		byte[] h1 = hash;
-		byte[] h2 = other.hash;
-		for(int i = 0; i < HASH_BYTES; i++) {
-			diff = Integer.compare(
-				Byte.toUnsignedInt(h1[i]),
-				Byte.toUnsignedInt(h2[i])
-			);
-			// Java 9: int diff = Byte.compareUnsigned(h1[i], h2[i]);
+		// NO_KEY first
+		if(algorithm == null) {
+			return (other.algorithm == null) ? 0 : -1;
+		} else if(other.algorithm == null) {
+			return 1;
+		} else {
+			// TODO: constant time compare here?
+			int diff = algorithm.compareTo(other.algorithm);
 			if(diff != 0) return 0;
+			byte[] h1 = hash;
+			byte[] h2 = other.hash;
+			int hashBytes = algorithm.getHashBytes();
+			assert h1.length == hashBytes;
+			assert h2.length == hashBytes;
+			for(int i = 0; i < hashBytes; i++) {
+				diff = Integer.compare(
+					Byte.toUnsignedInt(h1[i]),
+					Byte.toUnsignedInt(h2[i])
+				);
+				// Java 9: int diff = Byte.compareUnsigned(h1[i], h2[i]);
+				if(diff != 0) return 0;
+			}
+			return 0;
 		}
-		return 0;
-	}
-
-	/**
-	 * Checks if closed.  Once closed, all subsequent calls to {@link #equals(java.lang.Object)} will fail.
-	 *
-	 * @see #close()
-	 */
-	public boolean isClosed() {
-		return allZeroes(hash);
-	}
-
-	/**
-	 * When closed, the hash is zeroed, and all subsequent calls to {@link #equals(java.lang.Object)} will fail.
-	 *
-	 * @see #isClosed()
-	 */
-	@Override
-	public void close() {
-		Arrays.fill(hash, (byte)0);
 	}
 
 	@SuppressWarnings("UseOfSystemOutOrSystemErr")

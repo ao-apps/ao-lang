@@ -29,6 +29,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Objects;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
@@ -38,7 +39,7 @@ import javax.crypto.spec.PBEKeySpec;
  *
  * @author  AO Industries, Inc.
  */
-public class HashedPassword implements AutoCloseable {
+public class HashedPassword {
 
 	/**
 	 * Value selected to be URL-safe and distinct from the values used by {@link Base64#getUrlEncoder()}.
@@ -170,6 +171,15 @@ public class HashedPassword implements AutoCloseable {
 	public static final Algorithm RECOMMENDED_ALGORITHM = Algorithm.PBKDF2WITHHMACSHA512;
 
 	/**
+	 * Private dummy salt array, used to keep constant time when no salt available.
+	 * <p>
+	 * TODO: In theory, does sharing this array make it likely to be in cache, and thus make it clear which passwords do
+	 * not have any password set?  Would it matter if it did?
+	 * </p>
+	 */
+	private static final byte[] DUMMY_SALT = new byte[RECOMMENDED_ALGORITHM.getSaltBytes()];
+
+	/**
 	 * The number of bytes in the random salt.
 	 *
 	 * @deprecated  This is the value matching {@linkplain Algorithm#PBKDF2WITHHMACSHA1 the previous default algorithm},
@@ -218,14 +228,8 @@ public class HashedPassword implements AutoCloseable {
 
 	/**
 	 * A constant that may be used in places where no password is set.
-	 * This behaves as if already {@linkplain #close() closed}.
 	 */
-	public static final HashedPassword NO_PASSWORD = new HashedPassword(
-		RECOMMENDED_ALGORITHM,
-		new byte[RECOMMENDED_ALGORITHM.getSaltBytes()],
-		RECOMMENDED_ITERATIONS,
-		new byte[RECOMMENDED_ALGORITHM.getHashBytes()]
-	);
+	public static final HashedPassword NO_PASSWORD = new HashedPassword();
 	static {
 		assert isUrlSafe(NO_PASSWORD.toString());
 	}
@@ -298,18 +302,6 @@ public class HashedPassword implements AutoCloseable {
 	}
 
 	/**
-	 * Performs check in length-constant time.
-	 * <a href="https://crackstation.net/hashing-security.htm">https://crackstation.net/hashing-security.htm</a>
-	 */
-	static boolean allZeroes(byte[] bytes) {
-		byte allbits = 0;
-		for(byte b : bytes) {
-			allbits ^= b;
-		}
-		return allbits == 0;
-	}
-
-	/**
 	 * Parses the result of {@link #toString()}.
 	 *
 	 * @param hashedPassword  when {@code null}, returns {@code null}
@@ -336,13 +328,11 @@ public class HashedPassword implements AutoCloseable {
 			int pos2 = hashedPassword.indexOf(SEPARATOR, pos1 + 1);
 			if(pos2 == -1) throw new IllegalArgumentException("Second separator (" + SEPARATOR + ") not found");
 			byte[] salt = DECODER.decode(hashedPassword.substring(pos1 + 1, pos2));
-			if(allZeroes(salt)) throw new IllegalArgumentException("Salt may not represent all zeroes, which is reserved for no password (\"" + NO_PASSWORD_VALUE + "\")");
 			int pos3 = hashedPassword.indexOf(SEPARATOR, pos2 + 1);
 			if(pos3 == -1) throw new IllegalArgumentException("Third separator (" + SEPARATOR + ") not found");
 			int iterations = Integer.parseInt(hashedPassword.substring(pos2 + 1, pos3));
 			if(iterations < 1) throw new IllegalArgumentException("Invalid iterations: " + iterations);
 			byte[] hash = DECODER.decode(hashedPassword.substring(pos3 + 1));
-			if(allZeroes(hash)) throw new IllegalArgumentException("Hash may not represent all zeroes, which is reserved for no password (\"" + NO_PASSWORD_VALUE + "\")");
 			return new HashedPassword(algorithm, salt, iterations, hash);
 		}
 	}
@@ -353,12 +343,20 @@ public class HashedPassword implements AutoCloseable {
 	private final byte[] hash;
 
 	/**
+	 * Special singleton for {@link #NO_PASSWORD}.
+	 */
+	private HashedPassword() {
+		algorithm = null;
+		salt = null;
+		iterations = 0;
+		hash = null;
+	}
+
+	/**
 	 * @param algorithm   The algorithm previously used to hash the password
 	 * @param salt        The provided parameter is zeroed.
-	 *                    When all zeroes, this behaves as if already {@linkplain #close() closed}.
 	 * @param iterations  The number of has iterations
 	 * @param hash        The provided parameter is zeroed.
-	 *                    When all zeroes, this behaves as if already {@linkplain #close() closed}.
 	 *
 	 * @throws  IllegalArgumentException  when {@code salt.length != algorithm.getSaltBytes()}
 	 *                                    or {@code hash.length != algorithm.getHashBytes()}
@@ -378,9 +376,10 @@ public class HashedPassword implements AutoCloseable {
 			Arrays.fill(hash, (byte)0);
 			throw new IllegalArgumentException();
 		}
-		this.algorithm = algorithm;
+		this.algorithm = Objects.requireNonNull(algorithm);
 		this.salt = Arrays.copyOf(salt, salt.length);
 		Arrays.fill(salt, (byte)0);
+		if(iterations < 1) throw new IllegalArgumentException("iterations < 1: " + iterations);
 		this.iterations = iterations;
 		this.hash = Arrays.copyOf(hash, hash.length);
 		Arrays.fill(hash, (byte)0);
@@ -388,10 +387,8 @@ public class HashedPassword implements AutoCloseable {
 
 	/**
 	 * @param salt        The provided parameter is zeroed.
-	 *                    When all zeroes, this behaves as if already {@linkplain #close() closed}.
 	 * @param iterations  The number of has iterations
 	 * @param hash        The provided parameter is zeroed.
-	 *                    When all zeroes, this behaves as if already {@linkplain #close() closed}.
 	 *
 	 * @deprecated  This represents a hash using {@linkplain Algorithm#PBKDF2WITHHMACSHA1 the previous default algorithm},
 	 *              please use {@link #HashedPassword(com.aoindustries.security.HashedPassword.Algorithm, byte[], int, byte[])} instead.
@@ -406,32 +403,42 @@ public class HashedPassword implements AutoCloseable {
 	 */
 	@Override
 	public String toString() {
-		if(isClosed()) return NO_PASSWORD_VALUE;
-		String str = algorithm.name()
-			+ SEPARATOR + ENCODER.withoutPadding().encodeToString(salt)
-			+ SEPARATOR + iterations
-			+ SEPARATOR + ENCODER.withoutPadding().encodeToString(hash);
+		String str;
+		if(algorithm == null) {
+			assert salt == null;
+			assert iterations == 0;
+			assert hash == null;
+			str = NO_PASSWORD_VALUE;
+		} else {
+			str = algorithm.name()
+				+ SEPARATOR + ENCODER.withoutPadding().encodeToString(salt)
+				+ SEPARATOR + iterations
+				+ SEPARATOR + ENCODER.withoutPadding().encodeToString(hash);
+		}
 		assert isUrlSafe(str);
 		return str;
 	}
 
 	/**
-	 * Checks if this matches the provided password, always {@code false} when {@linkplain #close() closed}.
+	 * Checks if this matches the provided password, always {@code false} when is {@link #NO_PASSWORD}.
 	 * <p>
 	 * Performs comparisons in length-constant time.
 	 * <a href="https://crackstation.net/hashing-security.htm">https://crackstation.net/hashing-security.htm</a>
 	 * </p>
 	 */
 	public boolean matches(String password) {
-		// Hash again with the original salt and iterations
-		byte[] newHash = hash(password, algorithm, salt, iterations);
-		try {
-			return
-				// All done for length-constant time comparisons
-				!isClosed()
-				& slowEquals(hash, newHash);
-		} finally {
-			Arrays.fill(newHash, (byte)0);
+		if(algorithm == null) {
+			// Perform a hash with default settings, just to occupy the same amount of time as if had a password
+			hash(password, RECOMMENDED_ALGORITHM, DUMMY_SALT, RECOMMENDED_ITERATIONS);
+			return false;
+		} else {
+			// Hash again with the original salt and iterations
+			byte[] newHash = hash(password, algorithm, salt, iterations);
+			try {
+				return slowEquals(hash, newHash);
+			} finally {
+				Arrays.fill(newHash, (byte)0);
+			}
 		}
 	}
 
@@ -459,28 +466,11 @@ public class HashedPassword implements AutoCloseable {
 	 */
 	public boolean isRehashRecommended() {
 		return
-			algorithm.compareTo(RECOMMENDED_ALGORITHM) < 0
-			|| iterations < RECOMMENDED_ITERATIONS;
-	}
-
-	/**
-	 * Checks if closed.  Once closed, all subsequent calls to {@link #matches(java.lang.String)} will fail.
-	 *
-	 * @see #close()
-	 */
-	public boolean isClosed() {
-		return allZeroes(salt) | allZeroes(hash);
-	}
-
-	/**
-	 * When closed, the salt and hash are zeroed, and all subsequent calls to {@link #matches(java.lang.String)} will fail.
-	 *
-	 * @see #isClosed()
-	 */
-	@Override
-	public void close() {
-		Arrays.fill(salt, (byte)0);
-		Arrays.fill(hash, (byte)0);
+			algorithm != null
+			&& (
+				algorithm.compareTo(RECOMMENDED_ALGORITHM) < 0
+				|| iterations < RECOMMENDED_ITERATIONS
+			);
 	}
 
 	@SuppressWarnings("UseOfSystemOutOrSystemErr")
@@ -504,9 +494,7 @@ public class HashedPassword implements AutoCloseable {
 				startNanos = verbose ? System.nanoTime() : 0;
 				byte[] hash = hash(password, algorithm, salt, iterations);
 				endNanos = verbose ? System.nanoTime() : 0;
-				try (HashedPassword hashedPassword = new HashedPassword(algorithm, salt, iterations, hash)) {
-					System.out.println(hashedPassword);
-				}
+				System.out.println(new HashedPassword(algorithm, salt, iterations, hash));
 				if(verbose) {
 					long nanos = endNanos - startNanos;
 					System.out.println("Completed in " + BigDecimal.valueOf(nanos, 6).toPlainString() + " ms");
