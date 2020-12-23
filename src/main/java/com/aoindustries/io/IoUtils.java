@@ -213,22 +213,22 @@ final public class IoUtils {
 	// <editor-fold desc="byte[] manipulation methods">
 	// @ThreadSafe
 	public static void charToBuffer(char ch, byte[] ioBuffer) {
-		ioBuffer[0] = (byte)(ch >>> 8);
-		ioBuffer[1] = (byte)ch;
+		ioBuffer[0] = (byte)(ch >>> Byte.SIZE);
+		ioBuffer[1] = (byte) ch;
 	}
 
 	// @ThreadSafe
 	public static void charToBuffer(char ch, byte[] ioBuffer, int off) {
-		ioBuffer[off] = (byte)(ch >>> 8);
-		ioBuffer[off+1] = (byte)ch;
+		ioBuffer[off    ] = (byte)(ch >>> Byte.SIZE);
+		ioBuffer[off + 1] = (byte) ch;
 	}
 
 	// @ThreadSafe
 	public static char bufferToChar(byte[] ioBuffer) {
 		return
 			(char)(
-				(ioBuffer[0] << 8)
-				| (ioBuffer[1]&255)
+				  (ioBuffer[0] << Byte.SIZE)
+				| (ioBuffer[1] & 0xff      )
 			)
 		;
 	}
@@ -237,30 +237,30 @@ final public class IoUtils {
 	public static char bufferToChar(byte[] ioBuffer, int off) {
 		return
 			(char)(
-				(ioBuffer[off+0] << 8)
-				| (ioBuffer[off+1]&255)
+				  (ioBuffer[off + 0] << Byte.SIZE)
+				| (ioBuffer[off + 1] & 0xff      )
 			)
 		;
 	}
 
 	// @ThreadSafe
 	public static void shortToBuffer(short s, byte[] ioBuffer) {
-		ioBuffer[0] = (byte)(s >>> 8);
-		ioBuffer[1] = (byte)s;
+		ioBuffer[0] = (byte)(s >>> Byte.SIZE);
+		ioBuffer[1] = (byte) s;
 	}
 
 	// @ThreadSafe
 	public static void shortToBuffer(short s, byte[] ioBuffer, int off) {
-		ioBuffer[off] = (byte)(s >>> 8);
-		ioBuffer[off+1] = (byte)s;
+		ioBuffer[off    ] = (byte)(s >>> Byte.SIZE);
+		ioBuffer[off + 1] = (byte) s;
 	}
 
 	// @ThreadSafe
 	public static short bufferToShort(byte[] ioBuffer) {
 		return
 			(short)(
-				(ioBuffer[0] << 8)
-				| (ioBuffer[1]&255)
+				  (ioBuffer[0] << Byte.SIZE)
+				| (ioBuffer[1] & 0xff      )
 			)
 		;
 	}
@@ -269,97 +269,97 @@ final public class IoUtils {
 	public static short bufferToShort(byte[] ioBuffer, int off) {
 		return
 			(short)(
-				(ioBuffer[off+0] << 8)
-				| (ioBuffer[off+1]&255)
+				  (ioBuffer[off + 0] << Byte.SIZE)
+				| (ioBuffer[off + 1] & 0xff      )
 			)
 		;
 	}
 
 	// @ThreadSafe
 	public static void intToBuffer(int i, byte[] ioBuffer) {
-		ioBuffer[0] = (byte)(i >>> 24);
-		ioBuffer[1] = (byte)(i >>> 16);
-		ioBuffer[2] = (byte)(i >>> 8);
-		ioBuffer[3] = (byte)i;
+		ioBuffer[0] = (byte)(i >>> (Byte.SIZE * 3));
+		ioBuffer[1] = (byte)(i >>> (Byte.SIZE * 2));
+		ioBuffer[2] = (byte)(i >>>  Byte.SIZE     );
+		ioBuffer[3] = (byte) i;
 	}
 
 	// @ThreadSafe
 	public static void intToBuffer(int i, byte[] ioBuffer, int off) {
-		ioBuffer[off] = (byte)(i >>> 24);
-		ioBuffer[off+1] = (byte)(i >>> 16);
-		ioBuffer[off+2] = (byte)(i >>> 8);
-		ioBuffer[off+3] = (byte)i;
+		ioBuffer[off    ] = (byte)(i >>> (Byte.SIZE * 3));
+		ioBuffer[off + 1] = (byte)(i >>> (Byte.SIZE * 2));
+		ioBuffer[off + 2] = (byte)(i >>>  Byte.SIZE     );
+		ioBuffer[off + 3] = (byte) i;
 	}
 
 	// @ThreadSafe
 	public static int bufferToInt(byte[] ioBuffer) {
 		return
-			  (ioBuffer[0] << 24)
-			+ ((ioBuffer[1]&255) << 16)
-			+ ((ioBuffer[2]&255) << 8)
-			+ (ioBuffer[3]&255)
+			  ( ioBuffer[0]         << (Byte.SIZE * 3))
+			+ ((ioBuffer[1] & 0xff) << (Byte.SIZE * 2))
+			+ ((ioBuffer[2] & 0xff) <<  Byte.SIZE     )
+			+ ( ioBuffer[3] & 0xff)
 		;
 	}
 
 	// @ThreadSafe
 	public static int bufferToInt(byte[] ioBuffer, int off) {
 		return
-			  (ioBuffer[off] << 24)
-			+ ((ioBuffer[off+1]&255) << 16)
-			+ ((ioBuffer[off+2]&255) << 8)
-			+ (ioBuffer[off+3]&255)
+			  ( ioBuffer[off]             << (Byte.SIZE * 3))
+			+ ((ioBuffer[off + 1] & 0xff) << (Byte.SIZE * 2))
+			+ ((ioBuffer[off + 2] & 0xff) <<  Byte.SIZE     )
+			+ ( ioBuffer[off + 3] & 0xff)
 		;
 	}
 
 	// @ThreadSafe
 	public static void longToBuffer(long l, byte[] ioBuffer) {
-		ioBuffer[0] = (byte)(l >>> 56);
-		ioBuffer[1] = (byte)(l >>> 48);
-		ioBuffer[2] = (byte)(l >>> 40);
-		ioBuffer[3] = (byte)(l >>> 32);
-		ioBuffer[4] = (byte)(l >>> 24);
-		ioBuffer[5] = (byte)(l >>> 16);
-		ioBuffer[6] = (byte)(l >>> 8);
-		ioBuffer[7] = (byte)l;
+		ioBuffer[0] = (byte)(l >>> (Byte.SIZE * 7));
+		ioBuffer[1] = (byte)(l >>> (Byte.SIZE * 6));
+		ioBuffer[2] = (byte)(l >>> (Byte.SIZE * 5));
+		ioBuffer[3] = (byte)(l >>> (Byte.SIZE * 4));
+		ioBuffer[4] = (byte)(l >>> (Byte.SIZE * 3));
+		ioBuffer[5] = (byte)(l >>> (Byte.SIZE * 2));
+		ioBuffer[6] = (byte)(l >>>  Byte.SIZE     );
+		ioBuffer[7] = (byte) l;
 	}
 
 	// @ThreadSafe
 	public static void longToBuffer(long l, byte[] ioBuffer, int off) {
-		ioBuffer[off] = (byte)(l >>> 56);
-		ioBuffer[off+1] = (byte)(l >>> 48);
-		ioBuffer[off+2] = (byte)(l >>> 40);
-		ioBuffer[off+3] = (byte)(l >>> 32);
-		ioBuffer[off+4] = (byte)(l >>> 24);
-		ioBuffer[off+5] = (byte)(l >>> 16);
-		ioBuffer[off+6] = (byte)(l >>> 8);
-		ioBuffer[off+7] = (byte)l;
+		ioBuffer[off    ] = (byte)(l >>> (Byte.SIZE * 7));
+		ioBuffer[off + 1] = (byte)(l >>> (Byte.SIZE * 6));
+		ioBuffer[off + 2] = (byte)(l >>> (Byte.SIZE * 5));
+		ioBuffer[off + 3] = (byte)(l >>> (Byte.SIZE * 4));
+		ioBuffer[off + 4] = (byte)(l >>> (Byte.SIZE * 3));
+		ioBuffer[off + 5] = (byte)(l >>> (Byte.SIZE * 2));
+		ioBuffer[off + 6] = (byte)(l >>>  Byte.SIZE     );
+		ioBuffer[off + 7] = (byte) l;
 	}
 
 	// @ThreadSafe
 	public static long bufferToLong(byte[] ioBuffer) {
 		return
-			  ((ioBuffer[0]&255L) << 56)
-			+ ((ioBuffer[1]&255L) << 48)
-			+ ((ioBuffer[2]&255L) << 40)
-			+ ((ioBuffer[3]&255L) << 32)
-			+ ((ioBuffer[4]&255L) << 24)
-			+ ((ioBuffer[5]&255L) << 16)
-			+ ((ioBuffer[6]&255L) << 8)
-			+ (ioBuffer[7]&255L)
+			  ((ioBuffer[0] & 0xffL) << (Byte.SIZE * 7))
+			+ ((ioBuffer[1] & 0xffL) << (Byte.SIZE * 6))
+			+ ((ioBuffer[2] & 0xffL) << (Byte.SIZE * 5))
+			+ ((ioBuffer[3] & 0xffL) << (Byte.SIZE * 4))
+			+ ((ioBuffer[4] & 0xffL) << (Byte.SIZE * 3))
+			+ ((ioBuffer[5] & 0xffL) << (Byte.SIZE * 2))
+			+ ((ioBuffer[6] & 0xffL) <<  Byte.SIZE     )
+			+ ( ioBuffer[7] & 0xffL)
 		;
 	}
 
 	// @ThreadSafe
 	public static long bufferToLong(byte[] ioBuffer, int off) {
 		return
-			  ((ioBuffer[off  ]&255L) << 56)
-			+ ((ioBuffer[off+1]&255L) << 48)
-			+ ((ioBuffer[off+2]&255L) << 40)
-			+ ((ioBuffer[off+3]&255L) << 32)
-			+ ((ioBuffer[off+4]&255L) << 24)
-			+ ((ioBuffer[off+5]&255L) << 16)
-			+ ((ioBuffer[off+6]&255L) << 8)
-			+ (ioBuffer[off+7]&255L)
+			  ((ioBuffer[off    ] & 0xffL) << (Byte.SIZE * 7))
+			+ ((ioBuffer[off + 1] & 0xffL) << (Byte.SIZE * 6))
+			+ ((ioBuffer[off + 2] & 0xffL) << (Byte.SIZE * 5))
+			+ ((ioBuffer[off + 3] & 0xffL) << (Byte.SIZE * 4))
+			+ ((ioBuffer[off + 4] & 0xffL) << (Byte.SIZE * 3))
+			+ ((ioBuffer[off + 5] & 0xffL) << (Byte.SIZE * 2))
+			+ ((ioBuffer[off + 6] & 0xffL) <<  Byte.SIZE     )
+			+ ( ioBuffer[off + 7] & 0xffL)
 		;
 	}
 	// </editor-fold>
