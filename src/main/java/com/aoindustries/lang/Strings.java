@@ -954,18 +954,28 @@ public final class Strings {
 		} while (string.length() > 0);
 	}
 
+	/**
+	 * @deprecated  Please use {@link org.apache.commons.codec.binary.Hex}
+	 */
+	@Deprecated
 	private static final char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
 	/**
 	 * Gets the hexadecimal character for the low-order four bits of the provided int.
+	 *
+	 * @deprecated  Please use {@link org.apache.commons.codec.binary.Hex}
 	 */
+	@Deprecated
 	public static char getHexChar(int v) {
 		return hexChars[v & 0xf];
 	}
 
 	/**
 	 * Converts one hex digit to an integer
+	 *
+	 * @deprecated  Please use {@link org.apache.commons.codec.binary.Hex}
 	 */
+	@Deprecated
 	public static int getHex(char ch) throws IllegalArgumentException {
 		switch(ch) {
 			case '0': return 0x00;
@@ -988,6 +998,10 @@ public final class Strings {
 		}
 	}
 
+	/**
+	 * @deprecated  Please use {@link org.apache.commons.codec.binary.Hex}
+	 */
+	@Deprecated
 	public static void convertToHex(byte[] bytes, Appendable out) throws IOException {
 		if(bytes != null) {
 			int len = bytes.length;
@@ -999,6 +1013,10 @@ public final class Strings {
 		}
 	}
 
+	/**
+	 * @deprecated  Please use {@link org.apache.commons.codec.binary.Hex}
+	 */
+	@Deprecated
 	public static String convertToHex(byte[] bytes) {
 		if(bytes == null) return null;
 		int len = bytes.length;
@@ -1011,6 +1029,10 @@ public final class Strings {
 		return SB.toString();
 	}
 
+	/**
+	 * @deprecated  Please use {@link org.apache.commons.codec.binary.Hex}
+	 */
+	@Deprecated
 	public static byte[] convertByteArrayFromHex(char[] hex) {
 		int hexLen = hex.length;
 		if((hexLen&1) != 0) throw new IllegalArgumentException("Uneven number of characters: " + hexLen);
@@ -1029,7 +1051,10 @@ public final class Strings {
 
 	/**
 	 * Converts an int to a full 8-character hex code.
+	 *
+	 * @deprecated  Please use {@link org.apache.commons.codec.binary.Hex}
 	 */
+	@Deprecated
 	public static void convertToHex(int value, Appendable out) throws IOException {
 		out.append(getHexChar(value >>> 28));
 		out.append(getHexChar(value >>> 24));
@@ -1043,7 +1068,10 @@ public final class Strings {
 
 	/**
 	 * Converts an int to a full 8-character hex code.
+	 *
+	 * @deprecated  Please use {@link org.apache.commons.codec.binary.Hex}
 	 */
+	@Deprecated
 	public static String convertToHex(int value) {
 		StringBuilder SB = new StringBuilder(8);
 		try {
@@ -1054,6 +1082,10 @@ public final class Strings {
 		return SB.toString();
 	}
 
+	/**
+	 * @deprecated  Please use {@link org.apache.commons.codec.binary.Hex}
+	 */
+	@Deprecated
 	public static int convertIntArrayFromHex(char[] hex) {
 		int hexLen = hex.length;
 		if(hexLen < 8) throw new IllegalArgumentException("Too few characters: " + hexLen);
@@ -1071,7 +1103,10 @@ public final class Strings {
 
 	/**
 	 * Converts a long integer to a full 16-character hex code.
+	 *
+	 * @deprecated  Please use {@link org.apache.commons.codec.binary.Hex}
 	 */
+	@Deprecated
 	public static void convertToHex(long value, Appendable out) throws IOException {
 		convertToHex((int)(value >>> 32), out);
 		convertToHex((int)value, out);
@@ -1079,7 +1114,10 @@ public final class Strings {
 
 	/**
 	 * Converts a long integer to a full 16-character hex code.
+	 *
+	 * @deprecated  Please use {@link org.apache.commons.codec.binary.Hex}
 	 */
+	@Deprecated
 	public static String convertToHex(long value) {
 		StringBuilder SB = new StringBuilder(16);
 		try {
@@ -1090,6 +1128,10 @@ public final class Strings {
 		return SB.toString();
 	}
 
+	/**
+	 * @deprecated  Please use {@link org.apache.commons.codec.binary.Hex}
+	 */
+	@Deprecated
 	public static long convertLongArrayFromHex(char[] hex) {
 		int hexLen = hex.length;
 		if(hexLen < 16) throw new IllegalArgumentException("Too few characters: " + hexLen);
