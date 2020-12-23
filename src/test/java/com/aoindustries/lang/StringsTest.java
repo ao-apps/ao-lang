@@ -46,6 +46,7 @@ public class StringsTest extends TestCase {
 	public void testConvertToFromHexInt() {
 		for(int i=0; i<1000; i++) {
 			int before = random.nextInt();
+			@SuppressWarnings("deprecation")
 			int after = Strings.convertIntArrayFromHex(Strings.convertToHex(before).toCharArray());
 			assertEquals(before, after);
 		}
@@ -54,6 +55,7 @@ public class StringsTest extends TestCase {
 	public void testConvertToFromHexLong() {
 		for(int i=0; i<1000; i++) {
 			long before = random.nextLong();
+			@SuppressWarnings("deprecation")
 			long after = Strings.convertLongArrayFromHex(Strings.convertToHex(before).toCharArray());
 			assertEquals(before, after);
 		}
