@@ -187,6 +187,7 @@ public final class Strings {
 	/**
 	 * Counts how many times a word appears in a line.  Case insensitive matching.
 	 */
+	@SuppressWarnings("AssignmentToForLoopParameter")
 	public static int countOccurrences(byte[] buff, int len, String word) {
 		int wordlen=word.length();
 		int end=len-wordlen;
@@ -200,7 +201,7 @@ public final class Strings {
 				if(ch2<='Z' && ch2>='A') ch2+='a'-'A';
 				if(ch1!=ch2) continue Loop;
 			}
-			c+=wordlen-1;
+			c += (wordlen - 1);
 			count++;
 		}
 		return count;
@@ -209,6 +210,7 @@ public final class Strings {
 	/**
 	 * Counts how many times a word appears in a line.  Case insensitive matching.
 	 */
+	@SuppressWarnings("AssignmentToForLoopParameter")
 	public static int countOccurrences(byte[] buff, String word) {
 		int wordlen=word.length();
 		int end=buff.length-wordlen;
@@ -222,7 +224,7 @@ public final class Strings {
 				if(ch2<='Z' && ch2>='A') ch2+='a'-'A';
 				if(ch1!=ch2) continue Loop;
 			}
-			c+=wordlen-1;
+			c += (wordlen - 1);
 			count++;
 		}
 		return count;
@@ -231,6 +233,7 @@ public final class Strings {
 	/**
 	 * Counts how many times a word appears in a line.  Case insensitive matching.
 	 */
+	@SuppressWarnings("AssignmentToForLoopParameter")
 	public static int countOccurrences(String line, String word) {
 		int wordlen=word.length();
 		int end=line.length()-wordlen;
@@ -244,7 +247,7 @@ public final class Strings {
 				if(ch2<='Z' && ch2>='A') ch2+='a'-'A';
 				if(ch1!=ch2) continue Loop;
 			}
-			c+=wordlen-1;
+			c += (wordlen - 1);
 			count++;
 		}
 		return count;
@@ -350,7 +353,9 @@ public final class Strings {
 		int clen=chars.length;
 		for(int c=start;c<Slen;c++) {
 			char ch=S.charAt(c);
-			for(int d=0;d<clen;d++) if(ch==chars[d]) return c;
+			for(int d= 0; d < clen; d++) {
+				if(ch == chars[d]) return c;
+			}
 		}
 		return -1;
 	}
@@ -1212,6 +1217,7 @@ public final class Strings {
 	 * Finds the next of a substring like regular String.indexOf, but stops at a certain maximum index.
 	 * Like substring, will look up to the character one before toIndex.
 	 */
+	@SuppressWarnings("AssignmentToForLoopParameter")
 	public static int indexOf(String source, String target, int fromIndex, int toIndex) {
 		if(fromIndex>toIndex) throw new IllegalArgumentException("fromIndex>toIndex: fromIndex="+fromIndex+", toIndex="+toIndex);
 
