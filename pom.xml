@@ -29,7 +29,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		<relativePath>../ao-oss-parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.11.0-POST-SNAPSHOT</version>
+	<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.11.1-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<properties>

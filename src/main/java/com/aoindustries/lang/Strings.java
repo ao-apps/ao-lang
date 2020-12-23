@@ -1013,8 +1013,8 @@ public final class Strings {
 		int resultPos = 0;
 		int hexPos = 0;
 		while(hexPos < hexLen) {
-			int h = getHex(hexChars[hexPos++]);
-			int l = getHex(hexChars[hexPos++]);
+			int h = getHex(hex[hexPos++]);
+			int l = getHex(hex[hexPos++]);
 			result[resultPos++] = (byte)(
 				(h<<4) | l
 			);
