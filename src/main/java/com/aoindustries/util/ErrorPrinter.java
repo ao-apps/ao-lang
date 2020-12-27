@@ -30,10 +30,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.AccessControlException;
 import java.security.Permission;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.WeakHashMap;
 
 /**
  * Prints errors with more detail than a standard printStackTrace() call.  Is also able to
@@ -57,6 +61,78 @@ public class ErrorPrinter {
 	private static final String EOL = System.lineSeparator();
 
 	private ErrorPrinter() {}
+
+	private static class IdentityKey {
+
+		private final Throwable t;
+
+		private IdentityKey(Throwable t) {
+			this.t = t;
+		}
+
+		@Override
+		public int hashCode() {
+			return System.identityHashCode(t);
+		}
+
+		@Override
+		@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
+		public boolean equals(Object obj) {
+			return this == obj;
+		}
+	}
+
+	private static final Map<IdentityKey,List<String>> statements = new WeakHashMap<>();
+
+	/**
+	 * Adds a new mapping between a throwable and the statement that caused it.
+	 *
+	 * @param  sql  The SQL statement that caused the exception.
+	 */
+	public static void addSQL(Throwable t, String sql) {
+		if(t != null && sql != null) {
+			IdentityKey key = new IdentityKey(t);
+			synchronized(statements) {
+				List<String> causes = statements.get(key);
+				if(causes == null) {
+					statements.put(key, causes = new ArrayList<>());
+				}
+				causes.add(sql);
+			}
+		}
+	}
+
+	/**
+	 * Adds a new mapping between a throwable and the statement that caused it.
+	 *
+	 * @param  pstmt  The SQL statement that caused the exception.
+	 *                This must provide the SQL statement from {@link PreparedStatement}{@code .toString()},
+	 *                which the PostgreSQL JDBC driver does.
+	 */
+	public static void addSQL(Throwable t, PreparedStatement pstmt) {
+		if(t != null && pstmt != null) {
+			addSQL(t, pstmt.toString());
+		}
+	}
+
+	/**
+	 * Gets the mappings between the given throwable and any statements that caused it.
+	 *
+	 * @return  The SQL statements that caused the exception or an empty list when none.
+	 */
+	public static List<String> getSQL(Throwable t) {
+		if(t == null) {
+			return Collections.emptyList();
+		} else {
+			IdentityKey key = new IdentityKey(t);
+			synchronized(statements) {
+				List<String> causes = statements.get(key);
+				return (causes == null)
+					? Collections.emptyList()
+					: Collections.unmodifiableList(new ArrayList<>(causes));
+			}
+		}
+	}
 
 	/**
 	 * @deprecated  Please use {@link #printStackTraces(java.lang.Throwable, java.lang.Appendable)} with {@link System#err}
@@ -252,6 +328,11 @@ public class ErrorPrinter {
 		}
 	}
 
+	/**
+	 * The expected number of characters before the colon in a label.
+	 */
+	private static final int LABEL_WIDTH = 18;
+
 	private static void printThrowables(Throwable thrown, Appendable out, int indent, List<Throwable> closed) {
 		indent(out, indent);
 		appendln(thrown.getClass().getName(), out);
@@ -303,6 +384,24 @@ public class ErrorPrinter {
 				}
 			} catch(SecurityException err) {
 				appendln("Permission........: Unable to get permission details: ", out); append(err.toString(), out);
+			}
+		}
+		// SQL Statements (not within SQLException, since they can be associated with any throwable)
+		{
+			List<String> causes = getSQL(thrown);
+			int size = causes.size();
+			if(size != 0) {
+				final String LABEL_PRE = "SQL Statement";
+				StringBuilder label = new StringBuilder(LABEL_PRE);
+				for(int i = 0; i < size; i++) {
+					label.setLength(LABEL_PRE.length());
+					if(size != 1) label.append(" #").append(i + 1);
+					while(label.length() < LABEL_WIDTH) {
+						label.append('.');
+					}
+					label.append(": ");
+					CustomMessageHandler.printMessage(out, indent + 4, label.toString(), causes.get(i));
+				}
 			}
 		}
 		indent(out, indent + 4);
