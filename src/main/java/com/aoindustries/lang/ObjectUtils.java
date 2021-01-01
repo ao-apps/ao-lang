@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2013, 2016, 2017, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2012, 2013, 2016, 2017, 2018, 2019, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -41,17 +41,19 @@ public final class ObjectUtils {
 	}
 
 	/**
-	 * Gets the hashCode for an object or <code>0</code> when <code>null</code>.
+	 * Gets {@linkplain Object#hashCode() the hashCode for an object}
+	 * or {@code 0} when {@code null}.
 	 *
 	 * @deprecated  use {@link java.util.Objects#hashCode(java.lang.Object)} as of Java 1.7.
 	 */
 	@Deprecated
 	public static int hashCode(Object obj) {
-		return obj != null ? obj.hashCode() : 0;
+		return (obj != null) ? obj.hashCode() : 0;
 	}
 
 	/**
-	 * Gets the hashCode for a set of objects or <code>0</code> when <code>null</code>.
+	 * Gets {@linkplain Arrays#hashCode(java.lang.Object[]) the hashCode for a set of objects}
+	 * {@code 0} when {@code null}.
 	 *
 	 * @deprecated  use {@link java.util.Objects#hash(java.lang.Object...)} as of Java 1.7.
 	 */
@@ -61,7 +63,8 @@ public final class ObjectUtils {
 	}
 
 	/**
-	 * Compares the equality of two objects, including their null states.
+	 * Compares {@linkplain Object#equals(java.lang.Object) the equality of two objects},
+	 * including their {@code null} states.
 	 *
 	 * @deprecated  use java.util.Objects#equals(Object, Object) as of Java 1.7.
 	 */
@@ -71,12 +74,13 @@ public final class ObjectUtils {
 	}
 
 	/**
-	 * Calls toString if non-null, returns null when null.
+	 * Calls {@link Object#toString()} if non-{@code null},
+	 * returns {@code null} when {@code null}.
 	 *
 	 * @deprecated  use {@link java.util.Objects#toString(java.lang.Object, java.lang.String)} as of Java 1.7.
 	 */
 	@Deprecated
 	public static String toString(Object obj) {
-		return obj==null ? null : obj.toString();
+		return (obj == null) ? null : obj.toString();
 	}
 }
