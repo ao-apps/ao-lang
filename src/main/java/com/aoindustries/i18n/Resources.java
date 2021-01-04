@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -34,6 +34,8 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Provides a simplified interface for obtaining localized and formatted values
@@ -46,6 +48,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAccessor {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final Logger logger = Logger.getLogger(Resources.class.getName());
 
 	/**
 	 * Note: If ao-collections ever a dependency, could use it's constant empty object array.
@@ -313,7 +317,19 @@ public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAc
 		String resource = null;
 		try {
 			resource = getResourceBundle(locale).getString(key);
+			if(resource == null && logger.isLoggable(Level.FINE)) {
+				logger.fine(
+					"Bundle lookup failed: baseName = \"" + baseName + "\", locale = \"" + locale + "\", key = \"" + key + '"'
+				);
+			}
 		} catch(MissingResourceException err) {
+			if(logger.isLoggable(Level.FINE)) {
+				logger.log(
+					Level.FINE,
+					"Bundle lookup failed: baseName = \"" + baseName + "\", locale = \"" + locale + "\", key = \"" + key + '"',
+					err
+				);
+			}
 			// resource remains null
 		}
 		if(resource == null) {
