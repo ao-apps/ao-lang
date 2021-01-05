@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-lang - Minimal Java library with no external dependencies shared by many other projects.
-Copyright (C) 2017, 2018, 2019, 2020  AO Industries, Inc.
+Copyright (C) 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
 	support@aoindustries.com
 	7262 Bull Pen Cir
 	Mobile, AL 36695
@@ -127,24 +127,24 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 									<artifactItems>
 										<!-- Javadoc-only -->
 										<artifactItem>
-											<groupId>commons-codec</groupId><artifactId>commons-codec</artifactId><version>${commons-codec.version}</version>
-											<classifier>javadoc</classifier><includes>element-list, package-list</includes>
+											<groupId>commons-codec</groupId><artifactId>commons-codec</artifactId><version>${commons-codec.version}</version><classifier>javadoc</classifier>
+											<includes>element-list, package-list</includes>
 											<outputDirectory>${project.build.directory}/offlineLinks/commons-codec/commons-codec</outputDirectory>
 										</artifactItem>
 										<artifactItem>
-											<groupId>commons-io</groupId><artifactId>commons-io</artifactId><version>${commons-io.version}</version>
-											<classifier>javadoc</classifier><includes>element-list, package-list</includes>
+											<groupId>commons-io</groupId><artifactId>commons-io</artifactId><version>${commons-io.version}</version><classifier>javadoc</classifier>
+											<includes>element-list, package-list</includes>
 											<outputDirectory>${project.build.directory}/offlineLinks/commons-io/commons-io</outputDirectory>
 										</artifactItem>
 										<artifactItem>
-											<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${commons-lang3.version}</version>
-											<classifier>javadoc</classifier><includes>element-list, package-list</includes>
+											<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${commons-lang3.version}</version><classifier>javadoc</classifier>
+											<includes>element-list, package-list</includes>
 											<outputDirectory>${project.build.directory}/offlineLinks/org.apache.commons/commons-lang3</outputDirectory>
 										</artifactItem>
 										<!-- Test Direct -->
 										<artifactItem>
-											<groupId>junit</groupId><artifactId>junit</artifactId>
-											<classifier>javadoc</classifier><includes>element-list, package-list</includes>
+											<groupId>junit</groupId><artifactId>junit</artifactId><classifier>javadoc</classifier>
+											<includes>element-list, package-list</includes>
 											<outputDirectory>${project.build.directory}/offlineLinks/junit/junit</outputDirectory>
 										</artifactItem>
 									</artifactItems>
