@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -336,8 +336,14 @@ public class ErrorPrinter {
 	private static void printThrowables(Throwable thrown, Appendable out, int indent, List<Throwable> closed) {
 		indent(out, indent);
 		appendln(thrown.getClass().getName(), out);
-		CustomMessageHandler.printMessage(out, indent+4, "Message...........: ", thrown.getMessage());
-		CustomMessageHandler.printMessage(out, indent+4, "Localized Message.: ", thrown.getLocalizedMessage());
+		String message = thrown.getMessage();
+		if(message != null) {
+			CustomMessageHandler.printMessage(out, indent+4, "Message...........: ", message);
+		}
+		String localizedMessage = thrown.getLocalizedMessage();
+		if(localizedMessage != null && !localizedMessage.equals(message)) {
+			CustomMessageHandler.printMessage(out, indent+4, "Localized Message.: ", localizedMessage);
+		}
 		synchronized(customMessageHandlers) {
 			for(CustomMessageHandler handler : customMessageHandlers) {
 				handler.printCustomMessages(thrown, out, indent + 4);
