@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2009, 2010, 2011, 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2016, 2017, 2019, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -28,7 +28,6 @@ import com.aoindustries.io.FastObjectOutput;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.ObjectInput;
-import java.io.ObjectInputValidation;
 import java.io.ObjectOutput;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -43,7 +42,7 @@ import java.util.Locale;
  *
  * @author  AO Industries, Inc.
  */
-final public class Money implements FastExternalizable, ObjectInputValidation, Comparable<Money> {
+final public class Money implements FastExternalizable, Comparable<Money> {
 
 	/**
 	 * Parses a monetary amount with an optional symbol prefix.
@@ -276,10 +275,6 @@ final public class Money implements FastExternalizable, ObjectInputValidation, C
 		} finally {
 			fastIn.unwrap();
 		}
-	}
-
-	@Override
-	public void validateObject() throws InvalidObjectException {
 		try {
 			validate();
 		} catch(NumberFormatException err) {

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017, 2020  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,8 +22,9 @@
  */
 package com.aoindustries.time;
 
+import java.io.IOException;
 import java.io.InvalidObjectException;
-import java.io.ObjectInputValidation;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 /**
@@ -39,7 +40,7 @@ import java.io.Serializable;
  * @deprecated  Please use standard Java 8 classes.
  */
 @Deprecated
-public class Duration implements Comparable<Duration>, Serializable, ObjectInputValidation {
+public class Duration implements Comparable<Duration>, Serializable {
 
 	public static final Duration ZERO = new Duration(0, 0);
 
@@ -68,8 +69,11 @@ public class Duration implements Comparable<Duration>, Serializable, ObjectInput
 		if(nano < 0 || nano >= Instant.NANOS_PER_SECOND) throw new IllegalArgumentException("nanoseconds out of range 0-" + (Instant.NANOS_PER_SECOND - 1));
 	}
 
-	@Override
-	public void validateObject() throws InvalidObjectException {
+	/**
+	 * Perform same validation as constructor on readObject.
+	 */
+	private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+		ois.defaultReadObject();
 		try {
 			validate();
 		} catch(IllegalArgumentException err) {
