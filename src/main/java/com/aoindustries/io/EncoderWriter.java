@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2015, 2016, 2017, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2015, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,6 +22,7 @@
  */
 package com.aoindustries.io;
 
+import com.aoindustries.lang.NullArgumentException;
 import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -40,7 +41,7 @@ public class EncoderWriter extends FilterWriter {
 
 	public EncoderWriter(Encoder encoder, Writer out) {
 		super(out);
-		this.encoder = encoder;
+		this.encoder = NullArgumentException.checkNotNull(encoder, "encoder");
 	}
 
 	public Encoder getEncoder() {
