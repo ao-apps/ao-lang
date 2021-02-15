@@ -46,30 +46,39 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				groupId="@{project.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
-			>
-				<ul>
-					<li>
-						<code>Coercion</code> improvements:
-						<ol>
-							<li>
-								Using optimized writer for all writes.  This can help maintain string identity for
-								in-context translation tools.
-							</li>
-							<li><code>trim(…)</code> methods convert to empty string in more cases.</li>
-							<li>
-								<code>trim(…)</code> methods return original <code>char[]</code> when non-empty and not
-								trimmed.  This is to allow subsequent writes to use the <code>char[]</code> directly.
-							</li>
-							<li>
-								Added optimization for <code>Segment</code> to write the underlying <code>char[]</code>
-								directly.
-							</li>
-							<li>Added support for <code>Optional</code> by unwrapping the value.</li>
-						</ol>
-					</li>
-				</ul>
-			</changelog:release>
+			/>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="4.15.0"
+			datePublished="2021-02-15T02:00:31-06:00"
+			groupId="@{project.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{project.scm.url}"
+		>
+			<ul>
+				<li>
+					<code>Coercion</code> improvements:
+					<ol>
+						<li>
+							Using optimized writer for all writes.  This can help maintain string identity for
+							in-context translation tools.
+						</li>
+						<li><code>trim(…)</code> methods convert to empty string in more cases.</li>
+						<li>
+							<code>trim(…)</code> methods return original <code>char[]</code> when non-empty and not
+							trimmed.  This is to allow subsequent writes to use the <code>char[]</code> directly.
+						</li>
+						<li>
+							Added optimization for <code>Segment</code> to write the underlying <code>char[]</code>
+							directly.
+						</li>
+						<li>Added support for <code>Optional</code> by unwrapping the value.</li>
+					</ol>
+				</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
