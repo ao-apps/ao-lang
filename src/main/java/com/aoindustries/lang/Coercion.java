@@ -69,7 +69,7 @@ public final class Coercion {
 			//       This should keep it consistent with other coercions.
 			return value.toString();
 		}
-		// Support CharSequence
+		// Support Segment and CharSequence
 		if(value instanceof CharSequence) return value.toString();
 		// Support char[]
 		if(value instanceof char[]) {
@@ -181,6 +181,10 @@ public final class Coercion {
 						// Avoid intermediate String from Writable
 						writable.writeTo(out);
 					}
+				} else if(value instanceof Segment) {
+					// Support Segment
+					Segment s = (Segment)value;
+					out.write(s.array, s.offset, s.count);
 				} else if(value instanceof CharSequence) {
 					// Support CharSequence
 					out.append((CharSequence)value);
@@ -238,6 +242,10 @@ public final class Coercion {
 						// Avoid intermediate String from Writable
 						writable.writeTo(encoder, out);
 					}
+				} else if(value instanceof Segment) {
+					// Support Segment
+					Segment s = (Segment)value;
+					encoder.write(s.array, s.offset, s.count, out);
 				} else if(value instanceof CharSequence) {
 					// Support CharSequence
 					encoder.append((CharSequence)value, out);
@@ -297,7 +305,7 @@ public final class Coercion {
 						writable.appendTo(out);
 					}
 				} else if(value instanceof CharSequence) {
-					// Support CharSequence
+					// Support Segment and CharSequence
 					out.append((CharSequence)value);
 				} else if(value instanceof char[]) {
 					// Support char[]
@@ -358,7 +366,7 @@ public final class Coercion {
 						writable.appendTo(encoder, out);
 					}
 				} else if(value instanceof CharSequence) {
-					// Support CharSequence
+					// Support Segment and CharSequence
 					encoder.append((CharSequence)value, out);
 				} else if(value instanceof char[]) {
 					// Support char[]
@@ -403,7 +411,7 @@ public final class Coercion {
 			// If is a Writable, support optimizations
 			return ((Writable)value).getLength() == 0;
 		} else if(value instanceof CharSequence) {
-			// Support CharSequence
+			// Support Segment and CharSequence
 			return ((CharSequence)value).length() == 0;
 		} else if(value instanceof char[]) {
 			// Support char[]
@@ -434,7 +442,7 @@ public final class Coercion {
 			// If is a Writable, support optimizations
 			return ((Writable)value).getLength() == 0 ? null : value;
 		} else if(value instanceof CharSequence) {
-			// Support CharSequence
+			// Support Segment and CharSequence
 			return ((CharSequence)value).length() == 0 ? null : value;
 		} else if(value instanceof char[]) {
 			// Support char[]
@@ -473,9 +481,8 @@ public final class Coercion {
 				return writable.trim();
 			}
 		} else if(value instanceof CharSequence) {
-			// Support CharSequence
-			CharSequence cs = (CharSequence)value;
-			cs = Strings.trim(cs);
+			// Support Segment and CharSequence
+			CharSequence cs = Strings.trim((CharSequence)value);
 			return cs.length() == 0 ? "" : cs;
 		} else if(value instanceof char[]) {
 			// Support char[]
@@ -523,7 +530,7 @@ public final class Coercion {
 				return writable.getLength() == 0 ? null : writable;
 			}
 		} else if(value instanceof CharSequence) {
-			// Support CharSequence
+			// Support Segment and CharSequence
 			return Strings.trimNullIfEmpty((CharSequence)value);
 		} else if(value instanceof char[]) {
 			// Support char[]
