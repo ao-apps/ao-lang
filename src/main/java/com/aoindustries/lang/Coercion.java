@@ -72,7 +72,10 @@ public final class Coercion {
 		// Support CharSequence
 		if(value instanceof CharSequence) return value.toString();
 		// Support char[]
-		if(value instanceof char[]) return new String((char[])value);
+		if(value instanceof char[]) {
+			char[] chs = (char[])value;
+			return chs.length == 0 ? "" : new String(chs);
+		}
 		// If is a DOM node, serialize the output
 		if(value instanceof Node) {
 			try {
@@ -211,7 +214,7 @@ public final class Coercion {
 	/**
 	 * Writes an object's String representation,
 	 * supporting streaming for specialized types.
-	 * 
+	 *
 	 * @param  encoder  if null, no encoding is performed - write through
 	 */
 	public static void write(Object value, Encoder encoder, Writer out) throws IOException {
@@ -299,7 +302,8 @@ public final class Coercion {
 				} else if(value instanceof char[]) {
 					// Support char[]
 					char[] chs = (char[])value;
-					out.append(new Segment(chs, 0, chs.length));
+					int chsLen = chs.length;
+					if(chsLen > 0) out.append(new Segment(chs, 0, chsLen));
 				} else if(value instanceof Node) {
 					// If is a DOM node, serialize the output
 					try {
@@ -327,7 +331,7 @@ public final class Coercion {
 	/**
 	 * Appends an object's String representation,
 	 * supporting streaming for specialized types.
-	 * 
+	 *
 	 * @param  encoder  if null, no encoding is performed - write through
 	 */
 	public static void append(Object value, Encoder encoder, Appendable out) throws IOException {
@@ -359,7 +363,8 @@ public final class Coercion {
 				} else if(value instanceof char[]) {
 					// Support char[]
 					char[] chs = (char[])value;
-					encoder.append(new Segment(chs, 0, chs.length), out);
+					int chsLen = chs.length;
+					if(chsLen > 0) encoder.append(new Segment(chs, 0, chsLen), out);
 				} else if(value instanceof Node) {
 					// If is a DOM node, serialize the output
 					try {
@@ -415,7 +420,7 @@ public final class Coercion {
 
 	/**
 	 * Returns the provided value (possibly converted to a different form, like String) or null if the value is empty.
-	 * 
+	 *
 	 * @see  #isEmpty(java.lang.Object)
 	 */
 	public static Object nullIfEmpty(Object value) throws IOException {
@@ -447,7 +452,8 @@ public final class Coercion {
 	/**
 	 * Returns the provided value trimmed, as per rules of {@link Strings#isWhitespace(int)}.
 	 *
-	 * @return  The original value, a trimmed version of the value (possibly of a different type),
+	 * @return  The original value (possibly of a different type even when nothing to trim),
+	 *          a trimmed version of the value (possibly of a different type),
 	 *          a trimmed {@link String} representation of the object,
 	 *          or {@code null} when the value is {@code null}.
 	 */
@@ -468,11 +474,19 @@ public final class Coercion {
 			}
 		} else if(value instanceof CharSequence) {
 			// Support CharSequence
-			return Strings.trim((CharSequence)value);
+			CharSequence cs = (CharSequence)value;
+			cs = Strings.trim(cs);
+			return cs.length() == 0 ? "" : cs;
 		} else if(value instanceof char[]) {
 			// Support char[]
 			char[] chs = (char[])value;
-			return Strings.trim(new Segment(chs, 0, chs.length));
+			int chsLen = chs.length;
+			if(chsLen == 0) return "";          // Already empty
+			CharSequence cs = Strings.trim(new Segment(chs, 0, chsLen));
+			return
+				  (cs.length() == 0) ? ""       // Now empty
+				: (cs.length() == chsLen) ? chs // Unchanged
+				: cs;                           // Trimmed
 		} else if(value instanceof Node) {
 			// If is a DOM node, serialize the output
 			return value; // There is a node, is not empty
@@ -487,9 +501,10 @@ public final class Coercion {
 	 * Returns the provided value trimmed, as per rules of {@link Strings#isWhitespace(int)},
 	 * or {@code null} if the value is empty after trimming.
 	 *
-	 * @return  The original value, a trimmed version of the value (possibly of a different type),
+	 * @return  The original value (possibly of a different type even when nothing to trim),
+	 *          a trimmed version of the value (possibly of a different type),
 	 *          a trimmed {@link String} representation of the object,
-	 *          or {@code null} when the value is {@code null}.
+	 *          or {@code null} when the value is {@code null} or empty after trimming.
 	 */
 	public static Object trimNullIfEmpty(Object value) throws IOException {
 		if(value == null) {
@@ -513,7 +528,13 @@ public final class Coercion {
 		} else if(value instanceof char[]) {
 			// Support char[]
 			char[] chs = (char[])value;
-			return Strings.trimNullIfEmpty(new Segment(chs, 0, chs.length));
+			int chsLen = chs.length;
+			if(chsLen == 0) return null;        // Already empty
+			CharSequence cs = Strings.trimNullIfEmpty(new Segment(chs, 0, chsLen));
+			return
+				  (cs == null) ? null           // Now empty
+				: (cs.length() == chsLen) ? chs // Unchanged
+				: cs;                           // Trimmed
 		} else if(value instanceof Node) {
 			// If is a DOM node, serialize the output
 			return value; // There is a node, is not empty

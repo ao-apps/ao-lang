@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -1351,42 +1351,59 @@ public final class Strings {
 	 * Trims a value, as per rules of {@link #isWhitespace(int)}.
 	 *
 	 * @return  The value trimmed or {@code null} when was {@code null}
+	 *
+	 * @see String#substring(int, int)
 	 */
 	public static String trim(String value) {
 		if(value == null) return null;
-        int len = value.length();
-        int st = 0;
+		final int valueLen = value.length();
+		int len = valueLen;
+		int st = 0;
 
 		int cp;
-        while ((st < len) && isWhitespace(cp = value.codePointAt(st))) {
+		while ((st < len) && isWhitespace(cp = value.codePointAt(st))) {
 			st += Character.charCount(cp);
-        }
-        while ((st < len) && isWhitespace(cp = value.codePointBefore(len))) {
-            len -= Character.charCount(cp);
+		}
+		while ((st < len) && isWhitespace(cp = value.codePointBefore(len))) {
+			len -= Character.charCount(cp);
 			if(len < st) len = st; // Just in case strangely overlapping invalid code points
-        }
-        return ((st > 0) || (len < value.length())) ? value.substring(st, len) : value;
+		}
+		assert st  >= 0;
+		assert len <= valueLen;
+		assert st  <= len;
+		return
+			  (st == 0 && len == valueLen) ? value // Unchanged
+			: (st == len) ? ""                     // Now empty
+			: value.substring(st, len);            // Trimmed
 	}
 
 	/**
 	 * Trims a value, as per rules of {@link #isWhitespace(int)}.
 	 *
 	 * @return  The value trimmed or {@code null} when was {@code null}
+	 *
+	 * @see CharSequence#subSequence(int, int)
 	 */
 	public static CharSequence trim(CharSequence value) {
 		if(value == null) return null;
-        int len = value.length();
-        int st = 0;
+		final int valueLen = value.length();
+		int len = valueLen;
+		int st = 0;
 
 		int cp;
-        while ((st < len) && isWhitespace(cp = Character.codePointAt(value, st))) {
+		while ((st < len) && isWhitespace(cp = Character.codePointAt(value, st))) {
 			st += Character.charCount(cp);
-        }
-        while ((st < len) && isWhitespace(cp = Character.codePointBefore(value, len))) {
-            len -= Character.charCount(cp);
+		}
+		while ((st < len) && isWhitespace(cp = Character.codePointBefore(value, len))) {
+			len -= Character.charCount(cp);
 			if(len < st) len = st; // Just in case strangely overlapping invalid code points
-        }
-        return ((st > 0) || (len < value.length())) ? value.subSequence(st, len) : value;
+		}
+		assert st  >= 0;
+		assert len <= valueLen;
+		assert st  <= len;
+		return
+			  (st == 0 && len == valueLen) ? value // Unchanged
+			: value.subSequence(st, len);          // Trimmed
 	}
 
 	/**

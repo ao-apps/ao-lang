@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-0500"
-		dateModified="2021-02-14T22:44:52-06:00"
+		dateModified="2021-02-14T22:48:56-06:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -54,6 +54,11 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 							<li>
 								Using optimized writer for all writes.  This can help maintain string identity for
 								in-context translation tools.
+							</li>
+							<li><code>trim(…)</code> methods convert to empty string in more cases.</li>
+							<li>
+								<code>trim(…)</code> methods return original <code>char[]</code> when non-empty and not
+								trimmed.  This is to allow subsequent writes to use the <code>char[]</code> directly.
 							</li>
 						</ol>
 					</li>
