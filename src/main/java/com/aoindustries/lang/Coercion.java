@@ -32,6 +32,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.ServiceLoader;
 import javax.swing.text.Segment;
 import javax.xml.transform.OutputKeys;
@@ -49,13 +50,26 @@ import org.w3c.dom.Node;
  *
  * @author  AO Industries, Inc.
  */
-// TODO: Add Coercion support for Optional
 public final class Coercion {
 
 	/**
 	 * Converts an object to a string.
+	 * <ol>
+	 * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
+	 * <li>When {@code null} return {@code ""}.</li>
+	 * <li>When {@link String} return directly.</li>
+	 * <li>When {@link Writable} return {@link Writable#toString()}.</li>
+	 * <li>When {@link Segment} or {@link CharSequence} return {@link CharSequence#toString()}.</li>
+	 * <li>When {@code char[]} return {@code ""} when empty or {@link String#String(char[])}.</li>
+	 * <li>When {@link Node} serialize the output as {@link StandardCharsets#UTF_8}.</li>
+	 * <li>Otherwise return {@link Object#toString() value.toString()}.</li>
+	 * </ol>
 	 */
 	public static String toString(Object value) {
+		// Support Optional
+		while(value instanceof Optional) {
+			value = ((Optional<?>)value).orElse(null);
+		}
 		// If A is null, then the result is "".
 		if(value == null) return "";
 		// If A is a string, then the result is A.
@@ -151,10 +165,23 @@ public final class Coercion {
 	 * Writes an object's String representation,
 	 * supporting streaming for specialized types.
 	 * <ol>
-	 * <li>{@link Node} will be output as {@link StandardCharsets#UTF_8}.</li>
+	 * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
+	 * <li>When {@code null} do not write.</li>
+	 * <li>When {@link EncoderWriter} unwrap and dispatch to {@link #write(java.lang.Object, com.aoindustries.io.Encoder, java.io.Writer)}.</li>
+	 * <li>When {@link String} write directly.</li>
+	 * <li>When {@link Writable} write {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to {@link Writable#writeTo(java.io.Writer)}.</li>
+	 * <li>When {@link Segment} write {@link Segment#array}.</li>
+	 * <li>When {@link CharSequence} append directly.</li>
+	 * <li>When {@code char[]} write directly.</li>
+	 * <li>When {@link Node} serialize the output as {@link StandardCharsets#UTF_8}.</li>
+	 * <li>Otherwise write {@link Object#toString() value.toString()}.</li>
 	 * </ol>
 	 */
 	public static void write(Object value, Writer out) throws IOException {
+		// Support Optional
+		while(value instanceof Optional) {
+			value = ((Optional<?>)value).orElse(null);
+		}
 		// If A is null, then the result is "".
 		if(value != null) {
 			assert out != null;
@@ -167,7 +194,7 @@ public final class Coercion {
 					encoderWriter.getOut()
 				);
 			} else {
-				// Optimize writer
+				// Optimize output
 				out = optimize(out, null);
 				if(value instanceof String) {
 					// If A is a string, then the result is A.
@@ -216,18 +243,34 @@ public final class Coercion {
 	}
 
 	/**
-	 * Writes an object's String representation,
+	 * Encodes an object's String representation,
 	 * supporting streaming for specialized types.
+	 * <ol>
+	 * <li>When {@code encoder == null} dispatch to {@link #write(java.lang.Object, java.io.Writer)}.</li>
+	 * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
+	 * <li>When {@code null} do not encode.</li>
+	 * <li>When {@link String} encode directly.</li>
+	 * <li>When {@link Writable} encode {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to {@link Writable#writeTo(com.aoindustries.io.Encoder, java.io.Writer)}.</li>
+	 * <li>When {@link Segment} encode {@link Segment#array}.</li>
+	 * <li>When {@link CharSequence} encode directly.</li>
+	 * <li>When {@code char[]} encode directly.</li>
+	 * <li>When {@link Node} serialize the output as {@link StandardCharsets#UTF_8} while encoding through {@link EncoderWriter}.</li>
+	 * <li>Otherwise encode {@link Object#toString() value.toString()}.</li>
+	 * </ol>
 	 *
 	 * @param  encoder  if null, no encoding is performed - write through
 	 */
 	public static void write(Object value, Encoder encoder, Writer out) throws IOException {
-		// If A is null, then the result is "".
-		if(value != null) {
-			if(encoder == null) {
-				write(value, out);
-			} else {
-				// Optimize writer
+		if(encoder == null) {
+			write(value, out);
+		} else {
+			// Support Optional
+			while(value instanceof Optional) {
+				value = ((Optional<?>)value).orElse(null);
+			}
+			// If A is null, then the result is "".
+			if(value != null) {
+				// Optimize output
 				out = optimize(out, encoder);
 				// Write through the given encoder
 				if(value instanceof String) {
@@ -280,17 +323,29 @@ public final class Coercion {
 	 * Appends an object's String representation,
 	 * supporting streaming for specialized types.
 	 * <ol>
-	 * <li>{@link Node} will be output as {@link StandardCharsets#UTF_8}.</li>
+	 * <li>When {@code out} is a {@link Writer} dispatch to {@link #write(java.lang.Object, java.io.Writer)}.</li>
+	 * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
+	 * <li>When {@code null} do not append.</li>
+	 * <li>When {@link String} append directly.</li>
+	 * <li>When {@link Writable} append {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to {@link Writable#appendTo(java.lang.Appendable)}.</li>
+	 * <li>When {@link Segment} or {@link CharSequence} append directly.</li>
+	 * <li>When {@code char[]} append wrapped in new {@link Segment}.</li>
+	 * <li>When {@link Node} serialize the output as {@link StandardCharsets#UTF_8}.</li>
+	 * <li>Otherwise append {@link Object#toString() value.toString()}.</li>
 	 * </ol>
 	 */
 	public static void append(Object value, Appendable out) throws IOException {
 		assert out != null;
-		// If A is null, then the result is "".
-		if(value != null) {
-			if(out instanceof Writer) {
-				write(value, (Writer)out);
-			} else {
-				// Optimize writer
+		if(out instanceof Writer) {
+			write(value, (Writer)out);
+		} else {
+			// Support Optional
+			while(value instanceof Optional) {
+				value = ((Optional<?>)value).orElse(null);
+			}
+			// If A is null, then the result is "".
+			if(value != null) {
+				// Optimize output
 				out = optimize(out, null);
 				if(value instanceof String) {
 					// If A is a string, then the result is A.
@@ -337,20 +392,36 @@ public final class Coercion {
 	}
 
 	/**
-	 * Appends an object's String representation,
+	 * Encodes an object's String representation,
 	 * supporting streaming for specialized types.
+	 * <ol>
+	 * <li>When {@code encoder == null} dispatch to {@link #append(java.lang.Object, java.lang.Appendable)}.</li>
+	 * <li>When {@code out} is a {@link Writer} dispatch to {@link #write(java.lang.Object, com.aoindustries.io.Encoder, java.io.Writer)}.</li>
+	 * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
+	 * <li>When {@code null} do not encode.</li>
+	 * <li>When {@link String} encode directly.</li>
+	 * <li>When {@link Writable} encode {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to {@link Writable#appendTo(com.aoindustries.io.Encoder, java.lang.Appendable)}.</li>
+	 * <li>When {@link Segment} or {@link CharSequence} encode directly.</li>
+	 * <li>When {@code char[]} encode wrapped in new {@link Segment}.</li>
+	 * <li>When {@link Node} serialize the output as {@link StandardCharsets#UTF_8} while encoding through {@link EncoderWriter} and {@link AppendableWriter}.</li>
+	 * <li>Otherwise encode {@link Object#toString() value.toString()}.</li>
+	 * </ol>
 	 *
 	 * @param  encoder  if null, no encoding is performed - write through
 	 */
 	public static void append(Object value, Encoder encoder, Appendable out) throws IOException {
-		// If A is null, then the result is "".
-		if(value != null) {
-			if(encoder == null) {
-				append(value, out);
-			} else if(out instanceof Writer) {
-				write(value, encoder, (Writer)out);
-			} else {
-				// Optimize writer
+		if(encoder == null) {
+			append(value, out);
+		} else if(out instanceof Writer) {
+			write(value, encoder, (Writer)out);
+		} else {
+			// Support Optional
+			while(value instanceof Optional) {
+				value = ((Optional<?>)value).orElse(null);
+			}
+			// If A is null, then the result is "".
+			if(value != null) {
+				// Optimize output
 				out = optimize(out, encoder);
 				// Write through the given encoder
 				if(value instanceof String) {
@@ -399,8 +470,22 @@ public final class Coercion {
 
 	/**
 	 * Checks if a value is null or empty.
+	 * <ol>
+	 * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
+	 * <li>When {@code null} return {@code true}.</li>
+	 * <li>When {@link String} return {@link String#isEmpty()}.</li>
+	 * <li>When {@link Writable} return <code>{@linkplain Writable#getLength()} == 0</code>.</li>
+	 * <li>When {@link Segment} or {@link CharSequence} return <code>{@linkplain CharSequence#length()} == 0</code>.</li>
+	 * <li>When {@code char[]} return {@code value.length == 0}.</li>
+	 * <li>When {@link Node} return {@code false}.</li>
+	 * <li>Otherwise return <code>{@linkplain Object#toString() value.toString()}.{@linkplain String#isEmpty() isEmpty()}</code>.</li>
+	 * </ol>
 	 */
 	public static boolean isEmpty(Object value) throws IOException {
+		// Support Optional
+		while(value instanceof Optional) {
+			value = ((Optional<?>)value).orElse(null);
+		}
 		if(value == null) {
 			// If A is null, then the result is "".
 			return true;
@@ -428,10 +513,24 @@ public final class Coercion {
 
 	/**
 	 * Returns the provided value (possibly converted to a different form, like String) or null if the value is empty.
+	 * <ol>
+	 * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
+	 * <li>When {@code null} return {@code null}.</li>
+	 * <li>When {@link String} return {@code null} when {@link String#isEmpty()}.</li>
+	 * <li>When {@link Writable} return {@code null} when <code>{@linkplain Writable#getLength()} == 0</code>.</li>
+	 * <li>When {@link Segment} or {@link CharSequence} return {@code null} when <code>{@linkplain CharSequence#length()} == 0</code>.</li>
+	 * <li>When {@code char[]} return {@code null} when {@code value.length == 0}.</li>
+	 * <li>When {@link Node} return {@code value}.</li>
+	 * <li>Otherwise return <code>{@linkplain Strings#nullIfEmpty(java.lang.String) Strings.nullIfEmpty}({@linkplain Object#toString() value.toString()})</code>.</li>
+	 * </ol>
 	 *
 	 * @see  #isEmpty(java.lang.Object)
 	 */
 	public static Object nullIfEmpty(Object value) throws IOException {
+		// Support Optional
+		while(value instanceof Optional) {
+			value = ((Optional<?>)value).orElse(null);
+		}
 		if(value == null) {
 			// If A is null, then the result is "".
 			return null;
@@ -459,6 +558,16 @@ public final class Coercion {
 
 	/**
 	 * Returns the provided value trimmed, as per rules of {@link Strings#isWhitespace(int)}.
+	 * <ol>
+	 * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
+	 * <li>When {@code null} return {@code null}.</li>
+	 * <li>When {@link String} return {@link Strings#trim(java.lang.String)}.</li>
+	 * <li>When {@link Writable} return {@link Strings#trim(java.lang.String)} when {@link Writable#isFastToString()} otherwise {@link Writable#trim()}.</li>
+	 * <li>When {@link Segment} or {@link CharSequence} return {@link Strings#trim(java.lang.CharSequence)}.</li>
+	 * <li>When {@code char[]} return {@code ""} when {@code value.length == 0} or <code>{@linkplain Strings#trim(java.lang.CharSequence) Strings.trim}({@linkplain Segment#Segment(char[], int, int) new Segment(value, 0, value.length)}</code>) then {@code value} if nothing trimmed.</li>
+	 * <li>When {@link Node} return {@code value}.</li>
+	 * <li>Otherwise return <code>{@linkplain Strings#trim(java.lang.String) Strings.trim}({@linkplain Object#toString() value.toString()})</code>.</li>
+	 * </ol>
 	 *
 	 * @return  The original value (possibly of a different type even when nothing to trim),
 	 *          a trimmed version of the value (possibly of a different type),
@@ -466,6 +575,10 @@ public final class Coercion {
 	 *          or {@code null} when the value is {@code null}.
 	 */
 	public static Object trim(Object value) throws IOException {
+		// Support Optional
+		while(value instanceof Optional) {
+			value = ((Optional<?>)value).orElse(null);
+		}
 		if(value == null) {
 			// If A is null, then the result is "".
 			return null;
@@ -507,6 +620,16 @@ public final class Coercion {
 	/**
 	 * Returns the provided value trimmed, as per rules of {@link Strings#isWhitespace(int)},
 	 * or {@code null} if the value is empty after trimming.
+	 * <ol>
+	 * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
+	 * <li>When {@code null} return {@code null}.</li>
+	 * <li>When {@link String} return {@link Strings#trimNullIfEmpty(java.lang.String)}.</li>
+	 * <li>When {@link Writable} return {@link Strings#trimNullIfEmpty(java.lang.String)} when {@link Writable#isFastToString()} otherwise {@link Writable#trim()} then {@code null} if empty after trimming.</li>
+	 * <li>When {@link Segment} or {@link CharSequence} return {@link Strings#trimNullIfEmpty(java.lang.CharSequence)}.</li>
+	 * <li>When {@code char[]} return {@code null} when {@code value.length == 0} or <code>{@linkplain Strings#trimNullIfEmpty(java.lang.CharSequence) Strings.trimNullIfEmpty}({@linkplain Segment#Segment(char[], int, int) new Segment(value, 0, value.length)}</code>) then {@code value} if nothing trimmed.</li>
+	 * <li>When {@link Node} return {@code value}.</li>
+	 * <li>Otherwise return <code>{@linkplain Strings#trimNullIfEmpty(java.lang.String) Strings.trimNullIfEmpty}({@linkplain Object#toString() value.toString()})</code>.</li>
+	 * </ol>
 	 *
 	 * @return  The original value (possibly of a different type even when nothing to trim),
 	 *          a trimmed version of the value (possibly of a different type),
@@ -514,6 +637,10 @@ public final class Coercion {
 	 *          or {@code null} when the value is {@code null} or empty after trimming.
 	 */
 	public static Object trimNullIfEmpty(Object value) throws IOException {
+		// Support Optional
+		while(value instanceof Optional) {
+			value = ((Optional<?>)value).orElse(null);
+		}
 		if(value == null) {
 			// If A is null, then the result is "".
 			return null;
