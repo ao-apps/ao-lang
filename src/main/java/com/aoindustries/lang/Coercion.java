@@ -56,11 +56,11 @@ public final class Coercion {
 	 * Converts an object to a string.
 	 */
 	public static String toString(Object value) {
+		// If A is null, then the result is "".
+		if(value == null) return "";
 		// If A is a string, then the result is A.
 		if(value instanceof String) return (String)value;
-		// Otherwise, if A is null, then the result is "".
-		if(value == null) return "";
-		// Otherwise, if is a Writable, support optimizations
+		// If is a Writable, support optimizations
 		if(value instanceof Writable) {
 			// Note: This is only optimal for Writable that are "isFastToString()",
 			//       but we don't have much better option since a String is required.
@@ -69,11 +69,11 @@ public final class Coercion {
 			//       This should keep it consistent with other coercions.
 			return value.toString();
 		}
-		// Otherwise, support CharSequence
+		// Support CharSequence
 		if(value instanceof CharSequence) return value.toString();
-		// Otherwise, support char[]
+		// Support char[]
 		if(value instanceof char[]) return new String((char[])value);
-		// Otherwise, if is a DOM node, serialize the output
+		// If is a DOM node, serialize the output
 		if(value instanceof Node) {
 			try {
 				// Can use thread-local or pooled transformers if performance is ever an issue
@@ -91,7 +91,7 @@ public final class Coercion {
 				throw new WrappedException(e);
 			}
 		}
-		// Otherwise, if A.toString() throws an exception, then raise an error
+		// If A.toString() throws an exception, then raise an error
 		// Otherwise, the result is A.toString();
 		return value.toString();
 	}
@@ -152,56 +152,58 @@ public final class Coercion {
 	 * </ol>
 	 */
 	public static void write(Object value, Writer out) throws IOException {
-		assert out != null;
-		if(out instanceof EncoderWriter) {
-			// Unwrap media writer and use encoder directly
-			EncoderWriter encoderWriter = (EncoderWriter)out;
-			write(
-				value,
-				encoderWriter.getEncoder(),
-				encoderWriter.getOut()
-			);
-		} else {
-			if(value instanceof String) {
-				// If A is a string, then the result is A.
-				out.write((String)value);
-			} else if(value == null) {
-				// Otherwise, if A is null, then the result is "".
-				// Write nothing
-			} else if(value instanceof Writable) {
-				// Otherwise, if is a Writable, support optimizations
-				Writable writable = (Writable)value;
-				if(writable.isFastToString()) {
-					out.write(writable.toString());
-				} else {
-					// Avoid intermediate String from Writable
-					writable.writeTo(optimize(out, null));
-				}
-			} else if(value instanceof CharSequence) {
-				// Otherwise, support CharSequence
-				out.append((CharSequence)value);
-			} else if(value instanceof char[]) {
-				// Otherwise, support char[]
-				out.write((char[])value);
-			} else if(value instanceof Node) {
-				// Otherwise, if is a DOM node, serialize the output
-				try {
-					// Can use thread-local or pooled transformers if performance is ever an issue
-					TransformerFactory transFactory = TransformerFactory.newInstance();
-					Transformer transformer = transFactory.newTransformer();
-					transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-					transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
-					transformer.transform(
-						new DOMSource((Node)value),
-						new StreamResult(optimize(out, null))
-					);
-				} catch(TransformerException e) {
-					throw new IOException(e);
-				}
+		// If A is null, then the result is "".
+		if(value != null) {
+			assert out != null;
+			if(out instanceof EncoderWriter) {
+				// Unwrap media writer and use encoder directly
+				EncoderWriter encoderWriter = (EncoderWriter)out;
+				write(
+					value,
+					encoderWriter.getEncoder(),
+					encoderWriter.getOut()
+				);
 			} else {
-				// Otherwise, if A.toString() throws an exception, then raise an error
-				// Otherwise, the result is A.toString();
-				out.write(value.toString());
+				// Optimize writer
+				out = optimize(out, null);
+				if(value instanceof String) {
+					// If A is a string, then the result is A.
+					out.write((String)value);
+				} else if(value instanceof Writable) {
+					// If is a Writable, support optimizations
+					Writable writable = (Writable)value;
+					if(writable.isFastToString()) {
+						out.write(writable.toString());
+					} else {
+						// Avoid intermediate String from Writable
+						writable.writeTo(out);
+					}
+				} else if(value instanceof CharSequence) {
+					// Support CharSequence
+					out.append((CharSequence)value);
+				} else if(value instanceof char[]) {
+					// Support char[]
+					out.write((char[])value);
+				} else if(value instanceof Node) {
+					// If is a DOM node, serialize the output
+					try {
+						// Can use thread-local or pooled transformers if performance is ever an issue
+						TransformerFactory transFactory = TransformerFactory.newInstance();
+						Transformer transformer = transFactory.newTransformer();
+						transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
+						transformer.transform(
+							new DOMSource((Node)value),
+							new StreamResult(out)
+						);
+					} catch(TransformerException e) {
+						throw new IOException(e);
+					}
+				} else {
+					// If A.toString() throws an exception, then raise an error
+					// Otherwise, the result is A.toString();
+					out.write(value.toString());
+				}
 			}
 		}
 	}
@@ -213,20 +215,19 @@ public final class Coercion {
 	 * @param  encoder  if null, no encoding is performed - write through
 	 */
 	public static void write(Object value, Encoder encoder, Writer out) throws IOException {
-		if(encoder == null) {
-			write(value, out);
-		} else {
-			// Otherwise, if A is null, then the result is "".
-			// Write nothing
-			if(value != null) {
-				// Unwrap out to avoid unnecessary validation of known valid output
+		// If A is null, then the result is "".
+		if(value != null) {
+			if(encoder == null) {
+				write(value, out);
+			} else {
+				// Optimize writer
 				out = optimize(out, encoder);
 				// Write through the given encoder
 				if(value instanceof String) {
 					// If A is a string, then the result is A.
 					encoder.write((String)value, out);
 				} else if(value instanceof Writable) {
-					// Otherwise, if is a Writable, support optimizations
+					// If is a Writable, support optimizations
 					Writable writable = (Writable)value;
 					if(writable.isFastToString()) {
 						encoder.write(writable.toString(), out);
@@ -235,13 +236,13 @@ public final class Coercion {
 						writable.writeTo(encoder, out);
 					}
 				} else if(value instanceof CharSequence) {
-					// Otherwise, support CharSequence
+					// Support CharSequence
 					encoder.append((CharSequence)value, out);
 				} else if(value instanceof char[]) {
-					// Otherwise, support char[]
+					// Support char[]
 					encoder.write((char[])value, out);
 				} else if(value instanceof Node) {
-					// Otherwise, if is a DOM node, serialize the output
+					// If is a DOM node, serialize the output
 					try {
 						// Can use thread-local or pooled transformers if performance is ever an issue
 						TransformerFactory transFactory = TransformerFactory.newInstance();
@@ -256,7 +257,7 @@ public final class Coercion {
 						throw new IOException(e);
 					}
 				} else {
-					// Otherwise, if A.toString() throws an exception, then raise an error
+					// If A.toString() throws an exception, then raise an error
 					// Otherwise, the result is A.toString();
 					encoder.write(value.toString(), out);
 				}
@@ -273,50 +274,52 @@ public final class Coercion {
 	 */
 	public static void append(Object value, Appendable out) throws IOException {
 		assert out != null;
-		if(out instanceof Writer) {
-			write(value, (Writer)out);
-		} else {
-			if(value instanceof String) {
-				// If A is a string, then the result is A.
-				out.append((String)value);
-			} else if(value == null) {
-				// Otherwise, if A is null, then the result is "".
-				// Write nothing
-			} else if(value instanceof Writable) {
-				// Otherwise, if is a Writable, support optimizations
-				Writable writable = (Writable)value;
-				if(writable.isFastToString()) {
-					out.append(writable.toString());
-				} else {
-					// Avoid intermediate String from Writable
-					writable.appendTo(optimize(out, null));
-				}
-			} else if(value instanceof CharSequence) {
-				// Otherwise, support CharSequence
-				out.append((CharSequence)value);
-			} else if(value instanceof char[]) {
-				// Otherwise, support char[]
-				char[] chs = (char[])value;
-				out.append(new Segment(chs, 0, chs.length));
-			} else if(value instanceof Node) {
-				// Otherwise, if is a DOM node, serialize the output
-				try {
-					// Can use thread-local or pooled transformers if performance is ever an issue
-					TransformerFactory transFactory = TransformerFactory.newInstance();
-					Transformer transformer = transFactory.newTransformer();
-					transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-					transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
-					transformer.transform(
-						new DOMSource((Node)value),
-						new StreamResult(AppendableWriter.wrap(optimize(out, null)))
-					);
-				} catch(TransformerException e) {
-					throw new IOException(e);
-				}
+		// If A is null, then the result is "".
+		if(value != null) {
+			if(out instanceof Writer) {
+				write(value, (Writer)out);
 			} else {
-				// Otherwise, if A.toString() throws an exception, then raise an error
-				// Otherwise, the result is A.toString();
-				out.append(value.toString());
+				// Optimize writer
+				out = optimize(out, null);
+				if(value instanceof String) {
+					// If A is a string, then the result is A.
+					out.append((String)value);
+				} else if(value instanceof Writable) {
+					// If is a Writable, support optimizations
+					Writable writable = (Writable)value;
+					if(writable.isFastToString()) {
+						out.append(writable.toString());
+					} else {
+						// Avoid intermediate String from Writable
+						writable.appendTo(out);
+					}
+				} else if(value instanceof CharSequence) {
+					// Support CharSequence
+					out.append((CharSequence)value);
+				} else if(value instanceof char[]) {
+					// Support char[]
+					char[] chs = (char[])value;
+					out.append(new Segment(chs, 0, chs.length));
+				} else if(value instanceof Node) {
+					// If is a DOM node, serialize the output
+					try {
+						// Can use thread-local or pooled transformers if performance is ever an issue
+						TransformerFactory transFactory = TransformerFactory.newInstance();
+						Transformer transformer = transFactory.newTransformer();
+						transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
+						transformer.transform(
+							new DOMSource((Node)value),
+							new StreamResult(AppendableWriter.wrap(out))
+						);
+					} catch(TransformerException e) {
+						throw new IOException(e);
+					}
+				} else {
+					// If A.toString() throws an exception, then raise an error
+					// Otherwise, the result is A.toString();
+					out.append(value.toString());
+				}
 			}
 		}
 	}
@@ -328,22 +331,21 @@ public final class Coercion {
 	 * @param  encoder  if null, no encoding is performed - write through
 	 */
 	public static void append(Object value, Encoder encoder, Appendable out) throws IOException {
-		if(encoder == null) {
-			append(value, out);
-		} else if(out instanceof Writer) {
-			write(value, encoder, (Writer)out);
-		} else {
-			// Otherwise, if A is null, then the result is "".
-			// Write nothing
-			if(value != null) {
-				// Unwrap out to avoid unnecessary validation of known valid output
+		// If A is null, then the result is "".
+		if(value != null) {
+			if(encoder == null) {
+				append(value, out);
+			} else if(out instanceof Writer) {
+				write(value, encoder, (Writer)out);
+			} else {
+				// Optimize writer
 				out = optimize(out, encoder);
 				// Write through the given encoder
 				if(value instanceof String) {
 					// If A is a string, then the result is A.
 					encoder.append((String)value, out);
 				} else if(value instanceof Writable) {
-					// Otherwise, if is a Writable, support optimizations
+					// If is a Writable, support optimizations
 					Writable writable = (Writable)value;
 					if(writable.isFastToString()) {
 						encoder.append(writable.toString(), out);
@@ -352,14 +354,14 @@ public final class Coercion {
 						writable.appendTo(encoder, out);
 					}
 				} else if(value instanceof CharSequence) {
-					// Otherwise, support CharSequence
+					// Support CharSequence
 					encoder.append((CharSequence)value, out);
 				} else if(value instanceof char[]) {
-					// Otherwise, support char[]
+					// Support char[]
 					char[] chs = (char[])value;
 					encoder.append(new Segment(chs, 0, chs.length), out);
 				} else if(value instanceof Node) {
-					// Otherwise, if is a DOM node, serialize the output
+					// If is a DOM node, serialize the output
 					try {
 						// Can use thread-local or pooled transformers if performance is ever an issue
 						TransformerFactory transFactory = TransformerFactory.newInstance();
@@ -374,7 +376,7 @@ public final class Coercion {
 						throw new IOException(e);
 					}
 				} else {
-					// Otherwise, if A.toString() throws an exception, then raise an error
+					// If A.toString() throws an exception, then raise an error
 					// Otherwise, the result is A.toString();
 					encoder.append(value.toString(), out);
 				}
@@ -386,26 +388,26 @@ public final class Coercion {
 	 * Checks if a value is null or empty.
 	 */
 	public static boolean isEmpty(Object value) throws IOException {
-		if(value instanceof String) {
+		if(value == null) {
+			// If A is null, then the result is "".
+			return true;
+		} else if(value instanceof String) {
 			// If A is a string, then the result is A.
 			return ((String)value).isEmpty();
-		} else if(value == null) {
-			// Otherwise, if A is null, then the result is "".
-			return true;
 		} else if(value instanceof Writable) {
-			// Otherwise, if is a Writable, support optimizations
+			// If is a Writable, support optimizations
 			return ((Writable)value).getLength() == 0;
 		} else if(value instanceof CharSequence) {
-			// Otherwise, support CharSequence
+			// Support CharSequence
 			return ((CharSequence)value).length() == 0;
 		} else if(value instanceof char[]) {
-			// Otherwise, support char[]
+			// Support char[]
 			return ((char[])value).length == 0;
 		} else if(value instanceof Node) {
-			// Otherwise, if is a DOM node, serialize the output
+			// If is a DOM node, serialize the output
 			return false; // There is a node, is not empty
 		} else {
-			// Otherwise, if A.toString() throws an exception, then raise an error
+			// If A.toString() throws an exception, then raise an error
 			// Otherwise, the result is A.toString();
 			return value.toString().isEmpty();
 		}
@@ -417,26 +419,26 @@ public final class Coercion {
 	 * @see  #isEmpty(java.lang.Object)
 	 */
 	public static Object nullIfEmpty(Object value) throws IOException {
-		if(value instanceof String) {
+		if(value == null) {
+			// If A is null, then the result is "".
+			return null;
+		} else if(value instanceof String) {
 			// If A is a string, then the result is A.
 			return Strings.nullIfEmpty((String)value);
-		} else if(value == null) {
-			// Otherwise, if A is null, then the result is "".
-			return null;
 		} else if(value instanceof Writable) {
-			// Otherwise, if is a Writable, support optimizations
+			// If is a Writable, support optimizations
 			return ((Writable)value).getLength() == 0 ? null : value;
 		} else if(value instanceof CharSequence) {
-			// Otherwise, support CharSequence
+			// Support CharSequence
 			return ((CharSequence)value).length() == 0 ? null : value;
 		} else if(value instanceof char[]) {
-			// Otherwise, support char[]
+			// Support char[]
 			return ((char[])value).length == 0 ? null : value;
 		} else if(value instanceof Node) {
-			// Otherwise, if is a DOM node, serialize the output
+			// If is a DOM node, serialize the output
 			return value; // There is a node, is not empty
 		} else {
-			// Otherwise, if A.toString() throws an exception, then raise an error
+			// If A.toString() throws an exception, then raise an error
 			// Otherwise, the result is A.toString();
 			return Strings.nullIfEmpty(value.toString());
 		}
@@ -450,14 +452,14 @@ public final class Coercion {
 	 *          or {@code null} when the value is {@code null}.
 	 */
 	public static Object trim(Object value) throws IOException {
-		if(value instanceof String) {
+		if(value == null) {
+			// If A is null, then the result is "".
+			return null;
+		} else if(value instanceof String) {
 			// If A is a string, then the result is A.
 			return Strings.trim((String)value);
-		} else if(value == null) {
-			// Otherwise, if A is null, then the result is "".
-			return null;
 		} else if(value instanceof Writable) {
-			// Otherwise, if is a Writable, support optimizations
+			// If is a Writable, support optimizations
 			Writable writable = (Writable)value;
 			if(writable.isFastToString()) {
 				return Strings.trim(writable.toString());
@@ -465,17 +467,17 @@ public final class Coercion {
 				return writable.trim();
 			}
 		} else if(value instanceof CharSequence) {
-			// Otherwise, support CharSequence
+			// Support CharSequence
 			return Strings.trim((CharSequence)value);
 		} else if(value instanceof char[]) {
-			// Otherwise, support char[]
+			// Support char[]
 			char[] chs = (char[])value;
 			return Strings.trim(new Segment(chs, 0, chs.length));
 		} else if(value instanceof Node) {
-			// Otherwise, if is a DOM node, serialize the output
+			// If is a DOM node, serialize the output
 			return value; // There is a node, is not empty
 		} else {
-			// Otherwise, if A.toString() throws an exception, then raise an error
+			// If A.toString() throws an exception, then raise an error
 			// Otherwise, the result is A.toString();
 			return Strings.trim(value.toString());
 		}
@@ -490,14 +492,14 @@ public final class Coercion {
 	 *          or {@code null} when the value is {@code null}.
 	 */
 	public static Object trimNullIfEmpty(Object value) throws IOException {
-		if(value instanceof String) {
+		if(value == null) {
+			// If A is null, then the result is "".
+			return null;
+		} else if(value instanceof String) {
 			// If A is a string, then the result is A.
 			return Strings.trimNullIfEmpty((String)value);
-		} else if(value == null) {
-			// Otherwise, if A is null, then the result is "".
-			return null;
 		} else if(value instanceof Writable) {
-			// Otherwise, if is a Writable, support optimizations
+			// If is a Writable, support optimizations
 			Writable writable = (Writable)value;
 			if(writable.isFastToString()) {
 				return Strings.trimNullIfEmpty(writable.toString());
@@ -506,17 +508,17 @@ public final class Coercion {
 				return writable.getLength() == 0 ? null : writable;
 			}
 		} else if(value instanceof CharSequence) {
-			// Otherwise, support CharSequence
+			// Support CharSequence
 			return Strings.trimNullIfEmpty((CharSequence)value);
 		} else if(value instanceof char[]) {
-			// Otherwise, support char[]
+			// Support char[]
 			char[] chs = (char[])value;
 			return Strings.trimNullIfEmpty(new Segment(chs, 0, chs.length));
 		} else if(value instanceof Node) {
-			// Otherwise, if is a DOM node, serialize the output
+			// If is a DOM node, serialize the output
 			return value; // There is a node, is not empty
 		} else {
-			// Otherwise, if A.toString() throws an exception, then raise an error
+			// If A.toString() throws an exception, then raise an error
 			// Otherwise, the result is A.toString();
 			return Strings.trimNullIfEmpty(value.toString());
 		}
