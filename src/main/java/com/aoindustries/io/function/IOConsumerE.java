@@ -20,15 +20,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.lang;
+package com.aoindustries.io.function;
+
+import java.io.IOException;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
- * Runnable interface with a bounded exception type.
+ * A consumer that is allowed to throw {@link IOException} and a checked exception.
  *
- * @see Runnable
+ * @see Consumer
  */
 @FunctionalInterface
-public interface RunnableE<E extends Throwable> {
+public interface IOConsumerE<T, E extends Throwable> {
 
-	void run() throws E;
+	void accept(T t) throws IOException, E;
+
+	default IOConsumerE<T, E> andThen(IOConsumerE<? super T, ? extends E> after) throws IOException, E {
+		Objects.requireNonNull(after);
+		return (T t) -> { accept(t); after.accept(t); };
+	}
 }

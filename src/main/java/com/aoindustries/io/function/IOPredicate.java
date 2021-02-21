@@ -20,15 +20,32 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.lang;
+package com.aoindustries.io.function;
+
+import java.io.IOException;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
- * Runnable interface with a bounded exception type.
+ * A predicate that is allowed to throw {@link IOException}.
  *
- * @see Runnable
+ * @see Predicate
  */
 @FunctionalInterface
-public interface RunnableE<E extends Throwable> {
+public interface IOPredicate<T> extends IOPredicateE<T, RuntimeException> {
 
-	void run() throws E;
+	@Override
+	boolean test(T t) throws IOException;
+
+	static <T> IOPredicate<T> isEqual(Object targetRef) {
+		return (null == targetRef)
+			? Objects::isNull
+			: object -> targetRef.equals(object);
+	}
+
+	@SuppressWarnings("unchecked")
+	static <T> IOPredicate<T> not(IOPredicate<? super T> target) throws IOException {
+		Objects.requireNonNull(target);
+		return (IOPredicate<T>)target.negate();
+	}
 }

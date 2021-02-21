@@ -20,15 +20,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.lang;
+package com.aoindustries.io.function;
+
+import java.io.IOException;
 
 /**
- * Runnable interface with a bounded exception type.
+ * A runnable that is allowed to throw {@link IOException} and a checked exception.
  *
  * @see Runnable
  */
 @FunctionalInterface
-public interface RunnableE<E extends Throwable> {
+public interface IORunnableE<E extends Throwable> {
 
-	void run() throws E;
+	void run() throws IOException, E;
 }

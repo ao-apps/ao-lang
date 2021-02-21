@@ -20,15 +20,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.lang;
+package com.aoindustries.io.function;
+
+import java.io.IOException;
+import java.util.function.BiConsumer;
 
 /**
- * Runnable interface with a bounded exception type.
+ * A biconsumer that is allowed to throw {@link IOException}.
  *
- * @see Runnable
+ * @see BiConsumer
  */
 @FunctionalInterface
-public interface RunnableE<E extends Throwable> {
+public interface IOBiConsumer<T, U> extends IOBiConsumerE<T, U, RuntimeException> {
 
-	void run() throws E;
+	@Override
+	void accept(T t, U u) throws IOException;
 }
