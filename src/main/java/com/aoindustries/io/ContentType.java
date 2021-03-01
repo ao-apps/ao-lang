@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020  AO Industries, Inc.
+ * Copyright (C) 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -66,6 +66,11 @@ final public class ContentType {
 	 */
 	@Deprecated
 	public static final String ECMASCRIPT_OLD = "text/ecmascript";
+
+	/**
+	 * Form data that may include <code>&lt;input type="file"&gt;</code>.
+	 */
+	public static final String FORM_DATA = "multipart/form-data";
 
 	/**
 	 * A JavaScript.
@@ -134,6 +139,11 @@ final public class ContentType {
 	 * Pseudo content type for a URL.
 	 */
 	public static final String URL = "text/url";
+
+	/**
+	 * URL-encoded form data.
+	 */
+	public static final String X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded";
 
 	/**
 	 * An XHTML document.
