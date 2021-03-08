@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2019  AO Industries, Inc.
+ * Copyright (C) 2019, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -31,6 +31,8 @@ import java.io.Writer;
  */
 public class NoCloseWriter extends FilterWriter {
 
+	// TODO: static wrap method that will not wrap again when is already a NoCloseWriter
+	//       making close() final would be good form in this case.
 	public NoCloseWriter(Writer out) {
 		super(out);
 	}
