@@ -28,10 +28,12 @@ import java.util.function.Supplier;
 /**
  * A supplier that is allowed to throw {@link IOException} and a checked exception.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see Supplier
  */
 @FunctionalInterface
-public interface IOSupplierE<T, E extends Throwable> {
+public interface IOSupplierE<T, Ex extends Throwable> {
 
-	T get() throws IOException, E;
+	T get() throws IOException, Ex;
 }

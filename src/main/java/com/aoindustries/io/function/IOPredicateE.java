@@ -29,36 +29,44 @@ import java.util.function.Predicate;
 /**
  * A predicate that is allowed to throw {@link IOException} and a checked exception.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see Predicate
  */
 @FunctionalInterface
-public interface IOPredicateE<T, E extends Throwable> {
+public interface IOPredicateE<T, Ex extends Throwable> {
 
-	boolean test(T t) throws IOException, E;
+	boolean test(T t) throws IOException, Ex;
 
-	default IOPredicateE<T, E> and(IOPredicateE<? super T, ? extends E> other) throws IOException, E {
+	default IOPredicateE<T, Ex> and(IOPredicateE<? super T, ? extends Ex> other) throws IOException, Ex {
 		Objects.requireNonNull(other);
 		return (t) -> test(t) && other.test(t);
 	}
 
-	default IOPredicateE<T, E> negate() throws IOException, E {
+	default IOPredicateE<T, Ex> negate() throws IOException, Ex {
 		return (t) -> !test(t);
 	}
 
-	default IOPredicateE<T, E> or(IOPredicateE<? super T, ? extends E> other) throws IOException, E {
+	default IOPredicateE<T, Ex> or(IOPredicateE<? super T, ? extends Ex> other) throws IOException, Ex {
 		Objects.requireNonNull(other);
 		return (t) -> test(t) || other.test(t);
 	}
 
-	static <T, E extends Throwable> IOPredicateE<T, E> isEqual(Object targetRef) {
+	/**
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
+	 */
+	static <T, Ex extends Throwable> IOPredicateE<T, Ex> isEqual(Object targetRef) {
 		return (null == targetRef)
 			? Objects::isNull
 			: object -> targetRef.equals(object);
 	}
 
+	/**
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
+	 */
 	@SuppressWarnings("unchecked")
-	static <T, E extends Throwable> IOPredicateE<T, E> not(IOPredicateE<? super T, ? extends E> target) throws IOException, E {
+	static <T, Ex extends Throwable> IOPredicateE<T, Ex> not(IOPredicateE<? super T, ? extends Ex> target) throws IOException, Ex {
 		Objects.requireNonNull(target);
-		return (IOPredicateE<T, E>)target.negate();
+		return (IOPredicateE<T, Ex>)target.negate();
 	}
 }

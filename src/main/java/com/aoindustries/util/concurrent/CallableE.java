@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -29,9 +29,11 @@ import java.util.concurrent.Callable;
  * <p>
  * Furthermore, unlike {@link Callable}, can throw any {@link Throwable}.
  * </p>
+ *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
  */
 @FunctionalInterface
-public interface CallableE<V,E extends Throwable> {
+public interface CallableE<V, Ex extends Throwable> {
 
-	V call() throws E;
+	V call() throws Ex;
 }

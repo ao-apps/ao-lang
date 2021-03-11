@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020  AO Industries, Inc.
+ * Copyright (C) 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -28,14 +28,16 @@ import java.util.function.Consumer;
 /**
  * A consumer that is allowed to throw a checked exception.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see Consumer
  */
 @FunctionalInterface
-public interface ConsumerE<T, E extends Throwable> {
+public interface ConsumerE<T, Ex extends Throwable> {
 
-	void accept(T t) throws E;
+	void accept(T t) throws Ex;
 
-	default ConsumerE<T, E> andThen(ConsumerE<? super T, ? extends E> after) throws E {
+	default ConsumerE<T, Ex> andThen(ConsumerE<? super T, ? extends Ex> after) throws Ex {
 		Objects.requireNonNull(after);
 		return (T t) -> { accept(t); after.accept(t); };
 	}

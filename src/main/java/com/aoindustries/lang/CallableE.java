@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -25,11 +25,13 @@ package com.aoindustries.lang;
 /**
  * Callable interface with a bounded exception type.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @deprecated  Please use {@link com.aoindustries.util.concurrent.CallableE}
  */
 @Deprecated
 @FunctionalInterface
-public interface CallableE<V,E extends Exception> {
+public interface CallableE<V, Ex extends Exception> {
 
-	V call() throws E;
+	V call() throws Ex;
 }

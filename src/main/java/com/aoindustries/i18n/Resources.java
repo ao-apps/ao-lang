@@ -82,7 +82,7 @@ public class Resources extends com.aoindustries.util.i18n.ApplicationResourcesAc
 		}
 	}
 
-	private static final ConcurrentMap<Key,Resources> resources = new ConcurrentHashMap<>();
+	private static final ConcurrentMap<Key, Resources> resources = new ConcurrentHashMap<>();
 
 	/**
 	 * Accesses the resources with the given base name and prefix.

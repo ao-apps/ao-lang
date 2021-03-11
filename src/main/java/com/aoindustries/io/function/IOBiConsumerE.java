@@ -29,14 +29,16 @@ import java.util.function.BiConsumer;
 /**
  * A biconsumer that is allowed to throw {@link IOException} and a checked exception.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see BiConsumer
  */
 @FunctionalInterface
-public interface IOBiConsumerE<T, U, E extends Throwable> {
+public interface IOBiConsumerE<T, U, Ex extends Throwable> {
 
-	void accept(T t, U u) throws IOException, E;
+	void accept(T t, U u) throws IOException, Ex;
 
-	default IOBiConsumerE<T, U, E> andThen(IOBiConsumerE<? super T, ? super U, ? extends E> after) throws IOException, E {
+	default IOBiConsumerE<T, U, Ex> andThen(IOBiConsumerE<? super T, ? super U, ? extends Ex> after) throws IOException, Ex {
 		Objects.requireNonNull(after);
 
 		return (l, r) -> {

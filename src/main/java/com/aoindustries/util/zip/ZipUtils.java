@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2013, 2016, 2017, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2012, 2013, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -160,7 +160,7 @@ public class ZipUtils {
 		// Add trailing / to sourcePrefix if missing
 		if(!sourcePrefix.isEmpty() && !sourcePrefix.endsWith("/")) sourcePrefix += "/";
 		try (ZipFile zipFile = new ZipFile(sourceFile)) {
-			SortedMap<File,Long> directoryModifyTimes = new TreeMap<>(reverseFileComparator);
+			SortedMap<File, Long> directoryModifyTimes = new TreeMap<>(reverseFileComparator);
 
 			// Pass one: create directories and files
 			Enumeration<? extends ZipEntry> entries = zipFile.entries();
@@ -197,7 +197,7 @@ public class ZipUtils {
 			}
 
 			// Pass two: go backwards through directories, setting the modification times
-			for(Map.Entry<File,Long> entry : directoryModifyTimes.entrySet()) {
+			for(Map.Entry<File, Long> entry : directoryModifyTimes.entrySet()) {
 				//System.out.println("File: " + entry.getKey() + ", mtime = " + entry.getValue());
 				entry.getKey().setLastModified(entry.getValue());
 			}

@@ -29,24 +29,29 @@ import java.util.function.Function;
 /**
  * A function that is allowed to throw {@link IOException} and a checked exception.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see Function
  */
 @FunctionalInterface
-public interface IOFunctionE<T, R, E extends Throwable> {
+public interface IOFunctionE<T, R, Ex extends Throwable> {
 
-	R apply(T t) throws IOException, E;
+	R apply(T t) throws IOException, Ex;
 
-	default <V> IOFunctionE<V, R, E> compose(IOFunctionE<? super V, ? extends T, ? extends E> before) throws IOException, E {
+	default <V> IOFunctionE<V, R, Ex> compose(IOFunctionE<? super V, ? extends T, ? extends Ex> before) throws IOException, Ex {
 		Objects.requireNonNull(before);
 		return (V v) -> apply(before.apply(v));
 	}
 
-	default <V> IOFunctionE<T, V, E> andThen(IOFunctionE<? super R, ? extends V, ? extends E> after) throws IOException, E {
+	default <V> IOFunctionE<T, V, Ex> andThen(IOFunctionE<? super R, ? extends V, ? extends Ex> after) throws IOException, Ex {
 		Objects.requireNonNull(after);
 		return (T t) -> after.apply(apply(t));
 	}
 
-	static <T,E extends Throwable> IOFunctionE<T, T, E> identity() {
+	/**
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
+	 */
+	static <T, Ex extends Throwable> IOFunctionE<T, T, Ex> identity() {
 		return t -> t;
 	}
 }

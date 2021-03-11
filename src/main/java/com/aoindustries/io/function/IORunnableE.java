@@ -27,10 +27,12 @@ import java.io.IOException;
 /**
  * A runnable that is allowed to throw {@link IOException} and a checked exception.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see Runnable
  */
 @FunctionalInterface
-public interface IORunnableE<E extends Throwable> {
+public interface IORunnableE<Ex extends Throwable> {
 
-	void run() throws IOException, E;
+	void run() throws IOException, Ex;
 }

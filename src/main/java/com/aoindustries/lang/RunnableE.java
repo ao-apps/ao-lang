@@ -25,10 +25,12 @@ package com.aoindustries.lang;
 /**
  * Runnable interface with a bounded exception type.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see Runnable
  */
 @FunctionalInterface
-public interface RunnableE<E extends Throwable> {
+public interface RunnableE<Ex extends Throwable> {
 
-	void run() throws E;
+	void run() throws Ex;
 }

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2013, 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2011, 2013, 2016, 2017, 2019, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -49,7 +49,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class MessageFormatFactory {
 
-	private static final ConcurrentMap<Locale,ConcurrentMap<String,UnmodifiableMessageFormat>> cache = new ConcurrentHashMap<>();
+	private static final ConcurrentMap<Locale, ConcurrentMap<String, UnmodifiableMessageFormat>> cache = new ConcurrentHashMap<>();
 
 	/**
 	 * Gets a message format for the provided format in the current thread locale.
@@ -68,10 +68,10 @@ public class MessageFormatFactory {
 	 * @return  a MessageFormat that may not be modified with any of its setters or other mutator methods.
 	 */
 	public static UnmodifiableMessageFormat getMessageFormat(String pattern, Locale locale) {
-		ConcurrentMap<String,UnmodifiableMessageFormat> localeCache = cache.get(locale);
+		ConcurrentMap<String, UnmodifiableMessageFormat> localeCache = cache.get(locale);
 		if(localeCache==null) {
 			localeCache = new ConcurrentHashMap<>();
-			ConcurrentMap<String,UnmodifiableMessageFormat> existing = cache.putIfAbsent(locale, localeCache);
+			ConcurrentMap<String, UnmodifiableMessageFormat> existing = cache.putIfAbsent(locale, localeCache);
 			if(existing!=null) localeCache = existing;
 		}
 		UnmodifiableMessageFormat messageFormat = localeCache.get(pattern);

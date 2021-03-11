@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -70,7 +70,7 @@ public class Locales {
 			}
 		}
 
-		private static final ConcurrentMap<CacheKey,Locale> locales = new ConcurrentHashMap<>(16, 0.75f, 1);
+		private static final ConcurrentMap<CacheKey, Locale> locales = new ConcurrentHashMap<>(16, 0.75f, 1);
 
 		/**
 		 * @see  Locales#getCachedLocale(java.lang.String, java.lang.String, java.lang.String)

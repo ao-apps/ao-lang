@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2016, 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -64,7 +64,7 @@ final public class ThreadLocale {
 	 * Changes the current thread locale then calls the Callable.  The locale is
 	 * automatically restored.
 	 */
-	public static <V> V call(Locale locale, CallableE<? extends V,? extends RuntimeException> callable) {
+	public static <V> V call(Locale locale, CallableE<? extends V, ? extends RuntimeException> callable) {
 		return call(locale, RuntimeException.class, callable);
 	}
 
@@ -88,8 +88,10 @@ final public class ThreadLocale {
 	/**
 	 * Changes the current thread locale then calls the Callable.  The locale is
 	 * automatically restored.
+	 *
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
 	 */
-	public static <V,E extends Throwable> V call(Locale locale, Class<? extends E> eClass, CallableE<? extends V,? extends E> callable) throws E {
+	public static <V, Ex extends Throwable> V call(Locale locale, Class<? extends Ex> eClass, CallableE<? extends V, ? extends Ex> callable) throws Ex {
 		Locale oldLocale = get();
 		try {
 			set(locale);
@@ -103,10 +105,12 @@ final public class ThreadLocale {
 	 * Changes the current thread locale then calls the Callable.  The locale is
 	 * automatically restored.
 	 *
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
+	 *
 	 * @deprecated  Please use {@link #call(java.util.Locale, com.aoindustries.util.concurrent.CallableE)}
 	 */
 	@Deprecated
-	public static <V,E extends Exception> V set(Locale locale, com.aoindustries.lang.CallableE<V,E> callable) throws E {
+	public static <V, Ex extends Exception> V set(Locale locale, com.aoindustries.lang.CallableE<V, Ex> callable) throws Ex {
 		Locale oldLocale = get();
 		try {
 			set(locale);
@@ -133,8 +137,10 @@ final public class ThreadLocale {
 	/**
 	 * Changes the current thread locale then runs the RunnableE.  The locale is
 	 * automatically restored.
+	 *
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
 	 */
-	public static <E extends Throwable> void run(Locale locale, Class<? extends E> eClass, RunnableE<? extends E> runnable) throws E {
+	public static <Ex extends Throwable> void run(Locale locale, Class<? extends Ex> eClass, RunnableE<? extends Ex> runnable) throws Ex {
 		Locale oldLocale = get();
 		try {
 			set(locale);

@@ -82,7 +82,7 @@ public class ErrorPrinter {
 		}
 	}
 
-	private static final Map<IdentityKey,List<String>> statements = new WeakHashMap<>();
+	private static final Map<IdentityKey, List<String>> statements = new WeakHashMap<>();
 
 	/**
 	 * Adds a new mapping between a throwable and the statement that caused it.

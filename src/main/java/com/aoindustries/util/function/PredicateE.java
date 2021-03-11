@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020  AO Industries, Inc.
+ * Copyright (C) 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -28,36 +28,44 @@ import java.util.function.Predicate;
 /**
  * A predicate that is allowed to throw a checked exception.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see Predicate
  */
 @FunctionalInterface
-public interface PredicateE<T, E extends Throwable> {
+public interface PredicateE<T, Ex extends Throwable> {
 
-	boolean test(T t) throws E;
+	boolean test(T t) throws Ex;
 
-	default PredicateE<T, E> and(PredicateE<? super T, ? extends E> other) throws E {
+	default PredicateE<T, Ex> and(PredicateE<? super T, ? extends Ex> other) throws Ex {
 		Objects.requireNonNull(other);
 		return (t) -> test(t) && other.test(t);
 	}
 
-	default PredicateE<T, E> negate() throws E {
+	default PredicateE<T, Ex> negate() throws Ex {
 		return (t) -> !test(t);
 	}
 
-	default PredicateE<T, E> or(PredicateE<? super T, ? extends E> other) throws E {
+	default PredicateE<T, Ex> or(PredicateE<? super T, ? extends Ex> other) throws Ex {
 		Objects.requireNonNull(other);
 		return (t) -> test(t) || other.test(t);
 	}
 
-	static <T, E extends Throwable> PredicateE<T, E> isEqual(Object targetRef) {
+	/**
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
+	 */
+	static <T, Ex extends Throwable> PredicateE<T, Ex> isEqual(Object targetRef) {
 		return (null == targetRef)
 			? Objects::isNull
 			: object -> targetRef.equals(object);
 	}
 
+	/**
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
+	 */
 	@SuppressWarnings("unchecked")
-	static <T, E extends Throwable> PredicateE<T, E> not(PredicateE<? super T, ? extends E> target) throws E {
+	static <T, Ex extends Throwable> PredicateE<T, Ex> not(PredicateE<? super T, ? extends Ex> target) throws Ex {
 		Objects.requireNonNull(target);
-		return (PredicateE<T, E>)target.negate();
+		return (PredicateE<T, Ex>)target.negate();
 	}
 }

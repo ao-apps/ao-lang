@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020  AO Industries, Inc.
+ * Copyright (C) 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -81,7 +81,7 @@ public final class Projects {
 	/**
 	 * Reads the <code>pom.properties</code> from the given source.
 	 */
-	public static String readVersion(Function<String,InputStream> getResourceAsStream, String groupId, String artifactId) throws IOException {
+	public static String readVersion(Function<String, InputStream> getResourceAsStream, String groupId, String artifactId) throws IOException {
 		String resource = "/META-INF/maven/" + groupId + '/' + artifactId + "/pom.properties";
 		try (InputStream in = getResourceAsStream.apply(resource)) {
 			return readVersion(resource, in, groupId, artifactId);

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020  AO Industries, Inc.
+ * Copyright (C) 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -28,24 +28,29 @@ import java.util.function.Function;
 /**
  * A function that is allowed to throw a checked exception.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see Function
  */
 @FunctionalInterface
-public interface FunctionE<T, R, E extends Throwable> {
+public interface FunctionE<T, R, Ex extends Throwable> {
 
-	R apply(T t) throws E;
+	R apply(T t) throws Ex;
 
-	default <V> FunctionE<V, R, E> compose(FunctionE<? super V, ? extends T, ? extends E> before) throws E {
+	default <V> FunctionE<V, R, Ex> compose(FunctionE<? super V, ? extends T, ? extends Ex> before) throws Ex {
 		Objects.requireNonNull(before);
 		return (V v) -> apply(before.apply(v));
 	}
 
-	default <V> FunctionE<T, V, E> andThen(FunctionE<? super R, ? extends V, ? extends E> after) throws E {
+	default <V> FunctionE<T, V, Ex> andThen(FunctionE<? super R, ? extends V, ? extends Ex> after) throws Ex {
 		Objects.requireNonNull(after);
 		return (T t) -> after.apply(apply(t));
 	}
 
-	static <T,E extends Throwable> FunctionE<T, T, E> identity() {
+	/**
+	 * @param  <Ex>  An arbitrary exception type that may be thrown
+	 */
+	static <T, Ex extends Throwable> FunctionE<T, T, Ex> identity() {
 		return t -> t;
 	}
 }

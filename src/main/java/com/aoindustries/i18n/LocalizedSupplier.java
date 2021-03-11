@@ -33,5 +33,5 @@ import java.util.function.Supplier;
  */
 @FunctionalInterface
 @SuppressWarnings("MarkerInterface")
-public interface LocalizedSupplier<T> extends LocalizedSupplierE<T,RuntimeException> {
+public interface LocalizedSupplier<T> extends LocalizedSupplierE<T, RuntimeException> {
 }

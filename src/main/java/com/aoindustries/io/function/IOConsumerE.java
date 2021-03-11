@@ -29,14 +29,16 @@ import java.util.function.Consumer;
 /**
  * A consumer that is allowed to throw {@link IOException} and a checked exception.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see Consumer
  */
 @FunctionalInterface
-public interface IOConsumerE<T, E extends Throwable> {
+public interface IOConsumerE<T, Ex extends Throwable> {
 
-	void accept(T t) throws IOException, E;
+	void accept(T t) throws IOException, Ex;
 
-	default IOConsumerE<T, E> andThen(IOConsumerE<? super T, ? extends E> after) throws IOException, E {
+	default IOConsumerE<T, Ex> andThen(IOConsumerE<? super T, ? extends Ex> after) throws IOException, Ex {
 		Objects.requireNonNull(after);
 		return (T t) -> { accept(t); after.accept(t); };
 	}

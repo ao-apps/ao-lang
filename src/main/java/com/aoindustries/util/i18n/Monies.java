@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2019  AO Industries, Inc.
+ * Copyright (C) 2019, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -41,21 +41,21 @@ import java.util.TreeMap;
  */
 public class Monies implements Comparable<Monies>, Iterable<Money> {
 
-	private static void add(Map<Currency,Money> monies, Money addend) {
+	private static void add(Map<Currency, Money> monies, Money addend) {
 		Currency currency = addend.getCurrency();
 		Money total = monies.get(currency);
 		total = (total == null) ? addend : total.add(addend);
 		monies.put(currency, total);
 	}
 
-	private static void subtract(Map<Currency,Money> monies, Money subtrahend) {
+	private static void subtract(Map<Currency, Money> monies, Money subtrahend) {
 		Currency currency = subtrahend.getCurrency();
 		Money total = monies.get(currency);
 		total = (total == null) ? subtrahend : total.subtract(subtrahend);
 		monies.put(currency, total);
 	}
 
-	private static final Monies EMPTY_MONIES = new Monies(Collections.<Currency,Money>emptyMap());
+	private static final Monies EMPTY_MONIES = new Monies(Collections.<Currency, Money>emptyMap());
 
 	public static Monies of() {
 		return EMPTY_MONIES;
@@ -66,7 +66,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 		return new Monies(Collections.singletonMap(money.getCurrency(), money));
 	}
 
-	private static Monies of(SortedMap<Currency,Money> newMap) {
+	private static Monies of(SortedMap<Currency, Money> newMap) {
 		int size = newMap.size();
 		if(size == 0) return of();
 		if(size == 1) return of(newMap.values().iterator().next());
@@ -79,7 +79,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 	public static Monies of(Money ... monies) {
 		if(monies == null || monies.length == 0) return of();
 		if(monies.length == 1) return of(monies[0]);
-		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
+		SortedMap<Currency, Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		for(Money m : monies) {
 			if(m != null) add(newMap, m);
 		}
@@ -91,16 +91,16 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 	 */
 	public static Monies of(Iterable<Money> monies) {
 		if(monies == null) return of();
-		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
+		SortedMap<Currency, Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		for(Money m : monies) {
 			if(m != null) add(newMap, m);
 		}
 		return of(newMap);
 	}
 
-	private final Map<Currency,Money> monies;
+	private final Map<Currency, Money> monies;
 
-	private Monies(Map<Currency,Money> monies) {
+	private Monies(Map<Currency, Money> monies) {
 		this.monies = monies;
 	}
 
@@ -176,7 +176,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 		return monies.get(currency);
 	}
 
-	public Map<Currency,Money> getMap() {
+	public Map<Currency, Money> getMap() {
 		return monies;
 	}
 
@@ -220,7 +220,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 	 */
 	public Monies add(Money addend) throws ArithmeticException {
 		if(addend == null) return this;
-		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
+		SortedMap<Currency, Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		newMap.putAll(monies);
 		add(newMap, addend);
 		return of(newMap);
@@ -231,7 +231,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 	 */
 	public Monies add(Monies addend) throws ArithmeticException {
 		if(addend == null) return this;
-		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
+		SortedMap<Currency, Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		newMap.putAll(monies);
 		for(Money money : addend) {
 			add(newMap, money);
@@ -245,7 +245,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 	 * @see  Money#multiply(java.math.BigDecimal)
 	 */
 	public Monies multiply(BigDecimal multiplicand) throws ArithmeticException {
-		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
+		SortedMap<Currency, Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		for(Money money : monies.values()) {
 			Currency currency = money.getCurrency();
 			newMap.put(currency, money.multiply(multiplicand));
@@ -259,7 +259,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 	 * @see  Money#multiply(java.math.BigDecimal, java.math.RoundingMode)
 	 */
 	public Monies multiply(BigDecimal multiplicand, RoundingMode roundingMode) throws ArithmeticException {
-		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
+		SortedMap<Currency, Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		for(Money money : monies.values()) {
 			Currency currency = money.getCurrency();
 			newMap.put(currency, money.multiply(multiplicand, roundingMode));
@@ -273,7 +273,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 	 * @see  Money#negate()
 	 */
 	public Monies negate() {
-		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
+		SortedMap<Currency, Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		for(Money money : monies.values()) {
 			Currency currency = money.getCurrency();
 			newMap.put(currency, money.negate());
@@ -286,7 +286,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 	 */
 	public Monies subtract(Money subtrahend) throws ArithmeticException {
 		if(subtrahend == null) return this;
-		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
+		SortedMap<Currency, Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		newMap.putAll(monies);
 		subtract(newMap, subtrahend);
 		return of(newMap);
@@ -297,7 +297,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 	 */
 	public Monies subtract(Monies subtrahend) throws ArithmeticException {
 		if(subtrahend == null) return this;
-		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
+		SortedMap<Currency, Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		newMap.putAll(monies);
 		for(Money money : subtrahend) {
 			subtract(newMap, money);
@@ -327,7 +327,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
 			}
 		}
 		if(!hasZero) return this;
-		SortedMap<Currency,Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
+		SortedMap<Currency, Money> newMap = new TreeMap<>(CurrencyComparator.getInstance());
 		for(Money money : monies.values()) {
 			if(money.getUnscaledValue() != 0) {
 				newMap.put(money.getCurrency(), money);

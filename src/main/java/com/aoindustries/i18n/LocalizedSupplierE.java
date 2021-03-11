@@ -29,16 +29,18 @@ import java.util.function.Supplier;
 /**
  * A localized supplier that is allowed to throw a checked exception.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see Supplier
  *
  * @author  AO Industries, Inc.
  */
 @FunctionalInterface
-public interface LocalizedSupplierE<T, E extends Throwable> {
+public interface LocalizedSupplierE<T, Ex extends Throwable> {
 
-	default T get(Resources resources, String key) throws E {
+	default T get(Resources resources, String key) throws Ex {
 		return get(resources, key, EmptyArrays.EMPTY_SERIALIZABLE_ARRAY);
 	}
 
-	T get(Resources resources, String key, Serializable... args) throws E;
+	T get(Resources resources, String key, Serializable... args) throws Ex;
 }

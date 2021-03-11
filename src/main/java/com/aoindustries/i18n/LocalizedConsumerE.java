@@ -30,20 +30,22 @@ import java.util.function.Consumer;
 /**
  * A localized consumer that is allowed to throw a checked exception.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see Consumer
  *
  * @author  AO Industries, Inc.
  */
 @FunctionalInterface
-public interface LocalizedConsumerE<E extends Throwable> {
+public interface LocalizedConsumerE<Ex extends Throwable> {
 
-	default void accept(Resources resources, String key) throws E {
+	default void accept(Resources resources, String key) throws Ex {
 		accept(resources, key, EmptyArrays.EMPTY_SERIALIZABLE_ARRAY);
 	}
 
-	void accept(Resources resources, String key, Serializable... args) throws E;
+	void accept(Resources resources, String key, Serializable... args) throws Ex;
 
-	default LocalizedConsumerE<E> andThen(LocalizedConsumerE<? extends E> after) {
+	default LocalizedConsumerE<Ex> andThen(LocalizedConsumerE<? extends Ex> after) {
         Objects.requireNonNull(after);
         return (Resources resources, String key, Serializable... args) -> { accept(resources, key, args); after.accept(resources, key, args); };
     }

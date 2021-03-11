@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020  AO Industries, Inc.
+ * Copyright (C) 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -27,10 +27,12 @@ import java.util.function.Supplier;
 /**
  * A supplier that is allowed to throw a checked exception.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see Supplier
  */
 @FunctionalInterface
-public interface SupplierE<T, E extends Throwable> {
+public interface SupplierE<T, Ex extends Throwable> {
 
-	T get() throws E;
+	T get() throws Ex;
 }

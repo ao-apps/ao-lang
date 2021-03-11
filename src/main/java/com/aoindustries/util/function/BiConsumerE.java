@@ -28,14 +28,16 @@ import java.util.function.BiConsumer;
 /**
  * A biconsumer that is allowed to throw a checked exception.
  *
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
  * @see BiConsumer
  */
 @FunctionalInterface
-public interface BiConsumerE<T, U, E extends Throwable> {
+public interface BiConsumerE<T, U, Ex extends Throwable> {
 
-	void accept(T t, U u) throws E;
+	void accept(T t, U u) throws Ex;
 
-	default BiConsumerE<T, U, E> andThen(BiConsumerE<? super T, ? super U, ? extends E> after) throws E {
+	default BiConsumerE<T, U, Ex> andThen(BiConsumerE<? super T, ? super U, ? extends Ex> after) throws Ex {
 		Objects.requireNonNull(after);
 
 		return (l, r) -> {

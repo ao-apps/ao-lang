@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020  AO Industries, Inc.
+ * Copyright (C) 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -83,7 +83,7 @@ final public class Iterables {
 	 * useful to avoid conflict after type erasure.
 	 */
 	@FunctionalInterface
-	public static interface Enum<E extends java.lang.Enum<E>,T extends E> extends Iterable<T> {
+	public static interface Enum<E extends java.lang.Enum<E>, T extends E> extends Iterable<T> {
 	}
 
 	/**
