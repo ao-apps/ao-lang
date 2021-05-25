@@ -35,7 +35,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 	<properties>
 		<!-- Dependencies -->
 		<commons-codec.version>1.15</commons-codec.version>
-		<commons-io.version>2.8.0</commons-io.version>
+		<commons-io.version>2.9.0</commons-io.version>
 		<commons-lang3.version>3.12.0</commons-lang3.version>
 	</properties>
 
