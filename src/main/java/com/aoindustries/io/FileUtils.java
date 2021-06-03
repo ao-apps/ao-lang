@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -195,7 +195,7 @@ final public class FileUtils {
 	 * </p>
 	 * <p>
 	 * The file is not {@linkplain File#deleteOnExit() deleted on exit}.  If this is required, we recommend creating the
-	 * temp file with the <a href="https://aoindustries.com/ao-tempfiles/">AO TempFiles</a> project, then using
+	 * temp file with the <a href="https://oss.aoapps.com/tempfiles/">AO TempFiles</a> project, then using
 	 * {@link #copyToFile(java.io.InputStream, java.io.File)}.  This avoids the memory leak of the implementation
 	 * of {@link File#deleteOnExit()}.
 	 * </p>
@@ -212,7 +212,7 @@ final public class FileUtils {
 	 * </p>
 	 * <p>
 	 * The file is not {@linkplain File#deleteOnExit() deleted on exit}.  If this is required, we recommend creating the
-	 * temp file with the <a href="https://aoindustries.com/ao-tempfiles/">AO TempFiles</a> project, then using
+	 * temp file with the <a href="https://oss.aoapps.com/tempfiles/">AO TempFiles</a> project, then using
 	 * {@link #copyToFile(java.io.InputStream, java.io.File)}.  This avoids the memory leak of the implementation
 	 * of {@link File#deleteOnExit()}.
 	 * </p>
@@ -375,7 +375,7 @@ final public class FileUtils {
 	 *
 	 * @param  deleteOnExit  when <code>true</code>, any newly created temp file will be flagged for {@link File#deleteOnExit() delete on exit}
 	 *
-	 * @deprecated  Please use <a href="https://aoindustries.com/ao-tempfiles/apidocs/com/aoindustries/tempfiles/TempFileContext.html">TempFileContext</a>
+	 * @deprecated  Please use <a href="https://oss.aoapps.com/tempfiles/apidocs/com/aoindustries/tempfiles/TempFileContext.html">TempFileContext</a>
 	 *              as {@link File#deleteOnExit()} is prone to memory leaks in long-running applications.
 	 */
 	// TODO: Is it worth having a non-deprecated version that does not delete on exit?

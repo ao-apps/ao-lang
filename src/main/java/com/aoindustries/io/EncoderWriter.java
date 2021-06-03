@@ -30,7 +30,7 @@ import java.io.Writer;
 /**
  * Writer that encodes during write.
  * <p>
- * See <a href="https://aoindustries.com/ao-encoding/apidocs/com/aoindustries/encoding/MediaEncoder.html">MediaEncoder</a>
+ * See <a href="https://oss.aoapps.com/encoding/apidocs/com/aoindustries/encoding/MediaEncoder.html">MediaEncoder</a>
  * <p>
  *
  * @author  AO Industries, Inc.
@@ -56,7 +56,7 @@ public class EncoderWriter extends FilterWriter {
 	}
 
 	/**
-	 * See <a href="https://aoindustries.com/ao-encoding/apidocs/com/aoindustries/encoding/MediaEncoder.html#writePrefixTo(java.lang.Appendable)">MediaEncoder.writePrefixTo(java.lang.Appendable)</a>
+	 * See <a href="https://oss.aoapps.com/encoding/apidocs/com/aoindustries/encoding/MediaEncoder.html#writePrefixTo(java.lang.Appendable)">MediaEncoder.writePrefixTo(java.lang.Appendable)</a>
 	 */
 	public void writePrefix() throws IOException {
 		encoder.writePrefixTo(out);
@@ -106,7 +106,7 @@ public class EncoderWriter extends FilterWriter {
 	}
 
 	/**
-	 * See <a href="https://aoindustries.com/ao-encoding/apidocs/com/aoindustries/encoding/MediaEncoder.html#writeSuffixTo(java.lang.Appendable)">MediaEncoder.writeSuffixTo(java.lang.Appendable)</a>
+	 * See <a href="https://oss.aoapps.com/encoding/apidocs/com/aoindustries/encoding/MediaEncoder.html#writeSuffixTo(java.lang.Appendable)">MediaEncoder.writeSuffixTo(java.lang.Appendable)</a>
 	 */
 	public void writeSuffix() throws IOException {
 		encoder.writeSuffixTo(out);

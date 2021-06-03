@@ -25,11 +25,11 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.aoindustries</groupId><artifactId>ao-oss-parent</artifactId><version>1.16.0-SNAPSHOT</version>
-		<relativePath>../ao-oss-parent/pom.xml</relativePath>
+		<groupId>com.aoapps</groupId><artifactId>ao-oss-parent</artifactId><version>1.16.0-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.17.1-SNAPSHOT</version>
+	<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>4.17.1-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<properties>
@@ -40,6 +40,8 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		<!-- This must be set in your ~/.m2/settings.xml when building with JDK < 9 -->
 		<javase.bootclasspath>${javase.bootclasspath.8}</javase.bootclasspath>
 
+		<javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://oss.aoapps.com/">AO OSS</a>
+/ <a target="${javadoc.target}" href="${project.url}">Lang</a>]]></javadoc.breadcrumbs>
 		<!-- Dependencies -->
 		<commons-codec.version>1.15</commons-codec.version>
 		<commons-io.version>2.9.0</commons-io.version>
@@ -47,7 +49,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 	</properties>
 
 	<name>AO Lang</name>
-	<url>https://aoindustries.com/ao-lang/</url>
+	<url>https://oss.aoapps.com/lang/</url>
 	<description>Minimal Java library with no external dependencies shared by many other projects.</description>
 	<inceptionYear>2017</inceptionYear>
 
@@ -184,7 +186,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 								<!-- Java SE -->
 								<offlineLink>
 									<url>${javadoc.link.javase}</url>
-									<location>${project.build.directory}/offlineLinks/com/aoindustries/javadoc/offline/javase/${javase.release}</location>
+									<location>${project.build.directory}/offlineLinks/com/aoapps/javadoc/offline/javase/${javase.release}</location>
 								</offlineLink>
 							</offlineLinks>
 						</configuration>

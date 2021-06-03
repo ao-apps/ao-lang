@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2015, 2016, 2017, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -34,7 +34,7 @@ import java.util.Properties;
 /**
  * Property utilities.
  * <p>
- * See <a href="https://aoindustries.com/aocode-public/apidocs/com/aoindustries/servlet/PropertiesUtils.html">com.aoindustries.servlet.PropertiesUtils</a> for use in servlet environment
+ * See <a href="https://oss.aoapps.com/hodgepodge/apidocs/com/aoindustries/servlet/PropertiesUtils.html">com.aoindustries.servlet.PropertiesUtils</a> for use in servlet environment
  * </p>
  */
 final public class PropertiesUtils {

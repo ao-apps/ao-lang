@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2016, 2017, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2013, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -41,7 +41,7 @@ public final class ApplicationResources extends EditableResourceBundle {
 	);
 
 	static File getSourceFile(String filename) {
-		return new File(System.getProperty("user.home") + "/maven2/ao/ao-lang/src/main/resources/com/aoindustries/lang", filename);
+		return new File(System.getProperty("user.home") + "/maven2/ao/oss/lang/src/main/resources/com/aoindustries/lang", filename);
 	}
 
 	public ApplicationResources() {
