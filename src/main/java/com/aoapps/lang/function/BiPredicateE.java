@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,31 +20,34 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoapps.lang;
+package com.aoapps.lang.function;
 
-import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
-import com.aoapps.hodgepodge.i18n.EditableResourceBundleSet;
-import java.io.File;
-import java.util.Locale;
+import java.util.Objects;
+import java.util.function.BiPredicate;
 
 /**
- * Is also an editable resource bundle.
+ * A bipredicate that is allowed to throw a checked exception.
  *
- * @author  AO Industries, Inc.
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
+ * @see BiPredicate
  */
-public final class ApplicationResources extends EditableResourceBundle {
+@FunctionalInterface
+public interface BiPredicateE<T, U, Ex extends Throwable> {
 
-	static final EditableResourceBundleSet bundleSet = new EditableResourceBundleSet(
-		ApplicationResources.class,
-		Locale.ROOT,
-		Locale.JAPANESE
-	);
+	boolean test(T t, U u) throws Ex;
 
-	static File getSourceFile(String filename) {
-		return new File(System.getProperty("user.home") + "/maven2/ao/oss/lang/src/main/resources/com/aoapps/lang", filename);
+	default BiPredicateE<T, U, Ex> and(BiPredicateE<? super T, ? super U, ? extends Ex> other) throws Ex {
+		Objects.requireNonNull(other);
+		return (T t, U u) -> test(t, u) && other.test(t, u);
 	}
 
-	public ApplicationResources() {
-		super(Locale.ROOT, bundleSet, getSourceFile("ApplicationResources.properties"));
+	default BiPredicateE<T, U, Ex> negate() throws Ex {
+        return (T t, U u) -> !test(t, u);
+	}
+
+	default BiPredicateE<T, U, Ex> or(BiPredicateE<? super T, ? super U, ? extends Ex> other) throws Ex {
+		Objects.requireNonNull(other);
+        return (T t, U u) -> test(t, u) || other.test(t, u);
 	}
 }

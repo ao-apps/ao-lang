@@ -35,47 +35,24 @@ import java.text.ParseException;
  */
 public class LocalizedParseException extends ParseException {
 
-	private static final long serialVersionUID = 2L;
+	private static final long serialVersionUID = 3L;
 
-	/**
-	 * @deprecated  Please use {@link #resources} directly.
-	 */
-	@Deprecated
-	protected final com.aoapps.util.i18n.ApplicationResourcesAccessor accessor;
 	protected final Resources resources;
 	protected final String key;
 	protected final Serializable[] args;
 
 	public LocalizedParseException(int errorOffset, Resources resources, String key) {
 		super(resources.getMessage(key), errorOffset);
-		this.accessor = resources;
 		this.resources = resources;
 		this.key = key;
 		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
-	/**
-	 * @deprecated  Please use {@link #LocalizedParseException(int, com.aoapps.lang.i18n.Resources, java.lang.String)} directly.
-	 */
-	@Deprecated
-	public LocalizedParseException(int errorOffset, com.aoapps.util.i18n.ApplicationResourcesAccessor accessor, String key) {
-		this(errorOffset, (Resources)accessor, key);
-	}
-
 	public LocalizedParseException(int errorOffset, Resources resources, String key, Serializable... args) {
 		super(resources.getMessage(key, (Object[])args), errorOffset);
-		this.accessor = resources;
 		this.resources = resources;
 		this.key = key;
 		this.args = args;
-	}
-
-	/**
-	 * @deprecated  Please use {@link #LocalizedParseException(int, com.aoapps.lang.i18n.Resources, java.lang.String, java.io.Serializable...)} directly.
-	 */
-	@Deprecated
-	public LocalizedParseException(int errorOffset, com.aoapps.util.i18n.ApplicationResourcesAccessor accessor, String key, Serializable... args) {
-		this(errorOffset, (Resources)accessor, key, args);
 	}
 
 	@Override

@@ -25,6 +25,7 @@ package com.aoapps.lang.validation;
 import com.aoapps.lang.LocalizedIllegalArgumentException;
 import com.aoapps.lang.Throwables;
 import com.aoapps.lang.i18n.Resources;
+import java.util.ResourceBundle;
 
 /**
  * Thrown when internal object validation fails.
@@ -35,7 +36,7 @@ import com.aoapps.lang.i18n.Resources;
 // TODO: Or extend javax.validation.ValidationException and deprecate this.
 public class ValidationException extends Exception {
 
-	private static final Resources RESOURCES = Resources.getResources(ValidationException.class);
+	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ValidationException.class);
 
 	private static final long serialVersionUID = -1153407618428602416L;
 

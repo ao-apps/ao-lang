@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,31 +20,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoapps.lang.validation;
+package com.aoapps.lang.function;
 
-import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
-import com.aoapps.hodgepodge.i18n.EditableResourceBundleSet;
-import java.io.File;
-import java.util.Locale;
+import java.io.Serializable;
+import java.util.function.BiFunction;
 
 /**
- * Is also an editable resource bundle.
- *
- * @author  AO Industries, Inc.
+ * A bifunction that must be {@link Serializable}.
+ * <p>
+ * Inspired by <a href="https://stackoverflow.com/questions/22807912/how-to-serialize-a-lambda">java - How to serialize a lambda? - Stack Overflow</a>.
+ * </p>
  */
-public final class ApplicationResources extends EditableResourceBundle {
-
-	static final EditableResourceBundleSet bundleSet = new EditableResourceBundleSet(
-		ApplicationResources.class,
-		Locale.ROOT,
-		Locale.JAPANESE
-	);
-
-	static File getSourceFile(String filename) {
-		return new File(System.getProperty("user.home") + "/maven2/ao/oss/lang/src/main/resources/com/aoapps/lang/validation", filename);
-	}
-
-	public ApplicationResources() {
-		super(Locale.ROOT, bundleSet, getSourceFile("ApplicationResources.properties"));
-	}
+@FunctionalInterface
+public interface SerializableBiFunction<T, U, R> extends BiFunction<T, U, R>, Serializable {
 }

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2013, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,21 +20,31 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoapps.lang;
+package com.aoapps.lang.i18n_res;
 
 import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
+import com.aoapps.hodgepodge.i18n.EditableResourceBundleSet;
+import java.io.File;
 import java.util.Locale;
 
 /**
+ * Is also an editable resource bundle.
+ *
  * @author  AO Industries, Inc.
  */
-public final class ApplicationResources_ja extends EditableResourceBundle {
+public final class ApplicationResources extends EditableResourceBundle {
 
-	public ApplicationResources_ja() {
-		super(
-			Locale.JAPANESE,
-			ApplicationResources.bundleSet,
-			ApplicationResources.getSourceFile("ApplicationResources_ja.properties")
-		);
+	static final EditableResourceBundleSet bundleSet = new EditableResourceBundleSet(
+		ApplicationResources.class,
+		Locale.ROOT,
+		Locale.JAPANESE
+	);
+
+	static File getSourceFile(String filename) {
+		return new File(System.getProperty("user.home") + "/maven2/ao/oss/lang/src/main/resources/com/aoapps/lang/i18n_res", filename);
+	}
+
+	public ApplicationResources() {
+		super(Locale.ROOT, bundleSet, getSourceFile("ApplicationResources.properties"));
 	}
 }

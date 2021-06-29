@@ -23,6 +23,7 @@
 package com.aoapps.lang;
 
 import com.aoapps.lang.i18n.Resources;
+import java.util.ResourceBundle;
 
 /**
  * Indicates a null argument was passed where not allowed.
@@ -31,7 +32,12 @@ import com.aoapps.lang.i18n.Resources;
  */
 public class NullArgumentException extends IllegalArgumentException {
 
-	private static final Resources RESOURCES = Resources.getResources(NullArgumentException.class);
+	private static final Resources RESOURCES = Resources.getResources(
+		ResourceBundle::getBundle,
+		NullArgumentException.class.getPackage(),
+		"i18n_res.ApplicationResources",
+		NullArgumentException.class.getSimpleName() + '.'
+	);
 
 	private static final long serialVersionUID = 1L;
 

@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-05:00"
-		dateModified="2021-06-03T22:53:21-05:00"
+		dateModified="2021-06-27T16:13:41-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -49,8 +49,22 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				scmUrl="@{project.scm.url}"
 			>
 				<ul>
+					<li>Now supports Java 9+ modules with included <code>module-info.class</code>.</li>
 					<li>Maven artifact relocated from <code>com.aoindustries:ao-lang</code> to <code>com.aoapps:ao-lang</code>.</li>
 					<li>Packages renamed from <code>com.aoindustries.*</code> to <code>com.aoapps.lang.*</code>.</li>
+					<li>
+						Resources now default to sub-package <code>*/i18n/ApplicationResources*</code>, which is done so
+						that modular resource bundles maybe opened without opening the entire package to reflection.  If
+						there were separate "opens" for reflection versus resources, this change would not be necessary.
+					</li>
+					<li>
+						Filled-out the <code>com.aoapps.lang.function</code> package with <code>BiFunctionE</code>,
+						<code>BiPredicateE</code>, and <code>SerializableBiFunction</code>.
+					</li>
+					<li>
+						New utility classes with lazy-evaluation, functional coalesce methods: <code>BiFunctions</code>,
+						<code>Functions</code>, and <code>Suppliers</code>.
+					</li>
 				</ul>
 			</changelog:release>
 		</c:if>
@@ -217,7 +231,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 			<ul>
 				<li>
 					May now register SQL statements that cause an exception directly with <code>ErrorPrinter</code>.
-					This is preferred over the use of <ao:a href="https://oss.aoapps.com/sql/apidocs/com/aoapps/sql/WrappedSQLException.html">WrappedSQLException</ao:a>,
+					This is preferred over the use of <ao:a href="https://oss.aoapps.com/sql/apidocs/com.aoapps.sql/com/aoapps/sql/WrappedSQLException.html">WrappedSQLException</ao:a>,
 					which is now deprecated in favor of this mechanism.  The issue with wrapping exceptions is it
 					hides the original exception from subtype-specific catch blocks.
 				</li>
@@ -580,7 +594,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 			scmUrl="@{project.scm.url}"
 		>
 			<ul>
-				<li>New exception type <code><ao:a href="apidocs/com/aoapps/lang/io/LocalizedUnsupportedEncodingException.html">LocalizedUnsupportedEncodingException</ao:a></code>.</li>
+				<li>New exception type <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/io/LocalizedUnsupportedEncodingException.html">LocalizedUnsupportedEncodingException</ao:a></code>.</li>
 			</ul>
 		</changelog:release>
 
@@ -600,12 +614,12 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				</li>
 				<li>New wrappers to avoid closing streams and writers.</li>
 				<li>
-					New <code>appendTo(…)</code> methods on <code><ao:a href="apidocs/com/aoapps/lang/io/Writable.html">Writable</ao:a></code>
+					New <code>appendTo(…)</code> methods on <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/io/Writable.html">Writable</ao:a></code>
 					for use with <code>Appendable</code>.  Reasonably efficient default interface methods
 					are provided, but implementations may provide more optimal solutions.
 				</li>
 				<li>
-					New class <code><ao:a href="apidocs/com/aoapps/lang/io/AppendableWriter.html">AppendableWriter</ao:a></code>
+					New class <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/io/AppendableWriter.html">AppendableWriter</ao:a></code>
 					that adapts <code>Writer</code> to <code>Appendable</code>.
 				</li>
 				<li>
@@ -636,7 +650,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				</li>
 				<li>
 					<p>
-						New class <code><ao:a href="apidocs/com/aoapps/lang/Iterables.html">Iterables</ao:a></code> with
+						New class <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/Iterables.html">Iterables</ao:a></code> with
 						a set of various <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Iterable.html">Iterable</ao:a></code> over common Java types,
 						useful to avoid conflict after type erasure.
 					</p>
@@ -648,7 +662,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				<li>Updated dependencies.</li>
 				<li>Moved and renamed classes:
 					<ol>
-						<li><code>com.aoindustries.util.StringUtility</code> → <code><ao:a href="apidocs/com/aoapps/lang/Strings.html">Strings</ao:a></code></li>
+						<li><code>com.aoindustries.util.StringUtility</code> → <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/Strings.html">Strings</ao:a></code></li>
 					</ol>
 				</li>
 				<li>
@@ -659,9 +673,9 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				<li>Split collection-related utilities into new <core:link book="/collections" page="/index.jspx" /> project.</li>
 				<li>Moved a few general-purpose exceptions to the new <code>com.aoindustries.exception</code> package:
 					<ol>
-						<li><code><ao:a href="apidocs/com/aoapps/lang/exception/NotImplementedException.html">NotImplementedException</ao:a></code></li>
-						<li><code><ao:a href="apidocs/com/aoapps/lang/exception/WrappedException.html">WrappedException</ao:a></code></li>
-						<li><code><ao:a href="apidocs/com/aoapps/lang/exception/WrappedExceptions.html">WrappedExceptions</ao:a></code></li>
+						<li><code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/exception/NotImplementedException.html">NotImplementedException</ao:a></code></li>
+						<li><code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/exception/WrappedException.html">WrappedException</ao:a></code></li>
+						<li><code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/exception/WrappedExceptions.html">WrappedExceptions</ao:a></code></li>
 					</ol>
 				</li>
 				<li>Renamed <code>Strings.splitString(…)</code> to <code>Strings.split(…)</code>.</li>
@@ -682,7 +696,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		>
 			<ul>
 				<li>
-					New method <code><ao:a href="apidocs/com/aoapps/lang/io/Writable.html#trim-">Writable.trim()</ao:a></code>
+					New method <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/io/Writable.html#trim-">Writable.trim()</ao:a></code>
 					that trims the contents of the writable.
 				</li>
 			</ul>
@@ -715,7 +729,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		>
 			<ul>
 				<li>
-					Fixed bug in <code><ao:a href="apidocs/com/aoapps/lang/util/CalendarUtils.html">CalendarUtils.parseDate(…)</ao:a></code>
+					Fixed bug in <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/util/CalendarUtils.html">CalendarUtils.parseDate(…)</ao:a></code>
 					that failed to set the month before verifying date is valid within the month.
 				</li>
 				<li>Moved the following classes from the old <core:link book="/hodgepodge" page="/index.jspx" /> project:
@@ -740,17 +754,17 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				<li>Breaking changes (source-compatible, rebuild required):
 					<ol>
 						<li>
-							<code><ao:a href="apidocs/com/aoapps/lang/util/CalendarUtils.html">CalendarUtils</ao:a></code>
+							<code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/util/CalendarUtils.html">CalendarUtils</ao:a></code>
 							returns <code>GregorianCalendar</code> instead of <code>Calendar</code> where appropriate.
 						</li>
 					</ol>
 				</li>
 				<li>
-					New class <code><ao:a href="apidocs/com/aoapps/lang/i18n/Monies.html">Monies</ao:a></code>
+					New class <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/i18n/Monies.html">Monies</ao:a></code>
 					for processing multiple monetary values in different currencies at once.
 				</li>
 				<li>
-					New class <code><ao:a href="apidocs/com/aoapps/lang/i18n/CurrencyUtil.html">CurrencyUtil</ao:a></code>
+					New class <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/i18n/CurrencyUtil.html">CurrencyUtil</ao:a></code>
 					for help working with <code>Currency</code>.
 				</li>
 				<li>
@@ -773,7 +787,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		>
 			<ul>
 				<li>
-					New method <code><ao:a href="apidocs/com/aoapps/lang/math/SafeMath.html#castShort-long-">SafeMath.castShort(long)</ao:a></code>
+					New method <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/math/SafeMath.html#castShort-long-">SafeMath.castShort(long)</ao:a></code>
 					to safely cast from <code>long</code> to <code>short</code> with bounds checks.
 				</li>
 				<li>Using managed dependencies:
@@ -797,33 +811,33 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 			<ul>
 				<li>Minimum Java version changed from 1.6 to 1.7.</li>
 				<li>
-					Deprecated <code><ao:a href="apidocs/com/aoapps/lang/io/FileUtils.html#getFile-java.net.URL-java.lang.String-boolean-">FileUtils.getFile(URL url, String urlEncoding, boolean deleteOnExit)</ao:a></code>
-					in favor of new <code><ao:a href="https://oss.aoapps.com/tempfiles/apidocs/com/aoapps/tempfiles/TempFileContext.html">TempFileContext</ao:a></code>
+					Deprecated <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/io/FileUtils.html#getFile-java.net.URL-java.lang.String-boolean-">FileUtils.getFile(URL url, String urlEncoding, boolean deleteOnExit)</ao:a></code>
+					in favor of new <code><ao:a href="https://oss.aoapps.com/tempfiles/apidocs/com.aoapps.tempfiles/com/aoapps/tempfiles/TempFileContext.html">TempFileContext</ao:a></code>
 					that does not suffer from a memory leak in long-running applications.
 				</li>
-				<li>New class <code><ao:a href="apidocs/com/aoapps/lang/concurrent/CallableE.html">CallableE</ao:a></code> for callables with parameterized exceptions.</li>
-				<li>New methods in <code><ao:a href="apidocs/com/aoapps/lang/i18n/ThreadLocale.html">ThreadLocale</ao:a></code>
-					to support <code><ao:a href="apidocs/com/aoapps/lang/concurrent/CallableE.html">CallableE</ao:a></code>
-					or <code><ao:a href="apidocs/com/aoapps/lang/i18n/ThreadLocale.Supplier.html">ThreadLocale.Supplier</ao:a></code>.
+				<li>New class <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/concurrent/CallableE.html">CallableE</ao:a></code> for callables with parameterized exceptions.</li>
+				<li>New methods in <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/i18n/ThreadLocale.html">ThreadLocale</ao:a></code>
+					to support <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/concurrent/CallableE.html">CallableE</ao:a></code>
+					or <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/i18n/ThreadLocale.Supplier.html">ThreadLocale.Supplier</ao:a></code>.
 				</li>
 				<li>New localizable exceptions:
 					<ul>
-						<li><code><ao:a href="apidocs/com/aoapps/lang/text/LocalizedParseException.html">LocalizedParseException</ao:a></code></li>
-						<li><code><ao:a href="apidocs/com/aoapps/lang/concurrent/LocalizedTimeoutException.html">LocalizedTimeoutException</ao:a></code></li>
+						<li><code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/text/LocalizedParseException.html">LocalizedParseException</ao:a></code></li>
+						<li><code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/concurrent/LocalizedTimeoutException.html">LocalizedTimeoutException</ao:a></code></li>
 					</ul>
 				</li>
 				<li>
-					<code><ao:a href="https://oss.aoapps.com/collections/apidocs/com/aoapps/collections/MinimalList.html">MinimalList</ao:a></code> now represents
+					<code><ao:a href="https://oss.aoapps.com/collections/apidocs/com.aoapps.collections/com/aoapps/collections/MinimalList.html">MinimalList</ao:a></code> now represents
 					an empty list as using <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Collections.html#emptyList()">Collections.emptyList()</ao:a></code>
 					instead of <code>null</code>.
 				</li>
 				<li>
-					<code><ao:a href="https://oss.aoapps.com/collections/apidocs/com/aoapps/collections/MinimalMap.html">MinimalMap</ao:a></code> now represents
+					<code><ao:a href="https://oss.aoapps.com/collections/apidocs/com.aoapps.collections/com/aoapps/collections/MinimalMap.html">MinimalMap</ao:a></code> now represents
 					an empty map as using <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Collections.html#emptyMap()">Collections.emptyMap()</ao:a></code>
 					instead of <code>null</code>.
 				</li>
 				<li>
-					New methods in <code><ao:a href="https://oss.aoapps.com/collections/apidocs/com/aoapps/collections/AoCollections.html">AoCollections</ao:a></code> to assist
+					New methods in <code><ao:a href="https://oss.aoapps.com/collections/apidocs/com.aoapps.collections/com/aoapps/collections/AoCollections.html">AoCollections</ao:a></code> to assist
 					in efficiently converting <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Iterable.html">Iterable</ao:a></code>
 					to different types of <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Collection.html">Collection</ao:a></code>.
 				</li>
@@ -844,16 +858,16 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 					</p>
 				</li>
 				<li>
-					New methods in <code><ao:a href="apidocs/com/aoapps/lang/math/SafeMath.html">SafeMath</ao:a></code> to handle
+					New methods in <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/math/SafeMath.html">SafeMath</ao:a></code> to handle
 					multiple values via varargs.
 				</li>
 				<li>
-					New class <code><ao:a href="apidocs/com/aoapps/lang/reflect/Classes.html">Classes</ao:a></code> to help when
+					New class <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/reflect/Classes.html">Classes</ao:a></code> to help when
 					dealing with <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Class.html">Class</ao:a></code>.
 				</li>
 				<li>
-					New classes <code><ao:a href="https://oss.aoapps.com/collections/apidocs/com/aoapps/collections/PolymorphicRegistry.html">PolymorphicRegistry</ao:a></code>
-					and <code><ao:a href="https://oss.aoapps.com/collections/apidocs/com/aoapps/collections/PolymorphicMultimap.html">PolymorphicMultimap</ao:a></code>
+					New classes <code><ao:a href="https://oss.aoapps.com/collections/apidocs/com.aoapps.collections/com/aoapps/collections/PolymorphicRegistry.html">PolymorphicRegistry</ao:a></code>
+					and <code><ao:a href="https://oss.aoapps.com/collections/apidocs/com.aoapps.collections/com/aoapps/collections/PolymorphicMultimap.html">PolymorphicMultimap</ao:a></code>
 					supporting efficient registration of objects and looking up instances by their class, or any
 					parent class and interface they implement.  Optimized for high concurrency lookups in O(1) time.
 				</li>

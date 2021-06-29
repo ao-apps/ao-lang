@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011-2013, 2016, 2017, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,42 +20,31 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoapps.lang.validation;
+package com.aoapps.lang.validation.i18n;
 
-import com.aoapps.lang.i18n.Resources;
-import java.util.ResourceBundle;
+import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
+import com.aoapps.hodgepodge.i18n.EditableResourceBundleSet;
+import java.io.File;
+import java.util.Locale;
 
 /**
- * A valid result singleton.
+ * Is also an editable resource bundle.
  *
  * @author  AO Industries, Inc.
  */
-final public class ValidResult implements ValidationResult {
+public final class ApplicationResources extends EditableResourceBundle {
 
-	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ValidResult.class);
+	static final EditableResourceBundleSet bundleSet = new EditableResourceBundleSet(
+		ApplicationResources.class,
+		Locale.ROOT,
+		Locale.JAPANESE
+	);
 
-	private static final long serialVersionUID = -5742207860354792003L;
-
-	private static final ValidResult singleton = new ValidResult();
-
-	public static ValidResult getInstance() {
-		return singleton;
+	static File getSourceFile(String filename) {
+		return new File(System.getProperty("user.home") + "/maven2/ao/oss/lang/src/main/resources/com/aoapps/lang/validation/i18n", filename);
 	}
 
-	private ValidResult() {
-	}
-
-	private Object readResolve() {
-		return singleton;
-	}
-
-	@Override
-	public boolean isValid() {
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return RESOURCES.getMessage("toString");
+	public ApplicationResources() {
+		super(Locale.ROOT, bundleSet, getSourceFile("ApplicationResources.properties"));
 	}
 }

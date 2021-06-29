@@ -30,6 +30,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputValidation;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -205,18 +206,26 @@ public class FastObjectInput implements ObjectInput {
 			}
 		}
 		try {
-			FastExternalizable obj = (FastExternalizable)lastClass.newInstance();
+			FastExternalizable obj = (FastExternalizable)lastClass.getConstructor().newInstance();
 			long actualSerialVersionUID = obj.getSerialVersionUID();
 			if(lastSerialVersionUID != actualSerialVersionUID) throw new InvalidClassException(lastClass.getName(), "Mismatched serialVersionUID: expected " + lastSerialVersionUID + ", got " + actualSerialVersionUID);
 			obj.readExternal(this);
 			if(obj instanceof ObjectInputValidation) ((ObjectInputValidation)obj).validateObject();
 			return obj;
+		} catch(NoSuchMethodException exc) {
+			InvalidClassException newExc = new InvalidClassException("NoSuchMethodException");
+			newExc.initCause(exc);
+			throw newExc;
 		} catch(InstantiationException exc) {
 			InvalidClassException newExc = new InvalidClassException("InstantiationException");
 			newExc.initCause(exc);
 			throw newExc;
 		} catch(IllegalAccessException exc) {
 			InvalidClassException newExc = new InvalidClassException("IllegalAccessException");
+			newExc.initCause(exc);
+			throw newExc;
+		} catch(InvocationTargetException exc) {
+			InvalidClassException newExc = new InvalidClassException("InvocationTargetException");
 			newExc.initCause(exc);
 			throw newExc;
 		}

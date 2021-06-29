@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011-2013, 2016, 2017, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,42 +20,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoapps.lang.validation;
+package com.aoapps.lang.function;
 
-import com.aoapps.lang.i18n.Resources;
-import java.util.ResourceBundle;
+import java.util.Objects;
+import java.util.function.BiFunction;
 
 /**
- * A valid result singleton.
+ * A bifunction that is allowed to throw a checked exception.
  *
- * @author  AO Industries, Inc.
+ * @param  <Ex>  An arbitrary exception type that may be thrown
+ *
+ * @see BiFunction
  */
-final public class ValidResult implements ValidationResult {
+@FunctionalInterface
+public interface BiFunctionE<T, U, R, Ex extends Throwable> {
 
-	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ValidResult.class);
+	R apply(T t, U u) throws Ex;
 
-	private static final long serialVersionUID = -5742207860354792003L;
-
-	private static final ValidResult singleton = new ValidResult();
-
-	public static ValidResult getInstance() {
-		return singleton;
-	}
-
-	private ValidResult() {
-	}
-
-	private Object readResolve() {
-		return singleton;
-	}
-
-	@Override
-	public boolean isValid() {
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return RESOURCES.getMessage("toString");
+	default <V> BiFunctionE<T, U, V, Ex> andThen(FunctionE<? super R, ? extends V, ? extends Ex> after) throws Ex {
+        Objects.requireNonNull(after);
+        return (T t, U u) -> after.apply(apply(t, u));
 	}
 }

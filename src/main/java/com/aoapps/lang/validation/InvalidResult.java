@@ -46,28 +46,12 @@ final public class InvalidResult implements ValidationResult {
 	}
 
 	/**
-	 * @deprecated  Please use {@link #InvalidResult(com.aoapps.lang.i18n.Resources, java.lang.String)} directly.
-	 */
-	@Deprecated
-	public InvalidResult(com.aoapps.util.i18n.ApplicationResourcesAccessor accessor, String key) {
-		this((Resources)accessor, key);
-	}
-
-	/**
 	 * @param  args  No defensive copy
 	 */
 	public InvalidResult(Resources resources, String key, Serializable... args) {
 		this.resources = resources;
 		this.key = key;
 		this.args = args;
-	}
-
-	/**
-	 * @deprecated  Please use {@link #InvalidResult(com.aoapps.lang.i18n.Resources, java.lang.String, java.io.Serializable...)} directly.
-	 */
-	@Deprecated
-	public InvalidResult(com.aoapps.util.i18n.ApplicationResourcesAccessor accessor, String key, Serializable... args) {
-		this((Resources)accessor, key, args);
 	}
 
 	@Override
@@ -81,14 +65,6 @@ final public class InvalidResult implements ValidationResult {
 	}
 
 	public Resources getResources() {
-		return resources;
-	}
-
-	/**
-	 * @deprecated  Please use {@link #getResources()} directly.
-	 */
-	@Deprecated
-	public com.aoapps.util.i18n.ApplicationResourcesAccessor getAccessor() {
 		return resources;
 	}
 

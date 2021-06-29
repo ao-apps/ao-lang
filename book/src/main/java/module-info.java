@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011-2013, 2016, 2017, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,42 +20,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoapps.lang.validation;
-
-import com.aoapps.lang.i18n.Resources;
-import java.util.ResourceBundle;
-
-/**
- * A valid result singleton.
- *
- * @author  AO Industries, Inc.
- */
-final public class ValidResult implements ValidationResult {
-
-	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ValidResult.class);
-
-	private static final long serialVersionUID = -5742207860354792003L;
-
-	private static final ValidResult singleton = new ValidResult();
-
-	public static ValidResult getInstance() {
-		return singleton;
-	}
-
-	private ValidResult() {
-	}
-
-	private Object readResolve() {
-		return singleton;
-	}
-
-	@Override
-	public boolean isValid() {
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return RESOURCES.getMessage("toString");
-	}
+module com.aoapps.lang.book {
+	// Direct
+	requires com.aoapps.badges; // <groupId>com.aoapps</groupId><artifactId>ao-badges</artifactId>
+	requires com.aoapps.taglib; // <groupId>com.aoapps</groupId><artifactId>ao-taglib</artifactId>
+	requires com.semanticcms.changelog.taglib; // <groupId>com.semanticcms</groupId><artifactId>semanticcms-changelog-taglib</artifactId>
+	requires com.semanticcms.core.taglib; // <groupId>com.semanticcms</groupId><artifactId>semanticcms-core-taglib</artifactId>
+	requires com.semanticcms.section.taglib; // <groupId>com.semanticcms</groupId><artifactId>semanticcms-section-taglib</artifactId>
+	requires taglibs.standard.spec; // <groupId>org.apache.taglibs</groupId><artifactId>taglibs-standard-spec</artifactId>
 }

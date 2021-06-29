@@ -135,7 +135,7 @@ final public class FileUtils {
 
 	/**
 	 * Computes a hash code of the file contents, consistent with Arrays.hashCode(byte[]).
-	 * 
+	 *
 	 * @see  Arrays#hashCode(byte[])
 	 */
 	public static int contentHashCode(File file) throws IOException {
@@ -375,7 +375,7 @@ final public class FileUtils {
 	 *
 	 * @param  deleteOnExit  when <code>true</code>, any newly created temp file will be flagged for {@link File#deleteOnExit() delete on exit}
 	 *
-	 * @deprecated  Please use <a href="https://oss.aoapps.com/tempfiles/apidocs/com/aoapps/tempfiles/TempFileContext.html">TempFileContext</a>
+	 * @deprecated  Please use <a href="https://oss.aoapps.com/tempfiles/apidocs/com.aoapps.tempfiles/com/aoapps/tempfiles/TempFileContext.html">TempFileContext</a>
 	 *              as {@link File#deleteOnExit()} is prone to memory leaks in long-running applications.
 	 */
 	// TODO: Is it worth having a non-deprecated version that does not delete on exit?
@@ -436,7 +436,7 @@ final public class FileUtils {
 	 */
 	public static String readFileAsString(File file) throws IOException {
 		return readFileAsString(file, Charset.defaultCharset());
-	}    
+	}
 
 	/**
 	 * Reads the contents of a File and returns as a String in the provided character set.
@@ -458,5 +458,5 @@ final public class FileUtils {
 			}
 		}
 		return SB.toString();
-	}    
+	}
 }
