@@ -24,6 +24,7 @@ package com.aoapps.lang.i18n;
 
 import com.aoapps.lang.RunnableE;
 import com.aoapps.lang.concurrent.CallableE;
+import com.aoapps.lang.i18n.impl.ThreadLocaleImpl;
 import java.util.Locale;
 import java.util.concurrent.Callable;
 
@@ -36,19 +37,11 @@ final public class ThreadLocale {
 
 	private ThreadLocale() {}
 
-	// TODO: cross-module permissions, not public
-	public static final ThreadLocal<Locale> locale = new ThreadLocal<Locale>() {
-		@Override
-		protected Locale initialValue() {
-			return Locale.getDefault();
-		}
-	};
-
 	/**
 	 * Gets the current thread's locale or {@linkplain Locale#getDefault() the system default} if not yet set.
 	 */
 	public static Locale get() {
-		return locale.get();
+		return ThreadLocaleImpl.locale.get();
 	}
 
 	/**
@@ -57,7 +50,7 @@ final public class ThreadLocale {
 	 */
 	public static void set(Locale locale) {
 		if(locale==null) throw new IllegalArgumentException("locale==null");
-		ThreadLocale.locale.set(locale);
+		ThreadLocaleImpl.locale.set(locale);
 	}
 
 	/**

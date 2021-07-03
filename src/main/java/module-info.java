@@ -27,6 +27,7 @@ module com.aoapps.lang {
 	exports com.aoapps.lang.exception;
 	exports com.aoapps.lang.function;
 	exports com.aoapps.lang.i18n;
+	exports com.aoapps.lang.i18n.impl to com.aoapps.hodgepodge;
 	exports com.aoapps.lang.io;
 	exports com.aoapps.lang.io.function;
 	exports com.aoapps.lang.math;
