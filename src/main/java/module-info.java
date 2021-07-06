@@ -42,7 +42,7 @@ module com.aoapps.lang {
 	exports com.aoapps.lang.zip;
 	uses com.aoapps.lang.CoercionOptimizerInitializer;
 	uses com.aoapps.lang.ThrowableSurrogateFactoryInitializer;
-	// Javadoc-only
+	// Direct
 	requires static org.apache.commons.codec; // <groupId>commons-codec</groupId><artifactId>commons-codec</artifactId>
 	requires static org.apache.commons.io; // <groupId>commons-io</groupId><artifactId>commons-io</artifactId>
 	requires static org.apache.commons.lang3; // <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId>
