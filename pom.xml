@@ -49,7 +49,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<!-- Dependencies -->
 		<commons-codec.version>1.15</commons-codec.version>
-		<commons-io.version>2.10.0</commons-io.version>
+		<commons-io.version>2.11.0</commons-io.version>
 		<commons-lang3.version>3.12.0</commons-lang3.version>
 	</properties>
 
