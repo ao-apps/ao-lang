@@ -552,11 +552,15 @@ public class Resources implements Serializable {
 				);
 			}
 		} catch(MissingResourceException err) {
-			if(logger.isLoggable(Level.FINE)) {
+			if(logger.isLoggable(Level.FINER)) {
 				logger.log(
-					Level.FINE,
+					Level.FINER,
 					"Bundle lookup failed: baseName = \"" + baseName + "\", locale = \"" + locale + "\", key = \"" + key + '"',
 					err
+				);
+			} else if(logger.isLoggable(Level.FINE)) {
+				logger.fine(
+					"Bundle lookup failed: baseName = \"" + baseName + "\", locale = \"" + locale + "\", key = \"" + key + "\" (enable FINER logging for stack trace)"
 				);
 			}
 			// resource remains null
