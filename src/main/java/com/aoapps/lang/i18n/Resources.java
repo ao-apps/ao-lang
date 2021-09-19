@@ -92,7 +92,46 @@ public class Resources implements Serializable {
 	 */
 	@Deprecated
 	public static Resources getResources(SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor, String baseName, String prefix) {
-		return new Resources(bundleAccessor, baseName, prefix);
+		return new Resources(bundleAccessor, (ClassLoader)null, (ResourceBundleAccessor)null, baseName, prefix);
+	}
+
+	/**
+	 * Accesses the resources with the given base name and prefix using a classloader.
+	 *
+	 * @param  loader          The classloader used to access the bundle.  When {@code null}, will use
+	 *                         {@linkplain Thread#getContextClassLoader() the context classloader} of
+	 *                         {@linkplain Thread#currentThread() the current thread}, falling back to
+	 *                         {@linkplain ClassLoader#getSystemClassLoader() the system classloader} when there is no
+	 *                         context classloader.
+	 *
+	 * @param  bundleAccessor  Lookup for bundle, which will typically be the static method reference
+	 *                         <code>ResourceBundle::getBundle</code>.
+	 *                         <p>
+	 *                         As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
+	 *                         caller permissions, pass a small lambda that performs the bundle access.  This will
+	 *                         typically be the static method reference <code>ResourceBundle::getBundle</code>, but may
+	 *                         be of any arbitrary complexity.  The bundle accessor is invoked for every message lookup,
+	 *                         so the implementation should take care to perform well.
+	 *                         </p>
+	 *                         <p>
+	 *                         When {@code null}, the bundle is looked-up via a direct call to
+	 *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires
+	 *                         <code>opens …;</code> in <code>module-info.java</code>.
+	 *                         </p>
+	 *
+	 * @deprecated  Please use one of the class- or package-relative techniques in locating the resource bundle, as they
+	 *              will correctly locate the resources after packages are renamed by code obfuscation.
+	 *              <ul>
+	 *              <li>{@link #getResources(java.lang.Class, com.aoapps.lang.i18n.ResourceBundleAccessor)}</li>
+	 *              <li>{@link #getResources(java.lang.Class, java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor)}</li>
+	 *              <li>{@link #getResources(java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor, java.lang.Package)}</li>
+	 *              <li>{@link #getResources(java.lang.ClassLoader, com.aoapps.i18n.ResourceBundleAccessor, java.lang.Package, java.lang.String)}</li>
+	 *              <li>{@link #getResources(java.lang.ClassLoader, com.aoapps.i18n.ResourceBundleAccessor, java.lang.Package, java.lang.String, java.lang.String)}</li>
+	 *              </ul>
+	 */
+	@Deprecated
+	public static Resources getResources(ClassLoader loader, ResourceBundleAccessor bundleAccessor, String baseName, String prefix) {
+		return new Resources((SerializableBiFunction<String, Locale, ResourceBundle>)null, loader, bundleAccessor, baseName, prefix);
 	}
 
 	/**
@@ -108,6 +147,27 @@ public class Resources implements Serializable {
 	@Deprecated
 	public static Resources getResources(String baseName, String prefix) {
 		return getResources((SerializableBiFunction<String, Locale, ResourceBundle>)null, baseName, prefix);
+	}
+
+	/**
+	 * Accesses the resources with the given base name and prefix using a classloader.
+	 *
+	 * @param  loader          The classloader used to access the bundle.  When {@code null}, will use
+	 *                         {@linkplain Thread#getContextClassLoader() the context classloader} of
+	 *                         {@linkplain Thread#currentThread() the current thread}, falling back to
+	 *                         {@linkplain ClassLoader#getSystemClassLoader() the system classloader} when there is no
+	 *                         context classloader.
+	 *
+	 * @deprecated  Please use {@link #getResources(java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor, java.lang.String, java.lang.String)} instead.
+	 *              <p>
+	 *              As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
+	 *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires <code>opens …;</code> in
+	 *              <code>module-info.java</code>.
+	 *              </p>
+	 */
+	@Deprecated
+	public static Resources getResources(ClassLoader loader, String baseName, String prefix) {
+		return getResources(loader, (ResourceBundleAccessor)null, baseName, prefix);
 	}
 
 	/**
@@ -139,7 +199,46 @@ public class Resources implements Serializable {
 	 */
 	@Deprecated
 	public static Resources getResources(SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor, String baseName) {
-		return getResources(bundleAccessor, baseName, null);
+		return getResources(bundleAccessor, baseName, (String)null);
+	}
+
+	/**
+	 * Accesses the resources with the given base name and no prefix using a classloader.
+	 *
+	 * @param  loader          The classloader used to access the bundle.  When {@code null}, will use
+	 *                         {@linkplain Thread#getContextClassLoader() the context classloader} of
+	 *                         {@linkplain Thread#currentThread() the current thread}, falling back to
+	 *                         {@linkplain ClassLoader#getSystemClassLoader() the system classloader} when there is no
+	 *                         context classloader.
+	 *
+	 * @param  bundleAccessor  Lookup for bundle, which will typically be the static method reference
+	 *                         <code>ResourceBundle::getBundle</code>.
+	 *                         <p>
+	 *                         As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
+	 *                         caller permissions, pass a small lambda that performs the bundle access.  This will
+	 *                         typically be the static method reference <code>ResourceBundle::getBundle</code>, but may
+	 *                         be of any arbitrary complexity.  The bundle accessor is invoked for every message lookup,
+	 *                         so the implementation should take care to perform well.
+	 *                         </p>
+	 *                         <p>
+	 *                         When {@code null}, the bundle is looked-up via a direct call to
+	 *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires
+	 *                         <code>opens …;</code> in <code>module-info.java</code>.
+	 *                         </p>
+	 *
+	 * @deprecated  Please use one of the class- or package-relative techniques in locating the resource bundle, as they
+	 *              will correctly locate the resources after packages are renamed by code obfuscation.
+	 *              <ul>
+	 *              <li>{@link #getResources(java.lang.Class, com.aoapps.lang.i18n.ResourceBundleAccessor)}</li>
+	 *              <li>{@link #getResources(java.lang.Class, java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor)}</li>
+	 *              <li>{@link #getResources(java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor, java.lang.Package)}</li>
+	 *              <li>{@link #getResources(java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor, java.lang.Package, java.lang.String)}</li>
+	 *              <li>{@link #getResources(java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor, java.lang.Package, java.lang.String, java.lang.String)}</li>
+	 *              </ul>
+	 */
+	@Deprecated
+	public static Resources getResources(ClassLoader loader, ResourceBundleAccessor bundleAccessor, String baseName) {
+		return getResources(loader, bundleAccessor, baseName, (String)null);
 	}
 
 	/**
@@ -154,7 +253,28 @@ public class Resources implements Serializable {
 	 */
 	@Deprecated
 	public static Resources getResources(String baseName) {
-		return getResources((SerializableBiFunction<String, Locale, ResourceBundle>)null, baseName, null);
+		return getResources((SerializableBiFunction<String, Locale, ResourceBundle>)null, baseName, (String)null);
+	}
+
+	/**
+	 * Accesses the resources with the given base name and no prefix using a classloader.
+	 *
+	 * @param  loader          The classloader used to access the bundle.  When {@code null}, will use
+	 *                         {@linkplain Thread#getContextClassLoader() the context classloader} of
+	 *                         {@linkplain Thread#currentThread() the current thread}, falling back to
+	 *                         {@linkplain ClassLoader#getSystemClassLoader() the system classloader} when there is no
+	 *                         context classloader.
+	 *
+	 * @deprecated  Please use {@link #getResources(java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor, java.lang.String)} instead.
+	 *              <p>
+	 *              As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
+	 *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires <code>opens …;</code> in
+	 *              <code>module-info.java</code>.
+	 *              </p>
+	 */
+	@Deprecated
+	public static Resources getResources(ClassLoader loader, String baseName) {
+		return getResources(loader, (ResourceBundleAccessor)null, baseName, (String)null);
 	}
 
 	/**
@@ -188,9 +308,60 @@ public class Resources implements Serializable {
 	 *
 	 * @param  name  The name of the resource within the package, when {@code null} defaults to
 	 *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+	 *
+	 * @deprecated  Please use {@link #getResources(java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor, java.lang.Package, java.lang.String, java.lang.String)},
+	 *              which can correctly locate resources in more complication classloading scenarios (such as when running as a Java EE Webapp).
 	 */
+	@Deprecated
 	public static Resources getResources(SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor, Package pack, String name, String prefix) {
 		return getResources(
+			bundleAccessor,
+			(name == null) ? (pack.getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME) : (pack.getName() + '.' + name),
+			prefix
+		);
+	}
+
+	/**
+	 * Accesses the resources in the given package (or sub-package) with the given name and prefix using a classloader.
+	 * The base name is derived as {@code pack.getName() + '.' + name}.
+	 * <p>
+	 * By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+	 * used because the module system does not allow opening for reflection separately from opening for resources.  By
+	 * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
+	 * reflection.
+	 * </p>
+	 * <p>
+	 * Note: Being accessed relative to the package, the resources can still be correctly located after
+	 * packages are renamed by code obfuscation.
+	 * </p>
+	 *
+	 * @param  loader          The classloader used to access the bundle.  When {@code null}, will use
+	 *                         {@linkplain Thread#getContextClassLoader() the context classloader} of
+	 *                         {@linkplain Thread#currentThread() the current thread}, falling back to
+	 *                         {@linkplain ClassLoader#getSystemClassLoader() the system classloader} when there is no
+	 *                         context classloader.
+	 *
+	 * @param  bundleAccessor  Lookup for bundle, which will typically be the static method reference
+	 *                         <code>ResourceBundle::getBundle</code>.
+	 *                         <p>
+	 *                         As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
+	 *                         caller permissions, pass a small lambda that performs the bundle access.  This will
+	 *                         typically be the static method reference <code>ResourceBundle::getBundle</code>, but may
+	 *                         be of any arbitrary complexity.  The bundle accessor is invoked for every message lookup,
+	 *                         so the implementation should take care to perform well.
+	 *                         </p>
+	 *                         <p>
+	 *                         When {@code null}, the bundle is looked-up via a direct call to
+	 *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires
+	 *                         <code>opens …;</code> in <code>module-info.java</code>.
+	 *                         </p>
+	 *
+	 * @param  name  The name of the resource within the package, when {@code null} defaults to
+	 *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+	 */
+	public static Resources getResources(ClassLoader loader, ResourceBundleAccessor bundleAccessor, Package pack, String name, String prefix) {
+		return getResources(
+			loader,
 			bundleAccessor,
 			(name == null) ? (pack.getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME) : (pack.getName() + '.' + name),
 			prefix
@@ -223,7 +394,42 @@ public class Resources implements Serializable {
 	 */
 	@Deprecated
 	public static Resources getResources(Package pack, String name, String prefix) {
-		return getResources(null, pack, name, prefix);
+		return getResources((SerializableBiFunction<String, Locale, ResourceBundle>)null, pack, name, prefix);
+	}
+
+	/**
+	 * Accesses the resources in the given package (or sub-package) with the given name and prefix using a classloader.
+	 * The base name is derived as {@code pack.getName() + '.' + name}.
+	 * <p>
+	 * By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+	 * used because the module system does not allow opening for reflection separately from opening for resources.  By
+	 * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
+	 * reflection.
+	 * </p>
+	 * <p>
+	 * Note: Being accessed relative to the package, the resources can still be correctly located after
+	 * packages are renamed by code obfuscation.
+	 * </p>
+	 *
+	 * @param  loader          The classloader used to access the bundle.  When {@code null}, will use
+	 *                         {@linkplain Thread#getContextClassLoader() the context classloader} of
+	 *                         {@linkplain Thread#currentThread() the current thread}, falling back to
+	 *                         {@linkplain ClassLoader#getSystemClassLoader() the system classloader} when there is no
+	 *                         context classloader.
+	 *
+	 * @param  name  The name of the resource within the package, when {@code null} defaults to
+	 *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+	 *
+	 * @deprecated  Please use {@link #getResources(java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor, java.lang.Package, java.lang.String, java.lang.String)} instead.
+	 *              <p>
+	 *              As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
+	 *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires <code>opens …;</code> in
+	 *              <code>module-info.java</code>.
+	 *              </p>
+	 */
+	@Deprecated
+	public static Resources getResources(ClassLoader loader, Package pack, String name, String prefix) {
+		return getResources(loader, (ResourceBundleAccessor)null, pack, name, prefix);
 	}
 
 	/**
@@ -257,9 +463,55 @@ public class Resources implements Serializable {
 	 *
 	 * @param  name  The name of the resource within the package, when {@code null} defaults to
 	 *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+	 *
+	 * @deprecated  Please use {@link #getResources(java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor, java.lang.Package, java.lang.String)},
+	 *              which can correctly locate resources in more complication classloading scenarios (such as when running as a Java EE Webapp).
 	 */
+	@Deprecated
 	public static Resources getResources(SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor, Package pack, String name) {
-		return getResources(bundleAccessor, pack, name, null);
+		return getResources(bundleAccessor, pack, name, (String)null);
+	}
+
+	/**
+	 * Accesses the resources in the given package (or sub-package) with the given name and no prefix using a classloader.
+	 * The base name is derived as {@code pack.getName() + '.' + name}.
+	 * <p>
+	 * By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+	 * used because the module system does not allow opening for reflection separately from opening for resources.  By
+	 * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
+	 * reflection.
+	 * </p>
+	 * <p>
+	 * Note: Being accessed relative to the package, the resources can still be correctly located after
+	 * packages are renamed by code obfuscation.
+	 * </p>
+	 *
+	 * @param  loader          The classloader used to access the bundle.  When {@code null}, will use
+	 *                         {@linkplain Thread#getContextClassLoader() the context classloader} of
+	 *                         {@linkplain Thread#currentThread() the current thread}, falling back to
+	 *                         {@linkplain ClassLoader#getSystemClassLoader() the system classloader} when there is no
+	 *                         context classloader.
+	 *
+	 * @param  bundleAccessor  Lookup for bundle, which will typically be the static method reference
+	 *                         <code>ResourceBundle::getBundle</code>.
+	 *                         <p>
+	 *                         As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
+	 *                         caller permissions, pass a small lambda that performs the bundle access.  This will
+	 *                         typically be the static method reference <code>ResourceBundle::getBundle</code>, but may
+	 *                         be of any arbitrary complexity.  The bundle accessor is invoked for every message lookup,
+	 *                         so the implementation should take care to perform well.
+	 *                         </p>
+	 *                         <p>
+	 *                         When {@code null}, the bundle is looked-up via a direct call to
+	 *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires
+	 *                         <code>opens …;</code> in <code>module-info.java</code>.
+	 *                         </p>
+	 *
+	 * @param  name  The name of the resource within the package, when {@code null} defaults to
+	 *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+	 */
+	public static Resources getResources(ClassLoader loader, ResourceBundleAccessor bundleAccessor, Package pack, String name) {
+		return getResources(loader, bundleAccessor, pack, name, (String)null);
 	}
 
 	/**
@@ -288,7 +540,42 @@ public class Resources implements Serializable {
 	 */
 	@Deprecated
 	public static Resources getResources(Package pack, String name) {
-		return getResources(null, pack, name, null);
+		return getResources((SerializableBiFunction<String, Locale, ResourceBundle>)null, pack, name, (String)null);
+	}
+
+	/**
+	 * Accesses the resources in the given package (or sub-package) with the given name and no prefix using a classloader.
+	 * The base name is derived as {@code pack.getName() + '.' + name}.
+	 * <p>
+	 * By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+	 * used because the module system does not allow opening for reflection separately from opening for resources.  By
+	 * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
+	 * reflection.
+	 * </p>
+	 * <p>
+	 * Note: Being accessed relative to the package, the resources can still be correctly located after
+	 * packages are renamed by code obfuscation.
+	 * </p>
+	 *
+	 * @param  loader          The classloader used to access the bundle.  When {@code null}, will use
+	 *                         {@linkplain Thread#getContextClassLoader() the context classloader} of
+	 *                         {@linkplain Thread#currentThread() the current thread}, falling back to
+	 *                         {@linkplain ClassLoader#getSystemClassLoader() the system classloader} when there is no
+	 *                         context classloader.
+	 *
+	 * @param  name  The name of the resource within the package, when {@code null} defaults to
+	 *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+	 *
+	 * @deprecated  Please use {@link #getResources(java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor, java.lang.Package, java.lang.String)} instead.
+	 *              <p>
+	 *              As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
+	 *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires <code>opens …;</code> in
+	 *              <code>module-info.java</code>.
+	 *              </p>
+	 */
+	@Deprecated
+	public static Resources getResources(ClassLoader loader, Package pack, String name) {
+		return getResources(loader, (ResourceBundleAccessor)null, pack, name, (String)null);
 	}
 
 	/**
@@ -319,9 +606,52 @@ public class Resources implements Serializable {
 	 *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires
 	 *                         <code>opens …;</code> in <code>module-info.java</code>.
 	 *                         </p>
+	 *
+	 * @deprecated  Please use {@link #getResources(java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor, java.lang.Package)},
+	 *              which can correctly locate resources in more complication classloading scenarios (such as when running as a Java EE Webapp).
 	 */
+	@Deprecated
 	public static Resources getResources(SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor, Package pack) {
-		return getResources(bundleAccessor, pack, null, null);
+		return getResources(bundleAccessor, pack, (String)null, (String)null);
+	}
+
+	/**
+	 * Accesses the resources in the {@link #DEFAULT_SUBPACKAGE} sub-package of the given package named {@link #DEFAULT_NAME} using a classloader.
+	 * The base name is derived as {@code pack.getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+	 * <p>
+	 * Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+	 * used because the module system does not allow opening for reflection separately from opening for resources.  By
+	 * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
+	 * reflection.
+	 * </p>
+	 * <p>
+	 * Note: Being accessed relative to the package, the resources can still be correctly located after
+	 * packages are renamed by code obfuscation.
+	 * </p>
+	 *
+	 * @param  loader          The classloader used to access the bundle.  When {@code null}, will use
+	 *                         {@linkplain Thread#getContextClassLoader() the context classloader} of
+	 *                         {@linkplain Thread#currentThread() the current thread}, falling back to
+	 *                         {@linkplain ClassLoader#getSystemClassLoader() the system classloader} when there is no
+	 *                         context classloader.
+	 *
+	 * @param  bundleAccessor  Lookup for bundle, which will typically be the static method reference
+	 *                         <code>ResourceBundle::getBundle</code>.
+	 *                         <p>
+	 *                         As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
+	 *                         caller permissions, pass a small lambda that performs the bundle access.  This will
+	 *                         typically be the static method reference <code>ResourceBundle::getBundle</code>, but may
+	 *                         be of any arbitrary complexity.  The bundle accessor is invoked for every message lookup,
+	 *                         so the implementation should take care to perform well.
+	 *                         </p>
+	 *                         <p>
+	 *                         When {@code null}, the bundle is looked-up via a direct call to
+	 *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires
+	 *                         <code>opens …;</code> in <code>module-info.java</code>.
+	 *                         </p>
+	 */
+	public static Resources getResources(ClassLoader loader, ResourceBundleAccessor bundleAccessor, Package pack) {
+		return getResources(loader, bundleAccessor, pack, (String)null, (String)null);
 	}
 
 	/**
@@ -347,7 +677,39 @@ public class Resources implements Serializable {
 	 */
 	@Deprecated
 	public static Resources getResources(Package pack) {
-		return getResources(pack, null, null);
+		return getResources(pack, (String)null, (String)null);
+	}
+
+	/**
+	 * Accesses the resources in the {@link #DEFAULT_SUBPACKAGE} sub-package of the given package named {@link #DEFAULT_NAME} using a classloader.
+	 * The base name is derived as {@code pack.getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+	 * <p>
+	 * Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+	 * used because the module system does not allow opening for reflection separately from opening for resources.  By
+	 * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
+	 * reflection.
+	 * </p>
+	 * <p>
+	 * Note: Being accessed relative to the package, the resources can still be correctly located after
+	 * packages are renamed by code obfuscation.
+	 * </p>
+	 *
+	 * @param  loader          The classloader used to access the bundle.  When {@code null}, will use
+	 *                         {@linkplain Thread#getContextClassLoader() the context classloader} of
+	 *                         {@linkplain Thread#currentThread() the current thread}, falling back to
+	 *                         {@linkplain ClassLoader#getSystemClassLoader() the system classloader} when there is no
+	 *                         context classloader.
+	 *
+	 * @deprecated  Please use {@link #getResources(java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor, java.lang.Package)} instead.
+	 *              <p>
+	 *              As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
+	 *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires <code>opens …;</code> in
+	 *              <code>module-info.java</code>.
+	 *              </p>
+	 */
+	@Deprecated
+	public static Resources getResources(ClassLoader loader, Package pack) {
+		return getResources(loader, pack, (String)null, (String)null);
 	}
 
 	/**
@@ -389,9 +751,112 @@ public class Resources implements Serializable {
 	 *
 	 * @param  clazz  This class is used for determining the package and prefix only.  It will typically be the
 	 *                class that is using the resource, not the class that implements {@link ResourceBundle}.
+	 *
+	 * @deprecated  Please use {@link #getResources(java.lang.Class, com.aoapps.lang.i18n.ResourceBundleAccessor)}
+	 *              or {@link #getResources(java.lang.Class, java.lang.ClassLoader, com.aoapps.lang.i18n.ResourceBundleAccessor)},
+	 *              which can correctly locate resources in more complication classloading scenarios (such as when running as a Java EE Webapp).
 	 */
+	@Deprecated
 	public static Resources getResources(SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor, Class<?> clazz) {
-		return getResources(bundleAccessor, clazz.getPackage(), null, clazz.getSimpleName() + '.');
+		return getResources(bundleAccessor, clazz.getPackage(), (String)null, clazz.getSimpleName() + '.');
+	}
+
+	/**
+	 * Accesses the resources in the {@link #DEFAULT_SUBPACKAGE} sub-package of the given class named
+	 * {@link #DEFAULT_NAME} with {@code clazz.getSimpleName() + '.'} as the prefix using a classloader.
+	 * The base name is derived as {@code clazz.getPackage().getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME}
+	 * (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+	 * <p>
+	 * Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+	 * used because the module system does not allow opening for reflection separately from opening for resources.  By
+	 * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
+	 * reflection.
+	 * </p>
+	 * <p>
+	 * Note: Being accessed relative to the package, the resources may still be correctly located after
+	 * packages are renamed by code obfuscation.  However, if classes are also renamed, the prefix will change and the
+	 * build system must also alter the contents of the underlying <code>*.properties</code> files correspondingly.
+	 * </p>
+	 * <p>
+	 * When rewriting the contents of the underlying properties files is not possible, it may be best either use
+	 * hard-coded prefix (may leak original class name, thus thwarting obfuscation a bit) or use a per-class
+	 * properties file (tedious, also requires build system coordination).
+	 * </p>
+	 *
+	 * @param  loader          The classloader used to access the bundle.  When {@code null}, will use
+	 *                         {@linkplain Thread#getContextClassLoader() the context classloader} of
+	 *                         {@linkplain Thread#currentThread() the current thread}, falling back to
+	 *                         {@linkplain ClassLoader#getSystemClassLoader() the system classloader} when there is no
+	 *                         context classloader.
+	 *
+	 * @param  bundleAccessor  Function lookup for bundle, which will typically be the static method reference
+	 *                         <code>ResourceBundle::getBundle</code>.
+	 *                         <p>
+	 *                         As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
+	 *                         caller permissions, pass a small lambda that performs the bundle access.  This will
+	 *                         typically be the static method reference <code>ResourceBundle::getBundle</code>, but may
+	 *                         be of any arbitrary complexity.  The bundle accessor is invoked for every message lookup,
+	 *                         so the implementation should take care to perform well.
+	 *                         </p>
+	 *                         <p>
+	 *                         When {@code null}, the bundle is looked-up via a direct call to
+	 *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires
+	 *                         <code>opens …;</code> in <code>module-info.java</code>.
+	 *                         </p>
+	 *
+	 * @param  clazz  This class is used for determining the package and prefix only.  It will typically be the
+	 *                class that is using the resource, not the class that implements {@link ResourceBundle}.
+	 */
+	public static Resources getResources(Class<?> clazz, ClassLoader loader, ResourceBundleAccessor bundleAccessor) {
+		return getResources(loader, bundleAccessor, clazz.getPackage(), (String)null, clazz.getSimpleName() + '.');
+	}
+
+	/**
+	 * Accesses the resources in the {@link #DEFAULT_SUBPACKAGE} sub-package of the given class named
+	 * {@link #DEFAULT_NAME} with {@code clazz.getSimpleName() + '.'} as the prefix using a classloader.
+	 * The classloader will be {@linkplain Class#getClassLoader() the class' classloader}, falling back to
+	 * {@linkplain ClassLoader#getSystemClassLoader() the system classloader}.
+	 * The base name is derived as {@code clazz.getPackage().getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME}
+	 * (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+	 * <p>
+	 * Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+	 * used because the module system does not allow opening for reflection separately from opening for resources.  By
+	 * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
+	 * reflection.
+	 * </p>
+	 * <p>
+	 * Note: Being accessed relative to the package, the resources may still be correctly located after
+	 * packages are renamed by code obfuscation.  However, if classes are also renamed, the prefix will change and the
+	 * build system must also alter the contents of the underlying <code>*.properties</code> files correspondingly.
+	 * </p>
+	 * <p>
+	 * When rewriting the contents of the underlying properties files is not possible, it may be best either use
+	 * hard-coded prefix (may leak original class name, thus thwarting obfuscation a bit) or use a per-class
+	 * properties file (tedious, also requires build system coordination).
+	 * </p>
+	 *
+	 * @param  bundleAccessor  Function lookup for bundle, which will typically be the static method reference
+	 *                         <code>ResourceBundle::getBundle</code>.
+	 *                         <p>
+	 *                         As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
+	 *                         caller permissions, pass a small lambda that performs the bundle access.  This will
+	 *                         typically be the static method reference <code>ResourceBundle::getBundle</code>, but may
+	 *                         be of any arbitrary complexity.  The bundle accessor is invoked for every message lookup,
+	 *                         so the implementation should take care to perform well.
+	 *                         </p>
+	 *                         <p>
+	 *                         When {@code null}, the bundle is looked-up via a direct call to
+	 *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires
+	 *                         <code>opens …;</code> in <code>module-info.java</code>.
+	 *                         </p>
+	 *
+	 * @param  clazz  This class is used for determining the classloader, package, and prefix only.  It will typically be the
+	 *                class that is using the resource, not the class that implements {@link ResourceBundle}.
+	 */
+	public static Resources getResources(Class<?> clazz, ResourceBundleAccessor bundleAccessor) {
+		ClassLoader loader = clazz.getClassLoader();
+		if(loader == null) loader = ClassLoader.getSystemClassLoader();
+		return getResources(clazz, loader, bundleAccessor);
 	}
 
 	/**
@@ -422,13 +887,56 @@ public class Resources implements Serializable {
 	 * @deprecated  Please use {@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Class)} instead.
 	 *              <p>
 	 *              As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
-	 *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires <code>opens …;</code> in
+	 *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires <code>opens …;</code> in
 	 *              <code>module-info.java</code>.
 	 *              </p>
 	 */
 	@Deprecated
 	public static Resources getResources(Class<?> clazz) {
-		return getResources(null, clazz.getPackage(), null, clazz.getSimpleName() + '.');
+		return getResources(clazz, (ResourceBundleAccessor)null);
+	}
+
+	/**
+	 * Accesses the resources in the {@link #DEFAULT_SUBPACKAGE} sub-package of the given class named
+	 * {@link #DEFAULT_NAME} with {@code clazz.getSimpleName() + '.'} as the prefix using a classloader.
+	 * The base name is derived as {@code clazz.getPackage().getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME}
+	 * (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+	 * <p>
+	 * Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+	 * used because the module system does not allow opening for reflection separately from opening for resources.  By
+	 * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
+	 * reflection.
+	 * </p>
+	 * <p>
+	 * Note: Being accessed relative to the package, the resources may still be correctly located after
+	 * packages are renamed by code obfuscation.  However, if classes are also renamed, the prefix will change and the
+	 * build system must also alter the contents of the underlying <code>*.properties</code> files correspondingly.
+	 * </p>
+	 * <p>
+	 * When rewriting the contents of the underlying properties files is not possible, it may be best either use
+	 * hard-coded prefix (may leak original class name, thus thwarting obfuscation a bit) or use a per-class
+	 * properties file (tedious, also requires build system coordination).
+	 * </p>
+	 *
+	 * @param  loader          The classloader used to access the bundle.  When {@code null}, will use
+	 *                         {@linkplain Thread#getContextClassLoader() the context classloader} of
+	 *                         {@linkplain Thread#currentThread() the current thread}, falling back to
+	 *                         {@linkplain ClassLoader#getSystemClassLoader() the system classloader} when there is no
+	 *                         context classloader.
+	 *
+	 * @param  clazz  This class is used for determining the package and prefix only.  It will typically be the
+	 *                class that is using the resource, not the class that implements {@link ResourceBundle}.
+	 *
+	 * @deprecated  Please use {@link #getResources(java.lang.Class, com.aoapps.lang.i18n.ResourceBundleAccessor)} instead.
+	 *              <p>
+	 *              As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
+	 *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)}, which requires <code>opens …;</code> in
+	 *              <code>module-info.java</code>.
+	 *              </p>
+	 */
+	@Deprecated
+	public static Resources getResources(Class<?> clazz, ClassLoader loader) {
+		return getResources(loader, (ResourceBundleAccessor)null, clazz.getPackage(), (String)null, clazz.getSimpleName() + '.');
 	}
 
 	/**
@@ -476,16 +984,22 @@ public class Resources implements Serializable {
 
 	private static final long serialVersionUID = 2L;
 
-	private final SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor;
+	private final SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessorOld;
+	private final ClassLoader loader;
+	private final ResourceBundleAccessor bundleAccessorNew;
 	private final String baseName;
 	private final String prefix;
 
 	private Resources(
-		SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor,
+		SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessorOld,
+		ClassLoader loader,
+		ResourceBundleAccessor bundleAccessorNew,
 		String baseName,
 		String prefix
 	) {
-		this.bundleAccessor = bundleAccessor;
+		this.bundleAccessorOld = bundleAccessorOld;
+		this.loader = loader;
+		this.bundleAccessorNew = bundleAccessorNew;
 		this.baseName = Objects.requireNonNull(baseName);
 		if(prefix != null && prefix.isEmpty()) prefix = null;
 		this.prefix = prefix;
@@ -510,9 +1024,16 @@ public class Resources implements Serializable {
 	 * Direct use of this bundle will not have any {@linkplain #getPrefix() prefix} applied.
 	 */
 	public ResourceBundle getResourceBundle(Locale locale) {
-		return (bundleAccessor != null)
-			? bundleAccessor.apply(baseName, locale)
-			: ResourceBundle.getBundle(baseName, locale);
+		if(bundleAccessorOld != null) {
+			return bundleAccessorOld.apply(baseName, locale);
+		} else {
+			ClassLoader cl = loader;
+			if(cl == null) cl = Thread.currentThread().getContextClassLoader();
+			if(cl == null) cl = ClassLoader.getSystemClassLoader();
+			return (bundleAccessorNew != null)
+				? bundleAccessorNew.getBundle(baseName, locale, cl)
+				: ResourceBundle.getBundle(baseName, locale, cl);
+		}
 	}
 
 	/**

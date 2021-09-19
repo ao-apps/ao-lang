@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-05:00"
-		dateModified="2021-09-17T23:00:53-05:00"
+		dateModified="2021-09-18T16:04:54-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -52,6 +52,11 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 					<li>
 						Stack trace for missing resource now only logged at level FINER.
 						At FINE, only the message is logged.
+					</li>
+					<li>
+						ResourceBundle lookups have been failing in more complicated classloading scenarios (such as
+						when running as a Java EE Webapp).  Resources now support using a given classloader, with rational
+						defaults.
 					</li>
 				</ul>
 			</changelog:release>

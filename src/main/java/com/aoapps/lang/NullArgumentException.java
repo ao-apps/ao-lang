@@ -22,6 +22,7 @@
  */
 package com.aoapps.lang;
 
+import com.aoapps.lang.function.Suppliers;
 import com.aoapps.lang.i18n.Resources;
 import java.util.ResourceBundle;
 
@@ -32,7 +33,12 @@ import java.util.ResourceBundle;
  */
 public class NullArgumentException extends IllegalArgumentException {
 
+	@SuppressWarnings("unchecked")
 	private static final Resources RESOURCES = Resources.getResources(
+		Suppliers.coalesce(
+			NullArgumentException.class::getClassLoader,
+			ClassLoader::getSystemClassLoader
+		).get(),
 		ResourceBundle::getBundle,
 		NullArgumentException.class.getPackage(),
 		"i18n_res.ApplicationResources",

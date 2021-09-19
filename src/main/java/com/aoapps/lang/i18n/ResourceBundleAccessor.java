@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011-2013, 2016, 2017, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,42 +20,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoapps.lang.validation;
+package com.aoapps.lang.i18n;
 
-import com.aoapps.lang.i18n.Resources;
+import java.io.Serializable;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * A valid result singleton.
+ * The lookup for bundle, which will typically be the static method reference
+ * <code>ResourceBundle::getBundle</code>, but may be of any arbitrary complexity.
  *
- * @author  AO Industries, Inc.
+ * @see  ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)
  */
-final public class ValidResult implements ValidationResult {
-
-	private static final Resources RESOURCES = Resources.getResources(ValidResult.class, ResourceBundle::getBundle);
-
-	private static final long serialVersionUID = -5742207860354792003L;
-
-	private static final ValidResult singleton = new ValidResult();
-
-	public static ValidResult getInstance() {
-		return singleton;
-	}
-
-	private ValidResult() {
-	}
-
-	private Object readResolve() {
-		return singleton;
-	}
-
-	@Override
-	public boolean isValid() {
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return RESOURCES.getMessage("toString");
-	}
+@FunctionalInterface
+public interface ResourceBundleAccessor extends Serializable {
+	/**
+	 * The lookup for bundle, which will typically be the static method reference
+	 * <code>ResourceBundle::getBundle</code>, but may be of any arbitrary complexity.
+	 *
+	 * @see  ResourceBundle#getBundle(java.lang.String, java.util.Locale, java.lang.ClassLoader)
+	 */
+	ResourceBundle getBundle(String baseName, Locale locale, ClassLoader loader);
 }
