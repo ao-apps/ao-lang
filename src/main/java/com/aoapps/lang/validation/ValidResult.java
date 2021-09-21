@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  */
 final public class ValidResult implements ValidationResult {
 
-	private static final Resources RESOURCES = Resources.getResources(ValidResult.class, ResourceBundle::getBundle);
+	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ValidResult.class);
 
 	private static final long serialVersionUID = -5742207860354792003L;
 

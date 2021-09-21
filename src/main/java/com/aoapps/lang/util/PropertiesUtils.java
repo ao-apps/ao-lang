@@ -40,7 +40,7 @@ import java.util.ResourceBundle;
  */
 final public class PropertiesUtils {
 
-	public static final Resources RESOURCES = Resources.getResources(PropertiesUtils.class, ResourceBundle::getBundle);
+	public static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, PropertiesUtils.class);
 
 	/**
 	 * Make no instances.

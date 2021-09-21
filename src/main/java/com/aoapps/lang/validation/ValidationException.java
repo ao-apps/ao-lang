@@ -36,7 +36,7 @@ import java.util.ResourceBundle;
 // TODO: Or extend javax.validation.ValidationException and deprecate this.
 public class ValidationException extends Exception {
 
-	private static final Resources RESOURCES = Resources.getResources(ValidationException.class, ResourceBundle::getBundle);
+	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ValidationException.class);
 
 	private static final long serialVersionUID = -1153407618428602416L;
 
