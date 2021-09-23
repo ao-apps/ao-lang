@@ -26,6 +26,8 @@ import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
 import com.aoapps.hodgepodge.i18n.EditableResourceBundleSet;
 import java.io.File;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Is also an editable resource bundle.
@@ -41,7 +43,16 @@ public final class ApplicationResources extends EditableResourceBundle {
 	);
 
 	static File getSourceFile(String filename) {
-		return new File(System.getProperty("user.home") + "/maven2/ao/oss/lang/src/main/resources/com/aoapps/lang/validation/i18n", filename);
+		try {
+			return new File(System.getProperty("user.home") + "/maven2/ao/oss/lang/src/main/resources/com/aoapps/lang/validation/i18n", filename);
+		} catch(SecurityException e) {
+			Logger.getLogger(ApplicationResources.class.getName()).log(
+				Level.WARNING,
+				"Unable to locate source file: " + filename,
+				e
+			);
+			return null;
+		}
 	}
 
 	public ApplicationResources() {
