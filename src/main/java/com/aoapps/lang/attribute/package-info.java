@@ -35,7 +35,7 @@
  *   <li>{@link Attribute.Name} - A name without any specific scope or context.</li>
  * </ol>
  * <p>
- * Ultimately, the goal is to get the an attribute, which means having both a fully resolved context and a name.  The
+ * Ultimately, the goal is to get to an attribute, which means having both a fully resolved context and a name.  The
  * API supports arriving at an attribute in any order, such as <code>scope → context → name</code> or
  * <code>name → context</code>.
  * </p>
