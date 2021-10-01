@@ -24,6 +24,7 @@ package com.aoapps.lang.io;
 
 import com.aoapps.lang.EmptyArrays;
 import com.aoapps.lang.Throwables;
+import com.aoapps.lang.exception.LocalizedException;
 import com.aoapps.lang.i18n.Resources;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -33,7 +34,7 @@ import java.io.UnsupportedEncodingException;
  *
  * @author  AO Industries, Inc.
  */
-public class LocalizedUnsupportedEncodingException extends UnsupportedEncodingException {
+public class LocalizedUnsupportedEncodingException extends UnsupportedEncodingException implements LocalizedException {
 
 	private static final long serialVersionUID = 3L;
 
@@ -76,6 +77,25 @@ public class LocalizedUnsupportedEncodingException extends UnsupportedEncodingEx
 	@Override
 	public String getLocalizedMessage() {
 		return resources.getMessage(key, (Object[])args);
+	}
+
+	@Override
+	final public Resources getResources() {
+		return resources;
+	}
+
+	@Override
+	final public String getKey() {
+		return key;
+	}
+
+	/**
+	 * @return  No defensive copy
+	 */
+	@Override
+	@SuppressWarnings("ReturnOfCollectionOrArrayField")
+	final public Serializable[] getArgs() {
+		return args;
 	}
 
 	static {

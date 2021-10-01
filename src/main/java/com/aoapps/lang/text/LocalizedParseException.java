@@ -24,6 +24,7 @@ package com.aoapps.lang.text;
 
 import com.aoapps.lang.EmptyArrays;
 import com.aoapps.lang.Throwables;
+import com.aoapps.lang.exception.LocalizedException;
 import com.aoapps.lang.i18n.Resources;
 import java.io.Serializable;
 import java.text.ParseException;
@@ -33,7 +34,7 @@ import java.text.ParseException;
  *
  * @author  AO Industries, Inc.
  */
-public class LocalizedParseException extends ParseException {
+public class LocalizedParseException extends ParseException implements LocalizedException {
 
 	private static final long serialVersionUID = 3L;
 
@@ -58,6 +59,25 @@ public class LocalizedParseException extends ParseException {
 	@Override
 	public String getLocalizedMessage() {
 		return resources.getMessage(key, (Object[])args);
+	}
+
+	@Override
+	final public Resources getResources() {
+		return resources;
+	}
+
+	@Override
+	final public String getKey() {
+		return key;
+	}
+
+	/**
+	 * @return  No defensive copy
+	 */
+	@Override
+	@SuppressWarnings("ReturnOfCollectionOrArrayField")
+	final public Serializable[] getArgs() {
+		return args;
 	}
 
 	static {

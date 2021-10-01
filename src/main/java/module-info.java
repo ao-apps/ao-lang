@@ -22,6 +22,7 @@
  */
 module com.aoapps.lang {
 	exports com.aoapps.lang;
+	exports com.aoapps.lang.attribute;
 	exports com.aoapps.lang.concurrent;
 	exports com.aoapps.lang.dto;
 	exports com.aoapps.lang.exception;
