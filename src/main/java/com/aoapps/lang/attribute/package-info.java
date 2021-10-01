@@ -39,10 +39,6 @@
  * API supports arriving at an attribute in any order, such as <code>scope → context → name</code> or
  * <code>name → context</code>.
  * </p>
- * <p>
- * There is also a set of static utility methods, to which the rest of the API ends up calling.
- * For one-off attribute access, these static methods may be more succinct.
- * </p>
  *
  * @author  AO Industries, Inc.
  */
