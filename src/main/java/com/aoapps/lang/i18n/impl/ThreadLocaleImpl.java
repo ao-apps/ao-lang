@@ -30,7 +30,7 @@ import java.util.Locale;
  *
  * @author  AO Industries, Inc.
  */
-final public class ThreadLocaleImpl {
+public final class ThreadLocaleImpl {
 
 	private ThreadLocaleImpl() {}
 

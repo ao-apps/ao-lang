@@ -32,7 +32,7 @@ package com.aoapps.lang.io;
 // Related to ao-mime-mappings/…/web-fragment.xml
 // Is ContentType.java
 // Related to MimeType.java
-final public class ContentType {
+public final class ContentType {
 
 	/**
 	 * Make no instances.
@@ -172,7 +172,7 @@ final public class ContentType {
 	 * See <a href="https://stackoverflow.com/a/40893366">css - MIME type as text/plain for Sass stylesheet in chrome - Stack Overflow</a>
 	 */
 	public static final String SASS = "text/x-sass";
-	
+
 	/**
 	 * See <a href="https://stackoverflow.com/a/40893366">css - MIME type as text/plain for Sass stylesheet in chrome - Stack Overflow</a>
 	 */

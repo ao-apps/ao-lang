@@ -29,7 +29,7 @@ import java.util.Date;
  *
  * @author  AO Industries, Inc.
  */
-final public class UnmodifiableDate extends Date implements Cloneable {
+public final class UnmodifiableDate extends Date implements Cloneable {
 
 	private static final long serialVersionUID = 1L;
 

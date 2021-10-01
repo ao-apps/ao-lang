@@ -42,7 +42,7 @@ import java.util.Locale;
  *
  * @author  AO Industries, Inc.
  */
-final public class Money implements FastExternalizable, Comparable<Money> {
+public final class Money implements FastExternalizable, Comparable<Money> {
 
 	/**
 	 * Parses a monetary amount with an optional symbol prefix.

@@ -31,7 +31,7 @@ import java.io.Serializable;
  *
  * @author  AO Industries, Inc.
  */
-final public class InvalidResult implements ValidationResult {
+public final class InvalidResult implements ValidationResult {
 
 	private static final long serialVersionUID = -105878200149461063L;
 

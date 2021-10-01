@@ -104,12 +104,12 @@ public class LocalizedSQLException extends SQLException implements LocalizedExce
 	}
 
 	@Override
-	final public Resources getResources() {
+	public final Resources getResources() {
 		return resources;
 	}
 
 	@Override
-	final public String getKey() {
+	public final String getKey() {
 		return key;
 	}
 
@@ -118,7 +118,7 @@ public class LocalizedSQLException extends SQLException implements LocalizedExce
 	 */
 	@Override
 	@SuppressWarnings("ReturnOfCollectionOrArrayField")
-	final public Serializable[] getArgs() {
+	public final Serializable[] getArgs() {
 		return args;
 	}
 

@@ -49,7 +49,7 @@ import java.util.Arrays;
 /**
  * File utilities.
  */
-final public class FileUtils {
+public final class FileUtils {
 
 	/**
 	 * Make no instances.

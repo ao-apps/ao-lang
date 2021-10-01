@@ -33,7 +33,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-final public class WriterOutputStream extends OutputStream {
+public final class WriterOutputStream extends OutputStream {
 
 	private final Writer out;
 

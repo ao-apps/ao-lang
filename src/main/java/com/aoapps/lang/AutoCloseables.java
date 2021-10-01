@@ -27,7 +27,7 @@ import java.util.function.Function;
 /**
  * Utilities for working with {@link AutoCloseable}.
  */
-final public class AutoCloseables {
+public final class AutoCloseables {
 
 	/**
 	 * Make no instances.

@@ -32,7 +32,7 @@ import java.util.TimeZone;
  *
  * @author  AO Industries, Inc.
  */
-final public class UnmodifiableCalendar extends Calendar implements Cloneable {
+public final class UnmodifiableCalendar extends Calendar implements Cloneable {
 
 	private static final long serialVersionUID = -8096789285108910128L;
 

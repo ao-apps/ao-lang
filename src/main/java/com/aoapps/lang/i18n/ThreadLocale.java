@@ -33,7 +33,7 @@ import java.util.concurrent.Callable;
  *
  * @author  AO Industries, Inc.
  */
-final public class ThreadLocale {
+public final class ThreadLocale {
 
 	private ThreadLocale() {}
 

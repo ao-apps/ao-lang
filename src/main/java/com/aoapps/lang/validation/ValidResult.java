@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
  *
  * @author  AO Industries, Inc.
  */
-final public class ValidResult implements ValidationResult {
+public final class ValidResult implements ValidationResult {
 
 	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ValidResult.class);
 

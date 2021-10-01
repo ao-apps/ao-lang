@@ -25,7 +25,7 @@ package com.aoapps.lang;
 /**
  * Runtime utilities that enhance behavior of java.lang.Runtime.
  */
-final public class RuntimeUtils {
+public final class RuntimeUtils {
 
 	/**
 	 * Make no instances.

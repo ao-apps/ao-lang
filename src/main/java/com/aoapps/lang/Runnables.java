@@ -25,7 +25,7 @@ package com.aoapps.lang;
 /**
  * Utilities for working with {@link Runnable}.
  */
-final public class Runnables {
+public final class Runnables {
 
 	/**
 	 * Make no instances.

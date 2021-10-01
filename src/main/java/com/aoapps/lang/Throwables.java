@@ -35,7 +35,7 @@ import java.util.function.Function;
  * Utilities for working with {@link Throwable}.
  */
 // TODO: Automatically use cause from InvocationTargetException, javax.management.ReflectionException, and WrappedException, when cause is Error, Runtime, or assignable to X?
-final public class Throwables {
+public final class Throwables {
 
 	/**
 	 * Make no instances.

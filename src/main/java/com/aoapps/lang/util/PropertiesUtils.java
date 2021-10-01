@@ -38,7 +38,7 @@ import java.util.ResourceBundle;
  * See <a href="https://oss.aoapps.com/servlet-util/apidocs/com.aoapps.servlet.util/com/aoapps/servlet/PropertiesUtils.html">com.aoapps.servlet.PropertiesUtils</a> for use in servlet environment
  * </p>
  */
-final public class PropertiesUtils {
+public final class PropertiesUtils {
 
 	public static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, PropertiesUtils.class);
 

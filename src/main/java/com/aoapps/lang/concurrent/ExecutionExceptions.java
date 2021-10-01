@@ -29,7 +29,7 @@ import java.util.function.BiFunction;
 /**
  * Utilities for working with {@link ExecutionException}.
  */
-final public class ExecutionExceptions {
+public final class ExecutionExceptions {
 
 	/**
 	 * Make no instances.
@@ -56,7 +56,7 @@ final public class ExecutionExceptions {
 	 * Furthermore, it is desirable to be able to maintain expected exception types.  This wrapping will help maintain
 	 * exception types while not losing critical stack trace information.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * This is expected to typically used within a catch block, to maintain exception types:
 	 * </p>
@@ -109,7 +109,7 @@ final public class ExecutionExceptions {
 	 * Furthermore, it is desirable to be able to maintain expected exception types.  This wrapping will help maintain
 	 * exception types while not losing critical stack trace information.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * This is expected to typically used within a catch block, to maintain exception types:
 	 * </p>

@@ -31,7 +31,7 @@ package com.aoapps.lang;
  * </p>
  */
 // TODO: @see  Suppliers
-final public class Iterables {
+public final class Iterables {
 
 	/**
 	 * Make no instances.
@@ -138,7 +138,7 @@ final public class Iterables {
 	 * A set of various {@link Iterable} over common Java types from the <code>java.awt</code> package,
 	 * useful to avoid conflict after type erasure.
 	 */
-	final public static class awt {
+	public static final class awt {
 
 		/**
 		 * Make no instances.
@@ -174,7 +174,7 @@ final public class Iterables {
 	 * A set of various {@link Iterable} over common Java types from the <code>java.util</code> package,
 	 * useful to avoid conflict after type erasure.
 	 */
-	final public static class util {
+	public static final class util {
 
 		/**
 		 * Make no instances.

@@ -31,7 +31,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-final public class WriterFacade extends Writer {
+public final class WriterFacade extends Writer {
 
 	/**
 	 * Gets an instance of the WriterFacade that wraps the given Writer.

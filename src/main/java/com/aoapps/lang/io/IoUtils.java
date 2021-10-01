@@ -35,7 +35,7 @@ import java.io.Writer;
 /**
  * I/O utilities.
  */
-final public class IoUtils {
+public final class IoUtils {
 
 	/**
 	 * Make no instances.
