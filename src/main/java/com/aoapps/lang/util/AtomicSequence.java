@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class AtomicSequence implements Sequence {
 
-	final private AtomicLong counter;
+	private final AtomicLong counter;
 
 	/**
 	 * Starts at the value of 1.
