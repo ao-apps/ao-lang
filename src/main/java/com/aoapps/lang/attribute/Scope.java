@@ -22,6 +22,8 @@
  */
 package com.aoapps.lang.attribute;
 
+import java.io.Serializable;
+
 /**
  * The most broad concept is scope.
  * <p>
@@ -33,7 +35,9 @@ package com.aoapps.lang.attribute;
  *
  * @author  AO Industries, Inc.
  */
-public abstract class Scope<C> {
+public abstract class Scope<C> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	protected Scope() {}
 
@@ -45,7 +49,9 @@ public abstract class Scope<C> {
 	/**
 	 * {@link com.aoapps.lang.attribute.Attribute}: Has scope and name, still needs context.
 	 */
-	public abstract static class Attribute<C, T> {
+	public abstract static class Attribute<C, T> implements Serializable {
+
+		private static final long serialVersionUID = 1L;
 
 		protected final String name;
 

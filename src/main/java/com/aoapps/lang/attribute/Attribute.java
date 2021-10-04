@@ -24,6 +24,7 @@ package com.aoapps.lang.attribute;
 
 import com.aoapps.lang.function.BiFunctionE;
 import com.aoapps.lang.function.FunctionE;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -213,7 +214,9 @@ public abstract class Attribute<C, T> {
 	 * {@link Attribute}: Has name, still needs scope or context.
 	 * </p>
 	 */
-	public static class Name<T> {
+	public static class Name<T> implements Serializable {
+
+		private static final long serialVersionUID = 1L;
 
 		protected final String name;
 
