@@ -74,20 +74,20 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/aoindustries/ao-lang.git</connection>
-		<developerConnection>scm:git:git@github.com:aoindustries/ao-lang.git</developerConnection>
-		<url>https://github.com/aoindustries/ao-lang</url>
+		<connection>scm:git:git://github.com/ao-apps/ao-lang.git</connection>
+		<developerConnection>scm:git:git@github.com:ao-apps/ao-lang.git</developerConnection>
+		<url>https://github.com/ao-apps/ao-lang</url>
 		<tag>HEAD</tag>
 	</scm>
 
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/aoindustries/ao-lang/issues</url>
+		<url>https://github.com/ao-apps/ao-lang/issues</url>
 	</issueManagement>
 
 	<ciManagement>
 		<system>GitHub Actions</system>
-		<url>https://github.com/aoindustries/ao-lang/actions</url>
+		<url>https://github.com/ao-apps/ao-lang/actions</url>
 	</ciManagement>
 
 	<repositories>

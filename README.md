@@ -1,4 +1,4 @@
-# [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://github.com/aoindustries) [AO OSS](https://github.com/aoindustries/ao-oss) / [Lang](https://github.com/aoindustries/ao-lang)
+# [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://github.com/ao-apps) [AO OSS](https://github.com/ao-apps/ao-oss) / [Lang](https://github.com/ao-apps/ao-lang)
 
 [![project: current stable](https://oss.aoapps.com/ao-badges/project-current-stable.svg)](https://aoindustries.com/life-cycle#project-current-stable)
 [![management: production](https://oss.aoapps.com/ao-badges/management-production.svg)](https://aoindustries.com/life-cycle#management-production)
@@ -7,7 +7,7 @@
 [![semantic versioning: 2.0.0](https://oss.aoapps.com/ao-badges/semver-2.0.0.svg)](http://semver.org/spec/v2.0.0.html)
 [![license: LGPL v3](https://oss.aoapps.com/ao-badges/license-lgpl-3.0.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 
-[![Build](https://github.com/aoindustries/ao-lang/workflows/Build/badge.svg?branch=master)](https://github.com/aoindustries/ao-lang/actions?query=workflow%3ABuild)
+[![Build](https://github.com/ao-apps/ao-lang/workflows/Build/badge.svg?branch=master)](https://github.com/ao-apps/ao-lang/actions?query=workflow%3ABuild)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aoapps/ao-lang/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aoapps/ao-lang)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=master&project=com.aoapps%3Aao-lang&metric=alert_status)](https://sonarcloud.io/dashboard?branch=master&id=com.aoapps%3Aao-lang)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?branch=master&project=com.aoapps%3Aao-lang&metric=ncloc)](https://sonarcloud.io/component_measures?branch=master&id=com.aoapps%3Aao-lang&metric=ncloc)  
@@ -23,7 +23,7 @@ Minimal Java library with no external dependencies shared by many other projects
 * [Changelog](https://oss.aoapps.com/lang/changelog)
 * [API Docs](https://oss.aoapps.com/lang/apidocs/)
 * [Maven Central Repository](https://search.maven.org/artifact/com.aoapps/ao-lang)
-* [GitHub](https://github.com/aoindustries/ao-lang)
+* [GitHub](https://github.com/ao-apps/ao-lang)
 
 ## Features
 * Small, simple, unfocused utilities that are generally extensions to the standard Java libraries.
@@ -33,7 +33,7 @@ Minimal Java library with no external dependencies shared by many other projects
     * Android compatible.
 
 ## Motivation
-As we untangle our monolitic [AO Hodgepodge](https://github.com/aoindustries/ao-hodgepodge) project, we are placing small, simple, and unfocused utilities into this new project.  These tools are generally extensions to the standard Java libraries.  The `ao-lang` project is used by many other projects, but does not have any dependencies itself.
+As we untangle our monolitic [AO Hodgepodge](https://github.com/ao-apps/ao-hodgepodge) project, we are placing small, simple, and unfocused utilities into this new project.  These tools are generally extensions to the standard Java libraries.  The `ao-lang` project is used by many other projects, but does not have any dependencies itself.
 
 ## Alternatives
 There may be functionality that is also found in other projects.  This project is of a different evolutionary origin.
