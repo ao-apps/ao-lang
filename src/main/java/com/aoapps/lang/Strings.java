@@ -618,7 +618,7 @@ public final class Strings {
 			) {
 				pos += Character.charCount(cp);
 			}
-			if(pos>start) words[wordPos++]=line.substring(start,pos);
+			if(pos>start) words[wordPos++]=line.substring(start, pos);
 		}
 
 		return words;

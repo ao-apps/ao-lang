@@ -47,8 +47,8 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
 	;
 
 	public static final BigFraction
-		ZERO = new BigFraction(0,1,false),
-		ONE = new BigFraction(1,1,false)
+		ZERO = new BigFraction(0, 1, false),
+		ONE = new BigFraction(1, 1, false)
 	;
 
 	public static BigFraction valueOf(long numerator, long denominator, boolean displayPercentage) throws NumberFormatException {
