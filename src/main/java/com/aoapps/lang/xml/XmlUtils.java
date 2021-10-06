@@ -83,7 +83,7 @@ public final class XmlUtils {
 	 */
 	public static Iterable<Node> iterableNodes(final NodeList nodeList) {
 		return () -> new Iterator<Node>() {
-			int index = 0;
+			private int index = 0;
 
 			@Override
 			public boolean hasNext() {
@@ -111,7 +111,7 @@ public final class XmlUtils {
 	 */
 	public static Iterable<Element> iterableElements(final NodeList nodeList) {
 		return () -> new Iterator<Element>() {
-			int index = 0;
+			private int index = 0;
 
 			@Override
 			public boolean hasNext() {
@@ -147,8 +147,8 @@ public final class XmlUtils {
 	 */
 	public static Iterable<Element> iterableChildElementsByTagName(final Element element, final String childTagName) {
 		return () -> new Iterator<Element>() {
-			NodeList children = element.getChildNodes();
-			int index = 0;
+			private final NodeList children = element.getChildNodes();
+			private int index = 0;
 
 			@Override
 			public boolean hasNext() {
@@ -431,7 +431,9 @@ public final class XmlUtils {
 			}
 			// Trim any trailing hyphens (note: there are no surrage hyphens, so this is OK without code points)
 			int trimLen = id.length();
-			while(trimLen > 1 && isHyphen(id.charAt(trimLen - 1))) id.setLength(--trimLen);
+			while(trimLen > 1 && isHyphen(id.charAt(trimLen - 1))) {
+				id.setLength(--trimLen);
+			}
 		}
 		assert isValidName(id.toString());
 		return id;
