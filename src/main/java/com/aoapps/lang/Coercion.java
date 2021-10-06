@@ -35,8 +35,10 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.ServiceLoader;
 import javax.swing.text.Segment;
+import javax.xml.XMLConstants;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -95,6 +97,15 @@ public final class Coercion {
 			try {
 				// Can use thread-local or pooled transformers if performance is ever an issue
 				TransformerFactory transFactory = TransformerFactory.newInstance();
+				try {
+					transFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+				} catch(TransformerConfigurationException e) {
+					throw new AssertionError("All implementations are required to support the javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING feature.", e);
+				}
+				// See https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md#java
+				// See https://rules.sonarsource.com/java/RSPEC-2755
+				transFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+				transFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
 				Transformer transformer = transFactory.newTransformer();
 				StringWriter buffer = new StringWriter();
 				transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
@@ -223,6 +234,15 @@ public final class Coercion {
 					try {
 						// Can use thread-local or pooled transformers if performance is ever an issue
 						TransformerFactory transFactory = TransformerFactory.newInstance();
+						try {
+							transFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+						} catch(TransformerConfigurationException e) {
+							throw new AssertionError("All implementations are required to support the javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING feature.", e);
+						}
+						// See https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md#java
+						// See https://rules.sonarsource.com/java/RSPEC-2755
+						transFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+						transFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
 						Transformer transformer = transFactory.newTransformer();
 						transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
@@ -300,6 +320,15 @@ public final class Coercion {
 					try {
 						// Can use thread-local or pooled transformers if performance is ever an issue
 						TransformerFactory transFactory = TransformerFactory.newInstance();
+						try {
+							transFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+						} catch(TransformerConfigurationException e) {
+							throw new AssertionError("All implementations are required to support the javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING feature.", e);
+						}
+						// See https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md#java
+						// See https://rules.sonarsource.com/java/RSPEC-2755
+						transFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+						transFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
 						Transformer transformer = transFactory.newTransformer();
 						transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
@@ -372,6 +401,15 @@ public final class Coercion {
 					try {
 						// Can use thread-local or pooled transformers if performance is ever an issue
 						TransformerFactory transFactory = TransformerFactory.newInstance();
+						try {
+							transFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+						} catch(TransformerConfigurationException e) {
+							throw new AssertionError("All implementations are required to support the javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING feature.", e);
+						}
+						// See https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md#java
+						// See https://rules.sonarsource.com/java/RSPEC-2755
+						transFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+						transFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
 						Transformer transformer = transFactory.newTransformer();
 						transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
@@ -449,6 +487,15 @@ public final class Coercion {
 					try {
 						// Can use thread-local or pooled transformers if performance is ever an issue
 						TransformerFactory transFactory = TransformerFactory.newInstance();
+						try {
+							transFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+						} catch(TransformerConfigurationException e) {
+							throw new AssertionError("All implementations are required to support the javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING feature.", e);
+						}
+						// See https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md#java
+						// See https://rules.sonarsource.com/java/RSPEC-2755
+						transFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+						transFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
 						Transformer transformer = transFactory.newTransformer();
 						transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());

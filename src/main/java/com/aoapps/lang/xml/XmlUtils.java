@@ -30,7 +30,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import javax.xml.parsers.DocumentBuilder;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
@@ -61,6 +61,16 @@ public final class XmlUtils {
 
 	/**
 	 * Fetches and parses an XML DOM from a URL.
+	 * Uses the following XML security features:
+	 * <ol>
+	 * <li>{@link XMLConstants#FEATURE_SECURE_PROCESSING} = {@code true}</li>
+	 * <li>{@link XMLConstants#ACCESS_EXTERNAL_DTD} = {@code ""}</li>
+	 * <li>{@link XMLConstants#ACCESS_EXTERNAL_SCHEMA} = {@code ""}</li>
+	 * </ol>
+	 * <ul>
+	 * <li>See <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md#java">OWASP Cheat Sheet</a></li>
+	 * <li>See <a href="https://rules.sonarsource.com/java/RSPEC-2755">Java: XML parsers should not be vulnerable to XXE attacks</a></li>
+	 * </ul>
 	 */
 	public static Document parseXml(URL url) throws IOException, ParserConfigurationException, SAXException {
 		URLConnection conn = url.openConnection();
@@ -71,11 +81,29 @@ public final class XmlUtils {
 
 	/**
 	 * Parses an XML DOM from an input stream.
+	 * Uses the following XML security features:
+	 * <ol>
+	 * <li>{@link XMLConstants#FEATURE_SECURE_PROCESSING} = {@code true}</li>
+	 * <li>{@link XMLConstants#ACCESS_EXTERNAL_DTD} = {@code ""}</li>
+	 * <li>{@link XMLConstants#ACCESS_EXTERNAL_SCHEMA} = {@code ""}</li>
+	 * </ol>
+	 * <ul>
+	 * <li>See <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md#java">OWASP Cheat Sheet</a></li>
+	 * <li>See <a href="https://rules.sonarsource.com/java/RSPEC-2755">Java: XML parsers should not be vulnerable to XXE attacks</a></li>
+	 * </ul>
 	 */
 	public static Document parseXml(InputStream in) throws IOException, ParserConfigurationException, SAXException {
-		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = builderFactory.newDocumentBuilder();
-		return builder.parse(in);
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+			dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		} catch(ParserConfigurationException e) {
+			throw new AssertionError("All implementations are required to support the javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING feature.", e);
+		}
+		// See https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md#java
+		// See https://rules.sonarsource.com/java/RSPEC-2755
+		dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+		dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+		return dbf.newDocumentBuilder().parse(in);
 	}
 
 	/**
@@ -229,6 +257,15 @@ public final class XmlUtils {
 
 	public static String toString(Node node) throws TransformerConfigurationException, TransformerException {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		try {
+			transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		} catch(TransformerConfigurationException e) {
+			throw new AssertionError("All implementations are required to support the javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING feature.", e);
+		}
+		// See https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md#java
+		// See https://rules.sonarsource.com/java/RSPEC-2755
+		transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+		transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
 		transformerFactory.setAttribute("indent-number", 4);
 		Transformer transformer = transformerFactory.newTransformer();
 		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
