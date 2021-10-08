@@ -68,7 +68,7 @@ public abstract class Attribute<C, T> {
 
 		private final Object oldValue;
 
-		public OldValue(Object oldValue) {
+		protected OldValue(Object oldValue) {
 			this.oldValue = oldValue;
 		}
 
