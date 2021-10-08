@@ -45,11 +45,11 @@ public final class NullPrintWriter extends PrintWriter {
 	}
 
 	@Override
-	public void write(char cbuf[]) {
+	public void write(char[] cbuf) {
 	}
 
 	@Override
-	public void write(char cbuf[], int off, int len) {
+	public void write(char[] cbuf, int off, int len) {
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public final class NullPrintWriter extends PrintWriter {
 	}
 
 	@Override
-	public void print(char s[]) {
+	public void print(char[] s) {
 	}
 
 	@Override
@@ -162,7 +162,7 @@ public final class NullPrintWriter extends PrintWriter {
 	}
 
 	@Override
-	public void println(char x[]) {
+	public void println(char[] x) {
 	}
 
 	@Override

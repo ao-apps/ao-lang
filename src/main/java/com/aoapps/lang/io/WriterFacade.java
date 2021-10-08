@@ -55,12 +55,12 @@ public final class WriterFacade extends Writer {
 	}
 
 	@Override
-	public void write(char cbuf[]) throws IOException {
+	public void write(char[] cbuf) throws IOException {
 		out.write(cbuf);
 	}
 
 	@Override
-	public void write(char cbuf[], int off, int len) throws IOException  {
+	public void write(char[] cbuf, int off, int len) throws IOException  {
 		out.write(cbuf, off, len);
 	}
 

@@ -69,7 +69,7 @@ public final class WriterOutputStream extends OutputStream {
 	}
 
 	@Override
-	public void write(byte b[], int off, int len) throws IOException {
+	public void write(byte[] b, int off, int len) throws IOException {
 		synchronized(this) {
 			if (b == null) throw new NullPointerException();
 			int pos=0;

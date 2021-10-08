@@ -39,9 +39,9 @@ public interface Encoder {
 
 	void write(int c, Writer out) throws IOException;
 
-	void write(char cbuf[], Writer out) throws IOException;
+	void write(char[] cbuf, Writer out) throws IOException;
 
-	void write(char cbuf[], int off, int len, Writer out) throws IOException;
+	void write(char[] cbuf, int off, int len, Writer out) throws IOException;
 
 	void write(String str, Writer out) throws IOException;
 

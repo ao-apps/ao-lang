@@ -68,12 +68,12 @@ public class EncoderWriter extends FilterWriter {
 	}
 
 	@Override
-	public void write(char cbuf[]) throws IOException {
+	public void write(char[] cbuf) throws IOException {
 		encoder.write(cbuf, out);
 	}
 
 	@Override
-	public void write(char cbuf[], int off, int len) throws IOException {
+	public void write(char[] cbuf, int off, int len) throws IOException {
 		encoder.write(cbuf, off, len, out);
 	}
 

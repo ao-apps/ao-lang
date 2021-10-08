@@ -49,14 +49,14 @@ public final class SniffInputStream extends InputStream {
 	}
 
 	@Override
-	public int read(byte b[]) throws IOException {
+	public int read(byte[] b) throws IOException {
 		int numBytes = in.read(b);
 		if(numBytes > 0) out.write(b, 0, numBytes);
 		return numBytes;
 	}
 
 	@Override
-	public int read(byte b[], int off, int len) throws IOException {
+	public int read(byte[] b, int off, int len) throws IOException {
 		int numBytes = in.read(b, off, len);
 		if(numBytes > 0) out.write(b, off, numBytes);
 		return numBytes;

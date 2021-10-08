@@ -44,11 +44,11 @@ public final class NullWriter extends Writer {
 	}
 
 	@Override
-	public void write(char cbuf[]) {
+	public void write(char[] cbuf) {
 	}
 
 	@Override
-	public void write(char cbuf[], int off, int len) {
+	public void write(char[] cbuf, int off, int len) {
 	}
 
 	@Override
