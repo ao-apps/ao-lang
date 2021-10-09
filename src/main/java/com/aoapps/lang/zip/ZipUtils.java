@@ -153,6 +153,10 @@ public class ZipUtils {
 
 	/**
 	 * Unzips the provided file to the given destination directory.
+	 *
+	 * @param  sourceFile  Please take caution when extracting untrusted ZIP files.  This method does nothing to protect
+	 *                     against ZIP bombs.  Please see <a href="https://rules.sonarsource.com/java/RSPEC-5042">Expanding archive files without controlling resource consumption is security-sensitive</a>
+	 *                     for details.
 	 */
 	public static void unzip(File sourceFile, String sourcePrefix, File destination, ZipEntryFilter filter) throws IOException {
 		// Destination directory must exist
@@ -208,6 +212,10 @@ public class ZipUtils {
 	 * Combine contents of all ZIP files while unzipping, only allowing duplicates
 	 * where the file contents are equal.  When duplicates are found, uses the most
 	 * recent modification time.
+	 *
+	 * @param  zipFiles  Please take caution when extracting untrusted ZIP files.  This method does nothing to protect
+	 *                   against ZIP bombs.  Please see <a href="https://rules.sonarsource.com/java/RSPEC-5042">Expanding archive files without controlling resource consumption is security-sensitive</a>
+	 *                   for details.
 	 */
 	public static void mergeUnzip(File destination, File ... zipFiles) throws IOException {
 		mergeUnzip(null, destination, zipFiles);
@@ -217,6 +225,10 @@ public class ZipUtils {
 	 * Combine contents of all ZIP files while unzipping, only allowing duplicates
 	 * where the file contents are equal.  When duplicates are found, uses the most
 	 * recent modification time.
+	 *
+	 * @param  zipFiles  Please take caution when extracting untrusted ZIP files.  This method does nothing to protect
+	 *                   against ZIP bombs.  Please see <a href="https://rules.sonarsource.com/java/RSPEC-5042">Expanding archive files without controlling resource consumption is security-sensitive</a>
+	 *                   for details.
 	 */
 	@SuppressWarnings("deprecation")
 	public static void mergeUnzip(ZipEntryFilter filter, File destination, File ... zipFiles) throws IOException {
@@ -231,6 +243,10 @@ public class ZipUtils {
 
 	/**
 	 * Copies all non-directory entries.
+	 *
+	 * @param  file  Please take caution when extracting untrusted ZIP files.  This method does nothing to protect
+	 *               against ZIP bombs.  Please see <a href="https://rules.sonarsource.com/java/RSPEC-5042">Expanding archive files without controlling resource consumption is security-sensitive</a>
+	 *               for details.
 	 */
 	public static void copyEntries(File file, ZipOutputStream zipOut) throws IOException {
 		copyEntries(file, zipOut, null);
@@ -238,6 +254,10 @@ public class ZipUtils {
 
 	/**
 	 * Copies all non-directory entries.
+	 *
+	 * @param  file  Please take caution when extracting untrusted ZIP files.  This method does nothing to protect
+	 *               against ZIP bombs.  Please see <a href="https://rules.sonarsource.com/java/RSPEC-5042">Expanding archive files without controlling resource consumption is security-sensitive</a>
+	 *               for details.
 	 */
 	public static void copyEntries(File file, ZipOutputStream zipOut, ZipEntryFilter filter) throws IOException {
 		try (ZipFile zipFile = new ZipFile(file)) {
@@ -247,6 +267,10 @@ public class ZipUtils {
 
 	/**
 	 * Copies all non-directory entries.
+	 *
+	 * @param  zipFile  Please take caution when extracting untrusted ZIP files.  This method does nothing to protect
+	 *                  against ZIP bombs.  Please see <a href="https://rules.sonarsource.com/java/RSPEC-5042">Expanding archive files without controlling resource consumption is security-sensitive</a>
+	 *                  for details.
 	 */
 	public static void copyEntries(ZipFile zipFile, ZipOutputStream zipOut) throws IOException {
 		copyEntries(zipFile, zipOut, null);
@@ -254,6 +278,10 @@ public class ZipUtils {
 
 	/**
 	 * Copies all entries.
+	 *
+	 * @param  zipFile  Please take caution when extracting untrusted ZIP files.  This method does nothing to protect
+	 *                  against ZIP bombs.  Please see <a href="https://rules.sonarsource.com/java/RSPEC-5042">Expanding archive files without controlling resource consumption is security-sensitive</a>
+	 *                  for details.
 	 */
 	public static void copyEntries(ZipFile zipFile, ZipOutputStream zipOut, ZipEntryFilter filter) throws IOException {
 		Enumeration<? extends ZipEntry> entries = zipFile.entries();
