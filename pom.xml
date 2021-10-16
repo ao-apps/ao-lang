@@ -25,11 +25,11 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.aoapps</groupId><artifactId>ao-oss-parent</artifactId><version>1.17.3-POST-SNAPSHOT</version>
+		<groupId>com.aoapps</groupId><artifactId>ao-oss-parent</artifactId><version>1.17.4-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>5.1.0-POST-SNAPSHOT</version>
+	<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>5.1.1-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<properties>

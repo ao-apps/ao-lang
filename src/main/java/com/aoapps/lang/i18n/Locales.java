@@ -186,9 +186,13 @@ public class Locales {
 	public static boolean isRightToLeft(Locale locale) {
 		String language = locale.getLanguage();
 		return
-			"ar".equals(language)    // arabic
-			|| "iw".equals(language) // hebrew
-			|| "fa".equals(language) // persian
+			// arabic
+			"ar".equals(language)
+			// hebrew
+			|| "iw".equals(language) // Java <= 16
+			|| "he".equals(language) // Java >= 17
+			// persian
+			|| "fa".equals(language)
 		;
 	}
 
@@ -228,8 +232,9 @@ public class Locales {
 	public static final Locale HUNGARIAN = parseLocale("hu");
 
 	/**
-	 * INDONESIAN is now "id" - this matches Java's backward compatibility
+	 * INDONESIAN is now "id" - this matches Java's backward compatibility "in"
 	 */
+	// Java 17: Update ISO 639 language codes: https://bugs.openjdk.java.net/browse/JDK-8263202
 	public static final Locale INDONESIAN = parseLocale("in");
 	public static final Locale ICELANDIC = parseLocale("is");
 
@@ -246,8 +251,9 @@ public class Locales {
 	public static final Locale KOREAN = Locale.KOREAN;
 
 	/**
-	 * HEBREW is now "he" - this matches Java's backward compatibility
+	 * HEBREW is now "he" - this matches Java's backward compatibility "iw"
 	 */
+	// Java 17: Update ISO 639 language codes: https://bugs.openjdk.java.net/browse/JDK-8263202
 	public static final Locale HEBREW = parseLocale("iw");
 	public static final Locale LITHUANIAN = parseLocale("lt");
 	public static final Locale LATVIAN = parseLocale("lv");
