@@ -29,7 +29,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>5.1.1</version>
+	<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>5.1.1-POST-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<properties>
@@ -85,7 +85,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		<connection>scm:git:git://github.com/ao-apps/ao-lang.git</connection>
 		<developerConnection>scm:git:git@github.com:ao-apps/ao-lang.git</developerConnection>
 		<url>https://github.com/ao-apps/ao-lang</url>
-		<tag>ao-lang-5.1.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<issueManagement>
