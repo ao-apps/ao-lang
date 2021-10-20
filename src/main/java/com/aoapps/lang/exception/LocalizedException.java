@@ -22,10 +22,7 @@
  */
 package com.aoapps.lang.exception;
 
-import com.aoapps.lang.EmptyArrays;
-import com.aoapps.lang.Throwables;
 import com.aoapps.lang.i18n.Resources;
-import java.io.IOException;
 import java.io.Serializable;
 
 /**
