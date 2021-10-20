@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-05:00"
-		dateModified="2021-10-16T18:05:41-05:00"
+		dateModified="2021-10-20T16:04:29-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -47,16 +47,25 @@ along with ao-lang.  If not, see <http://www.gnu.org/licenses />.
 				artifactId="@{documented.artifactId}"
 				repository="@{nexusUrl}content/repositories/snapshots/"
 				scmUrl="@{project.scm.url}"
-			>
-				<ul>
-					<li>
-						For compatibility with Java 17, removed <code>java.rmi.activation.*</code> from
-						<code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/Throwables.html">Throwables</ao:a></code>.
-						See <ao:a href="https://openjdk.java.net/jeps/407">JEP 407: Remove RMI Activation</ao:a> for details.
-					</li>
-				</ul>
-			</changelog:release>
+			/>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="5.1.2"
+			datePublished="2021-10-20T16:04:29-05:00"
+			groupId="@{project.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{project.scm.url}"
+		>
+			<ul>
+				<li>
+					For compatibility with Java 17, removed <code>java.rmi.activation.*</code> from
+					<code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/Throwables.html">Throwables</ao:a></code>.
+					See <ao:a href="https://openjdk.java.net/jeps/407">JEP 407: Remove RMI Activation</ao:a> for details.
+				</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
