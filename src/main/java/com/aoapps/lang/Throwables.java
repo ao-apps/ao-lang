@@ -205,7 +205,7 @@ public final class Throwables {
 	 * </p>
 	 * <p>
 	 * This current implementation has registered all possible Java SE 8 throwable types, except those that have been
-	 * removed through Java 14.  Additionally, various throwable implementations
+	 * removed through Java 17.  Additionally, various throwable implementations
 	 * {@link #registerSurrogateFactory(java.lang.Class, com.aoapps.lang.ThrowableSurrogateFactory) register themselves}
 	 * in static blocks, while other APIs may be registered via the {@link ServiceLoader} mechanism on the
 	 * {@link ThrowableSurrogateFactoryInitializer} interface.
@@ -250,7 +250,7 @@ public final class Throwables {
 	 * </p>
 	 * <p>
 	 * This current implementation has registered all possible Java SE 8 throwable types, except those that have been
-	 * removed through Java 14.  Additionally, various throwable implementations
+	 * removed through Java 17.  Additionally, various throwable implementations
 	 * {@link #registerSurrogateFactory(java.lang.Class, com.aoapps.lang.ThrowableSurrogateFactory) register themselves}
 	 * in static blocks, while other APIs may be registered via the {@link ServiceLoader} mechanism on the
 	 * {@link ThrowableSurrogateFactoryInitializer} interface.
@@ -332,7 +332,7 @@ public final class Throwables {
 					registerSurrogateFactory(java.lang.UnknownError.class, (template, cause) -> initCause(new java.lang.UnknownError(template.getMessage()), cause));
 			registerSurrogateFactory(java.lang.Exception.class, (template, cause) -> new java.lang.Exception(template.getMessage(), cause));
 				// java.security.acl.AclNotFoundException: Not in Java SE 14+
-				registerSurrogateFactory(java.rmi.activation.ActivationException.class, (template, cause) -> new java.rmi.activation.ActivationException(template.getMessage(), cause));
+				// java.rmi.activation.ActivationException: Not in Java SE 17+
 					// java.rmi.activation.UnknownGroupException: No way to set cause
 					// java.rmi.activation.UnknownObjectException: No way to set cause
 				registerSurrogateFactory(java.rmi.AlreadyBoundException.class, (template, cause) -> initCause(new java.rmi.AlreadyBoundException(template.getMessage()), cause));
@@ -455,7 +455,7 @@ public final class Throwables {
 					registerSurrogateFactory(java.net.ProtocolException.class, (template, cause) -> initCause(new java.net.ProtocolException(template.getMessage()), cause));
 					registerSurrogateFactory(java.rmi.RemoteException.class, (template, cause) -> new java.rmi.RemoteException(template.getMessage(), cause));
 						registerSurrogateFactory(java.rmi.AccessException.class, (template, cause) -> (cause instanceof Exception) ? new java.rmi.AccessException(template.getMessage(), (Exception)cause) : new java.rmi.AccessException(template.getMessage(), new WrappedException(cause)));
-						registerSurrogateFactory(java.rmi.activation.ActivateFailedException.class, (template, cause) -> (cause instanceof Exception) ? new java.rmi.activation.ActivateFailedException(template.getMessage(), (Exception)cause) : new java.rmi.activation.ActivateFailedException(template.getMessage(), new WrappedException(cause)));
+						// java.rmi.activation.ActivateFailedException: Not in Java SE 17+
 						// javax.activity.ActivityCompletedException: Not in Java SE 11+, don't add dependency on activation
 						// javax.activity.ActivityRequiredException: Not in Java SE 11, don't add dependency on activation
 						registerSurrogateFactory(java.rmi.ConnectException.class, (template, cause) -> (cause instanceof Exception) ? new java.rmi.ConnectException(template.getMessage(), (Exception)cause) : new java.rmi.ConnectException(template.getMessage(), new WrappedException(cause)));
