@@ -46,7 +46,7 @@ public interface LocalizedConsumerE<Ex extends Throwable> {
 	void accept(Resources resources, String key, Serializable... args) throws Ex;
 
 	default LocalizedConsumerE<Ex> andThen(LocalizedConsumerE<? extends Ex> after) {
-        Objects.requireNonNull(after);
-        return (Resources resources, String key, Serializable... args) -> { accept(resources, key, args); after.accept(resources, key, args); };
-    }
+		Objects.requireNonNull(after);
+		return (Resources resources, String key, Serializable... args) -> { accept(resources, key, args); after.accept(resources, key, args); };
+	}
 }

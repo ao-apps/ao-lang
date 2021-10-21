@@ -43,11 +43,11 @@ public interface BiPredicateE<T, U, Ex extends Throwable> {
 	}
 
 	default BiPredicateE<T, U, Ex> negate() throws Ex {
-        return (T t, U u) -> !test(t, u);
+		return (T t, U u) -> !test(t, u);
 	}
 
 	default BiPredicateE<T, U, Ex> or(BiPredicateE<? super T, ? super U, ? extends Ex> other) throws Ex {
 		Objects.requireNonNull(other);
-        return (T t, U u) -> test(t, u) || other.test(t, u);
+		return (T t, U u) -> test(t, u) || other.test(t, u);
 	}
 }

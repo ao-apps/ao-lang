@@ -41,8 +41,8 @@ public interface BiConsumerE<T, U, Ex extends Throwable> {
 		Objects.requireNonNull(after);
 
 		return (l, r) -> {
-            accept(l, r);
-            after.accept(l, r);
-        };
+			accept(l, r);
+			after.accept(l, r);
+		};
 	}
 }
