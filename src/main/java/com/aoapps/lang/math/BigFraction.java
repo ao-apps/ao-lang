@@ -420,10 +420,9 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
 	 * @see  #compareTo(BigFraction)
 	 */
 	@Override
-	public boolean equals(Object o) {
-		if(o==null) return false;
-		if(!(o instanceof BigFraction)) return false;
-		BigFraction other = (BigFraction)o;
+	public boolean equals(Object obj) {
+		if(!(obj instanceof BigFraction)) return false;
+		BigFraction other = (BigFraction)obj;
 		return
 			displayPercentage==other.displayPercentage
 			&& numerator.equals(other.numerator)
