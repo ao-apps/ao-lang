@@ -445,18 +445,18 @@ public final class FileUtils {
 	 */
 	public static String readFileAsString(File file, Charset charset) throws IOException {
 		long len = file.length();
-		StringBuilder SB = len>0 && len<=Integer.MAX_VALUE ? new StringBuilder((int)len) : new StringBuilder();
+		StringBuilder sb = len > 0 && len <= Integer.MAX_VALUE ? new StringBuilder((int)len) : new StringBuilder();
 		try (Reader in = new InputStreamReader(new FileInputStream(file), charset)) {
 			char[] buff = BufferManager.getChars();
 			try {
 				int numChars;
 				while((numChars = in.read(buff, 0, BufferManager.BUFFER_SIZE)) != -1) {
-					SB.append(buff, 0, numChars);
+					sb.append(buff, 0, numChars);
 				}
 			} finally {
 				BufferManager.release(buff, false);
 			}
 		}
-		return SB.toString();
+		return sb.toString();
 	}
 }

@@ -42,29 +42,29 @@ public class LocalizedSQLException extends SQLException implements LocalizedExce
 	protected final String key;
 	protected final Serializable[] args;
 
-	public LocalizedSQLException(String SQLState, int vendorCode, Resources resources, String key) {
-		super(resources.getMessage(key), SQLState, vendorCode);
+	public LocalizedSQLException(String sqlState, int vendorCode, Resources resources, String key) {
+		super(resources.getMessage(key), sqlState, vendorCode);
 		this.resources = resources;
 		this.key = key;
 		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
-	public LocalizedSQLException(String SQLState, int vendorCode, Resources resources, String key, Serializable... args) {
-		super(resources.getMessage(key, (Object[])args), SQLState, vendorCode);
+	public LocalizedSQLException(String sqlState, int vendorCode, Resources resources, String key, Serializable... args) {
+		super(resources.getMessage(key, (Object[])args), sqlState, vendorCode);
 		this.resources = resources;
 		this.key = key;
 		this.args = args;
 	}
 
-	public LocalizedSQLException(String SQLState, Resources resources, String key) {
-		super(resources.getMessage(key), SQLState);
+	public LocalizedSQLException(String sqlState, Resources resources, String key) {
+		super(resources.getMessage(key), sqlState);
 		this.resources = resources;
 		this.key = key;
 		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
 	}
 
-	public LocalizedSQLException(String SQLState, Resources resources, String key, Serializable... args) {
-		super(resources.getMessage(key, (Object[])args), SQLState);
+	public LocalizedSQLException(String sqlState, Resources resources, String key, Serializable... args) {
+		super(resources.getMessage(key, (Object[])args), sqlState);
 		this.resources = resources;
 		this.key = key;
 		this.args = args;

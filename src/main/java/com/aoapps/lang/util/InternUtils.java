@@ -44,8 +44,8 @@ public final class InternUtils {
 	/**
 	 * Null-safe intern: interns a String if it is not null, returns null if parameter is null.
 	 */
-	public static String intern(String S) {
-		if(S==null) return null;
-		return S.intern();
+	public static String intern(String s) {
+		if(s == null) return null;
+		return s.intern();
 	}
 }

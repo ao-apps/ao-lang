@@ -254,42 +254,42 @@ public final class Strings {
 	}
 
 	public static String getTimeLengthString(long time) {
-		StringBuilder SB=new StringBuilder();
-		if(time<0) {
-			SB.append('-');
-			time=-time;
+		StringBuilder sb = new StringBuilder();
+		if(time < 0) {
+			sb.append('-');
+			time = -time;
 		}
 
-		long days=time/86400000;
-		time-=days*86400000;
-		int hours=(int)(time/3600000);
-		time-=hours*3600000;
-		int minutes=(int)(time/60000);
-		time-=minutes*60000;
-		int seconds=(int)(time/1000);
-		time-=seconds*1000;
-		if(days==0) {
-			if(hours==0) {
-				if(minutes==0) {
-					if(seconds==0) {
-						if(time==0) SB.append("0 minutes");
-						else SB.append(time).append(time==1?" millisecond":" milliseconds");
-					} else SB.append(seconds).append(seconds==1?" second":" seconds");
-				} else SB.append(minutes).append(minutes==1?" minute":" minutes");
+		long days = time / 86400000;
+		time -= days * 86400000;
+		int hours = (int)(time / 3600000);
+		time -= hours * 3600000;
+		int minutes = (int)(time / 60000);
+		time -= minutes * 60000;
+		int seconds = (int)(time / 1000);
+		time -= seconds * 1000;
+		if(days == 0) {
+			if(hours == 0) {
+				if(minutes == 0) {
+					if(seconds == 0) {
+						if(time == 0) sb.append("0 minutes");
+						else sb.append(time).append(time == 1 ? " millisecond" : " milliseconds");
+					} else sb.append(seconds).append(seconds == 1 ? " second" : " seconds");
+				} else sb.append(minutes).append(minutes == 1 ? " minute" : " minutes");
 			} else {
-				if(minutes==0) SB.append(hours).append(hours==1?" hour":" hours");
-				else SB.append(hours).append(hours==1?" hour and ":" hours and ").append(minutes).append(minutes==1?" minute":" minutes");
+				if(minutes == 0) sb.append(hours).append(hours == 1 ? " hour" : " hours");
+				else sb.append(hours).append(hours == 1 ? " hour and " : " hours and ").append(minutes).append(minutes == 1 ? " minute" : " minutes");
 			}
 		} else {
-			if(hours==0) {
-				if(minutes==0) SB.append(days).append(days==1?" day":" days");
-				else SB.append(days).append(days==1?" day and ":" days and ").append(minutes).append(minutes==1?" minute":" minutes");
+			if(hours == 0) {
+				if(minutes == 0) sb.append(days).append(days == 1 ? " day" : " days");
+				else sb.append(days).append(days == 1 ? " day and " : " days and ").append(minutes).append(minutes == 1 ? " minute" : " minutes");
 			} else {
-				if(minutes==0) SB.append(days).append(days==1?" day and ":" days and ").append(hours).append(hours==1?" hour":" hours");
-				else SB.append(days).append(days==1?" day, ":" days, ").append(hours).append(hours==1?" hour and ":" hours and ").append(minutes).append(minutes==1?" minute":" minutes");
+				if(minutes == 0) sb.append(days).append(days == 1 ? " day and " : " days and ").append(hours).append(hours == 1 ? " hour" : " hours");
+				else sb.append(days).append(days == 1 ? " day, " : " days, ").append(hours).append(hours == 1 ? " hour and " : " hours and ").append(minutes).append(minutes == 1 ? " minute" : " minutes");
 			}
 		}
-		return SB.toString();
+		return sb.toString();
 	}
 
 	public static String getDecimalTimeLengthString(long time) {
@@ -297,63 +297,63 @@ public final class Strings {
 	}
 
 	public static String getDecimalTimeLengthString(long time, boolean alwaysShowMillis) {
-		StringBuilder SB=new StringBuilder();
-		if(time<0) {
-			SB.append('-');
-			time=-time;
+		StringBuilder sb = new StringBuilder();
+		if(time < 0) {
+			sb.append('-');
+			time = -time;
 		}
 
-		long days=time/86400000;
-		time-=days*86400000;
-		int hours=(int)(time/3600000);
-		time-=hours*3600000;
-		int minutes=(int)(time/60000);
-		time-=minutes*60000;
-		int seconds=(int)(time/1000);
-		time-=seconds*1000;
+		long days = time / 86400000;
+		time -= days * 86400000;
+		int hours = (int)(time / 3600000);
+		time -= hours * 3600000;
+		int minutes = (int)(time / 60000);
+		time -= minutes * 60000;
+		int seconds = (int)(time / 1000);
+		time -= seconds * 1000;
 
-		if(days>0) SB.append(days).append(days==1?" day, ":" days, ");
-		SB.append(hours).append(':');
-		if(minutes<10) SB.append('0');
-		SB.append(minutes).append(':');
-		if(seconds<10) SB.append('0');
-		SB.append(seconds);
+		if(days > 0) sb.append(days).append(days == 1 ? " day, " : " days, ");
+		sb.append(hours).append(':');
+		if(minutes < 10) sb.append('0');
+		sb.append(minutes).append(':');
+		if(seconds < 10) sb.append('0');
+		sb.append(seconds);
 		if(alwaysShowMillis || time != 0) {
-			SB.append('.');
-			if(time<10) SB.append("00");
-			else if(time<100) SB.append('0');
-			SB.append(time);
+			sb.append('.');
+			if(time < 10) sb.append("00");
+			else if(time < 100) sb.append('0');
+			sb.append(time);
 		}
-		return SB.toString();
+		return sb.toString();
 	}
 
 	/**
 	 * Finds the first occurrence of any of the supplied characters
 	 *
-	 * @param  S  the <code>String</code> to search
+	 * @param  s  the <code>String</code> to search
 	 * @param  chars  the characters to look for
 	 *
 	 * @return  the index of the first occurrence of <code>-1</code> if none found
 	 */
-	public static int indexOf(String S, char[] chars) {
-		return indexOf(S, chars, 0);
+	public static int indexOf(String s, char[] chars) {
+		return indexOf(s, chars, 0);
 	}
 
 	/**
 	 * Finds the first occurrence of any of the supplied characters starting at the specified index.
 	 *
-	 * @param  S  the <code>String</code> to search
+	 * @param  s  the <code>String</code> to search
 	 * @param  chars  the characters to look for
 	 * @param  start  the starting index.
 	 *
 	 * @return  the index of the first occurrence of <code>-1</code> if none found
 	 */
-	public static int indexOf(String S, char[] chars, int start) {
-		int Slen=S.length();
-		int clen=chars.length;
-		for(int c=start;c<Slen;c++) {
-			char ch=S.charAt(c);
-			for(int d= 0; d < clen; d++) {
+	public static int indexOf(String s, char[] chars, int start) {
+		int sLen = s.length();
+		int cLen = chars.length;
+		for(int c = start; c < sLen; c++) {
+			char ch = s.charAt(c);
+			for(int d = 0; d < cLen; d++) {
 				if(ch == chars[d]) return c;
 			}
 		}
@@ -363,27 +363,27 @@ public final class Strings {
 	/**
 	 * Finds the first occurrence of any of the supplied characters
 	 *
-	 * @param  S  the <code>String</code> to search
+	 * @param  s  the <code>String</code> to search
 	 * @param  chars  the characters to look for
 	 *
 	 * @return  the index of the first occurrence of <code>-1</code> if none found
 	 */
-	public static int indexOf(String S, BitSet chars) {
-		return indexOf(S, chars, 0);
+	public static int indexOf(String s, BitSet chars) {
+		return indexOf(s, chars, 0);
 	}
 
 	/**
 	 * Finds the first occurrence of any of the supplied characters starting at the specified index.
 	 *
-	 * @param  S  the <code>String</code> to search
+	 * @param  s  the <code>String</code> to search
 	 * @param  chars  the characters to look for
 	 * @param  start  the starting index.
 	 *
 	 * @return  the index of the first occurrence of <code>-1</code> if none found
 	 */
-	public static int indexOf(String S, BitSet chars, int start) {
-		for(int c = start, len = S.length(); c < len; c++) {
-			if(chars.get(S.charAt(c))) return c;
+	public static int indexOf(String s, BitSet chars, int start) {
+		for(int c = start, len = s.length(); c < len; c++) {
+			if(chars.get(s.charAt(c))) return c;
 		}
 		return -1;
 	}
@@ -546,25 +546,25 @@ public final class Strings {
 	/**
 	 * Splits a String into lines on any '\n' characters.  Also removes any ending '\r' characters if present
 	 */
-	public static List<String> splitLines(String S) {
-		List<String> V=new ArrayList<>();
-		int start=0;
+	public static List<String> splitLines(String s) {
+		List<String> v = new ArrayList<>();
+		int start = 0;
 		int pos;
-		while((pos=S.indexOf('\n', start))!=-1) {
+		while((pos = s.indexOf('\n', start)) != -1) {
 			String line;
-			if(pos>start && S.charAt(pos-1)=='\r') line = S.substring(start, pos-1);
-			else line = S.substring(start, pos);
-			V.add(line);
-			start=pos+1;
+			if(pos > start && s.charAt(pos - 1) == '\r') line = s.substring(start, pos - 1);
+			else line = s.substring(start, pos);
+			v.add(line);
+			start = pos + 1;
 		}
-		int slen = S.length();
-		if(start<slen) {
+		int slen = s.length();
+		if(start < slen) {
 			// Ignore any trailing '\r'
-			if(S.charAt(slen-1)=='\r') slen--;
-			String line = S.substring(start, slen);
-			V.add(line);
+			if(s.charAt(slen - 1) == '\r') slen--;
+			String line = s.substring(start, slen);
+			v.add(line);
 		}
-		return V;
+		return v;
 	}
 
 	/**
@@ -1020,13 +1020,13 @@ public final class Strings {
 	public static String convertToHex(byte[] bytes) {
 		if(bytes == null) return null;
 		int len = bytes.length;
-		StringBuilder SB = new StringBuilder(len * 2);
+		StringBuilder sb = new StringBuilder(len * 2);
 		try {
-			convertToHex(bytes, SB);
+			convertToHex(bytes, sb);
 		} catch(IOException e) {
 			throw new AssertionError(e);
 		}
-		return SB.toString();
+		return sb.toString();
 	}
 
 	/**
@@ -1073,13 +1073,13 @@ public final class Strings {
 	 */
 	@Deprecated
 	public static String convertToHex(int value) {
-		StringBuilder SB = new StringBuilder(8);
+		StringBuilder sb = new StringBuilder(8);
 		try {
-			convertToHex(value, SB);
+			convertToHex(value, sb);
 		} catch(IOException e) {
 			throw new AssertionError(e);
 		}
-		return SB.toString();
+		return sb.toString();
 	}
 
 	/**
@@ -1119,13 +1119,13 @@ public final class Strings {
 	 */
 	@Deprecated
 	public static String convertToHex(long value) {
-		StringBuilder SB = new StringBuilder(16);
+		StringBuilder sb = new StringBuilder(16);
 		try {
-			convertToHex(value, SB);
+			convertToHex(value, sb);
 		} catch(IOException e) {
 			throw new AssertionError(e);
 		}
-		return SB.toString();
+		return sb.toString();
 	}
 
 	/**
@@ -1249,9 +1249,9 @@ public final class Strings {
 	 * Compares two strings in a case insensitive manner.  However, if they are considered equals in the
 	 * case-insensitive manner, the case sensitive comparison is done.
 	 */
-	public static int compareToIgnoreCaseCarefulEquals(String S1, String S2) {
-		int diff=S1.compareToIgnoreCase(S2);
-		if(diff==0) diff=S1.compareTo(S2);
+	public static int compareToIgnoreCaseCarefulEquals(String s1, String s2) {
+		int diff = s1.compareToIgnoreCase(s2);
+		if(diff == 0) diff = s1.compareTo(s2);
 		return diff;
 	}
 

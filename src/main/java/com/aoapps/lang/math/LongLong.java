@@ -218,10 +218,10 @@ public class LongLong extends Number implements Comparable<LongLong> {
 	}
 
 	@Override
-	public boolean equals(Object O) {
-		if(O instanceof LongLong) {
-			LongLong other = (LongLong)O;
-			return hi==other.hi && lo==other.lo;
+	public boolean equals(Object obj) {
+		if(obj instanceof LongLong) {
+			LongLong other = (LongLong)obj;
+			return hi == other.hi && lo == other.lo;
 		}
 		return false;
 	}

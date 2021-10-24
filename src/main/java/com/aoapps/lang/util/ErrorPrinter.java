@@ -139,8 +139,8 @@ public class ErrorPrinter {
 	 */
 	@Deprecated
 	@SuppressWarnings("UseOfSystemOutOrSystemErr")
-	public static void printStackTraces(Throwable T) {
-		printStackTraces(T, System.err, (Object[])null);
+	public static void printStackTraces(Throwable t) {
+		printStackTraces(t, System.err, (Object[])null);
 	}
 
 	/**
@@ -148,12 +148,12 @@ public class ErrorPrinter {
 	 */
 	@Deprecated
 	@SuppressWarnings("UseOfSystemOutOrSystemErr")
-	public static void printStackTraces(Throwable T, Object... extraInfo) {
-		printStackTraces(T, System.err, extraInfo);
+	public static void printStackTraces(Throwable t, Object... extraInfo) {
+		printStackTraces(t, System.err, extraInfo);
 	}
 
-	public static void printStackTraces(Throwable T, Appendable out) {
-		printStackTraces(T, out, (Object[])null);
+	public static void printStackTraces(Throwable t, Appendable out) {
+		printStackTraces(t, out, (Object[])null);
 	}
 
 	private static void appendln(Appendable out) {
@@ -164,17 +164,17 @@ public class ErrorPrinter {
 		}
 	}
 
-	private static void append(String S, Appendable out) {
+	private static void append(String s, Appendable out) {
 		try {
-			out.append(S);
+			out.append(s);
 		} catch(IOException err) {
 			// Ignored
 		}
 	}
 
-	private static void appendln(String S, Appendable out) {
+	private static void appendln(String s, Appendable out) {
 		try {
-			out.append(S);
+			out.append(s);
 			out.append(EOL);
 		} catch(IOException err) {
 			// Ignored
@@ -189,12 +189,12 @@ public class ErrorPrinter {
 		}
 	}
 
-	private static void append(Object O, Appendable out) {
-		append(O==null ? "null" : O.toString(), out);
+	private static void append(Object obj, Appendable out) {
+		append(obj == null ? "null" : obj.toString(), out);
 	}
 
-	private static void appendln(Object O, Appendable out) {
-		appendln(O==null ? "null" : O.toString(), out);
+	private static void appendln(Object obj, Appendable out) {
+		appendln(obj == null ? "null" : obj.toString(), out);
 	}
 
 	/**
@@ -242,16 +242,16 @@ public class ErrorPrinter {
 			append("            Priority....: ", out);
 			appendln(thread.getPriority(), out);
 			try {
-				ThreadGroup TG=thread.getThreadGroup();
-				while(TG!=null) {
-					String name=TG.getName();
-					String classname=TG.getClass().getName();
-					int maxPriority=TG.getMaxPriority();
+				ThreadGroup tg = thread.getThreadGroup();
+				while(tg != null) {
+					String name = tg.getName();
+					String classname = tg.getClass().getName();
+					int maxPriority = tg.getMaxPriority();
 					appendln("        ThreadGroup", out);
 					append("            Name........: ", out); appendln(name, out);
 					append("            Class.......: ", out); appendln(classname, out);
 					append("            Max Priority: ", out); appendln(maxPriority, out);
-					TG=TG.getParent();
+					tg = tg.getParent();
 				}
 			} catch(SecurityException err) {
 				append("Unable to print all Thread Groups: ", out); appendln(err.toString(), out);
@@ -529,8 +529,8 @@ public class ErrorPrinter {
 	 * Gets the entire exception report as a <code>String</code>.  This is not
 	 * as efficient as directly writing the report due to the extra buffering.
 	 */
-	public static String getStackTraces(Throwable T) {
-		return getStackTraces(T, (Object[])null);
+	public static String getStackTraces(Throwable t) {
+		return getStackTraces(t, (Object[])null);
 	}
 
 	/**
