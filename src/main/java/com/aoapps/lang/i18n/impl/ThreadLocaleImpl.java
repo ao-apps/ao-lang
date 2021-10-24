@@ -34,10 +34,5 @@ public final class ThreadLocaleImpl {
 
 	private ThreadLocaleImpl() {}
 
-	public static final ThreadLocal<Locale> locale = new ThreadLocal<Locale>() {
-		@Override
-		protected Locale initialValue() {
-			return Locale.getDefault();
-		}
-	};
+	public static final ThreadLocal<Locale> locale = ThreadLocal.withInitial(Locale::getDefault);
 }

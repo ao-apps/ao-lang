@@ -68,19 +68,9 @@ public final class BufferManager {
 	 */
 	public static final int BUFFER_SIZE = 4096;
 
-	private static final ThreadLocal<Deque<SoftReference<byte[]>>> bytes = new ThreadLocal<Deque<SoftReference<byte[]>>>() {
-		@Override
-		public Deque<SoftReference<byte[]>> initialValue() {
-			return new ArrayDeque<>();
-		}
-	};
+	private static final ThreadLocal<Deque<SoftReference<byte[]>>> bytes = ThreadLocal.withInitial(ArrayDeque::new);
 
-	private static final ThreadLocal<Deque<SoftReference<char[]>>> chars = new ThreadLocal<Deque<SoftReference<char[]>>>() {
-		@Override
-		public Deque<SoftReference<char[]>> initialValue() {
-			return new ArrayDeque<>();
-		}
-	};
+	private static final ThreadLocal<Deque<SoftReference<char[]>>> chars = ThreadLocal.withInitial(ArrayDeque::new);
 
 	/**
 	 * Make no instances.
@@ -174,7 +164,11 @@ public final class BufferManager {
 		myBytes.add(new SoftReference<>(buffer));
 	}
 	private static boolean inQueue(Iterable<SoftReference<byte[]>> myBytes, byte[] buffer) {
-		for(SoftReference<byte[]> inQueue : myBytes) if(inQueue.get() == buffer) return true;
+		for(SoftReference<byte[]> inQueue : myBytes) {
+			if(inQueue.get() == buffer) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -204,7 +198,11 @@ public final class BufferManager {
 		myChars.add(new SoftReference<>(buffer));
 	}
 	private static boolean inQueue(Iterable<SoftReference<char[]>> myChars, char[] buffer) {
-		for(SoftReference<char[]> inQueue : myChars) if(inQueue.get() == buffer) return true;
+		for(SoftReference<char[]> inQueue : myChars) {
+			if(inQueue.get() == buffer) {
+				return true;
+			}
+		}
 		return false;
 	}
 
