@@ -84,7 +84,7 @@ public class LongLong extends Number implements Comparable<LongLong> {
 	private static class LongLongCache {
 		private LongLongCache(){}
 
-		static final LongLong cache[] = new LongLong[-(-128) + 127 + 1];
+		static final LongLong[] cache = new LongLong[-(-128) + 127 + 1];
 
 		static {
 			for(int i = 0; i < cache.length; i++) {
