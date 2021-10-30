@@ -57,6 +57,10 @@ public final class Throwables {
 	/**
 	 * Adds a suppressed exception, unless already in the list of suppressed exceptions.
 	 * <p>
+	 * When {@code suppressed} is an {@link InterruptedException} and {@code t0} is not an {@link InterruptedException},
+	 * the current thread will be {@linkplain Thread#interrupt() re-interrupted}.
+	 * </p>
+	 * <p>
 	 * When {@code suppressed} is a {@link ThreadDeath} and {@code t0} is not itself a {@link ThreadDeath},
 	 * {@code suppressed} will be returned instead, with {@code t0} added to it as suppressed.
 	 * This is to maintain the precedence of {@link ThreadDeath} for fail-fast behavior.
@@ -72,10 +76,21 @@ public final class Throwables {
 	 */
 	// TODO: Rename "merge", since either one of them might be returned?
 	public static Throwable addSuppressed(Throwable t0, Throwable suppressed) {
-		if(suppressed != null) {
+		if(
+			suppressed != null
+			// Never try to suppress self
+			&& suppressed != t0
+		) {
 			if(t0 == null) {
 				t0 = suppressed;
 			} else {
+				if(
+					suppressed instanceof InterruptedException
+					&& !(t0 instanceof InterruptedException)
+				) {
+					// Restore the interrupted status
+					Thread.currentThread().interrupt();
+				}
 				if(
 					suppressed instanceof ThreadDeath
 					&& !(t0 instanceof ThreadDeath)
@@ -96,6 +111,10 @@ public final class Throwables {
 	/**
 	 * Adds a suppressed exception, unless already in the list of suppressed exceptions,
 	 * wrapping when needed, then throwing the result.
+	 * <p>
+	 * When {@code suppressed} is an {@link InterruptedException} and {@code t0} is not an {@link InterruptedException},
+	 * the current thread will be {@linkplain Thread#interrupt() re-interrupted}.
+	 * </p>
 	 * <p>
 	 * When {@code suppressed} is a {@link ThreadDeath} and {@code t0} is not itself a {@link ThreadDeath},
 	 * {@code suppressed} will be returned instead, with {@code t0} added to it as suppressed.
@@ -156,6 +175,11 @@ public final class Throwables {
 	 * } catch(Throwable t) {
 	 *   throw Throwables.wrap(t, SQLException.class, SQLException::new);
 	 * }</pre>
+	 * <p>
+	 * When the exception is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+	 * wrapper is not itself an {@link InterruptedException}, the current thread will be
+	 * {@linkplain Thread#interrupt() re-interrupted}.
+	 * </p>
 	 *
 	 * @param  t  The throwable to return, throw, or wrap and return.
 	 *
@@ -180,7 +204,15 @@ public final class Throwables {
 		if(t instanceof Error) throw (Error)t;
 		if(t instanceof RuntimeException) throw (RuntimeException)t;
 		if(xClass.isInstance(t)) return xClass.cast(t);
-		return xSupplier.apply(t);
+		X newExc = xSupplier.apply(t);
+		if(
+			t instanceof InterruptedException
+			&& !(newExc instanceof InterruptedException)
+		) {
+			// Restore the interrupted status
+			Thread.currentThread().interrupt();
+		}
+		return newExc;
 	}
 
 	private static final ConcurrentMap<Class<?>, ThrowableSurrogateFactory<?>> surrogateFactories =
@@ -211,7 +243,7 @@ public final class Throwables {
 	 * {@link ThrowableSurrogateFactoryInitializer} interface.
 	 * </p>
 	 *
-	 * @param  cause  The cause to use for the new throwable.  This should typically be either the template ifself, or
+	 * @param  cause  The cause to use for the new throwable.  This should typically be either the template itself, or
 	 *                should have the template somewhere in its chain of causes.
 	 *
 	 * @return  When wrapping performed, returns a new throwable of the same class as the template, but with the
@@ -292,7 +324,7 @@ public final class Throwables {
 	 * Used by static initializer to register Java SE types, see
 	 * <a href="https://docs.oracle.com/javase/8/docs/api/overview-tree.html">https://docs.oracle.com/javase/8/docs/api/overview-tree.html</a>.
 	 */
-	// Java 9: Review list
+	// Java 9: Review list for any new exception types, bump this note up to next Java version
 	@SuppressWarnings("deprecation")
 	private static void registerJavaseSurrogateFactories() {
 		registerSurrogateFactory(java.lang.Throwable.class, (template, cause) -> new java.lang.Throwable(template.getMessage(), cause));

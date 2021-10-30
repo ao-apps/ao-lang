@@ -147,7 +147,9 @@ public class ProcessResult {
 				stderr
 			);
 		} catch(InterruptedException err) {
-			IOException ioErr = new InterruptedIOException();
+			// Restore the interrupted status
+			Thread.currentThread().interrupt();
+			InterruptedIOException ioErr = new InterruptedIOException();
 			ioErr.initCause(err);
 			throw ioErr;
 		}

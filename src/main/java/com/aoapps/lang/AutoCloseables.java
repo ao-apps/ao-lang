@@ -36,6 +36,10 @@ public final class AutoCloseables {
 
 	/**
 	 * Closes the given {@link AutoCloseable}, catching all {@link Throwable}.
+	 * <p>
+	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  t0  If not {@code null}, any new throwables will be combined via
 	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
@@ -58,6 +62,10 @@ public final class AutoCloseables {
 
 	/**
 	 * Closes the given {@link AutoCloseable}, catching all {@link Throwable}.
+	 * <p>
+	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  closeable  The closeable to be closed
 	 *
@@ -69,6 +77,10 @@ public final class AutoCloseables {
 
 	/**
 	 * Closes all of the given {@link AutoCloseable} in order, catching all {@link Throwable}.
+	 * <p>
+	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  t0  If not {@code null}, any new throwables will be combined via
 	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
@@ -88,6 +100,10 @@ public final class AutoCloseables {
 
 	/**
 	 * Closes all of the given {@link AutoCloseable} in order, catching all {@link Throwable}.
+	 * <p>
+	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  closeable  The set of all closeables, which will be closed in order
 	 *
@@ -99,6 +115,10 @@ public final class AutoCloseables {
 
 	/**
 	 * Closes all of the given {@link AutoCloseable} in order, catching all {@link Throwable}.
+	 * <p>
+	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  t0  If not {@code null}, any new throwables will be combined via
 	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
@@ -118,6 +138,10 @@ public final class AutoCloseables {
 
 	/**
 	 * Closes all of the given {@link AutoCloseable} in order, catching all {@link Throwable}.
+	 * <p>
+	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  closeable  The set of all closeables, which will be closed in order
 	 *
@@ -132,6 +156,11 @@ public final class AutoCloseables {
 	 * <p>
 	 * Only returns when {@code t0} is {@code null} and no new throwables.
 	 * </p>
+	 * <p>
+	 * When the exception is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+	 * wrapper is not itself an {@link InterruptedException}, the current thread will be
+	 * {@linkplain Thread#interrupt() re-interrupted}.
+	 * </p>
 	 *
 	 * @param  t0  If not {@code null}, any new throwables will be combined via
 	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
@@ -161,7 +190,15 @@ public final class AutoCloseables {
 			if(t instanceof Error) throw (Error)t;
 			if(t instanceof RuntimeException) throw (RuntimeException)t;
 			if(xClass.isInstance(t)) throw xClass.cast(t);
-			throw xSupplier.apply(t);
+			X newExc = xSupplier.apply(t);
+			if(
+				t instanceof InterruptedException
+				&& !(newExc instanceof InterruptedException)
+			) {
+				// Restore the interrupted status
+				Thread.currentThread().interrupt();
+			}
+			throw newExc;
 		}
 	}
 
@@ -170,6 +207,11 @@ public final class AutoCloseables {
 	 * <p>
 	 * Only returns when no throwables.
 	 * </p>
+	 * <p>
+	 * When the exception is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+	 * wrapper is not itself an {@link InterruptedException}, the current thread will be
+	 * {@linkplain Thread#interrupt() re-interrupted}.
+	 * </p>
 	 *
 	 * @param  xClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
 	 *                 are thrown directly.
@@ -197,6 +239,11 @@ public final class AutoCloseables {
 	 * Closes all of the given {@link AutoCloseable} in order, throwing all {@link Throwable}, wrapping when needed.
 	 * <p>
 	 * Only returns when {@code t0} is {@code null} and no new throwables.
+	 * </p>
+	 * <p>
+	 * When the exception is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+	 * wrapper is not itself an {@link InterruptedException}, the current thread will be
+	 * {@linkplain Thread#interrupt() re-interrupted}.
 	 * </p>
 	 *
 	 * @param  t0  If not {@code null}, any new throwables will be combined via
@@ -227,7 +274,15 @@ public final class AutoCloseables {
 			if(t instanceof Error) throw (Error)t;
 			if(t instanceof RuntimeException) throw (RuntimeException)t;
 			if(xClass.isInstance(t)) throw xClass.cast(t);
-			throw xSupplier.apply(t);
+			X newExc = xSupplier.apply(t);
+			if(
+				t instanceof InterruptedException
+				&& !(newExc instanceof InterruptedException)
+			) {
+				// Restore the interrupted status
+				Thread.currentThread().interrupt();
+			}
+			throw newExc;
 		}
 	}
 
@@ -235,6 +290,11 @@ public final class AutoCloseables {
 	 * Closes all of the given {@link AutoCloseable} in order, throwing all {@link Throwable}, wrapping when needed.
 	 * <p>
 	 * Only returns when no throwables.
+	 * </p>
+	 * <p>
+	 * When the exception is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+	 * wrapper is not itself an {@link InterruptedException}, the current thread will be
+	 * {@linkplain Thread#interrupt() re-interrupted}.
 	 * </p>
 	 *
 	 * @param  xClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
@@ -263,6 +323,11 @@ public final class AutoCloseables {
 	 * Closes all of the given {@link AutoCloseable} in order, throwing all {@link Throwable}, wrapping when needed.
 	 * <p>
 	 * Only returns when {@code t0} is {@code null} and no new throwables.
+	 * </p>
+	 * <p>
+	 * When the exception is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+	 * wrapper is not itself an {@link InterruptedException}, the current thread will be
+	 * {@linkplain Thread#interrupt() re-interrupted}.
 	 * </p>
 	 *
 	 * @param  t0  If not {@code null}, any new throwables will be combined via
@@ -293,7 +358,15 @@ public final class AutoCloseables {
 			if(t instanceof Error) throw (Error)t;
 			if(t instanceof RuntimeException) throw (RuntimeException)t;
 			if(xClass.isInstance(t)) throw xClass.cast(t);
-			throw xSupplier.apply(t);
+			X newExc = xSupplier.apply(t);
+			if(
+				t instanceof InterruptedException
+				&& !(newExc instanceof InterruptedException)
+			) {
+				// Restore the interrupted status
+				Thread.currentThread().interrupt();
+			}
+			throw newExc;
 		}
 	}
 
@@ -301,6 +374,11 @@ public final class AutoCloseables {
 	 * Closes all of the given {@link AutoCloseable} in order, throwing all {@link Throwable}, wrapping when needed.
 	 * <p>
 	 * Only returns when no throwables.
+	 * </p>
+	 * <p>
+	 * When the exception is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+	 * wrapper is not itself an {@link InterruptedException}, the current thread will be
+	 * {@linkplain Thread#interrupt() re-interrupted}.
 	 * </p>
 	 *
 	 * @param  xClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
@@ -342,6 +420,10 @@ public final class AutoCloseables {
 	 * } catch(Throwable t) {
 	 *   throw AutoCloseables.closeAndWrap(t, SQLException.class, SQLException::new, closeable);
 	 * }</pre>
+	 * <p>
+	 * See {@link Throwables#wrap(java.lang.Throwable, java.lang.Class, java.util.function.Function)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  t0  If not {@code null}, any new throwables will be combined via
 	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
@@ -392,6 +474,10 @@ public final class AutoCloseables {
 	 * } catch(Throwable t) {
 	 *   throw AutoCloseables.closeAndWrap(t, SQLException.class, SQLException::new, closeable);
 	 * }</pre>
+	 * <p>
+	 * See {@link Throwables#wrap(java.lang.Throwable, java.lang.Class, java.util.function.Function)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  t0  If not {@code null}, any new throwables will be combined via
 	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
@@ -442,6 +528,10 @@ public final class AutoCloseables {
 	 * } catch(Throwable t) {
 	 *   throw AutoCloseables.closeAndWrap(t, SQLException.class, SQLException::new, closeable);
 	 * }</pre>
+	 * <p>
+	 * See {@link Throwables#wrap(java.lang.Throwable, java.lang.Class, java.util.function.Function)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  t0  If not {@code null}, any new throwables will be combined via
 	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}

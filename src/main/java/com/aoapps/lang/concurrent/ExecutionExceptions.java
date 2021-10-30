@@ -67,6 +67,11 @@ public final class ExecutionExceptions {
 	 *   wrapAndThrow(ee, IOException.class, IOException::new);
 	 *   throw ee;
 	 * }</pre>
+	 * <p>
+	 * When the cause is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+	 * surrogate is not itself an {@link InterruptedException}, the current thread will be
+	 * {@linkplain Thread#interrupt() re-interrupted}.
+	 * </p>
 	 *
 	 * @param  xClass  Exceptions with causes of this class are wrapped and thrown.
 	 *
@@ -86,7 +91,19 @@ public final class ExecutionExceptions {
 			if(xClass.isInstance(cause)) {
 				X template = xClass.cast(cause);
 				X surrogate = Throwables.newSurrogate(template, ee);
-				throw (surrogate != template) ? surrogate : xSupplier.apply(template.getMessage(), ee);
+				if(surrogate != template) {
+					throw surrogate;
+				} else {
+					X newExc = xSupplier.apply(template.getMessage(), ee);
+					if(
+						cause instanceof InterruptedException
+						&& !(newExc instanceof InterruptedException)
+					) {
+						// Restore the interrupted status
+						Thread.currentThread().interrupt();
+					}
+					throw newExc;
+				}
 			}
 		}
 	}
@@ -121,6 +138,11 @@ public final class ExecutionExceptions {
 	 *     -&gt; new SQLException(template.getMessage(), template.getSQLState(), template.getErrorCode(), cause)));
 	 *   throw ee;
 	 * }</pre>
+	 * <p>
+	 * When the cause is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+	 * surrogate is not itself an {@link InterruptedException}, the current thread will be
+	 * {@linkplain Thread#interrupt() re-interrupted}.
+	 * </p>
 	 *
 	 * @param  xClass  Exceptions with causes of this class are wrapped and thrown.
 	 *
@@ -140,7 +162,19 @@ public final class ExecutionExceptions {
 			if(xClass.isInstance(cause)) {
 				X template = xClass.cast(cause);
 				X surrogate = Throwables.newSurrogate(template, ee);
-				throw (surrogate != template) ? surrogate : xSupplier.apply(template, ee);
+				if(surrogate != template) {
+					throw surrogate;
+				} else {
+					X newExc = xSupplier.apply(template, ee);
+					if(
+						cause instanceof InterruptedException
+						&& !(newExc instanceof InterruptedException)
+					) {
+						// Restore the interrupted status
+						Thread.currentThread().interrupt();
+					}
+					throw newExc;
+				}
 			}
 		}
 	}

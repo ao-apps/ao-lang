@@ -34,6 +34,10 @@ public final class Runnables {
 
 	/**
 	 * Runs the given {@link Runnable}, catching all {@link Throwable}.
+	 * <p>
+	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  t0  If not {@code null}, any new throwables will be combined via
 	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
@@ -56,6 +60,10 @@ public final class Runnables {
 
 	/**
 	 * Runs the given {@link Runnable}, catching all {@link Throwable}.
+	 * <p>
+	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  runnable  The runnable to be invoked
 	 *
@@ -67,6 +75,10 @@ public final class Runnables {
 
 	/**
 	 * Runs all of the given {@link Runnable} in order, catching all {@link Throwable}.
+	 * <p>
+	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  t0  If not {@code null}, any new throwables will be combined via
 	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
@@ -86,6 +98,10 @@ public final class Runnables {
 
 	/**
 	 * Runs all of the given {@link Runnable} in order, catching all {@link Throwable}.
+	 * <p>
+	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  runnable  The set of all runnables, which will be invoked in order
 	 *
@@ -97,6 +113,10 @@ public final class Runnables {
 
 	/**
 	 * Runs all of the given {@link Runnable} in order, catching all {@link Throwable}.
+	 * <p>
+	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  t0  If not {@code null}, any new throwables will be combined via
 	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
@@ -116,6 +136,10 @@ public final class Runnables {
 
 	/**
 	 * Runs all of the given {@link Runnable} in order, catching all {@link Throwable}.
+	 * <p>
+	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
+	 * </p>
 	 *
 	 * @param  runnable  The set of all runnables, which will be invoked in order
 	 *
