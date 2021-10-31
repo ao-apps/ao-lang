@@ -50,7 +50,10 @@ public class ThreadLocalRunnable implements Runnable {
 			if(oldValue != newValue) tl.set(newValue);
 			task.run();
 		} finally {
-			if(oldValue != newValue) tl.set(oldValue);
+			if(oldValue != newValue) {
+				if(oldValue == null) tl.remove();
+				else tl.set(oldValue);
+			}
 		}
 	}
 }

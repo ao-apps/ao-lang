@@ -52,7 +52,10 @@ public class ThreadLocalCallable<T> implements Callable<T> {
 			if(oldValue != newValue) tl.set(newValue);
 			return task.call();
 		} finally {
-			if(oldValue != newValue) tl.set(oldValue);
+			if(oldValue != newValue) {
+				if(oldValue == null) tl.remove();
+				else tl.set(oldValue);
+			}
 		}
 	}
 }

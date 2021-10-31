@@ -70,7 +70,8 @@ public class ThreadLocalsRunnable implements Runnable {
 				if(oldValue != newValues[i]) {
 					@SuppressWarnings("unchecked")
 					ThreadLocal<Object> tl = (ThreadLocal<Object>)tls[i];
-					tl.set(oldValue);
+					if(oldValue == null) tl.remove();
+					else tl.set(oldValue);
 				}
 			}
 		}
