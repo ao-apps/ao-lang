@@ -1177,28 +1177,36 @@ public final class Strings {
 	 * xxx... T
 	 */
 	public static String getApproximateSize(long size) {
-		if(size==1) return "1 byte";
-		if(size<1024) return new StringBuilder().append((int)size).append(" bytes").toString();
+		boolean neg = size < 0;
+		if(neg) {
+			size = (size == Long.MIN_VALUE) ? Long.MAX_VALUE : -size;
+		}
+		if(size == 1) return "1 byte";
+		if(size < 1024) return new StringBuilder().append((int)size).append(" bytes").toString();
 		String unitName;
 		long unitSize;
-		if(size<(1024*1024)) {
-			unitName=" k";
-			unitSize=1024;
-		} else if(size<((long)1024*1024*1024)) {
-			unitName=" M";
-			unitSize=1024*1024;
-		} else if(size<((long)1024*1024*1024*1024)) {
-			unitName=" G";
-			unitSize=(long)1024*1024*1024;
+		if(size < (1024L * 1024)) {
+			unitName = " k";
+			unitSize = 1024;
+		} else if(size < (1024L * 1024 * 1024)) {
+			unitName = " M";
+			unitSize = 1024L * 1024;
+		} else if(size < (1024L * 1024 * 1024 * 1024)) {
+			unitName = " G";
+			unitSize = 1024L * 1024 * 1024;
 		} else {
-			unitName=" T";
-			unitSize=(long)1024*1024*1024*1024;
+			unitName = " T";
+			unitSize = 1024L * 1024 * 1024 * 1024;
 		}
-		long whole=size/unitSize;
-		if(whole<100) {
-			int fraction=(int)(((size%unitSize)*10)/unitSize);
-			return new StringBuilder().append(whole).append('.').append(fraction).append(unitName).toString();
-		} else return new StringBuilder().append(whole).append(unitName).toString();
+		StringBuilder sb = new StringBuilder();
+		if(neg) sb.append('-');
+		long whole = size / unitSize;
+		if(whole < 100) {
+			int fraction = (int)(((size % unitSize) * 10) / unitSize);
+			return sb.append(whole).append('.').append(fraction).append(unitName).toString();
+		} else {
+			return sb.append(whole).append(unitName).toString();
+		}
 	}
 
 	/**
@@ -1221,28 +1229,36 @@ public final class Strings {
 	 * xxx T
 	 * xxx... T
 	 */
-	public static String getApproximateBitRate(long bit_rate) {
-		if(bit_rate<1000) return Integer.toString((int)bit_rate);
+	public static String getApproximateBitRate(long bitRate) {
+		boolean neg = bitRate < 0;
+		if(neg) {
+			bitRate = (bitRate == Long.MIN_VALUE) ? Long.MAX_VALUE : -bitRate;
+		}
+		if(bitRate < 1000) return Integer.toString((int)bitRate);
 		String unitName;
 		long unitSize;
-		if(bit_rate<(1000*1000)) {
-			unitName=" k";
-			unitSize=1000;
-		} else if(bit_rate<((long)1000*1000*1000)) {
-			unitName=" M";
-			unitSize=1000*1000;
-		} else if(bit_rate<((long)1000*1000*1000*1000)) {
-			unitName=" G";
-			unitSize=(long)1000*1000*1000;
+		if(bitRate < (1000_000)) {
+			unitName = " k";
+			unitSize = 1000;
+		} else if(bitRate < 1000_000_000) {
+			unitName = " M";
+			unitSize = 1000_000;
+		} else if(bitRate < 1000_000_000_000L) {
+			unitName = " G";
+			unitSize = 1000_000_000;
 		} else {
-			unitName=" T";
-			unitSize=(long)1000*1000*1000*1000;
+			unitName = " T";
+			unitSize = 1000_000_000_000L;
 		}
-		long whole=bit_rate/unitSize;
-		if(whole<100) {
-			int fraction=(int)(((bit_rate%unitSize)*10)/unitSize);
-			return new StringBuilder().append(whole).append('.').append(fraction).append(unitName).toString();
-		} else return new StringBuilder().append(whole).append(unitName).toString();
+		StringBuilder sb = new StringBuilder();
+		if(neg) sb.append('-');
+		long whole = bitRate / unitSize;
+		if(whole < 100) {
+			int fraction = (int)(((bitRate % unitSize) * 10) / unitSize);
+			return sb.append(whole).append('.').append(fraction).append(unitName).toString();
+		} else {
+			return sb.append(whole).append(unitName).toString();
+		}
 	}
 
 	/**
