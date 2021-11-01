@@ -119,17 +119,12 @@ public final class XmlUtils {
 			}
 
 			@Override
-			public Node next() {
+			public Node next() throws NoSuchElementException {
 				if(hasNext()) {
 					return nodeList.item(index++);
 				} else {
 					throw new NoSuchElementException();
 				}
-			}
-
-			@Override
-			public void remove() throws UnsupportedOperationException {
-				throw new UnsupportedOperationException();
 			}
 		};
 	}
@@ -154,17 +149,12 @@ public final class XmlUtils {
 			}
 
 			@Override
-			public Element next() {
+			public Element next() throws NoSuchElementException {
 				if(hasNext()) {
 					return (Element)nodeList.item(index++);
 				} else {
 					throw new NoSuchElementException();
 				}
-			}
-
-			@Override
-			public void remove() throws UnsupportedOperationException {
-				throw new UnsupportedOperationException();
 			}
 		};
 	}
@@ -195,17 +185,12 @@ public final class XmlUtils {
 			}
 
 			@Override
-			public Element next() {
+			public Element next() throws NoSuchElementException {
 				if(hasNext()) {
 					return (Element)children.item(index++);
 				} else {
 					throw new NoSuchElementException();
 				}
-			}
-
-			@Override
-			public void remove() throws UnsupportedOperationException {
-				throw new UnsupportedOperationException();
 			}
 		};
 	}
