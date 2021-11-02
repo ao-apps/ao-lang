@@ -22,6 +22,7 @@
  */
 package com.aoapps.lang;
 
+import com.aoapps.lang.io.IoUtils;
 import java.security.SecureRandom;
 import java.util.Random;
 import junit.framework.Test;
@@ -41,11 +42,14 @@ public class StringsTest extends TestCase {
 		return new TestSuite(StringsTest.class);
 	}
 
-	private static final Random random = new SecureRandom();
+	/**
+	 * A fast pseudo-random number generator for non-cryptographic purposes.
+	 */
+	private static final Random fastRandom = new Random(IoUtils.bufferToLong(new SecureRandom().generateSeed(Long.BYTES)));
 
 	public void testConvertToFromHexInt() {
 		for(int i=0; i<1000; i++) {
-			int before = random.nextInt();
+			int before = fastRandom.nextInt();
 			@SuppressWarnings("deprecation")
 			int after = Strings.convertIntArrayFromHex(Strings.convertToHex(before).toCharArray());
 			assertEquals(before, after);
@@ -54,7 +58,7 @@ public class StringsTest extends TestCase {
 
 	public void testConvertToFromHexLong() {
 		for(int i=0; i<1000; i++) {
-			long before = random.nextLong();
+			long before = fastRandom.nextLong();
 			@SuppressWarnings("deprecation")
 			long after = Strings.convertLongArrayFromHex(Strings.convertToHex(before).toCharArray());
 			assertEquals(before, after);
