@@ -153,7 +153,7 @@ public class Instant implements Comparable<Instant>, Serializable {
 
 	@Override
 	public int hashCode() {
-		return (int)(epochSecond ^ (epochSecond >>> 32)) ^ nano;
+		return Long.hashCode(epochSecond) ^ nano;
 	}
 
 	@Override

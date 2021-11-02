@@ -34,19 +34,19 @@ import java.util.Arrays;
  */
 public class LongLong extends Number implements Comparable<LongLong> {
 
-	public static final LongLong MIN_VALUE = valueOf(0x8000000000000000L, 0L);
+	public static final LongLong MIN_VALUE = valueOf(Long.MIN_VALUE, 0L);
 
-	public static final LongLong MAX_VALUE = valueOf(0x7fffffffffffffffL, 0xffffffffffffffffL);
+	public static final LongLong MAX_VALUE = valueOf(Long.MAX_VALUE, -1L);
 
 	private static byte[] getBytes(BigInteger bigInteger) {
-		if(bigInteger.bitLength()>127) throw new NumberFormatException("For input string: \"" + bigInteger.toString() + "\"");
+		if(bigInteger.bitLength() >= SIZE) throw new NumberFormatException("For input string: \"" + bigInteger.toString() + "\"");
 		byte[] bytes = bigInteger.toByteArray();
-		int diff = 16 - bytes.length;
-		if(diff<0) throw new NumberFormatException("For input string: \"" + bigInteger.toString() + "\"");
-		if(diff>0) {
+		int diff = BYTES - bytes.length;
+		if(diff < 0) throw new NumberFormatException("For input string: \"" + bigInteger.toString() + "\"");
+		if(diff > 0) {
 			// Pad with the sign bit
-			byte[] newBytes = new byte[16];
-			if((bytes[0]&0x80)!=0) Arrays.fill(newBytes, 0, diff, (byte)0xff);
+			byte[] newBytes = new byte[BYTES];
+			if((bytes[0] & 0x80) != 0) Arrays.fill(newBytes, 0, diff, (byte)0xff);
 			System.arraycopy(bytes, 0, newBytes, diff, bytes.length);
 			bytes = newBytes;
 		}
@@ -59,7 +59,10 @@ public class LongLong extends Number implements Comparable<LongLong> {
 
 	public static LongLong parseLongLong(String s, int radix) throws NumberFormatException {
 		byte[] bytes = parseLongLongToBytes(s, radix);
-		return valueOf(IoUtils.bufferToLong(bytes), IoUtils.bufferToLong(bytes, 8));
+		return valueOf(
+			IoUtils.bufferToLong(bytes),
+			IoUtils.bufferToLong(bytes, Long.BYTES)
+		);
 	}
 
 	public static LongLong parseLongLong(String s) throws NumberFormatException {
@@ -81,26 +84,29 @@ public class LongLong extends Number implements Comparable<LongLong> {
 		return parseLongLong(s, 10);
 	}
 
+	private static final int CACHE_MIN = -128;
+	private static final int CACHE_MAX = 127;
+
 	private static class LongLongCache {
 		private LongLongCache(){}
 
-		static final LongLong[] cache = new LongLong[-(-128) + 127 + 1];
+		static final LongLong[] cache = new LongLong[-CACHE_MIN + CACHE_MAX + 1];
 
 		static {
 			for(int i = 0; i < cache.length; i++) {
-				int value = i - 128;
-				cache[i] = new LongLong(value<0 ? 0xffffffffffffffffL : 0, value);
+				int value = i + CACHE_MIN;
+				cache[i] = new LongLong(value < 0 ? -1 : 0, value);
 			}
 		}
 	}
 
 	public static LongLong valueOf(long hi, long lo) {
-		final int offset = 128;
 		if(
-			(hi==0xffffffffffffffffL && lo>= -128 && lo<0)
-			|| (hi==0 && lo <= 127 && lo>=0)
-		) { // will cache
-			return LongLongCache.cache[(int)lo + offset];
+			(hi == -1 && lo >= CACHE_MIN && lo < 0)
+			|| (hi == 0 && lo <= CACHE_MAX && lo >= 0)
+		) {
+			// will cache
+			return LongLongCache.cache[(int)lo - CACHE_MIN];
 		}
 		return new LongLong(hi, lo);
 	}
@@ -160,7 +166,7 @@ public class LongLong extends Number implements Comparable<LongLong> {
 	public LongLong(String s) throws NumberFormatException {
 		byte[] bytes = parseLongLongToBytes(s, 10);
 		this.hi = IoUtils.bufferToLong(bytes);
-		this.lo = IoUtils.bufferToLong(bytes, 8);
+		this.lo = IoUtils.bufferToLong(bytes, Long.BYTES);
 	}
 
 	@Override
@@ -184,9 +190,9 @@ public class LongLong extends Number implements Comparable<LongLong> {
 	}
 
 	private BigInteger getBigInteger() {
-		byte[] bytes = new byte[16];
+		byte[] bytes = new byte[BYTES];
 		IoUtils.longToBuffer(hi, bytes);
-		IoUtils.longToBuffer(lo, bytes, 8);
+		IoUtils.longToBuffer(lo, bytes, Long.BYTES);
 		return new BigInteger(bytes);
 	}
 
@@ -206,10 +212,7 @@ public class LongLong extends Number implements Comparable<LongLong> {
 	}
 
 	public static int hashCode(long hi, long lo) {
-		return
-			(int)(hi ^ (hi >>> 32))
-			^ (int)(lo ^ (lo >>> 32))
-		;
+		return Long.hashCode(hi) ^ Long.hashCode(lo);
 	}
 
 	@Override
@@ -221,7 +224,7 @@ public class LongLong extends Number implements Comparable<LongLong> {
 	public boolean equals(Object obj) {
 		if(obj instanceof LongLong) {
 			LongLong other = (LongLong)obj;
-			return hi == other.hi && lo == other.lo;
+			return (hi == other.hi) && (lo == other.lo);
 		}
 		return false;
 	}
@@ -274,7 +277,18 @@ public class LongLong extends Number implements Comparable<LongLong> {
 		return Long.compareUnsigned(lo, other.lo);
 	}
 
-	public static final int SIZE = 128;
+    /**
+     * The number of bits used to represent a {@link LongLong} value in two's
+     * complement binary form.
+     */
+    public static final int SIZE = Long.SIZE * 2;
+
+    /**
+     * The number of bytes used to represent a {@link LongLong} value in two's
+     * complement binary form.
+     */
+    public static final int BYTES = SIZE / Byte.SIZE;
+
 
 	public LongLong highestOneBit() {
 		long newHi = Long.highestOneBit(hi);
@@ -321,10 +335,10 @@ public class LongLong extends Number implements Comparable<LongLong> {
 	 */
 	public LongLong rotateLeft(int distance) {
 		// Rotate multiple of 128 yields same answer
-		if((distance & 127)==0) return this;
+		if((distance & (SIZE - 1)) == 0) return this;
 		// Rotate multiple of 64 yields swapped longs
 		long newHi, newLo;
-		if((distance & 63)==0) {
+		if((distance & (Long.SIZE - 1)) == 0) {
 			newHi = lo;
 			newLo = hi;
 		} else {
@@ -332,7 +346,7 @@ public class LongLong extends Number implements Comparable<LongLong> {
 			newHi = (hi << distance) | (lo >>> -distance);
 			newLo = (lo << distance) | (hi >>> -distance);
 		}
-		if(newHi==hi && newLo==lo) return this;
+		if(newHi == hi && newLo == lo) return this;
 		return valueOf(newHi, newLo);
 	}
 
@@ -341,10 +355,10 @@ public class LongLong extends Number implements Comparable<LongLong> {
 	 */
 	public LongLong rotateRight(int distance) {
 		// Rotate multiple of 128 yields same answer
-		if((distance & 127)==0) return this;
+		if((distance & (SIZE - 1)) == 0) return this;
 		// Rotate multiple of 64 yields swapped longs
 		long newHi, newLo;
-		if((distance & 63)==0) {
+		if((distance & (Long.SIZE - 1)) == 0) {
 			newHi = lo;
 			newLo = hi;
 		} else {
@@ -352,14 +366,14 @@ public class LongLong extends Number implements Comparable<LongLong> {
 			newHi = (hi >>> distance) | (lo << -distance);
 			newLo = (lo >>> distance) | (hi << -distance);
 		}
-		if(newHi==hi && newLo==lo) return this;
+		if(newHi == hi && newLo == lo) return this;
 		return valueOf(newHi, newLo);
 	}
 
 	public LongLong reverse() {
 		long newHi = Long.reverse(lo);
 		long newLo = Long.reverse(hi);
-		if(newHi==hi && newLo==lo) return this;
+		if(newHi == hi && newLo == lo) return this;
 		return valueOf(newHi, newLo);
 	}
 
@@ -370,13 +384,16 @@ public class LongLong extends Number implements Comparable<LongLong> {
 	public LongLong reverseBytes() {
 		long newHi = Long.reverseBytes(lo);
 		long newLo = Long.reverseBytes(hi);
-		if(newHi==hi && newLo==lo) return this;
+		if(newHi == hi && newLo == lo) return this;
 		return valueOf(newHi, newLo);
 	}
 
 	public LongLong negate() {
 		byte[] bytes = getBytes(getBigInteger().negate());
-		return valueOf(IoUtils.bufferToLong(bytes), IoUtils.bufferToLong(bytes, 8));
+		return valueOf(
+			IoUtils.bufferToLong(bytes),
+			IoUtils.bufferToLong(bytes, Long.BYTES)
+		);
 	}
 
 	/**

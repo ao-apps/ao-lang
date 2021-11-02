@@ -109,7 +109,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 
 	@Override
 	public int hashCode() {
-		return (int)(seconds ^ (seconds >>> 32)) ^ nano;
+		return Long.hashCode(seconds) ^ nano;
 	}
 
 	@Override

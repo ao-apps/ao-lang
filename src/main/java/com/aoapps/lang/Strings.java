@@ -1035,7 +1035,7 @@ public final class Strings {
 	@Deprecated
 	public static byte[] convertByteArrayFromHex(char[] hex) {
 		int hexLen = hex.length;
-		if((hexLen&1) != 0) throw new IllegalArgumentException("Uneven number of characters: " + hexLen);
+		if((hexLen & 1) != 0) throw new IllegalArgumentException("Uneven number of characters: " + hexLen);
 		byte[] result = new byte[hexLen / 2];
 		int resultPos = 0;
 		int hexPos = 0;
@@ -1088,7 +1088,7 @@ public final class Strings {
 	@Deprecated
 	public static int convertIntArrayFromHex(char[] hex) {
 		int hexLen = hex.length;
-		if(hexLen < 8) throw new IllegalArgumentException("Too few characters: " + hexLen);
+		if(hexLen < (Integer.BYTES * 2)) throw new IllegalArgumentException("Too few characters: " + hexLen);
 		return
 			(getHex(hex[0]) << 28)
 			| (getHex(hex[1]) << 24)
@@ -1134,7 +1134,7 @@ public final class Strings {
 	@Deprecated
 	public static long convertLongArrayFromHex(char[] hex) {
 		int hexLen = hex.length;
-		if(hexLen < 16) throw new IllegalArgumentException("Too few characters: " + hexLen);
+		if(hexLen < (Long.BYTES * 2)) throw new IllegalArgumentException("Too few characters: " + hexLen);
 		int h = (getHex(hex[0]) << 28)
 			| (getHex(hex[1]) << 24)
 			| (getHex(hex[2]) << 20)
@@ -1153,7 +1153,7 @@ public final class Strings {
 			| (getHex(hex[14]) << 4)
 			| (getHex(hex[15]))
 		;
-		return (((long)h) << 32) | (l & 0xffffffffL);
+		return (((long)h) << Integer.SIZE) | (l & 0xffffffffL);
 	}
 
 	/**
