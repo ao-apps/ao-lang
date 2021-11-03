@@ -58,7 +58,7 @@ public interface IOPredicateE<T, Ex extends Throwable> {
 	static <T, Ex extends Throwable> IOPredicateE<T, Ex> isEqual(Object targetRef) {
 		return (null == targetRef)
 			? Objects::isNull
-			: object -> targetRef.equals(object);
+			: targetRef::equals;
 	}
 
 	/**

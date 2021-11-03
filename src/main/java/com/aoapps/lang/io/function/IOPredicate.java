@@ -40,7 +40,7 @@ public interface IOPredicate<T> extends IOPredicateE<T, RuntimeException> {
 	static <T> IOPredicate<T> isEqual(Object targetRef) {
 		return (null == targetRef)
 			? Objects::isNull
-			: object -> targetRef.equals(object);
+			: targetRef::equals;
 	}
 
 	@SuppressWarnings("unchecked")

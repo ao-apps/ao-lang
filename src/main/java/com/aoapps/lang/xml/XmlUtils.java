@@ -110,6 +110,7 @@ public final class XmlUtils {
 	 * Iterates over a NodeList.
 	 */
 	public static Iterable<Node> iterableNodes(final NodeList nodeList) {
+		// Java 9: new Iterator<>
 		return () -> new Iterator<Node>() {
 			private int index = 0;
 
@@ -133,6 +134,7 @@ public final class XmlUtils {
 	 * Iterates over a NodeList, only returning Elements.
 	 */
 	public static Iterable<Element> iterableElements(final NodeList nodeList) {
+		// Java 9: new Iterator<>
 		return () -> new Iterator<Element>() {
 			private int index = 0;
 
@@ -164,6 +166,7 @@ public final class XmlUtils {
 	 * returning only returning child elements of the given name.
 	 */
 	public static Iterable<Element> iterableChildElementsByTagName(final Element element, final String childTagName) {
+		// Java 9: new Iterator<>
 		return () -> new Iterator<Element>() {
 			private final NodeList children = element.getChildNodes();
 			private int index = 0;
