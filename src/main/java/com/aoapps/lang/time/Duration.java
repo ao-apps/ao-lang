@@ -83,7 +83,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 		}
 	}
 
-	private Object readResolve() {
+	protected Object readResolve() {
 		if(seconds == 0 && nano == 0) return ZERO;
 		return this;
 	}

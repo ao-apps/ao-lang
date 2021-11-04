@@ -31,7 +31,7 @@ import java.util.Currency;
  *
  * @author  AO Industries, Inc.
  */
-public class CurrencyComparator implements Comparator<Currency>, Serializable {
+public final class CurrencyComparator implements Comparator<Currency>, Serializable {
 
 	private static final long serialVersionUID = -6360174337692570997L;
 

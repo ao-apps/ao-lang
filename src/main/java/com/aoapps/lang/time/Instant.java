@@ -92,7 +92,7 @@ public class Instant implements Comparable<Instant>, Serializable {
 		}
 	}
 
-	private Object readResolve() {
+	protected Object readResolve() {
 		if(epochSecond == 0 && nano == 0) return EPOCH;
 		return this;
 	}

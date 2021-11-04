@@ -31,7 +31,7 @@ import java.util.Locale;
  *
  * @author  AO Industries, Inc.
  */
-public class LocaleComparator implements Comparator<Locale>, Serializable {
+public final class LocaleComparator implements Comparator<Locale>, Serializable {
 
 	private static final long serialVersionUID = 7238956708102131937L;
 
