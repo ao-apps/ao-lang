@@ -201,9 +201,9 @@ public final class Throwables {
 		Function<? super Throwable, ? extends X> xSupplier
 	) throws Error, RuntimeException {
 		if(t == null) return null;
+		if(xClass.isInstance(t)) return xClass.cast(t);
 		if(t instanceof Error) throw (Error)t;
 		if(t instanceof RuntimeException) throw (RuntimeException)t;
-		if(xClass.isInstance(t)) return xClass.cast(t);
 		X newExc = xSupplier.apply(t);
 		if(
 			t instanceof InterruptedException
