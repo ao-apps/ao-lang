@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-05:00"
-		dateModified="2021-10-31T04:10:58-05:00"
+		dateModified="2021-11-04T01:42:43-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -60,6 +60,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 						Cleaning-up ThreadLocal variables when no longer used,
 						see <ao:a href="https://rules.sonarsource.com/java/RSPEC-5164" />.
 					</li>
+					<li><code>NoCloseOutputStream</code> now overrides <code>write(byte[],int,int)</code> for greater performance.</li>
 				</ul>
 			</changelog:release>
 		</c:if>

@@ -35,6 +35,11 @@ public class NoCloseOutputStream extends FilterOutputStream {
 		super(out);
 	}
 
+	@Override
+	public void write(byte[] b, int off, int len) throws IOException {
+		out.write(b, off, len);
+	}
+
 	/**
 	 * Does not close the wrapped stream.
 	 */
