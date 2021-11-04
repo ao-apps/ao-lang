@@ -39,16 +39,16 @@ public interface PredicateE<T, Ex extends Throwable> {
 
 	default PredicateE<T, Ex> and(PredicateE<? super T, ? extends Ex> other) throws Ex {
 		Objects.requireNonNull(other);
-		return (t) -> test(t) && other.test(t);
+		return t -> test(t) && other.test(t);
 	}
 
 	default PredicateE<T, Ex> negate() throws Ex {
-		return (t) -> !test(t);
+		return t -> !test(t);
 	}
 
 	default PredicateE<T, Ex> or(PredicateE<? super T, ? extends Ex> other) throws Ex {
 		Objects.requireNonNull(other);
-		return (t) -> test(t) || other.test(t);
+		return t -> test(t) || other.test(t);
 	}
 
 	/**

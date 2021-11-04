@@ -39,12 +39,12 @@ public interface FunctionE<T, R, Ex extends Throwable> {
 
 	default <V> FunctionE<V, R, Ex> compose(FunctionE<? super V, ? extends T, ? extends Ex> before) throws Ex {
 		Objects.requireNonNull(before);
-		return (V v) -> apply(before.apply(v));
+		return v -> apply(before.apply(v));
 	}
 
 	default <V> FunctionE<T, V, Ex> andThen(FunctionE<? super R, ? extends V, ? extends Ex> after) throws Ex {
 		Objects.requireNonNull(after);
-		return (T t) -> after.apply(apply(t));
+		return t -> after.apply(apply(t));
 	}
 
 	/**

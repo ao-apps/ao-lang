@@ -40,16 +40,16 @@ public interface IOPredicateE<T, Ex extends Throwable> {
 
 	default IOPredicateE<T, Ex> and(IOPredicateE<? super T, ? extends Ex> other) throws IOException, Ex {
 		Objects.requireNonNull(other);
-		return (t) -> test(t) && other.test(t);
+		return t -> test(t) && other.test(t);
 	}
 
 	default IOPredicateE<T, Ex> negate() throws IOException, Ex {
-		return (t) -> !test(t);
+		return t -> !test(t);
 	}
 
 	default IOPredicateE<T, Ex> or(IOPredicateE<? super T, ? extends Ex> other) throws IOException, Ex {
 		Objects.requireNonNull(other);
-		return (t) -> test(t) || other.test(t);
+		return t -> test(t) || other.test(t);
 	}
 
 	/**

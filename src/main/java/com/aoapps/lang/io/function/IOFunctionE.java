@@ -40,12 +40,12 @@ public interface IOFunctionE<T, R, Ex extends Throwable> {
 
 	default <V> IOFunctionE<V, R, Ex> compose(IOFunctionE<? super V, ? extends T, ? extends Ex> before) throws IOException, Ex {
 		Objects.requireNonNull(before);
-		return (V v) -> apply(before.apply(v));
+		return v -> apply(before.apply(v));
 	}
 
 	default <V> IOFunctionE<T, V, Ex> andThen(IOFunctionE<? super R, ? extends V, ? extends Ex> after) throws IOException, Ex {
 		Objects.requireNonNull(after);
-		return (T t) -> after.apply(apply(t));
+		return t -> after.apply(apply(t));
 	}
 
 	/**
