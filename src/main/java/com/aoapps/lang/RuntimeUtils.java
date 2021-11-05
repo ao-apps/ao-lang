@@ -25,14 +25,12 @@ package com.aoapps.lang;
 /**
  * Runtime utilities that enhance behavior of java.lang.Runtime.
  */
-public final class RuntimeUtils {
+public abstract class RuntimeUtils {
 
-	/**
-	 * Make no instances.
-	 */
-	private RuntimeUtils() {}
+	/** Make no instances. */
+	private RuntimeUtils() {throw new AssertionError();}
 
-	private static class AvailableProcessorsLock {}
+	private static class AvailableProcessorsLock {/* Empty lock class to help heap profile */}
 	private static final AvailableProcessorsLock availableProcessorsLock = new AvailableProcessorsLock();
 	private static long availableProcessorsLastRetrieved = Long.MIN_VALUE;
 	private static int availableProcessors = 0;

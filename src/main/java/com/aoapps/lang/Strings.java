@@ -33,13 +33,10 @@ import java.util.List;
 /**
  * @author  AO Industries, Inc.
  */
-public final class Strings {
+public abstract class Strings {
 
-	/**
-	 * Make no instances.
-	 */
-	private Strings() {
-	}
+	/** Make no instances. */
+	private Strings() {throw new AssertionError();}
 
 	private static final String[] MONTHS = {
 		"Jan",

@@ -42,6 +42,7 @@ public final class LocaleComparator implements Comparator<Locale>, Serializable 
 	}
 
 	private LocaleComparator() {
+		// Do nothing
 	}
 
 	private Object readResolve() {

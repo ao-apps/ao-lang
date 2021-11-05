@@ -31,13 +31,17 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @author  AO Industries, Inc.
  */
-public class Locales {
+public abstract class Locales {
 
-	private Locales() {}
+	/** Make no instances. */
+	private Locales() {throw new AssertionError();}
 
 	// Was getting NullPointerException on class init, trying cache in separate class.
 	// It might have been due to memory exhausted in Tomcat, but this won't hurt.
-	private static class LocaleCache {
+	private abstract static class LocaleCache {
+
+		/** Make no instances. */
+		private LocaleCache() {throw new AssertionError();}
 
 		private static class CacheKey {
 			private final String language;
@@ -116,8 +120,6 @@ public class Locales {
 					);
 				}
 			}
-		}
-		private LocaleCache() {
 		}
 	}
 

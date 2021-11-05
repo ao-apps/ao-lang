@@ -47,7 +47,10 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @author  AO Industries, Inc.
  */
-public class MessageFormatFactory {
+public abstract class MessageFormatFactory {
+
+	/** Make no instances. */
+	private MessageFormatFactory() {throw new AssertionError();}
 
 	private static final ConcurrentMap<Locale, ConcurrentMap<String, UnmodifiableMessageFormat>> cache = new ConcurrentHashMap<>();
 
@@ -55,7 +58,7 @@ public class MessageFormatFactory {
 	 * Gets a message format for the provided format in the current thread locale.
 	 *
 	 * @return  a MessageFormat that may not be modified with any of its setters or other mutator methods.
-	 * 
+	 *
 	 * @see ThreadLocale
 	 */
 	public static UnmodifiableMessageFormat getMessageFormat(String pattern) {
@@ -81,9 +84,6 @@ public class MessageFormatFactory {
 			if(existing!=null) messageFormat = existing;
 		}
 		return messageFormat;
-	}
-
-	private MessageFormatFactory() {
 	}
 
 	/*

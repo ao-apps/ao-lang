@@ -25,13 +25,10 @@ package com.aoapps.lang.util;
 /**
  * @author  AO Industries, Inc.
  */
-public final class InternUtils {
+public abstract class InternUtils {
 
-	/**
-	 * No instances
-	 */
-	private InternUtils() {
-	}
+	/** Make no instances. */
+	private InternUtils() {throw new AssertionError();}
 
 	/**
 	 * Interns the object, return null when null.

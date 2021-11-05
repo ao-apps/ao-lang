@@ -93,7 +93,10 @@ import javax.security.auth.login.LoginException;
  *		CANTCREAT, but rather for higher level permissions.
  * </pre>
  */
-public final class SysExits {
+public abstract class SysExits {
+
+	/** Make no instances. */
+	private SysExits() {throw new AssertionError();}
 
 	/** successful termination */
 	public static final int EX_OK = 0;
@@ -189,11 +192,5 @@ public final class SysExits {
 			return EX_NOPERM;
 		}
 		return EX_SOFTWARE;
-	}
-
-	/**
-	 * Make no instances.
-	 */
-	private SysExits() {
 	}
 }

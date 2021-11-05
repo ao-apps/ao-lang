@@ -30,13 +30,10 @@ import java.util.Locale;
  *
  * @author  AO Industries, Inc.
  */
-public final class ComparatorUtils {
+public abstract class ComparatorUtils {
 
-	/**
-	 * Make no instances.
-	 */
-	private ComparatorUtils() {
-	}
+	/** Make no instances. */
+	private ComparatorUtils() {throw new AssertionError();}
 
 	/**
 	 * Compares two integers.

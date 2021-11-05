@@ -44,7 +44,10 @@ import java.util.zip.ZipOutputStream;
 /**
  * ZIP file utilities.
  */
-public class ZipUtils {
+public abstract class ZipUtils {
+
+	/** Make no instances. */
+	private ZipUtils() {throw new AssertionError();}
 
 	/**
 	 * Gets the time for a ZipEntry, converting from GMT as stored in the ZIP
@@ -301,11 +304,5 @@ public class ZipUtils {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Make no instances.
-	 */
-	private ZipUtils() {
 	}
 }

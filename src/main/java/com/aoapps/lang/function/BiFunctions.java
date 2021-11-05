@@ -31,9 +31,10 @@ import java.util.function.BiFunction;
  * @see BiFunction
  * @see BiFunctionE
  */
-public class BiFunctions {
+public abstract class BiFunctions {
 
-	private BiFunctions() {}
+	/** Make no instances. */
+	private BiFunctions() {throw new AssertionError();}
 
 	/**
 	 * Lazily evaluates a set of bifunctions, returning the first non-null result or {@link Optional#EMPTY} when no result.

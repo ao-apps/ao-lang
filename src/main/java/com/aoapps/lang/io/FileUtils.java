@@ -49,12 +49,10 @@ import java.util.Arrays;
 /**
  * File utilities.
  */
-public final class FileUtils {
+public abstract class FileUtils {
 
-	/**
-	 * Make no instances.
-	 */
-	private FileUtils() {}
+	/** Make no instances. */
+	private FileUtils() {throw new AssertionError();}
 
 	/**
 	 * Deletes the provided file, throwing IOException if unsuccessful.

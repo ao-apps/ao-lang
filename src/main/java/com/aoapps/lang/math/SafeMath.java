@@ -27,10 +27,10 @@ package com.aoapps.lang.math;
  *
  * @author  AO Industries, Inc.
  */
-public class SafeMath {
+public abstract class SafeMath {
 
-	private SafeMath() {
-	}
+	/** Make no instances. */
+	private SafeMath() {throw new AssertionError();}
 
 	/**
 	 * Casts int to byte, looking for any underflow or overflow.

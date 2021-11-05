@@ -29,12 +29,10 @@ import java.util.function.BiFunction;
 /**
  * Utilities for working with {@link ExecutionException}.
  */
-public final class ExecutionExceptions {
+public abstract class ExecutionExceptions {
 
-	/**
-	 * Make no instances.
-	 */
-	private ExecutionExceptions() {}
+	/** Make no instances. */
+	private ExecutionExceptions() {throw new AssertionError();}
 
 	/**
 	 * Wraps and throws an {@link ExecutionException} when its {@linkplain ExecutionException#getCause() cause} is an

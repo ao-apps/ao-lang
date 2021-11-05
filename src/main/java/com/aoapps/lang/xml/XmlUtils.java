@@ -51,13 +51,10 @@ import org.xml.sax.SAXException;
  *
  * @author  AO Industries, Inc.
  */
-public final class XmlUtils {
+public abstract class XmlUtils {
 
-	/**
-	 * Make no instances.
-	 */
-	private XmlUtils() {
-	}
+	/** Make no instances. */
+	private XmlUtils() {throw new AssertionError();}
 
 	/**
 	 * Fetches and parses an XML DOM from a URL.

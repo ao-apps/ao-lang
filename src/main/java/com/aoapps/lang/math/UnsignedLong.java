@@ -29,16 +29,13 @@ import java.math.BigInteger;
  *
  * @author  AO Industries, Inc.
  */
-public class UnsignedLong {
+public abstract class UnsignedLong {
+
+	/** Make no instances. */
+	private UnsignedLong() {throw new AssertionError();}
 
 	private static final BigInteger TWO_POWER_64 = new BigInteger("10000000000000000", 16);
 	private static final BigInteger TWO_POWER_64_MINUS_1 = TWO_POWER_64.subtract(BigInteger.ONE);
-
-	/**
-	 * Make no instances.
-	 */
-	private UnsignedLong() {
-	}
 
 	private static BigInteger getUnsigned(long value) {
 		BigInteger bigValue = BigInteger.valueOf(value);

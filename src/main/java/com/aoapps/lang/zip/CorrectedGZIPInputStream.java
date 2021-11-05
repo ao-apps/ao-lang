@@ -41,7 +41,7 @@ public class CorrectedGZIPInputStream extends GZIPInputStream {
 		super(in, size);
 	}
 
-	private static class FoundErrorLock {}
+	private static class FoundErrorLock {/* Empty lock class to help heap profile */}
 	private final FoundErrorLock foundErrorLock=new FoundErrorLock();
 	private boolean foundError=false;
 

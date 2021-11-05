@@ -56,11 +56,12 @@ import java.util.WeakHashMap;
 // TODO: Move to com.aoapps.lang.Throwables?
 // TODO: Support SQLClientInfoException
 // TODO: Support MessagingException.getNextException?
-public class ErrorPrinter {
+public abstract class ErrorPrinter {
+
+	/** Make no instances. */
+	private ErrorPrinter() {throw new AssertionError();}
 
 	private static final String EOL = System.lineSeparator();
-
-	private ErrorPrinter() {}
 
 	private static class IdentityKey {
 

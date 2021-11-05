@@ -32,13 +32,10 @@ import java.lang.reflect.Method;
  *
  * @author  AO Industries, Inc.
  */
-public final class Methods {
+public abstract class Methods {
 
-	/**
-	 * Make no instances.
-	 */
-	private Methods() {
-	}
+	/** Make no instances. */
+	private Methods() {throw new AssertionError();}
 
 	/**
 	 * Invokes the provided method on the given object.

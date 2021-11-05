@@ -52,7 +52,10 @@ import org.w3c.dom.Node;
  *
  * @author  AO Industries, Inc.
  */
-public final class Coercion {
+public abstract class Coercion {
+
+	/** Make no instances. */
+	private Coercion() {throw new AssertionError();}
 
 	/**
 	 * Converts an object to a string.
@@ -724,12 +727,6 @@ public final class Coercion {
 			// Otherwise, the result is A.toString();
 			return Strings.trimNullIfEmpty(value.toString());
 		}
-	}
-
-	/**
-	 * Make no instances.
-	 */
-	private Coercion() {
 	}
 
 	static {

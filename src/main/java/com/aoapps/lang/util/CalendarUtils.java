@@ -32,10 +32,10 @@ import java.util.TimeZone;
  *
  * @author  AO Industries, Inc.
  */
-public class CalendarUtils {
+public abstract class CalendarUtils {
 
-	private CalendarUtils() {
-	}
+	/** Make no instances. */
+	private CalendarUtils() {throw new AssertionError();}
 
 	/**
 	 * Formats a date in "YYYY-MM-DD" format.

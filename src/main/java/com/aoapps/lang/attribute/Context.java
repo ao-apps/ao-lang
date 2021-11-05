@@ -37,7 +37,9 @@ import java.util.Enumeration;
  */
 public abstract class Context<C> {
 
-	protected Context() {}
+	protected Context() {
+		// Do nothing
+	}
 
 	/**
 	 * Gets the scope for this context.

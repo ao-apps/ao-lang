@@ -33,9 +33,10 @@ import java.util.concurrent.Callable;
  *
  * @author  AO Industries, Inc.
  */
-public final class ThreadLocale {
+public abstract class ThreadLocale {
 
-	private ThreadLocale() {}
+	/** Make no instances. */
+	private ThreadLocale() {throw new AssertionError();}
 
 	/**
 	 * Gets the current thread's locale or {@linkplain Locale#getDefault() the system default} if not yet set.

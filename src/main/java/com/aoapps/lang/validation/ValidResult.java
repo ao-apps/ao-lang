@@ -43,6 +43,7 @@ public final class ValidResult implements ValidationResult {
 	}
 
 	private ValidResult() {
+		// Do nothing
 	}
 
 	private Object readResolve() {

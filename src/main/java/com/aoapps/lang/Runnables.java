@@ -25,12 +25,10 @@ package com.aoapps.lang;
 /**
  * Utilities for working with {@link Runnable}.
  */
-public final class Runnables {
+public abstract class Runnables {
 
-	/**
-	 * Make no instances.
-	 */
-	private Runnables() {}
+	/** Make no instances. */
+	private Runnables() {throw new AssertionError();}
 
 	/**
 	 * Runs the given {@link Runnable}, catching all {@link Throwable}.

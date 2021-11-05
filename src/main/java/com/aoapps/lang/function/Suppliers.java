@@ -31,9 +31,10 @@ import java.util.function.Supplier;
  * @see Supplier
  * @see SupplierE
  */
-public class Suppliers {
+public abstract class Suppliers {
 
-	private Suppliers() {}
+	/** Make no instances. */
+	private Suppliers() {throw new AssertionError();}
 
 	/**
 	 * Lazily evaluates a set of suppliers, returning the first non-null result or {@link Optional#EMPTY} when no result.

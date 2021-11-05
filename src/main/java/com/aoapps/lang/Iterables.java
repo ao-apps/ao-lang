@@ -31,12 +31,10 @@ package com.aoapps.lang;
  * </p>
  */
 // TODO: @see  Suppliers
-public final class Iterables {
+public abstract class Iterables {
 
-	/**
-	 * Make no instances.
-	 */
-	private Iterables() {}
+	/** Make no instances. */
+	private Iterables() {throw new AssertionError();}
 
 	/**
 	 * An {@link Iterable} over {@link java.lang.Boolean},
@@ -138,12 +136,10 @@ public final class Iterables {
 	 * A set of various {@link Iterable} over common Java types from the <code>java.awt</code> package,
 	 * useful to avoid conflict after type erasure.
 	 */
-	public static final class awt {
+	public abstract static class awt {
 
-		/**
-		 * Make no instances.
-		 */
-		private awt() {}
+		/** Make no instances. */
+		private awt() {throw new AssertionError();}
 
 		/**
 		 * An {@link Iterable} over {@link java.awt.Polygon},
@@ -174,12 +170,10 @@ public final class Iterables {
 	 * A set of various {@link Iterable} over common Java types from the <code>java.util</code> package,
 	 * useful to avoid conflict after type erasure.
 	 */
-	public static final class util {
+	public abstract static class util {
 
-		/**
-		 * Make no instances.
-		 */
-		private util() {}
+		/** Make no instances. */
+		private util() {throw new AssertionError();}
 
 		/**
 		 * An {@link Iterable} over {@link java.util.Currency},

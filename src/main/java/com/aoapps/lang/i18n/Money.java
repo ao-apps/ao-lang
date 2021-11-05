@@ -244,7 +244,14 @@ public final class Money implements FastExternalizable, Comparable<Money> {
 	// <editor-fold defaultstate="collapsed" desc="FastExternalizable">
 	private static final long serialVersionUID = 2287045704444180509L;
 
+	/**
+	 * @deprecated  Only required for implementation, do not use directly.
+	 *
+	 * @see  FastExternalizable
+	 */
+	@Deprecated/* Java 9: (forRemoval = true) */
 	public Money() {
+		// Do nothing
 	}
 
 	@Override

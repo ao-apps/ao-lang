@@ -30,13 +30,10 @@ import java.util.Set;
  *
  * @author  AO Industries, Inc.
  */
-public final class Classes {
+public abstract class Classes {
 
-	/**
-	 * Make no instances.
-	 */
-	private Classes() {
-	}
+	/** Make no instances. */
+	private Classes() {throw new AssertionError();}
 
 	private static <T> void addAllClasses(Set<Class<? extends T>> classes, Set<Class<?>> notAssignable, Class<?> current, Class<T> upperBound) {
 		while(current != null) {

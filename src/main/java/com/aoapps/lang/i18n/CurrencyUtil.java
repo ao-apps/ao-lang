@@ -30,9 +30,10 @@ import java.util.Locale;
  *
  * @author  AO Industries, Inc.
  */
-public class CurrencyUtil {
+public abstract class CurrencyUtil {
 
-	private CurrencyUtil() {}
+	/** Make no instances. */
+	private CurrencyUtil() {throw new AssertionError();}
 
 	/**
 	 * Gets a symbol for a currency in the provided locale, with some extra hard-coded value when the Java

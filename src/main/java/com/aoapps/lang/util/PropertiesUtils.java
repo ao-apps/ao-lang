@@ -38,14 +38,12 @@ import java.util.ResourceBundle;
  * See <a href="https://oss.aoapps.com/servlet-util/apidocs/com.aoapps.servlet.util/com/aoapps/servlet/PropertiesUtils.html">com.aoapps.servlet.PropertiesUtils</a> for use in servlet environment
  * </p>
  */
-public final class PropertiesUtils {
+public abstract class PropertiesUtils {
+
+	/** Make no instances. */
+	private PropertiesUtils() {throw new AssertionError();}
 
 	public static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, PropertiesUtils.class);
-
-	/**
-	 * Make no instances.
-	 */
-	private PropertiesUtils() {}
 
 	/**
 	 * Loads properties from a file.

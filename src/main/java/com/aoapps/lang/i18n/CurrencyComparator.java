@@ -42,6 +42,7 @@ public final class CurrencyComparator implements Comparator<Currency>, Serializa
 	}
 
 	private CurrencyComparator() {
+		// Do nothing
 	}
 
 	private Object readResolve() {

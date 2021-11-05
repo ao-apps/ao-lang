@@ -30,9 +30,10 @@ import java.util.Locale;
  *
  * @author  AO Industries, Inc.
  */
-public final class ThreadLocaleImpl {
+public abstract class ThreadLocaleImpl {
 
-	private ThreadLocaleImpl() {}
+	/** Make no instances. */
+	private ThreadLocaleImpl() {throw new AssertionError();}
 
 	public static final ThreadLocal<Locale> locale = ThreadLocal.withInitial(Locale::getDefault);
 }

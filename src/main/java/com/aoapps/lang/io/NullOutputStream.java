@@ -36,25 +36,31 @@ public final class NullOutputStream extends OutputStream {
 	}
 
 	private NullOutputStream() {
+		// Do nothing
 	}
 
 	@Override
 	public void close() {
+		// Do nothing
 	}
 
 	@Override
 	public void flush() {
+		// Do nothing
 	}
 
 	@Override
 	public void write(byte[] b) {
+		// Do nothing
 	}
 
 	@Override
 	public void write(byte[] b, int off, int len) {
+		// Do nothing
 	}
 
 	@Override
 	public void write(int b) {
+		// Do nothing
 	}
 }

@@ -35,12 +35,10 @@ import java.io.Writer;
 /**
  * I/O utilities.
  */
-public final class IoUtils {
+public abstract class IoUtils {
 
-	/**
-	 * Make no instances.
-	 */
-	private IoUtils() {}
+	/** Make no instances. */
+	private IoUtils() {throw new AssertionError();}
 
 	/**
 	 * copies without flush.

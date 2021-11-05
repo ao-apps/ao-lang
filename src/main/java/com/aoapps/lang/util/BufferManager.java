@@ -61,7 +61,10 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * @author  AO Industries, Inc.
  */
-public final class BufferManager {
+public abstract class BufferManager {
+
+	/** Make no instances. */
+	private BufferManager() {throw new AssertionError();}
 
 	/**
 	 * The size of buffers that are returned.
@@ -71,12 +74,6 @@ public final class BufferManager {
 	private static final ThreadLocal<Deque<SoftReference<byte[]>>> bytes = ThreadLocal.withInitial(ArrayDeque::new);
 
 	private static final ThreadLocal<Deque<SoftReference<char[]>>> chars = ThreadLocal.withInitial(ArrayDeque::new);
-
-	/**
-	 * Make no instances.
-	 */
-	private BufferManager() {
-	}
 
 	/**
 	 * Various statistics

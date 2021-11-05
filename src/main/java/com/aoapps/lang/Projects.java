@@ -40,15 +40,12 @@ import java.util.regex.Pattern;
  *
  * @author  AO Industries, Inc.
  */
-public final class Projects {
+public abstract class Projects {
+
+	/** Make no instances. */
+	private Projects() {throw new AssertionError();}
 
 	private static final Logger logger = Logger.getLogger(Projects.class.getName());
-
-	/**
-	 * Make no instances.
-	 */
-	private Projects() {
-	}
 
 	/**
 	 * Reads the <code>pom.properties</code> from the given input stream.

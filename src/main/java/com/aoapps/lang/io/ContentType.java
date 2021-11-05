@@ -32,12 +32,10 @@ package com.aoapps.lang.io;
 // Related to ao-mime-mappings/…/web-fragment.xml
 // Is ContentType.java
 // Related to MimeType.java
-public final class ContentType {
+public abstract class ContentType {
 
-	/**
-	 * Make no instances.
-	 */
-	private ContentType() {}
+	/** Make no instances. */
+	private ContentType() {throw new AssertionError();}
 
 	/**
 	 * A CSS stylesheet.

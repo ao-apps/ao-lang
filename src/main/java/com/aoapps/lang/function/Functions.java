@@ -31,9 +31,10 @@ import java.util.function.Function;
  * @see Function
  * @see FunctionE
  */
-public class Functions {
+public abstract class Functions {
 
-	private Functions() {}
+	/** Make no instances. */
+	private Functions() {throw new AssertionError();}
 
 	/**
 	 * Lazily evaluates a set of functions, returning the first non-null result or {@link Optional#EMPTY} when no result.

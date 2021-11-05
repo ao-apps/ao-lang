@@ -29,10 +29,10 @@ import java.util.Collection;
  *
  * @author  AO Industries, Inc.
  */
-public class Statistics {
+public abstract class Statistics {
 
-	private Statistics() {
-	}
+	/** Make no instances. */
+	private Statistics() {throw new AssertionError();}
 
 	/**
 	 * Computes the average of a set of samples.  <code>null</code> values will be

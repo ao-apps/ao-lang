@@ -34,11 +34,14 @@ package com.aoapps.lang.time;
  * @deprecated  Please use standard Java 8 classes.
  */
 @Deprecated
-public class Clock {
+public abstract class Clock {
+
+	/** Make no instances. */
+	private Clock() {throw new AssertionError();}
 
 	/**
 	 * Gets the current time with up to millisecond precision.
-	 * 
+	 *
 	 * @see  System#currentTimeMillis()
 	 */
 	public static Instant instant() {
@@ -50,8 +53,5 @@ public class Clock {
 			nanos += 1000000000;
 		}
 		return new Instant(seconds, nanos);
-	}
-
-	private Clock() {
 	}
 }

@@ -27,13 +27,10 @@ package com.aoapps.lang;
  *
  * @author  AO Industries, Inc.
  */
-public final class EnumUtils {
+public abstract class EnumUtils {
 
-	/**
-	 * Make no instances.
-	 */
-	private EnumUtils() {
-	}
+	/** Make no instances. */
+	private EnumUtils() {throw new AssertionError();}
 
 	/**
 	 * Gets the greater of two enums.

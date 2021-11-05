@@ -33,7 +33,10 @@ import java.nio.charset.StandardCharsets;
  * @author  AO Industries, Inc.
  */
 @Deprecated
-public class Charsets {
+public abstract class Charsets {
+
+	/** Make no instances. */
+	private Charsets() {throw new AssertionError();}
 
 	/**
 	 * @deprecated  Use {@link java.nio.charset.StandardCharsets} as of Java 1.7.
@@ -47,10 +50,4 @@ public class Charsets {
 		UTF_16LE   = StandardCharsets.UTF_16LE,
 		UTF_16     = StandardCharsets.UTF_16
 	;
-
-	/**
-	 * Make no instances.
-	 */
-	private Charsets() {
-	}
 }

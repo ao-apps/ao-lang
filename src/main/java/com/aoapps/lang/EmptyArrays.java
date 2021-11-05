@@ -29,10 +29,10 @@ import java.io.Serializable;
  *
  * @author  AO Industries, Inc.
  */
-public class EmptyArrays {
+public abstract class EmptyArrays {
 
-	private EmptyArrays() {
-	}
+	/** Make no instances. */
+	private EmptyArrays() {throw new AssertionError();}
 
 	public static final byte[] EMPTY_BYTE_ARRAY = {};
 	public static final char[] EMPTY_CHAR_ARRAY = {};

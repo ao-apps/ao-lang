@@ -39,7 +39,9 @@ public abstract class Scope<C> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected Scope() {}
+	protected Scope() {
+		// Do nothing
+	}
 
 	/**
 	 * {@link com.aoapps.lang.attribute.Attribute}: Uses the given context within this scope, still needs name.

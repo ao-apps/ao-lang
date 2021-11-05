@@ -39,10 +39,10 @@ import java.util.List;
  *
  * @author  AO Industries, Inc.
  */
-public class GetOpt {
+public abstract class GetOpt {
 
-	private GetOpt() {
-	}
+	/** Make no instances. */
+	private GetOpt() {throw new AssertionError();}
 
 	/**
 	 * Parses a String value to the provided type.

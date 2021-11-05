@@ -27,12 +27,10 @@ import java.util.function.Function;
 /**
  * Utilities for working with {@link AutoCloseable}.
  */
-public final class AutoCloseables {
+public abstract class AutoCloseables {
 
-	/**
-	 * Make no instances.
-	 */
-	private AutoCloseables() {}
+	/** Make no instances. */
+	private AutoCloseables() {throw new AssertionError();}
 
 	/**
 	 * Closes the given {@link AutoCloseable}, catching all {@link Throwable}.

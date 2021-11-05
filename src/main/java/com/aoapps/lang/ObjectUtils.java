@@ -32,13 +32,10 @@ import java.util.Arrays;
  * @author  AO Industries, Inc.
  */
 @Deprecated
-public final class ObjectUtils {
+public abstract class ObjectUtils {
 
-	/**
-	 * Make no instances.
-	 */
-	private ObjectUtils() {
-	}
+	/** Make no instances. */
+	private ObjectUtils() {throw new AssertionError();}
 
 	/**
 	 * Gets {@linkplain Object#hashCode() the hashCode for an object}

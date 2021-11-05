@@ -27,14 +27,14 @@ package com.aoapps.lang.math;
  *
  * @author  AO Industries, Inc.
  */
-public class NullMath {
+public abstract class NullMath {
 
-	private NullMath() {
-	}
+	/** Make no instances. */
+	private NullMath() {throw new AssertionError();}
 
 	/**
 	 * Adds two integers together while allowing null.
-	 * 
+	 *
 	 * @return  the sum or null when both arguments are null
 	 */
 	public static Integer add(Integer i1, Integer i2) {
@@ -55,7 +55,7 @@ public class NullMath {
 
 	/**
 	 * Subtractions one integers from another while allowing null.
-	 * 
+	 *
 	 * @return  the difference or null when both arguments are null
 	 */
 	public static Integer sub(Integer i1, Integer i2) {

@@ -42,22 +42,27 @@ public final class NullPrintWriter extends PrintWriter {
 
 	@Override
 	public void write(int c) {
+		// Do nothing
 	}
 
 	@Override
 	public void write(char[] cbuf) {
+		// Do nothing
 	}
 
 	@Override
 	public void write(char[] cbuf, int off, int len) {
+		// Do nothing
 	}
 
 	@Override
 	public void write(String str) {
+		// Do nothing
 	}
 
 	@Override
 	public void write(String str, int off, int len) {
+		// Do nothing
 	}
 
 	@Override
@@ -77,10 +82,12 @@ public final class NullPrintWriter extends PrintWriter {
 
 	@Override
 	public void flush() {
+		// Do nothing
 	}
 
 	@Override
 	public void close() {
+		// Do nothing
 	}
 
 	@Override
@@ -95,82 +102,102 @@ public final class NullPrintWriter extends PrintWriter {
 
 	@Override
 	protected void clearError() {
+		// Do nothing
 	}
 
 	@Override
 	public void print(boolean b) {
+		// Do nothing
 	}
 
 	@Override
 	public void print(char c) {
+		// Do nothing
 	}
 
 	@Override
 	public void print(int i) {
+		// Do nothing
 	}
 
 	@Override
 	public void print(long l) {
+		// Do nothing
 	}
 
 	@Override
 	public void print(float f) {
+		// Do nothing
 	}
 
 	@Override
 	public void print(double d) {
+		// Do nothing
 	}
 
 	@Override
 	public void print(char[] s) {
+		// Do nothing
 	}
 
 	@Override
 	public void print(String s) {
+		// Do nothing
 	}
 
 	@Override
 	public void print(Object obj) {
+		// Do nothing
 	}
 
 	@Override
 	public void println() {
+		// Do nothing
 	}
 
 	@Override
 	public void println(boolean x) {
+		// Do nothing
 	}
 
 	@Override
 	public void println(char x) {
+		// Do nothing
 	}
 
 	@Override
 	public void println(int x) {
+		// Do nothing
 	}
 
 	@Override
 	public void println(long x) {
+		// Do nothing
 	}
 
 	@Override
 	public void println(float x) {
+		// Do nothing
 	}
 
 	@Override
 	public void println(double x) {
+		// Do nothing
 	}
 
 	@Override
 	public void println(char[] x) {
+		// Do nothing
 	}
 
 	@Override
 	public void println(String x) {
+		// Do nothing
 	}
 
 	@Override
 	public void println(Object x) {
+		// Do nothing
 	}
 
 	@Override
