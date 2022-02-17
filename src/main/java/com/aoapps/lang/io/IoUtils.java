@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2015, 2016, 2017, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2013, 2015, 2016, 2017, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -146,7 +146,6 @@ public abstract class IoUtils {
 	/**
 	 * readFully for any stream.
 	 */
-	// @ThreadSafe
 	public static void readFully(InputStream in, byte[] buffer) throws IOException {
 		readFully(in, buffer, 0, buffer.length);
 	}
@@ -154,7 +153,6 @@ public abstract class IoUtils {
 	/**
 	 * readFully for any stream.
 	 */
-	// @ThreadSafe
 	public static void readFully(InputStream in, byte[] buffer, int off, int len) throws IOException {
 		while(len>0) {
 			int count = in.read(buffer, off, len);
@@ -209,19 +207,16 @@ public abstract class IoUtils {
 	}
 
 	// <editor-fold desc="byte[] manipulation methods">
-	// @ThreadSafe
 	public static void charToBuffer(char ch, byte[] ioBuffer) {
 		ioBuffer[0] = (byte)(ch >>> Byte.SIZE);
 		ioBuffer[1] = (byte) ch;
 	}
 
-	// @ThreadSafe
 	public static void charToBuffer(char ch, byte[] ioBuffer, int off) {
 		ioBuffer[off    ] = (byte)(ch >>> Byte.SIZE);
 		ioBuffer[off + 1] = (byte) ch;
 	}
 
-	// @ThreadSafe
 	public static char bufferToChar(byte[] ioBuffer) {
 		return
 			(char)(
@@ -231,7 +226,6 @@ public abstract class IoUtils {
 		;
 	}
 
-	// @ThreadSafe
 	public static char bufferToChar(byte[] ioBuffer, int off) {
 		return
 			(char)(
@@ -241,19 +235,16 @@ public abstract class IoUtils {
 		;
 	}
 
-	// @ThreadSafe
 	public static void shortToBuffer(short s, byte[] ioBuffer) {
 		ioBuffer[0] = (byte)(s >>> Byte.SIZE);
 		ioBuffer[1] = (byte) s;
 	}
 
-	// @ThreadSafe
 	public static void shortToBuffer(short s, byte[] ioBuffer, int off) {
 		ioBuffer[off    ] = (byte)(s >>> Byte.SIZE);
 		ioBuffer[off + 1] = (byte) s;
 	}
 
-	// @ThreadSafe
 	public static short bufferToShort(byte[] ioBuffer) {
 		return
 			(short)(
@@ -263,7 +254,6 @@ public abstract class IoUtils {
 		;
 	}
 
-	// @ThreadSafe
 	public static short bufferToShort(byte[] ioBuffer, int off) {
 		return
 			(short)(
@@ -273,7 +263,6 @@ public abstract class IoUtils {
 		;
 	}
 
-	// @ThreadSafe
 	public static void intToBuffer(int i, byte[] ioBuffer) {
 		ioBuffer[0] = (byte)(i >>> (Byte.SIZE * 3));
 		ioBuffer[1] = (byte)(i >>> (Byte.SIZE * 2));
@@ -281,7 +270,6 @@ public abstract class IoUtils {
 		ioBuffer[3] = (byte) i;
 	}
 
-	// @ThreadSafe
 	public static void intToBuffer(int i, byte[] ioBuffer, int off) {
 		ioBuffer[off    ] = (byte)(i >>> (Byte.SIZE * 3));
 		ioBuffer[off + 1] = (byte)(i >>> (Byte.SIZE * 2));
@@ -289,7 +277,6 @@ public abstract class IoUtils {
 		ioBuffer[off + 3] = (byte) i;
 	}
 
-	// @ThreadSafe
 	public static int bufferToInt(byte[] ioBuffer) {
 		return
 			  ( ioBuffer[0]         << (Byte.SIZE * 3))
@@ -299,7 +286,6 @@ public abstract class IoUtils {
 		;
 	}
 
-	// @ThreadSafe
 	public static int bufferToInt(byte[] ioBuffer, int off) {
 		return
 			  ( ioBuffer[off]             << (Byte.SIZE * 3))
@@ -309,7 +295,6 @@ public abstract class IoUtils {
 		;
 	}
 
-	// @ThreadSafe
 	public static void longToBuffer(long l, byte[] ioBuffer) {
 		ioBuffer[0] = (byte)(l >>> (Byte.SIZE * 7));
 		ioBuffer[1] = (byte)(l >>> (Byte.SIZE * 6));
@@ -321,7 +306,6 @@ public abstract class IoUtils {
 		ioBuffer[7] = (byte) l;
 	}
 
-	// @ThreadSafe
 	public static void longToBuffer(long l, byte[] ioBuffer, int off) {
 		ioBuffer[off    ] = (byte)(l >>> (Byte.SIZE * 7));
 		ioBuffer[off + 1] = (byte)(l >>> (Byte.SIZE * 6));
@@ -333,7 +317,6 @@ public abstract class IoUtils {
 		ioBuffer[off + 7] = (byte) l;
 	}
 
-	// @ThreadSafe
 	public static long bufferToLong(byte[] ioBuffer) {
 		return
 			  ((ioBuffer[0] & 0xffL) << (Byte.SIZE * 7))
@@ -347,7 +330,6 @@ public abstract class IoUtils {
 		;
 	}
 
-	// @ThreadSafe
 	public static long bufferToLong(byte[] ioBuffer, int off) {
 		return
 			  ((ioBuffer[off    ] & 0xffL) << (Byte.SIZE * 7))
