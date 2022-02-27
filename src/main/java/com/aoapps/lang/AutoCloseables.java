@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -27,7 +27,7 @@ import java.util.function.Function;
 /**
  * Utilities for working with {@link AutoCloseable}.
  */
-public abstract class AutoCloseables {
+public final class AutoCloseables {
 
 	/** Make no instances. */
 	private AutoCloseables() {throw new AssertionError();}

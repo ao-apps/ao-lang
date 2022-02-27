@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2016, 2017, 2021  AO Industries, Inc.
+ * Copyright (C) 2013, 2016, 2017, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -25,7 +25,7 @@ package com.aoapps.lang.util;
 /**
  * @author  AO Industries, Inc.
  */
-public abstract class InternUtils {
+public final class InternUtils {
 
 	/** Make no instances. */
 	private InternUtils() {throw new AssertionError();}

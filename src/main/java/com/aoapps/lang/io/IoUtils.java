@@ -35,7 +35,7 @@ import java.io.Writer;
 /**
  * I/O utilities.
  */
-public abstract class IoUtils {
+public final class IoUtils {
 
 	/** Make no instances. */
 	private IoUtils() {throw new AssertionError();}

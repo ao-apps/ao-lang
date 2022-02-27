@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021  AO Industries, Inc.
+ * Copyright (C) 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -31,7 +31,7 @@ import java.util.function.Supplier;
  * @see Supplier
  * @see SupplierE
  */
-public abstract class Suppliers {
+public final class Suppliers {
 
 	/** Make no instances. */
 	private Suppliers() {throw new AssertionError();}

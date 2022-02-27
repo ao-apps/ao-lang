@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -32,7 +32,7 @@ package com.aoapps.lang.io;
 // Related to ao-mime-mappings/…/web-fragment.xml
 // Is ContentType.java
 // Related to MimeType.java
-public abstract class ContentType {
+public final class ContentType {
 
 	/** Make no instances. */
 	private ContentType() {throw new AssertionError();}

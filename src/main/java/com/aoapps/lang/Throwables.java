@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -35,7 +35,7 @@ import java.util.function.Function;
  * Utilities for working with {@link Throwable}.
  */
 // TODO: Automatically use cause from InvocationTargetException, javax.management.ReflectionException, and WrappedException, when cause is Error, Runtime, or assignable to X?
-public abstract class Throwables {
+public final class Throwables {
 
 	/** Make no instances. */
 	private Throwables() {throw new AssertionError();}

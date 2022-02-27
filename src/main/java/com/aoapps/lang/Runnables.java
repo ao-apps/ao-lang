@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -25,7 +25,7 @@ package com.aoapps.lang;
 /**
  * Utilities for working with {@link Runnable}.
  */
-public abstract class Runnables {
+public final class Runnables {
 
 	/** Make no instances. */
 	private Runnables() {throw new AssertionError();}

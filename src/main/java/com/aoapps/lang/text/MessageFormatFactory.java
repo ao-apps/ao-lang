@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2013, 2016, 2017, 2019, 2021  AO Industries, Inc.
+ * Copyright (C) 2011, 2013, 2016, 2017, 2019, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -47,7 +47,7 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @author  AO Industries, Inc.
  */
-public abstract class MessageFormatFactory {
+public final class MessageFormatFactory {
 
 	/** Make no instances. */
 	private MessageFormatFactory() {throw new AssertionError();}

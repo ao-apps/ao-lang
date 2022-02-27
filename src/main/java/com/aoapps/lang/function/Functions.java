@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021  AO Industries, Inc.
+ * Copyright (C) 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -31,7 +31,7 @@ import java.util.function.Function;
  * @see Function
  * @see FunctionE
  */
-public abstract class Functions {
+public final class Functions {
 
 	/** Make no instances. */
 	private Functions() {throw new AssertionError();}

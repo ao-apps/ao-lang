@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -31,14 +31,14 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @author  AO Industries, Inc.
  */
-public abstract class Locales {
+public final class Locales {
 
 	/** Make no instances. */
 	private Locales() {throw new AssertionError();}
 
 	// Was getting NullPointerException on class init, trying cache in separate class.
 	// It might have been due to memory exhausted in Tomcat, but this won't hurt.
-	private abstract static class LocaleCache {
+	private final static class LocaleCache {
 
 		/** Make no instances. */
 		private LocaleCache() {throw new AssertionError();}

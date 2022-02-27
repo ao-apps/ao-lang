@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2016, 2017, 2021  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2016, 2017, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -29,7 +29,7 @@ import java.util.Collection;
  *
  * @author  AO Industries, Inc.
  */
-public abstract class Statistics {
+public final class Statistics {
 
 	/** Make no instances. */
 	private Statistics() {throw new AssertionError();}

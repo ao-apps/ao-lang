@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -31,7 +31,7 @@ package com.aoapps.lang;
  * </p>
  */
 // TODO: @see  Suppliers
-public abstract class Iterables {
+public final class Iterables {
 
 	/** Make no instances. */
 	private Iterables() {throw new AssertionError();}
@@ -136,7 +136,7 @@ public abstract class Iterables {
 	 * A set of various {@link Iterable} over common Java types from the <code>java.awt</code> package,
 	 * useful to avoid conflict after type erasure.
 	 */
-	public abstract static class awt {
+	public final static class awt {
 
 		/** Make no instances. */
 		private awt() {throw new AssertionError();}
@@ -170,7 +170,7 @@ public abstract class Iterables {
 	 * A set of various {@link Iterable} over common Java types from the <code>java.util</code> package,
 	 * useful to avoid conflict after type erasure.
 	 */
-	public abstract static class util {
+	public final static class util {
 
 		/** Make no instances. */
 		private util() {throw new AssertionError();}

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2013, 2016, 2017, 2018, 2019, 2021  AO Industries, Inc.
+ * Copyright (C) 2012, 2013, 2016, 2017, 2018, 2019, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -33,7 +33,7 @@ import java.nio.charset.StandardCharsets;
  * @author  AO Industries, Inc.
  */
 @Deprecated
-public abstract class Charsets {
+public final class Charsets {
 
 	/** Make no instances. */
 	private Charsets() {throw new AssertionError();}

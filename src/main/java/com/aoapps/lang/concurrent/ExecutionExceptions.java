@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -29,7 +29,7 @@ import java.util.function.BiFunction;
 /**
  * Utilities for working with {@link ExecutionException}.
  */
-public abstract class ExecutionExceptions {
+public final class ExecutionExceptions {
 
 	/** Make no instances. */
 	private ExecutionExceptions() {throw new AssertionError();}

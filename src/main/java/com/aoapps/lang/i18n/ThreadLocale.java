@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2016, 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2016, 2017, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -33,7 +33,7 @@ import java.util.concurrent.Callable;
  *
  * @author  AO Industries, Inc.
  */
-public abstract class ThreadLocale {
+public final class ThreadLocale {
 
 	/** Make no instances. */
 	private ThreadLocale() {throw new AssertionError();}

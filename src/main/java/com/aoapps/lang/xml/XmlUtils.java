@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -51,7 +51,7 @@ import org.xml.sax.SAXException;
  *
  * @author  AO Industries, Inc.
  */
-public abstract class XmlUtils {
+public final class XmlUtils {
 
 	/** Make no instances. */
 	private XmlUtils() {throw new AssertionError();}
