@@ -38,7 +38,7 @@ public final class Locales {
 
 	// Was getting NullPointerException on class init, trying cache in separate class.
 	// It might have been due to memory exhausted in Tomcat, but this won't hurt.
-	private final static class LocaleCache {
+	private static final class LocaleCache {
 
 		/** Make no instances. */
 		private LocaleCache() {throw new AssertionError();}

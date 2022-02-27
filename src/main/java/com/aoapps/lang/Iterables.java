@@ -136,7 +136,7 @@ public final class Iterables {
 	 * A set of various {@link Iterable} over common Java types from the <code>java.awt</code> package,
 	 * useful to avoid conflict after type erasure.
 	 */
-	public final static class awt {
+	public static final class awt {
 
 		/** Make no instances. */
 		private awt() {throw new AssertionError();}
@@ -170,7 +170,7 @@ public final class Iterables {
 	 * A set of various {@link Iterable} over common Java types from the <code>java.util</code> package,
 	 * useful to avoid conflict after type erasure.
 	 */
-	public final static class util {
+	public static final class util {
 
 		/** Make no instances. */
 		private util() {throw new AssertionError();}

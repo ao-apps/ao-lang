@@ -87,7 +87,7 @@ public class LongLong extends Number implements Comparable<LongLong> {
 	private static final int CACHE_MIN = -128;
 	private static final int CACHE_MAX = 127;
 
-	private final static class LongLongCache {
+	private static final class LongLongCache {
 
 		/** Make no instances. */
 		private LongLongCache() {throw new AssertionError();}
