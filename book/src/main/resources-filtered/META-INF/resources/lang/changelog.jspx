@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-05:00"
-		dateModified="2022-02-15T18:36:22-06:00"
+		dateModified="2022-03-25T23:49:44-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -47,7 +47,11 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 				artifactId="@{documented.artifactId}"
 				repository="@{nexusUrl}content/repositories/snapshots/"
 				scmUrl="@{project.scm.url}"
-			/>
+			>
+				<ul>
+					<li>New exception type <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/LocalizedUnsupportedOperationException.html">LocalizedUnsupportedOperationException</ao:a></code>.</li>
+				</ul>
+			</changelog:release>
 		</c:if>
 
 		<changelog:release
