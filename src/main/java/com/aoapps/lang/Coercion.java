@@ -150,8 +150,8 @@ public final class Coercion {
 	 * Optimizes the given writer.
 	 */
 	private static Writer optimize(Writer out, Encoder encoder) throws IOException {
+		Writer newOut = out;
 		while(true) {
-			Writer newOut = out;
 			for(CoercionOptimizer optimizer : optimizers) {
 				newOut = optimizer.optimize(newOut, encoder);
 			}
