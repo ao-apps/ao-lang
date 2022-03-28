@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2015, 2016, 2017, 2021  AO Industries, Inc.
+ * Copyright (C) 2015, 2016, 2017, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -58,6 +58,28 @@ public interface Encoder {
 	 * This should also flush any internal buffers to <code>out</code>.  It
 	 * should not, however, call flush on <code>out</code> itself.  This is
 	 * to not interfere with any output buffering of <code>out</code>.
+	 * <p>
+	 * The internal buffer is always clear for re-use, even when an exception is thrown.
+	 * </p>
+	 *
+	 * @deprecated  Please use {@link #writeSuffixTo(java.lang.Appendable, boolean)} while specifying desired trim.
 	 */
+	@Deprecated
 	void writeSuffixTo(Appendable out) throws IOException;
+
+	/**
+	 * This is called when no more data will be written.
+	 * This should also flush any internal buffers to <code>out</code>.  It
+	 * should not, however, call flush on <code>out</code> itself.  This is
+	 * to not interfere with any output buffering of <code>out</code>.
+	 * <p>
+	 * The internal buffer is always clear for re-use, even when an exception is thrown.
+	 * </p>
+	 *
+	 * @param  trim  Requests that the buffer be trimmed, if buffered and trim supported.
+	 */
+	default void writeSuffixTo(Appendable out, boolean trim) throws IOException {
+		// Default to no trim supported implementation for API compatibility
+		writeSuffixTo(out);
+	}
 }

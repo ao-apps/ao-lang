@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-05:00"
-		dateModified="2022-03-25T23:49:44-05:00"
+		dateModified="2022-03-28T02:57:19-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -50,6 +50,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 			>
 				<ul>
 					<li>New exception type <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/LocalizedUnsupportedOperationException.html">LocalizedUnsupportedOperationException</ao:a></code>.</li>
+					<li>Encoder suffix and validate now accept optional trim, when trimmed, validation is applied after trimming.</li>
 				</ul>
 			</changelog:release>
 		</c:if>

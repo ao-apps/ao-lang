@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2015, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2015, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -107,8 +107,20 @@ public class EncoderWriter extends FilterWriter {
 
 	/**
 	 * See <a href="https://oss.aoapps.com/encoding/apidocs/com.aoapps.encoding/com/aoapps/encoding/MediaEncoder.html#writeSuffixTo(java.lang.Appendable)">MediaEncoder.writeSuffixTo(java.lang.Appendable)</a>
+	 *
+	 * @deprecated  Please use {@link #writeSuffix(boolean)} while specifying desired trim.
 	 */
-	public void writeSuffix() throws IOException {
-		encoder.writeSuffixTo(out);
+	@Deprecated
+	public final void writeSuffix() throws IOException {
+		writeSuffix(false);
+	}
+
+	/**
+	 * See <a href="https://oss.aoapps.com/encoding/apidocs/com.aoapps.encoding/com/aoapps/encoding/MediaEncoder.html#writeSuffixTo(java.lang.Appendable,boolean)">MediaEncoder.writeSuffixTo(java.lang.Appendable, boolean)</a>
+	 *
+	 * @param  trim  Requests that the buffer be trimmed, if buffered and trim supported.
+	 */
+	public void writeSuffix(boolean trim) throws IOException {
+		encoder.writeSuffixTo(out, trim);
 	}
 }
