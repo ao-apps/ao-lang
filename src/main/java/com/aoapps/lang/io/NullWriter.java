@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2016, 2017, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2012, 2016, 2017, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -28,7 +28,7 @@ import java.io.Writer;
  * Discards all data.
  */
 // Java 11: Deprecate in favor of Writer.nullWriter()
-public final class NullWriter extends Writer {
+public final class NullWriter extends Writer implements NoClose {
 
 	private static final NullWriter instance = new NullWriter();
 

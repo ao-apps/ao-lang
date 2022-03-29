@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2019, 2021  AO Industries, Inc.
+ * Copyright (C) 2019, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,14 +23,23 @@
 package com.aoapps.lang.io;
 
 import java.io.FilterReader;
-import java.io.IOException;
 import java.io.Reader;
 
 /**
  * Overrides {@link #close()} to a no-op.
  */
-public class NoCloseReader extends FilterReader {
+public class NoCloseReader extends FilterReader implements NoClose {
 
+	@SuppressWarnings("unchecked")
+	public static <R extends Reader & NoClose> R wrap(Reader in) {
+		if(in instanceof NoClose) return (R)in;
+		return (R)new NoCloseReader(in);
+	}
+
+	/**
+	 * @deprecated  Please use {@link #wrap(java.io.Reader)} to skip wrapping when possible.
+	 */
+	@Deprecated
 	public NoCloseReader(Reader in) {
 		super(in);
 	}
@@ -39,7 +48,7 @@ public class NoCloseReader extends FilterReader {
 	 * Does not close the wrapped reader.
 	 */
 	@Override
-	public void close() throws IOException {
+	public void close() {
 		// Do nothing
 	}
 }

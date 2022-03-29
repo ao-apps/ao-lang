@@ -147,9 +147,11 @@ public final class Coercion {
 	}
 
 	/**
-	 * Optimizes the given writer.
+	 * Optimizes the given writer by passing through {@link CoercionOptimizer#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 * on all {@linkplain #registerOptimizer(com.aoapps.lang.CoercionOptimizer) registered coercion optimizers} until
+	 * there are no replacements.
 	 */
-	private static Writer optimize(Writer out, Encoder encoder) throws IOException {
+	public static Writer optimize(Writer out, Encoder encoder) {
 		Writer newOut = out;
 		while(true) {
 			for(CoercionOptimizer optimizer : optimizers) {
@@ -162,7 +164,8 @@ public final class Coercion {
 	}
 
 	/**
-	 * Optimizes the given appendable.
+	 * Optimizes the given appendable by dispatching to {@link #optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 * when it is a {@link Writer}.
 	 * <p>
 	 * There is currently no implementation of appendable-specific unwrapping,
 	 * but this is here for consistency with the writer unwrapping.
@@ -170,7 +173,7 @@ public final class Coercion {
 	 *
 	 * @see  #optimize(java.io.Writer, com.aoapps.lang.io.Encoder)
 	 */
-	private static Appendable optimize(Appendable out, Encoder encoder) throws IOException {
+	public static Appendable optimize(Appendable out, Encoder encoder) {
 		if(out instanceof Writer) return optimize((Writer)out, encoder);
 		return out;
 	}
@@ -202,36 +205,37 @@ public final class Coercion {
 			if(out instanceof EncoderWriter) {
 				// Unwrap media writer and use encoder directly
 				EncoderWriter encoderWriter = (EncoderWriter)out;
-				write(
+				writeImpl(
 					value,
 					encoderWriter.getEncoder(),
-					encoderWriter.getOut()
+					encoderWriter.getOut(),
+					true // EncoderWriter always optimizes out
 				);
 			} else {
 				// Optimize output
-				out = optimize(out, null);
+				Writer optimized = optimize(out, null);
 				if(value instanceof String) {
 					// If A is a string, then the result is A.
-					out.write((String)value);
+					optimized.write((String)value);
 				} else if(value instanceof Writable) {
 					// If is a Writable, support optimizations
 					Writable writable = (Writable)value;
 					if(writable.isFastToString()) {
-						out.write(writable.toString());
+						optimized.write(writable.toString());
 					} else {
 						// Avoid intermediate String from Writable
-						writable.writeTo(out);
+						writable.writeTo(optimized);
 					}
 				} else if(value instanceof Segment) {
 					// Support Segment
 					Segment s = (Segment)value;
-					out.write(s.array, s.offset, s.count);
+					optimized.write(s.array, s.offset, s.count);
 				} else if(value instanceof CharSequence) {
 					// Support CharSequence
-					out.append((CharSequence)value);
+					optimized.append((CharSequence)value);
 				} else if(value instanceof char[]) {
 					// Support char[]
-					out.write((char[])value);
+					optimized.write((char[])value);
 				} else if(value instanceof Node) {
 					// If is a DOM node, serialize the output
 					try {
@@ -251,7 +255,7 @@ public final class Coercion {
 						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
 						transformer.transform(
 							new DOMSource((Node)value),
-							new StreamResult(out)
+							new StreamResult(optimized)
 						);
 					} catch(TransformerException e) {
 						throw new IOException(e);
@@ -259,7 +263,7 @@ public final class Coercion {
 				} else {
 					// If A.toString() throws an exception, then raise an error
 					// Otherwise, the result is A.toString();
-					out.write(value.toString());
+					optimized.write(value.toString());
 				}
 			}
 		}
@@ -284,6 +288,13 @@ public final class Coercion {
 	 * @param  encoder  if null, no encoding is performed - write through
 	 */
 	public static void write(Object value, Encoder encoder, Writer out) throws IOException {
+		writeImpl(value, encoder, out, false);
+	}
+
+	/**
+	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+	 */
+	private static void writeImpl(Object value, Encoder encoder, Writer out, boolean outOptimized) throws IOException {
 		if(encoder == null) {
 			write(value, out);
 		} else {
@@ -294,30 +305,36 @@ public final class Coercion {
 			// If A is null, then the result is "".
 			if(value != null) {
 				// Optimize output
-				out = optimize(out, encoder);
+				Writer optimized;
+				if(outOptimized) {
+					optimized = out;
+					assert optimized == optimize(out, encoder);
+				} else {
+					optimized = optimize(out, encoder);
+				}
 				// Write through the given encoder
 				if(value instanceof String) {
 					// If A is a string, then the result is A.
-					encoder.write((String)value, out);
+					encoder.write((String)value, optimized);
 				} else if(value instanceof Writable) {
 					// If is a Writable, support optimizations
 					Writable writable = (Writable)value;
 					if(writable.isFastToString()) {
-						encoder.write(writable.toString(), out);
+						encoder.write(writable.toString(), optimized);
 					} else {
 						// Avoid intermediate String from Writable
-						writable.writeTo(encoder, out);
+						writable.writeTo(encoder, optimized);
 					}
 				} else if(value instanceof Segment) {
 					// Support Segment
 					Segment s = (Segment)value;
-					encoder.write(s.array, s.offset, s.count, out);
+					encoder.write(s.array, s.offset, s.count, optimized);
 				} else if(value instanceof CharSequence) {
 					// Support CharSequence
-					encoder.append((CharSequence)value, out);
+					encoder.append((CharSequence)value, optimized);
 				} else if(value instanceof char[]) {
 					// Support char[]
-					encoder.write((char[])value, out);
+					encoder.write((char[])value, optimized);
 				} else if(value instanceof Node) {
 					// If is a DOM node, serialize the output
 					try {
@@ -337,7 +354,7 @@ public final class Coercion {
 						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
 						transformer.transform(
 							new DOMSource((Node)value),
-							new StreamResult(new EncoderWriter(encoder, out))
+							new StreamResult(new EncoderWriter(encoder, optimized, true))
 						);
 					} catch(TransformerException e) {
 						throw new IOException(e);
@@ -345,7 +362,7 @@ public final class Coercion {
 				} else {
 					// If A.toString() throws an exception, then raise an error
 					// Otherwise, the result is A.toString();
-					encoder.write(value.toString(), out);
+					encoder.write(value.toString(), optimized);
 				}
 			}
 		}
@@ -378,27 +395,27 @@ public final class Coercion {
 			// If A is null, then the result is "".
 			if(value != null) {
 				// Optimize output
-				out = optimize(out, null);
+				Appendable optimized = optimize(out, null);
 				if(value instanceof String) {
 					// If A is a string, then the result is A.
-					out.append((String)value);
+					optimized.append((String)value);
 				} else if(value instanceof Writable) {
 					// If is a Writable, support optimizations
 					Writable writable = (Writable)value;
 					if(writable.isFastToString()) {
-						out.append(writable.toString());
+						optimized.append(writable.toString());
 					} else {
 						// Avoid intermediate String from Writable
-						writable.appendTo(out);
+						writable.appendTo(optimized);
 					}
 				} else if(value instanceof CharSequence) {
 					// Support Segment and CharSequence
-					out.append((CharSequence)value);
+					optimized.append((CharSequence)value);
 				} else if(value instanceof char[]) {
 					// Support char[]
 					char[] chs = (char[])value;
 					int chsLen = chs.length;
-					if(chsLen > 0) out.append(new Segment(chs, 0, chsLen));
+					if(chsLen > 0) optimized.append(new Segment(chs, 0, chsLen));
 				} else if(value instanceof Node) {
 					// If is a DOM node, serialize the output
 					try {
@@ -418,7 +435,7 @@ public final class Coercion {
 						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
 						transformer.transform(
 							new DOMSource((Node)value),
-							new StreamResult(AppendableWriter.wrap(out))
+							new StreamResult(AppendableWriter.wrap(optimized))
 						);
 					} catch(TransformerException e) {
 						throw new IOException(e);
@@ -426,7 +443,7 @@ public final class Coercion {
 				} else {
 					// If A.toString() throws an exception, then raise an error
 					// Otherwise, the result is A.toString();
-					out.append(value.toString());
+					optimized.append(value.toString());
 				}
 			}
 		}
@@ -454,7 +471,7 @@ public final class Coercion {
 		if(encoder == null) {
 			append(value, out);
 		} else if(out instanceof Writer) {
-			write(value, encoder, (Writer)out);
+			writeImpl(value, encoder, (Writer)out, false);
 		} else {
 			// Support Optional
 			while(value instanceof Optional) {
@@ -463,28 +480,28 @@ public final class Coercion {
 			// If A is null, then the result is "".
 			if(value != null) {
 				// Optimize output
-				out = optimize(out, encoder);
+				Appendable optimized = optimize(out, encoder);
 				// Write through the given encoder
 				if(value instanceof String) {
 					// If A is a string, then the result is A.
-					encoder.append((String)value, out);
+					encoder.append((String)value, optimized);
 				} else if(value instanceof Writable) {
 					// If is a Writable, support optimizations
 					Writable writable = (Writable)value;
 					if(writable.isFastToString()) {
-						encoder.append(writable.toString(), out);
+						encoder.append(writable.toString(), optimized);
 					} else {
 						// Avoid intermediate String from Writable
-						writable.appendTo(encoder, out);
+						writable.appendTo(encoder, optimized);
 					}
 				} else if(value instanceof CharSequence) {
 					// Support Segment and CharSequence
-					encoder.append((CharSequence)value, out);
+					encoder.append((CharSequence)value, optimized);
 				} else if(value instanceof char[]) {
 					// Support char[]
 					char[] chs = (char[])value;
 					int chsLen = chs.length;
-					if(chsLen > 0) encoder.append(new Segment(chs, 0, chsLen), out);
+					if(chsLen > 0) encoder.append(new Segment(chs, 0, chsLen), optimized);
 				} else if(value instanceof Node) {
 					// If is a DOM node, serialize the output
 					try {
@@ -504,7 +521,7 @@ public final class Coercion {
 						transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
 						transformer.transform(
 							new DOMSource((Node)value),
-							new StreamResult(new EncoderWriter(encoder, AppendableWriter.wrap(out)))
+							new StreamResult(new EncoderWriter(encoder, AppendableWriter.wrap(optimized), true))
 						);
 					} catch(TransformerException e) {
 						throw new IOException(e);
@@ -512,7 +529,7 @@ public final class Coercion {
 				} else {
 					// If A.toString() throws an exception, then raise an error
 					// Otherwise, the result is A.toString();
-					encoder.append(value.toString(), out);
+					encoder.append(value.toString(), optimized);
 				}
 			}
 		}

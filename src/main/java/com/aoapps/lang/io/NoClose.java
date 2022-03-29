@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2017, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,45 +22,26 @@
  */
 package com.aoapps.lang.io;
 
-import java.io.OutputStream;
+import java.io.Closeable;
+import java.io.IOException;
 
 /**
- * Discards all data.
+ * Indicates that {@link #close()} is overridden to be a no-op.
+ * This facilitates avoiding duplicate wrapping to close protection.
+ *
+ * @see  NoCloseInputStream#wrap(java.io.InputStream)
+ * @see  NoCloseOutputStream#wrap(java.io.OutputStream)
+ * @see  NoCloseReader#wrap(java.io.Reader)
+ * @see  NoCloseWriter#wrap(java.io.Writer)
+ * @see  NullOutputStream#getInstance()
+ * @see  NullPrintWriter#getInstance()
+ * @see  NullWriter#getInstance()
  */
-public final class NullOutputStream extends OutputStream implements NoClose {
+public interface NoClose extends Closeable {
 
-	private static final NullOutputStream instance = new NullOutputStream();
-
-	public static NullOutputStream getInstance() {
-		return instance;
-	}
-
-	private NullOutputStream() {
-		// Do nothing
-	}
-
+	/**
+	 * Calls to close are ignored.
+	 */
 	@Override
-	public void close() {
-		// Do nothing
-	}
-
-	@Override
-	public void flush() {
-		// Do nothing
-	}
-
-	@Override
-	public void write(byte[] b) {
-		// Do nothing
-	}
-
-	@Override
-	public void write(byte[] b, int off, int len) {
-		// Do nothing
-	}
-
-	@Override
-	public void write(int b) {
-		// Do nothing
-	}
+	void close() throws IOException;
 }

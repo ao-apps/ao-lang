@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2019, 2021  AO Industries, Inc.
+ * Copyright (C) 2019, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,14 +23,23 @@
 package com.aoapps.lang.io;
 
 import java.io.FilterInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
  * Overrides {@link #close()} to a no-op.
  */
-public class NoCloseInputStream extends FilterInputStream {
+public class NoCloseInputStream extends FilterInputStream implements NoClose {
 
+	@SuppressWarnings("unchecked")
+	public static <I extends InputStream & NoClose> I wrap(InputStream in) {
+		if(in instanceof NoClose) return (I)in;
+		return (I)new NoCloseInputStream(in);
+	}
+
+	/**
+	 * @deprecated  Please use {@link #wrap(java.io.InputStream)} to skip wrapping when possible.
+	 */
+	@Deprecated
 	public NoCloseInputStream(InputStream in) {
 		super(in);
 	}
@@ -39,7 +48,7 @@ public class NoCloseInputStream extends FilterInputStream {
 	 * Does not close the wrapped stream.
 	 */
 	@Override
-	public void close() throws IOException {
+	public void close() {
 		// Do nothing
 	}
 }

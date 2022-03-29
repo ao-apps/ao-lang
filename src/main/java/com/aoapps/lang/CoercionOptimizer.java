@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021  AO Industries, Inc.
+ * Copyright (C) 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,7 +23,6 @@
 package com.aoapps.lang;
 
 import com.aoapps.lang.io.Encoder;
-import java.io.IOException;
 import java.io.Writer;
 
 /**
@@ -48,5 +47,5 @@ public interface CoercionOptimizer {
 	 * @return  The functionally equivalent, but more efficient/direct, writer
 	 *          or {@code out} when nothing to unwrap
 	 */
-	Writer optimize(Writer out, Encoder encoder) throws IOException;
+	Writer optimize(Writer out, Encoder encoder);
 }

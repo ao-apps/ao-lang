@@ -22,6 +22,7 @@
  */
 package com.aoapps.lang.io;
 
+import com.aoapps.lang.Coercion;
 import com.aoapps.lang.NullArgumentException;
 import java.io.FilterWriter;
 import java.io.IOException;
@@ -39,9 +40,23 @@ public class EncoderWriter extends FilterWriter {
 
 	private final Encoder encoder;
 
-	public EncoderWriter(Encoder encoder, Writer out) {
-		super(out);
+	/**
+	 * @param  out  Conditionally passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+	 */
+	public EncoderWriter(Encoder encoder, Writer out, boolean outOptimized) {
+		super(outOptimized ? out : Coercion.optimize(out, encoder));
+		if(outOptimized) {
+			assert out == Coercion.optimize(out, encoder);
+		}
 		this.encoder = NullArgumentException.checkNotNull(encoder, "encoder");
+	}
+
+	/**
+	 * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 */
+	public EncoderWriter(Encoder encoder, Writer out) {
+		this(encoder, out, false);
 	}
 
 	public Encoder getEncoder() {
@@ -49,7 +64,8 @@ public class EncoderWriter extends FilterWriter {
 	}
 
 	/**
-	 * Gets the wrapped writer.
+	 * Gets the wrapped writer, which has been optimized via
+	 * {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}.
 	 */
 	public Writer getOut() {
 		return out;
