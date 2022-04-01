@@ -34,6 +34,8 @@ public interface Encoder {
 
 	/**
 	 * This is called before any data is written.
+	 *
+	 * @param  out  May optionally have already been optimized via {@link com.aoapps.lang.Coercion#optimize(java.lang.Appendable, com.aoapps.lang.io.Encoder)}.
 	 */
 	void writePrefixTo(Appendable out) throws IOException;
 
@@ -62,6 +64,8 @@ public interface Encoder {
 	 * The internal buffer is always clear for re-use, even when an exception is thrown.
 	 * </p>
 	 *
+	 * @param  out  May optionally have already been optimized via {@link com.aoapps.lang.Coercion#optimize(java.lang.Appendable, com.aoapps.lang.io.Encoder)}.
+	 *
 	 * @deprecated  Please use {@link #writeSuffixTo(java.lang.Appendable, boolean)} while specifying desired trim.
 	 */
 	@Deprecated
@@ -75,6 +79,8 @@ public interface Encoder {
 	 * <p>
 	 * The internal buffer is always clear for re-use, even when an exception is thrown.
 	 * </p>
+	 *
+	 * @param  out  May optionally have already been optimized via {@link com.aoapps.lang.Coercion#optimize(java.lang.Appendable, com.aoapps.lang.io.Encoder)}.
 	 *
 	 * @param  trim  Requests that the buffer be trimmed, if buffered and trim supported.
 	 */
