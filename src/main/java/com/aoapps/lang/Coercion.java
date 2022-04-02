@@ -167,7 +167,10 @@ public final class Coercion {
 			out = newOut;
 		}
 		if(newOut != original && logger.isLoggable(Level.FINER)) {
-			logger.finer("Writer optimized from " + original.getClass().getName() + " to " + newOut.getClass().getName());
+			logger.finer(
+				"Writer optimized from " + original.getClass().getName() + " to " + newOut.getClass().getName()
+				+ " with encoder " + (encoder == null ? null : encoder.getClass().getName())
+			);
 		}
 		return newOut;
 	}
