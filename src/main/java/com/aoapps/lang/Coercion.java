@@ -204,6 +204,28 @@ public final class Coercion {
 	 * </ol>
 	 */
 	public static void write(Object value, Writer out) throws IOException {
+		write(value, out, false);
+	}
+
+	/**
+	 * Writes an object's String representation,
+	 * supporting streaming for specialized types.
+	 * <ol>
+	 * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
+	 * <li>When {@code null} do not write.</li>
+	 * <li>When {@link EncoderWriter} unwrap and dispatch to {@link #write(java.lang.Object, com.aoapps.lang.io.Encoder, java.io.Writer, boolean)}.</li>
+	 * <li>When {@link String} write directly.</li>
+	 * <li>When {@link Writable} write {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to {@link Writable#writeTo(java.io.Writer)}.</li>
+	 * <li>When {@link Segment} write {@link Segment#array}.</li>
+	 * <li>When {@link CharSequence} append directly.</li>
+	 * <li>When {@code char[]} write directly.</li>
+	 * <li>When {@link Node} serialize the output as {@link StandardCharsets#UTF_8}.</li>
+	 * <li>Otherwise write {@link Object#toString() value.toString()}.</li>
+	 * </ol>
+	 *
+	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+	 */
+	public static void write(Object value, Writer out, boolean outOptimized) throws IOException {
 		// Support Optional
 		while(value instanceof Optional) {
 			value = ((Optional<?>)value).orElse(null);
@@ -214,7 +236,7 @@ public final class Coercion {
 			if(out instanceof EncoderWriter) {
 				// Unwrap media writer and use encoder directly
 				EncoderWriter encoderWriter = (EncoderWriter)out;
-				writeImpl(
+				write(
 					value,
 					encoderWriter.getEncoder(),
 					encoderWriter.getOut(),
@@ -222,7 +244,13 @@ public final class Coercion {
 				);
 			} else {
 				// Optimize output
-				Writer optimized = optimize(out, null);
+				Writer optimized;
+				if(outOptimized) {
+					optimized = out;
+					assert optimized == optimize(out, null);
+				} else {
+					optimized = optimize(out, null);
+				}
 				if(value instanceof String) {
 					// If A is a string, then the result is A.
 					optimized.write((String)value);
@@ -297,15 +325,31 @@ public final class Coercion {
 	 * @param  encoder  if null, no encoding is performed - write through
 	 */
 	public static void write(Object value, Encoder encoder, Writer out) throws IOException {
-		writeImpl(value, encoder, out, false);
+		write(value, encoder, out, false);
 	}
 
 	/**
+	 * Encodes an object's String representation,
+	 * supporting streaming for specialized types.
+	 * <ol>
+	 * <li>When {@code encoder == null} dispatch to {@link #write(java.lang.Object, java.io.Writer, boolean)}.</li>
+	 * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
+	 * <li>When {@code null} do not encode.</li>
+	 * <li>When {@link String} encode directly.</li>
+	 * <li>When {@link Writable} encode {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to {@link Writable#writeTo(com.aoapps.lang.io.Encoder, java.io.Writer)}.</li>
+	 * <li>When {@link Segment} encode {@link Segment#array}.</li>
+	 * <li>When {@link CharSequence} encode directly.</li>
+	 * <li>When {@code char[]} encode directly.</li>
+	 * <li>When {@link Node} serialize the output as {@link StandardCharsets#UTF_8} while encoding through {@link EncoderWriter}.</li>
+	 * <li>Otherwise encode {@link Object#toString() value.toString()}.</li>
+	 * </ol>
+	 *
+	 * @param  encoder  if null, no encoding is performed - write through
 	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
 	 */
-	private static void writeImpl(Object value, Encoder encoder, Writer out, boolean outOptimized) throws IOException {
+	public static void write(Object value, Encoder encoder, Writer out, boolean outOptimized) throws IOException {
 		if(encoder == null) {
-			write(value, out);
+			write(value, out, outOptimized);
 		} else {
 			// Support Optional
 			while(value instanceof Optional) {
@@ -393,9 +437,30 @@ public final class Coercion {
 	 * </ol>
 	 */
 	public static void append(Object value, Appendable out) throws IOException {
+		append(value, out, false);
+	}
+
+	/**
+	 * Appends an object's String representation,
+	 * supporting streaming for specialized types.
+	 * <ol>
+	 * <li>When {@code out} is a {@link Writer} dispatch to {@link #write(java.lang.Object, java.io.Writer, boolean)}.</li>
+	 * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
+	 * <li>When {@code null} do not append.</li>
+	 * <li>When {@link String} append directly.</li>
+	 * <li>When {@link Writable} append {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to {@link Writable#appendTo(java.lang.Appendable)}.</li>
+	 * <li>When {@link Segment} or {@link CharSequence} append directly.</li>
+	 * <li>When {@code char[]} append wrapped in new {@link Segment}.</li>
+	 * <li>When {@link Node} serialize the output as {@link StandardCharsets#UTF_8}.</li>
+	 * <li>Otherwise append {@link Object#toString() value.toString()}.</li>
+	 * </ol>
+	 *
+	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+	 */
+	public static void append(Object value, Appendable out, boolean outOptimized) throws IOException {
 		assert out != null;
 		if(out instanceof Writer) {
-			write(value, (Writer)out);
+			write(value, (Writer)out, outOptimized);
 		} else {
 			// Support Optional
 			while(value instanceof Optional) {
@@ -404,7 +469,13 @@ public final class Coercion {
 			// If A is null, then the result is "".
 			if(value != null) {
 				// Optimize output
-				Appendable optimized = optimize(out, null);
+				Appendable optimized;
+				if(outOptimized) {
+					optimized = out;
+					assert optimized == optimize(out, null);
+				} else {
+					optimized = optimize(out, null);
+				}
 				if(value instanceof String) {
 					// If A is a string, then the result is A.
 					optimized.append((String)value);
@@ -477,10 +548,33 @@ public final class Coercion {
 	 * @param  encoder  if null, no encoding is performed - write through
 	 */
 	public static void append(Object value, Encoder encoder, Appendable out) throws IOException {
+		append(value, encoder, out, false);
+	}
+
+	/**
+	 * Encodes an object's String representation,
+	 * supporting streaming for specialized types.
+	 * <ol>
+	 * <li>When {@code encoder == null} dispatch to {@link #append(java.lang.Object, java.lang.Appendable, boolean)}.</li>
+	 * <li>When {@code out} is a {@link Writer} dispatch to {@link #write(java.lang.Object, com.aoapps.lang.io.Encoder, java.io.Writer, boolean)}.</li>
+	 * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
+	 * <li>When {@code null} do not encode.</li>
+	 * <li>When {@link String} encode directly.</li>
+	 * <li>When {@link Writable} encode {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to {@link Writable#appendTo(com.aoapps.lang.io.Encoder, java.lang.Appendable)}.</li>
+	 * <li>When {@link Segment} or {@link CharSequence} encode directly.</li>
+	 * <li>When {@code char[]} encode wrapped in new {@link Segment}.</li>
+	 * <li>When {@link Node} serialize the output as {@link StandardCharsets#UTF_8} while encoding through {@link EncoderWriter} and {@link AppendableWriter}.</li>
+	 * <li>Otherwise encode {@link Object#toString() value.toString()}.</li>
+	 * </ol>
+	 *
+	 * @param  encoder  if null, no encoding is performed - write through
+	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+	 */
+	public static void append(Object value, Encoder encoder, Appendable out, boolean outOptimized) throws IOException {
 		if(encoder == null) {
-			append(value, out);
+			append(value, out, outOptimized);
 		} else if(out instanceof Writer) {
-			writeImpl(value, encoder, (Writer)out, false);
+			write(value, encoder, (Writer)out, outOptimized);
 		} else {
 			// Support Optional
 			while(value instanceof Optional) {
@@ -489,7 +583,13 @@ public final class Coercion {
 			// If A is null, then the result is "".
 			if(value != null) {
 				// Optimize output
-				Appendable optimized = optimize(out, encoder);
+				Appendable optimized;
+				if(outOptimized) {
+					optimized = out;
+					assert optimized == optimize(out, encoder);
+				} else {
+					optimized = optimize(out, encoder);
+				}
 				// Write through the given encoder
 				if(value instanceof String) {
 					// If A is a string, then the result is A.

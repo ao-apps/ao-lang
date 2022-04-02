@@ -53,7 +53,7 @@ public class EncoderWriter extends FilterWriter {
 	}
 
 	/**
-	 * @param  out  Passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 * @param  out  Will be passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
 	 */
 	public EncoderWriter(Encoder encoder, Writer out) {
 		this(encoder, out, false);
