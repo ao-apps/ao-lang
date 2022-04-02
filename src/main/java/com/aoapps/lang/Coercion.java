@@ -34,6 +34,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.ServiceLoader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.text.Segment;
 import javax.xml.XMLConstants;
 import javax.xml.transform.OutputKeys;
@@ -56,6 +58,8 @@ public final class Coercion {
 
 	/** Make no instances. */
 	private Coercion() {throw new AssertionError();}
+
+	private static final Logger logger = Logger.getLogger(Coercion.class.getName());
 
 	/**
 	 * Converts an object to a string.
@@ -152,15 +156,20 @@ public final class Coercion {
 	 * there are no replacements.
 	 */
 	public static Writer optimize(Writer out, Encoder encoder) {
+		final Writer original = out;
 		Writer newOut = out;
 		while(true) {
 			for(CoercionOptimizer optimizer : optimizers) {
 				newOut = optimizer.optimize(newOut, encoder);
 			}
-			if(newOut == out) return out;
+			if(newOut == out) break;
 			// Will keep looping for further optimization
 			out = newOut;
 		}
+		if(newOut != original && logger.isLoggable(Level.FINER)) {
+			logger.finer("Writer optimized from " + original.getClass().getName() + " to " + newOut.getClass().getName());
+		}
+		return newOut;
 	}
 
 	/**
