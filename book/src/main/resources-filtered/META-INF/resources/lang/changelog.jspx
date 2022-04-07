@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2017-03-12T17:54:37-05:00"
-		dateModified="2022-04-07T08:50:29-05:00"
+		dateModified="2022-04-07T17:40:40-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -54,6 +54,10 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 					<li>New interface <code>NoClose</code> along with static <code>wrap(…)</code> methods to avoid duplicate wrapping.</li>
 					<li><code>EncoderWriter</code> now unwraps the writer via <code>Coercion.optimize(Writer, Encoder)</code>.</li>
 					<li>Moved <code>FailOnWriteWriter</code> from <core:link book="/encoding" page="/index.jspx" />.</li>
+					<li>
+						New method <code>Encoder.isBuffered()</code> that provides information about when an encoder is
+						buffered or write-through.  This affects which optimizations are allowed to bypass the encoder.
+					</li>
 				</ul>
 			</changelog:release>
 		</c:if>

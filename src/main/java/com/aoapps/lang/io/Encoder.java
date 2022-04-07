@@ -33,6 +33,17 @@ import java.io.Writer;
 public interface Encoder {
 
 	/**
+	 * Is this encoder buffered?  A buffered encoder may delay validation until {@link #writeSuffixTo(java.lang.Appendable, boolean)}.
+	 * Furthermore, a buffered encoder should not be bypassed before any buffered data has been written via {@link #writeSuffixTo(java.lang.Appendable, boolean)}.
+	 * An example of encoder bypassing is performing direct output on the writer from {@link EncoderWriter#getOut()}.
+	 *
+	 * @return  {@code false} by default
+	 */
+	default boolean isBuffered() {
+		return false;
+	}
+
+	/**
 	 * This is called before any data is written.
 	 *
 	 * @param  out  May optionally have already been optimized via {@link com.aoapps.lang.Coercion#optimize(java.lang.Appendable, com.aoapps.lang.io.Encoder)}.
