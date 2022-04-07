@@ -226,7 +226,8 @@ public final class Coercion {
 	 * <li>Otherwise write {@link Object#toString() value.toString()}.</li>
 	 * </ol>
 	 *
-	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 *                       (with {@code encoder = null})?
 	 */
 	public static void write(Object value, Writer out, boolean outOptimized) throws IOException {
 		// Support Optional
@@ -458,7 +459,8 @@ public final class Coercion {
 	 * <li>Otherwise append {@link Object#toString() value.toString()}.</li>
 	 * </ol>
 	 *
-	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}?
+	 * @param  outOptimized  Is {@code out} already known to have been passed through {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+	 *                       (with {@code encoder = null})?
 	 */
 	public static void append(Object value, Appendable out, boolean outOptimized) throws IOException {
 		assert out != null;
