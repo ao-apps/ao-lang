@@ -27,7 +27,7 @@ import java.io.IOException;
 
 /**
  * Indicates that {@link #close()} is overridden to be a no-op.
- * This facilitates avoiding duplicate wrapping to close protection.
+ * This facilitates avoiding duplicate wrapping for close protection.
  *
  * @see  NoCloseInputStream#wrap(java.io.InputStream)
  * @see  NoCloseOutputStream#wrap(java.io.OutputStream)
