@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2015, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -64,6 +64,7 @@ public class AoCharArrayWriter
 	 *
 	 * @return the string.
 	 */
+	@SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
 	public String toString(int off, int len) {
 		synchronized(lock) {
 			return new String(buf, off, len);
@@ -74,6 +75,7 @@ public class AoCharArrayWriter
 	 * Writes a portion of the contents of the buffer to another character stream.
 	 */
 	@Override
+	@SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
 	public void writeTo(Writer out, long off, long len) throws IOException {
 		synchronized(lock) {
 			if((off+len)>count) throw new IndexOutOfBoundsException();
@@ -86,6 +88,7 @@ public class AoCharArrayWriter
 	}
 
 	@Override
+	@SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
 	public void writeTo(Encoder encoder, Writer out) throws IOException {
 		synchronized(lock) {
 			encoder.write(buf, 0, count, out);
@@ -93,6 +96,7 @@ public class AoCharArrayWriter
 	}
 
 	@Override
+	@SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
 	public void writeTo(Encoder encoder, Writer out, long off, long len) throws IOException {
 		synchronized(lock) {
 			if((off+len)>count) throw new IndexOutOfBoundsException();
