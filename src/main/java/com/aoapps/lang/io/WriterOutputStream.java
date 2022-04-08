@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -33,7 +33,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public final class WriterOutputStream extends OutputStream {
+public final class WriterOutputStream extends OutputStream implements NoClose {
 
 	private final Writer out;
 
@@ -50,6 +50,12 @@ public final class WriterOutputStream extends OutputStream {
 	 */
 	public WriterOutputStream(Writer out) {
 		this.out=out;
+	}
+
+	@Override
+	public boolean isNoClose() {
+		// Note: It is OK if close is never called, so OK to optimize away close() when wrapping a NoClose output.
+		return (out instanceof NoClose) && ((NoClose)out).isNoClose();
 	}
 
 	@Override

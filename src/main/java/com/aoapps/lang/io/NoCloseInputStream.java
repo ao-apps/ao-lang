@@ -32,7 +32,7 @@ public class NoCloseInputStream extends FilterInputStream implements NoClose {
 
 	@SuppressWarnings("unchecked")
 	public static <I extends InputStream & NoClose> I wrap(InputStream in) {
-		if(in instanceof NoClose) return (I)in;
+		if(in instanceof NoClose && ((NoClose)in).isNoClose()) return (I)in;
 		return (I)new NoCloseInputStream(in);
 	}
 

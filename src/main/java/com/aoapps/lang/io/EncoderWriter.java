@@ -36,7 +36,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public class EncoderWriter extends FilterWriter {
+public class EncoderWriter extends FilterWriter implements NoClose {
 
 	private final Encoder encoder;
 
@@ -59,6 +59,9 @@ public class EncoderWriter extends FilterWriter {
 		this(encoder, out, false);
 	}
 
+	/**
+	 * This method may be overridden for the purpose of covariant return, but must return {@link #encoder}.
+	 */
 	public Encoder getEncoder() {
 		return encoder;
 	}
@@ -66,9 +69,17 @@ public class EncoderWriter extends FilterWriter {
 	/**
 	 * Gets the wrapped writer, which has been optimized via
 	 * {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}.
+	 * <p>
+	 * This method may be overridden for the purpose of covariant return, but must return {@link #out}.
+	 * </p>
 	 */
 	public Writer getOut() {
 		return out;
+	}
+
+	@Override
+	public boolean isNoClose() {
+		return (out instanceof NoClose) && ((NoClose)out).isNoClose();
 	}
 
 	/**

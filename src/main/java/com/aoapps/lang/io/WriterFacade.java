@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2016, 2017, 2021  AO Industries, Inc.
+ * Copyright (C) 2013, 2016, 2017, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -31,7 +31,7 @@ import java.io.Writer;
  *
  * @author  AO Industries, Inc.
  */
-public final class WriterFacade extends Writer {
+public final class WriterFacade extends Writer implements NoClose {
 
 	/**
 	 * Gets an instance of the WriterFacade that wraps the given Writer.
@@ -95,6 +95,11 @@ public final class WriterFacade extends Writer {
 	@Override
 	public void flush() throws IOException {
 		out.flush();
+	}
+
+	@Override
+	public boolean isNoClose() {
+		return (out instanceof NoClose) && ((NoClose)out).isNoClose();
 	}
 
 	@Override

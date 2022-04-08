@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -36,7 +36,7 @@ import javax.swing.text.Segment;
  *
  * @author  AO Industries, Inc.
  */
-public class AppendableWriter extends Writer {
+public class AppendableWriter extends Writer implements NoClose {
 
 	/**
 	 * Wraps the given {@link Appendable} if it is not already
@@ -111,6 +111,11 @@ public class AppendableWriter extends Writer {
 		if(out instanceof Flushable) {
 			((Flushable)out).flush();
 		}
+	}
+
+	@Override
+	public boolean isNoClose() {
+		return (out instanceof NoClose) && ((NoClose)out).isNoClose();
 	}
 
 	@Override

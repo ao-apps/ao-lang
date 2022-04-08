@@ -32,7 +32,7 @@ public class NoCloseWriter extends FilterWriter implements NoClose {
 
 	@SuppressWarnings("unchecked")
 	public static <W extends Writer & NoClose> W wrap(Writer out) {
-		if(out instanceof NoClose) return (W)out;
+		if(out instanceof NoClose && ((NoClose)out).isNoClose()) return (W)out;
 		return (W)new NoCloseWriter(out);
 	}
 
