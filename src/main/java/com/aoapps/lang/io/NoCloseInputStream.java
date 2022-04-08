@@ -30,6 +30,10 @@ import java.io.InputStream;
  */
 public class NoCloseInputStream extends FilterInputStream implements NoClose {
 
+	/**
+	 * Returns {@code in} when it is already a {@link NoClose} and {@link NoClose#isNoClose()}, otherwise
+	 * returns a new {@link NoCloseInputStream} wrapping {@code in}.
+	 */
 	@SuppressWarnings("unchecked")
 	public static <I extends InputStream & NoClose> I wrap(InputStream in) {
 		if(in instanceof NoClose && ((NoClose)in).isNoClose()) return (I)in;
