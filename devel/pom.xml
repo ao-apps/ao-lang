@@ -126,6 +126,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 					<instructions>
 						<Private-Package>
 							com.aoapps.lang.i18n_res;-split-package:=first,
+							com.aoapps.lang.io.i18n;-split-package:=first,
 							com.aoapps.lang.util.i18n;-split-package:=first,
 							com.aoapps.lang.validation.i18n;-split-package:=first
 						</Private-Package>
