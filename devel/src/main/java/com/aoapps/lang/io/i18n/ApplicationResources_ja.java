@@ -24,12 +24,14 @@ package com.aoapps.lang.io.i18n;
 
 import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
 import java.util.Locale;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Is also an editable resource bundle.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public final class ApplicationResources_ja extends EditableResourceBundle {
 
 	public ApplicationResources_ja() {

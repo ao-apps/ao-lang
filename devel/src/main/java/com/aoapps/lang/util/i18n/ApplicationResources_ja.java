@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2013, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -24,12 +24,14 @@ package com.aoapps.lang.util.i18n;
 
 import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
 import java.util.Locale;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Is also an editable resource bundle.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public final class ApplicationResources_ja extends EditableResourceBundle {
 
 	public ApplicationResources_ja() {

@@ -28,12 +28,14 @@ import java.io.File;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Is also an editable resource bundle.
  *
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public final class ApplicationResources extends EditableResourceBundle {
 
 	static final EditableResourceBundleSet bundleSet = new EditableResourceBundleSet(

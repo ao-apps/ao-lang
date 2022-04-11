@@ -27,6 +27,7 @@ module com.aoapps.lang.devel {
 	exports com.aoapps.lang.validation.i18n;
 	// Direct
 	requires com.aoapps.hodgepodge; // <groupId>com.aoapps</groupId><artifactId>ao-hodgepodge</artifactId>
+	requires static jsr305; // <groupId>com.google.code.findbugs</groupId><artifactId>jsr305</artifactId>
 	// Java SE
 	requires java.logging;
 }
