@@ -236,11 +236,11 @@ public final class XmlUtils {
 	 * @deprecated  Use {@link #toString(org.w3c.dom.Node)} instead.
 	 */
 	@Deprecated
-	public static String toString(Document document) throws TransformerConfigurationException, TransformerException {
+	public static String toString(Document document) throws TransformerException {
 		return toString((Node)document);
 	}
 
-	public static String toString(Node node) throws TransformerConfigurationException, TransformerException {
+	public static String toString(Node node) throws TransformerException {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		try {
 			transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);

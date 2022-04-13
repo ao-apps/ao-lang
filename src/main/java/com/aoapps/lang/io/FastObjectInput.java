@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2013, 2016, 2017, 2019, 2021  AO Industries, Inc.
+ * Copyright (C) 2011, 2013, 2016, 2017, 2019, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -236,7 +236,7 @@ public class FastObjectInput implements ObjectInput {
 	 *
 	 * @see  FastObjectOutput#writeFastUTF(java.lang.String)
 	 */
-	public String readFastUTF() throws IOException, ClassNotFoundException {
+	public String readFastUTF() throws IOException {
 		int code = in.read();
 		// Resolve string by code
 		switch(code) {
