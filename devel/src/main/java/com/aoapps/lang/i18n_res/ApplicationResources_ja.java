@@ -20,6 +20,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 package com.aoapps.lang.i18n_res;
 
 import com.aoapps.hodgepodge.i18n.EditableResourceBundle;

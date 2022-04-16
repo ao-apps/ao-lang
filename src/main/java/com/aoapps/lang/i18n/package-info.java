@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -29,4 +29,5 @@
  * related servlets going into something like "ao-i18n-editor-servlet".
  * </p>
  */
+
 package com.aoapps.lang.i18n;
