@@ -33,30 +33,35 @@ import java.util.concurrent.Callable;
  */
 public class ThreadLocalCallable<T> implements Callable<T> {
 
-	private final Callable<T> task;
-	private final ThreadLocal<?> threadLocal;
-	private final Object value;
+  private final Callable<T> task;
+  private final ThreadLocal<?> threadLocal;
+  private final Object value;
 
-	public ThreadLocalCallable(Callable<T> task, ThreadLocal<?> threadLocal) {
-		this.task = task;
-		this.threadLocal = threadLocal;
-		this.value = threadLocal.get();
-	}
+  public ThreadLocalCallable(Callable<T> task, ThreadLocal<?> threadLocal) {
+    this.task = task;
+    this.threadLocal = threadLocal;
+    this.value = threadLocal.get();
+  }
 
-	@Override
-	public T call() throws Exception {
-		@SuppressWarnings("unchecked")
-		ThreadLocal<Object> tl = (ThreadLocal<Object>)threadLocal;
-		Object oldValue = tl.get();
-		Object newValue = value;
-		try {
-			if(oldValue != newValue) tl.set(newValue);
-			return task.call();
-		} finally {
-			if(oldValue != newValue) {
-				if(oldValue == null) tl.remove();
-				else tl.set(oldValue);
-			}
-		}
-	}
+  @Override
+  public T call() throws Exception {
+    @SuppressWarnings("unchecked")
+    ThreadLocal<Object> tl = (ThreadLocal<Object>)threadLocal;
+    Object oldValue = tl.get();
+    Object newValue = value;
+    try {
+      if (oldValue != newValue) {
+        tl.set(newValue);
+      }
+      return task.call();
+    } finally {
+      if (oldValue != newValue) {
+        if (oldValue == null) {
+          tl.remove();
+        } else {
+          tl.set(oldValue);
+        }
+      }
+    }
+  }
 }

@@ -40,14 +40,14 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface LocalizedConsumerE<Ex extends Throwable> {
 
-	default void accept(Resources resources, String key) throws Ex {
-		accept(resources, key, EmptyArrays.EMPTY_SERIALIZABLE_ARRAY);
-	}
+  default void accept(Resources resources, String key) throws Ex {
+    accept(resources, key, EmptyArrays.EMPTY_SERIALIZABLE_ARRAY);
+  }
 
-	void accept(Resources resources, String key, Serializable... args) throws Ex;
+  void accept(Resources resources, String key, Serializable... args) throws Ex;
 
-	default LocalizedConsumerE<Ex> andThen(LocalizedConsumerE<? extends Ex> after) {
-		Objects.requireNonNull(after);
-		return (Resources resources, String key, Serializable... args) -> { accept(resources, key, args); after.accept(resources, key, args); };
-	}
+  default LocalizedConsumerE<Ex> andThen(LocalizedConsumerE<? extends Ex> after) {
+    Objects.requireNonNull(after);
+    return (Resources resources, String key, Serializable... args) -> { accept(resources, key, args); after.accept(resources, key, args); };
+  }
 }

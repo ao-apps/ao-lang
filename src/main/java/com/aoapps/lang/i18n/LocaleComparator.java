@@ -34,28 +34,32 @@ import java.util.Locale;
  */
 public final class LocaleComparator implements Comparator<Locale>, Serializable {
 
-	private static final long serialVersionUID = 7238956708102131937L;
+  private static final long serialVersionUID = 7238956708102131937L;
 
-	private static final LocaleComparator instance = new LocaleComparator();
+  private static final LocaleComparator instance = new LocaleComparator();
 
-	public static LocaleComparator getInstance() {
-		return instance;
-	}
+  public static LocaleComparator getInstance() {
+    return instance;
+  }
 
-	private LocaleComparator() {
-		// Do nothing
-	}
+  private LocaleComparator() {
+    // Do nothing
+  }
 
-	private Object readResolve() {
-		return getInstance();
-	}
+  private Object readResolve() {
+    return getInstance();
+  }
 
-	@Override
-	public int compare(Locale l1, Locale l2) {
-		int diff = l1.getLanguage().compareToIgnoreCase(l2.getLanguage());
-		if(diff!=0) return diff;
-		diff = l1.getCountry().compareToIgnoreCase(l2.getCountry());
-		if(diff!=0) return diff;
-		return l1.getVariant().compareToIgnoreCase(l2.getVariant());
-	}
+  @Override
+  public int compare(Locale l1, Locale l2) {
+    int diff = l1.getLanguage().compareToIgnoreCase(l2.getLanguage());
+    if (diff != 0) {
+      return diff;
+    }
+    diff = l1.getCountry().compareToIgnoreCase(l2.getCountry());
+    if (diff != 0) {
+      return diff;
+    }
+    return l1.getVariant().compareToIgnoreCase(l2.getVariant());
+  }
 }

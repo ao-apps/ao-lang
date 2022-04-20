@@ -64,199 +64,209 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public final class BufferManager {
 
-	/** Make no instances. */
-	private BufferManager() {throw new AssertionError();}
+  /** Make no instances. */
+  private BufferManager() {
+    throw new AssertionError();
+  }
 
-	/**
-	 * The size of buffers that are returned.
-	 */
-	public static final int BUFFER_SIZE = 4096;
+  /**
+   * The size of buffers that are returned.
+   */
+  public static final int BUFFER_SIZE = 4096;
 
-	private static final ThreadLocal<Deque<SoftReference<byte[]>>> bytes = ThreadLocal.withInitial(ArrayDeque::new);
+  private static final ThreadLocal<Deque<SoftReference<byte[]>>> bytes = ThreadLocal.withInitial(ArrayDeque::new);
 
-	private static final ThreadLocal<Deque<SoftReference<char[]>>> chars = ThreadLocal.withInitial(ArrayDeque::new);
+  private static final ThreadLocal<Deque<SoftReference<char[]>>> chars = ThreadLocal.withInitial(ArrayDeque::new);
 
-	/**
-	 * Various statistics
-	 */
-	private static final AtomicLong
-		bytesCreates = new AtomicLong(),
-		bytesUses = new AtomicLong(),
-		bytesZeroFills = new AtomicLong(),
-		bytesCollected = new AtomicLong(),
-		charsCreates = new AtomicLong(),
-		charsUses = new AtomicLong(),
-		charsZeroFills = new AtomicLong(),
-		charsCollected = new AtomicLong()
-	;
+  /**
+   * Various statistics
+   */
+  private static final AtomicLong
+    bytesCreates = new AtomicLong(),
+    bytesUses = new AtomicLong(),
+    bytesZeroFills = new AtomicLong(),
+    bytesCollected = new AtomicLong(),
+    charsCreates = new AtomicLong(),
+    charsUses = new AtomicLong(),
+    charsZeroFills = new AtomicLong(),
+    charsCollected = new AtomicLong()
+  ;
 
-	/**
-	 * Gets a {@code byte[]} of length {@code BUFFER_SIZE} that may
-	 * be temporarily used for any purpose.  Once done with the buffer,
-	 * {@code release} should be called, this is best accomplished
-	 * in a {@code finally} block.
-	 * The buffer is not necessarily zero-filled and may contain data from a previous use.
-	 */
-	public static byte[] getBytes() {
-		bytesUses.getAndIncrement();
-		Deque<SoftReference<byte[]>> myBytes = bytes.get();
-		while(true) {
-			SoftReference<byte[]> bufferRef = myBytes.poll();
-			if(bufferRef != null) {
-				byte[] buffer = bufferRef.get();
-				if(buffer != null) return buffer;
-				bytesCollected.getAndIncrement();
-			} else {
-				bytesCreates.getAndIncrement();
-				return new byte[BUFFER_SIZE];
-			}
-		}
-	}
+  /**
+   * Gets a {@code byte[]} of length {@code BUFFER_SIZE} that may
+   * be temporarily used for any purpose.  Once done with the buffer,
+   * {@code release} should be called, this is best accomplished
+   * in a {@code finally} block.
+   * The buffer is not necessarily zero-filled and may contain data from a previous use.
+   */
+  public static byte[] getBytes() {
+    bytesUses.getAndIncrement();
+    Deque<SoftReference<byte[]>> myBytes = bytes.get();
+    while (true) {
+      SoftReference<byte[]> bufferRef = myBytes.poll();
+      if (bufferRef != null) {
+        byte[] buffer = bufferRef.get();
+        if (buffer != null) {
+          return buffer;
+        }
+        bytesCollected.getAndIncrement();
+      } else {
+        bytesCreates.getAndIncrement();
+        return new byte[BUFFER_SIZE];
+      }
+    }
+  }
 
-	/**
-	 * Gets a {@code char[]} of length {@code BUFFER_SIZE} that may
-	 * be temporarily used for any purpose.  Once done with the buffer,
-	 * {@code release} should be called, this is best accomplished
-	 * in a {@code finally} block.
-	 * The buffer is not necessarily zero-filled and may contain data from a previous use.
-	 */
-	public static char[] getChars() {
-		charsUses.getAndIncrement();
-		Deque<SoftReference<char[]>> myChars = chars.get();
-		while(true) {
-			SoftReference<char[]> bufferRef = myChars.poll();
-			if(bufferRef != null) {
-				char[] buffer = bufferRef.get();
-				if(buffer != null) return buffer;
-				charsCollected.getAndIncrement();
-			} else {
-				charsCreates.getAndIncrement();
-				return new char[BUFFER_SIZE];
-			}
-		}
-	}
+  /**
+   * Gets a {@code char[]} of length {@code BUFFER_SIZE} that may
+   * be temporarily used for any purpose.  Once done with the buffer,
+   * {@code release} should be called, this is best accomplished
+   * in a {@code finally} block.
+   * The buffer is not necessarily zero-filled and may contain data from a previous use.
+   */
+  public static char[] getChars() {
+    charsUses.getAndIncrement();
+    Deque<SoftReference<char[]>> myChars = chars.get();
+    while (true) {
+      SoftReference<char[]> bufferRef = myChars.poll();
+      if (bufferRef != null) {
+        char[] buffer = bufferRef.get();
+        if (buffer != null) {
+          return buffer;
+        }
+        charsCollected.getAndIncrement();
+      } else {
+        charsCreates.getAndIncrement();
+        return new char[BUFFER_SIZE];
+      }
+    }
+  }
 
-	/**
-	 * @deprecated  May obtain greater performance by avoiding zero fill on non-sensitive data.
-	 */
-	@Deprecated
-	public static void release(byte[] buffer) {
-		release(buffer, true);
-	}
+  /**
+   * @deprecated  May obtain greater performance by avoiding zero fill on non-sensitive data.
+   */
+  @Deprecated
+  public static void release(byte[] buffer) {
+    release(buffer, true);
+  }
 
-	/**
-	 * Releases a {@code byte[]} that was obtained by a call to
-	 * {@code getBytes}.  A buffer must not be released more than once.
-	 *
-	 * @param  buffer  the {@code byte[]} to release
-	 * @param  zeroFill  if the data in the buffer may be sensitive, it is best to zero-fill the buffer on release.
-	 */
-	public static void release(byte[] buffer, boolean zeroFill) {
-		Deque<SoftReference<byte[]>> myBytes = bytes.get();
-		if(buffer.length != BUFFER_SIZE) throw new IllegalArgumentException();
-		assert !inQueue(myBytes, buffer); // Error if already in the buffer list
-		if(zeroFill) {
-			bytesZeroFills.getAndIncrement();
-			Arrays.fill(buffer, 0, BUFFER_SIZE, (byte)0);
-		}
-		myBytes.add(new SoftReference<>(buffer));
-	}
-	private static boolean inQueue(Iterable<SoftReference<byte[]>> myBytes, byte[] buffer) {
-		for(SoftReference<byte[]> inQueue : myBytes) {
-			if(inQueue.get() == buffer) {
-				return true;
-			}
-		}
-		return false;
-	}
+  /**
+   * Releases a {@code byte[]} that was obtained by a call to
+   * {@code getBytes}.  A buffer must not be released more than once.
+   *
+   * @param  buffer  the {@code byte[]} to release
+   * @param  zeroFill  if the data in the buffer may be sensitive, it is best to zero-fill the buffer on release.
+   */
+  public static void release(byte[] buffer, boolean zeroFill) {
+    Deque<SoftReference<byte[]>> myBytes = bytes.get();
+    if (buffer.length != BUFFER_SIZE) {
+      throw new IllegalArgumentException();
+    }
+    assert !inQueue(myBytes, buffer); // Error if already in the buffer list
+    if (zeroFill) {
+      bytesZeroFills.getAndIncrement();
+      Arrays.fill(buffer, 0, BUFFER_SIZE, (byte)0);
+    }
+    myBytes.add(new SoftReference<>(buffer));
+  }
+  private static boolean inQueue(Iterable<SoftReference<byte[]>> myBytes, byte[] buffer) {
+    for (SoftReference<byte[]> inQueue : myBytes) {
+      if (inQueue.get() == buffer) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-	/**
-	 * @deprecated  May obtain greater performance by avoiding zero fill on non-sensitive data.
-	 */
-	@Deprecated
-	public static void release(char[] buffer) {
-		release(buffer, true);
-	}
+  /**
+   * @deprecated  May obtain greater performance by avoiding zero fill on non-sensitive data.
+   */
+  @Deprecated
+  public static void release(char[] buffer) {
+    release(buffer, true);
+  }
 
-	/**
-	 * Releases a {@code char[]} that was obtained by a call to
-	 * {@code getChars}.  A buffer must not be released more than once.
-	 *
-	 * @param  buffer  the {@code char[]} to release
-	 * @param  zeroFill  if the data in the buffer may be sensitive, it is best to zero-fill the buffer on release.
-	 */
-	public static void release(char[] buffer, boolean zeroFill) {
-		Deque<SoftReference<char[]>> myChars = chars.get();
-		if(buffer.length != BUFFER_SIZE) throw new IllegalArgumentException();
-		assert !inQueue(myChars, buffer); // Error if already in the buffer list
-		if(zeroFill) {
-			charsZeroFills.getAndIncrement();
-			Arrays.fill(buffer, 0, BUFFER_SIZE, (char)0);
-		}
-		myChars.add(new SoftReference<>(buffer));
-	}
-	private static boolean inQueue(Iterable<SoftReference<char[]>> myChars, char[] buffer) {
-		for(SoftReference<char[]> inQueue : myChars) {
-			if(inQueue.get() == buffer) {
-				return true;
-			}
-		}
-		return false;
-	}
+  /**
+   * Releases a {@code char[]} that was obtained by a call to
+   * {@code getChars}.  A buffer must not be released more than once.
+   *
+   * @param  buffer  the {@code char[]} to release
+   * @param  zeroFill  if the data in the buffer may be sensitive, it is best to zero-fill the buffer on release.
+   */
+  public static void release(char[] buffer, boolean zeroFill) {
+    Deque<SoftReference<char[]>> myChars = chars.get();
+    if (buffer.length != BUFFER_SIZE) {
+      throw new IllegalArgumentException();
+    }
+    assert !inQueue(myChars, buffer); // Error if already in the buffer list
+    if (zeroFill) {
+      charsZeroFills.getAndIncrement();
+      Arrays.fill(buffer, 0, BUFFER_SIZE, (char)0);
+    }
+    myChars.add(new SoftReference<>(buffer));
+  }
+  private static boolean inQueue(Iterable<SoftReference<char[]>> myChars, char[] buffer) {
+    for (SoftReference<char[]> inQueue : myChars) {
+      if (inQueue.get() == buffer) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-	/**
-	 * Gets the number of {@code byte[]} buffers instantiated.
-	 */
-	public static long getByteBufferCreates() {
-		return bytesCreates.get();
-	}
+  /**
+   * Gets the number of {@code byte[]} buffers instantiated.
+   */
+  public static long getByteBufferCreates() {
+    return bytesCreates.get();
+  }
 
-	/**
-	 * Gets the number of time {@code byte[]} buffers have been used.
-	 */
-	public static long getByteBufferUses() {
-		return bytesUses.get();
-	}
+  /**
+   * Gets the number of time {@code byte[]} buffers have been used.
+   */
+  public static long getByteBufferUses() {
+    return bytesUses.get();
+  }
 
-	/**
-	 * Gets the number of time {@code byte[]} buffers have been zero-filled on release.
-	 */
-	public static long getByteBufferZeroFills() {
-		return bytesZeroFills.get();
-	}
+  /**
+   * Gets the number of time {@code byte[]} buffers have been zero-filled on release.
+   */
+  public static long getByteBufferZeroFills() {
+    return bytesZeroFills.get();
+  }
 
-	/**
-	 * Gets the number of {@code byte[]} buffers detected to have been garbage collected.
-	 */
-	public static long getByteBuffersCollected() {
-		return bytesCollected.get();
-	}
+  /**
+   * Gets the number of {@code byte[]} buffers detected to have been garbage collected.
+   */
+  public static long getByteBuffersCollected() {
+    return bytesCollected.get();
+  }
 
-	/**
-	 * Gets the number of {@code char[]} buffers instantiated.
-	 */
-	public static long getCharBufferCreates() {
-		return charsCreates.get();
-	}
+  /**
+   * Gets the number of {@code char[]} buffers instantiated.
+   */
+  public static long getCharBufferCreates() {
+    return charsCreates.get();
+  }
 
-	/**
-	 * Gets the number of time {@code char[]} buffers have been used.
-	 */
-	public static long getCharBufferUses() {
-		return charsUses.get();
-	}
+  /**
+   * Gets the number of time {@code char[]} buffers have been used.
+   */
+  public static long getCharBufferUses() {
+    return charsUses.get();
+  }
 
-	/**
-	 * Gets the number of time {@code char[]} buffers have been zero-filled on release.
-	 */
-	public static long getCharBufferZeroFills() {
-		return charsZeroFills.get();
-	}
+  /**
+   * Gets the number of time {@code char[]} buffers have been zero-filled on release.
+   */
+  public static long getCharBufferZeroFills() {
+    return charsZeroFills.get();
+  }
 
-	/**
-	 * Gets the number of {@code char[]} buffers detected to have been garbage collected.
-	 */
-	public static long getCharBuffersCollected() {
-		return charsCollected.get();
-	}
+  /**
+   * Gets the number of {@code char[]} buffers detected to have been garbage collected.
+   */
+  public static long getCharBuffersCollected() {
+    return charsCollected.get();
+  }
 }

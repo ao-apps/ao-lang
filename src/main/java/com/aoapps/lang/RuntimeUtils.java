@@ -28,36 +28,38 @@ package com.aoapps.lang;
  */
 public final class RuntimeUtils {
 
-	/** Make no instances. */
-	private RuntimeUtils() {throw new AssertionError();}
+  /** Make no instances. */
+  private RuntimeUtils() {
+    throw new AssertionError();
+  }
 
-	private static class AvailableProcessorsLock {/* Empty lock class to help heap profile */}
-	private static final AvailableProcessorsLock availableProcessorsLock = new AvailableProcessorsLock();
-	private static long availableProcessorsLastRetrieved = Long.MIN_VALUE;
-	private static int availableProcessors = 0;
+  private static class AvailableProcessorsLock {/* Empty lock class to help heap profile */}
+  private static final AvailableProcessorsLock availableProcessorsLock = new AvailableProcessorsLock();
+  private static long availableProcessorsLastRetrieved = Long.MIN_VALUE;
+  private static int availableProcessors = 0;
 
-	/**
-	 * Faster way to get the number of processors in the system.
-	 * <p>
-	 * The call the Runtime.availableProcessors is prohibitively slow (at least
-	 * in Java 1.6 on Debian 6).  The number of processors in a system is unlikely
-	 * to change frequently.  This will only call Runtime.availableProcessors
-	 * once a second.
-	 * </p>
-	 */
-	public static int getAvailableProcessors() {
-		long currentTime = System.currentTimeMillis();
-		synchronized(availableProcessorsLock) {
-			long timeSince;
-			if(
-				availableProcessors==0
-				|| (timeSince = availableProcessorsLastRetrieved - currentTime) >= 1000
-				|| timeSince <= -1000 // System time set to the past
-			) {
-				availableProcessors = Runtime.getRuntime().availableProcessors();
-				availableProcessorsLastRetrieved = currentTime;
-			}
-			return availableProcessors;
-		}
-	}
+  /**
+   * Faster way to get the number of processors in the system.
+   * <p>
+   * The call the Runtime.availableProcessors is prohibitively slow (at least
+   * in Java 1.6 on Debian 6).  The number of processors in a system is unlikely
+   * to change frequently.  This will only call Runtime.availableProcessors
+   * once a second.
+   * </p>
+   */
+  public static int getAvailableProcessors() {
+    long currentTime = System.currentTimeMillis();
+    synchronized (availableProcessorsLock) {
+      long timeSince;
+      if (
+        availableProcessors == 0
+        || (timeSince = availableProcessorsLastRetrieved - currentTime) >= 1000
+        || timeSince <= -1000 // System time set to the past
+      ) {
+        availableProcessors = Runtime.getRuntime().availableProcessors();
+        availableProcessorsLastRetrieved = currentTime;
+      }
+      return availableProcessors;
+    }
+  }
 }

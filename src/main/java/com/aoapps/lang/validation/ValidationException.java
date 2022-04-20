@@ -37,36 +37,40 @@ import java.util.ResourceBundle;
 // TODO: Or extend javax.validation.ValidationException and deprecate this.
 public class ValidationException extends Exception {
 
-	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ValidationException.class);
+  private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ValidationException.class);
 
-	private static final long serialVersionUID = -1153407618428602416L;
+  private static final long serialVersionUID = -1153407618428602416L;
 
-	private final ValidationResult result;
+  private final ValidationResult result;
 
-	public ValidationException(ValidationResult result) {
-		super(result.toString()); // Conversion done in server
-		if(result.isValid()) throw new LocalizedIllegalArgumentException(RESOURCES, "init.validResult");
-		this.result = result;
-	}
+  public ValidationException(ValidationResult result) {
+    super(result.toString()); // Conversion done in server
+    if (result.isValid()) {
+      throw new LocalizedIllegalArgumentException(RESOURCES, "init.validResult");
+    }
+    this.result = result;
+  }
 
-	public ValidationException(Throwable cause, ValidationResult result) {
-		super(result.toString(), cause); // Conversion done in server
-		if(result.isValid()) throw new LocalizedIllegalArgumentException(RESOURCES, "init.validResult");
-		this.result = result;
-	}
+  public ValidationException(Throwable cause, ValidationResult result) {
+    super(result.toString(), cause); // Conversion done in server
+    if (result.isValid()) {
+      throw new LocalizedIllegalArgumentException(RESOURCES, "init.validResult");
+    }
+    this.result = result;
+  }
 
-	@Override
-	public String getLocalizedMessage() {
-		return result.toString(); // Conversion done in client
-	}
+  @Override
+  public String getLocalizedMessage() {
+    return result.toString(); // Conversion done in client
+  }
 
-	public ValidationResult getResult() {
-		return result;
-	}
+  public ValidationResult getResult() {
+    return result;
+  }
 
-	static {
-		Throwables.registerSurrogateFactory(ValidationException.class, (template, cause) ->
-			new ValidationException(cause, template.result)
-		);
-	}
+  static {
+    Throwables.registerSurrogateFactory(ValidationException.class, (template, cause) ->
+      new ValidationException(cause, template.result)
+    );
+  }
 }

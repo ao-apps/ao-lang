@@ -34,6 +34,6 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface IOConsumer<T> extends IOConsumerE<T, RuntimeException> {
 
-	@Override
-	void accept(T t) throws IOException;
+  @Override
+  void accept(T t) throws IOException;
 }

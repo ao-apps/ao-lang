@@ -41,27 +41,27 @@ import com.aoapps.lang.Throwables;
  */
 public class ConfigurationException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	public ConfigurationException() {
-		// Do nothing
-	}
+  public ConfigurationException() {
+    // Do nothing
+  }
 
-	public ConfigurationException(String message) {
-		super(message);
-	}
+  public ConfigurationException(String message) {
+    super(message);
+  }
 
-	public ConfigurationException(Throwable cause) {
-		super(cause);
-	}
+  public ConfigurationException(Throwable cause) {
+    super(cause);
+  }
 
-	public ConfigurationException(String message, Throwable cause) {
-		super(message, cause);
-	}
+  public ConfigurationException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-	static {
-		Throwables.registerSurrogateFactory(ConfigurationException.class, (template, cause) ->
-			new ConfigurationException(template.getMessage(), cause)
-		);
-	}
+  static {
+    Throwables.registerSurrogateFactory(ConfigurationException.class, (template, cause) ->
+      new ConfigurationException(template.getMessage(), cause)
+    );
+  }
 }

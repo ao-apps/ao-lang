@@ -28,123 +28,125 @@ package com.aoapps.lang;
  */
 public final class Runnables {
 
-	/** Make no instances. */
-	private Runnables() {throw new AssertionError();}
+  /** Make no instances. */
+  private Runnables() {
+    throw new AssertionError();
+  }
 
-	/**
-	 * Runs the given {@link Runnable}, catching all {@link Throwable}.
-	 * <p>
-	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
-	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
-	 * </p>
-	 *
-	 * @param  t0  If not {@code null}, any new throwables will be combined via
-	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
-	 *
-	 * @param  runnable  The runnable to be invoked
-	 *
-	 * @return  {@code t0}, a new throwable, or {@code null} when none given and none new
-	 */
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static Throwable runAndCatch(Throwable t0, Runnable runnable) {
-		if(runnable != null) {
-			try {
-				runnable.run();
-			} catch(Throwable t) {
-				t0 = Throwables.addSuppressed(t0, t);
-			}
-		}
-		return t0;
-	}
+  /**
+   * Runs the given {@link Runnable}, catching all {@link Throwable}.
+   * <p>
+   * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+   * {@link ThreadDeath} and {@link InterruptedException} are managed.
+   * </p>
+   *
+   * @param  t0  If not {@code null}, any new throwables will be combined via
+   *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
+   *
+   * @param  runnable  The runnable to be invoked
+   *
+   * @return  {@code t0}, a new throwable, or {@code null} when none given and none new
+   */
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static Throwable runAndCatch(Throwable t0, Runnable runnable) {
+    if (runnable != null) {
+      try {
+        runnable.run();
+      } catch (Throwable t) {
+        t0 = Throwables.addSuppressed(t0, t);
+      }
+    }
+    return t0;
+  }
 
-	/**
-	 * Runs the given {@link Runnable}, catching all {@link Throwable}.
-	 * <p>
-	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
-	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
-	 * </p>
-	 *
-	 * @param  runnable  The runnable to be invoked
-	 *
-	 * @return  A new throwable or {@code null}
-	 */
-	public static Throwable runAndCatch(Runnable runnable) {
-		return runAndCatch(null, runnable);
-	}
+  /**
+   * Runs the given {@link Runnable}, catching all {@link Throwable}.
+   * <p>
+   * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+   * {@link ThreadDeath} and {@link InterruptedException} are managed.
+   * </p>
+   *
+   * @param  runnable  The runnable to be invoked
+   *
+   * @return  A new throwable or {@code null}
+   */
+  public static Throwable runAndCatch(Runnable runnable) {
+    return runAndCatch(null, runnable);
+  }
 
-	/**
-	 * Runs all of the given {@link Runnable} in order, catching all {@link Throwable}.
-	 * <p>
-	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
-	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
-	 * </p>
-	 *
-	 * @param  t0  If not {@code null}, any new throwables will be combined via
-	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
-	 *
-	 * @param  runnable  The set of all runnables, which will be invoked in order
-	 *
-	 * @return  {@code t0}, a new throwable, or {@code null} when none given and none new
-	 */
-	public static Throwable runAndCatch(Throwable t0, Runnable ... runnable) {
-		if(runnable != null) {
-			for(Runnable ac : runnable) {
-				t0 = runAndCatch(t0, ac);
-			}
-		}
-		return t0;
-	}
+  /**
+   * Runs all of the given {@link Runnable} in order, catching all {@link Throwable}.
+   * <p>
+   * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+   * {@link ThreadDeath} and {@link InterruptedException} are managed.
+   * </p>
+   *
+   * @param  t0  If not {@code null}, any new throwables will be combined via
+   *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
+   *
+   * @param  runnable  The set of all runnables, which will be invoked in order
+   *
+   * @return  {@code t0}, a new throwable, or {@code null} when none given and none new
+   */
+  public static Throwable runAndCatch(Throwable t0, Runnable ... runnable) {
+    if (runnable != null) {
+      for (Runnable ac : runnable) {
+        t0 = runAndCatch(t0, ac);
+      }
+    }
+    return t0;
+  }
 
-	/**
-	 * Runs all of the given {@link Runnable} in order, catching all {@link Throwable}.
-	 * <p>
-	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
-	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
-	 * </p>
-	 *
-	 * @param  runnable  The set of all runnables, which will be invoked in order
-	 *
-	 * @return  A new throwable or {@code null}
-	 */
-	public static Throwable runAndCatch(Runnable ... runnable) {
-		return runAndCatch(null, runnable);
-	}
+  /**
+   * Runs all of the given {@link Runnable} in order, catching all {@link Throwable}.
+   * <p>
+   * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+   * {@link ThreadDeath} and {@link InterruptedException} are managed.
+   * </p>
+   *
+   * @param  runnable  The set of all runnables, which will be invoked in order
+   *
+   * @return  A new throwable or {@code null}
+   */
+  public static Throwable runAndCatch(Runnable ... runnable) {
+    return runAndCatch(null, runnable);
+  }
 
-	/**
-	 * Runs all of the given {@link Runnable} in order, catching all {@link Throwable}.
-	 * <p>
-	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
-	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
-	 * </p>
-	 *
-	 * @param  t0  If not {@code null}, any new throwables will be combined via
-	 *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
-	 *
-	 * @param  runnable  The set of all runnables, which will be invoked in order
-	 *
-	 * @return  {@code t0}, a new throwable, or {@code null} when none given and none new
-	 */
-	public static Throwable runAndCatch(Throwable t0, Iterable<? extends Runnable> runnable) {
-		if(runnable != null) {
-			for(Runnable ac : runnable) {
-				t0 = runAndCatch(t0, ac);
-			}
-		}
-		return t0;
-	}
+  /**
+   * Runs all of the given {@link Runnable} in order, catching all {@link Throwable}.
+   * <p>
+   * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+   * {@link ThreadDeath} and {@link InterruptedException} are managed.
+   * </p>
+   *
+   * @param  t0  If not {@code null}, any new throwables will be combined via
+   *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
+   *
+   * @param  runnable  The set of all runnables, which will be invoked in order
+   *
+   * @return  {@code t0}, a new throwable, or {@code null} when none given and none new
+   */
+  public static Throwable runAndCatch(Throwable t0, Iterable<? extends Runnable> runnable) {
+    if (runnable != null) {
+      for (Runnable ac : runnable) {
+        t0 = runAndCatch(t0, ac);
+      }
+    }
+    return t0;
+  }
 
-	/**
-	 * Runs all of the given {@link Runnable} in order, catching all {@link Throwable}.
-	 * <p>
-	 * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
-	 * {@link ThreadDeath} and {@link InterruptedException} are managed.
-	 * </p>
-	 *
-	 * @param  runnable  The set of all runnables, which will be invoked in order
-	 *
-	 * @return  A new throwable or {@code null}
-	 */
-	public static Throwable runAndCatch(Iterable<? extends Runnable> runnable) {
-		return runAndCatch(null, runnable);
-	}
+  /**
+   * Runs all of the given {@link Runnable} in order, catching all {@link Throwable}.
+   * <p>
+   * See {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)} for details on how
+   * {@link ThreadDeath} and {@link InterruptedException} are managed.
+   * </p>
+   *
+   * @param  runnable  The set of all runnables, which will be invoked in order
+   *
+   * @return  A new throwable or {@code null}
+   */
+  public static Throwable runAndCatch(Iterable<? extends Runnable> runnable) {
+    return runAndCatch(null, runnable);
+  }
 }

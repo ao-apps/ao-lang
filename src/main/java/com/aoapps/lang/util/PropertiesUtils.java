@@ -41,60 +41,64 @@ import java.util.ResourceBundle;
  */
 public final class PropertiesUtils {
 
-	/** Make no instances. */
-	private PropertiesUtils() {throw new AssertionError();}
+  /** Make no instances. */
+  private PropertiesUtils() {
+    throw new AssertionError();
+  }
 
-	public static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, PropertiesUtils.class);
+  public static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, PropertiesUtils.class);
 
-	/**
-	 * Loads properties from a file.
-	 */
-	public static Properties loadFromFile(File file) throws IOException {
-		Properties props = new Properties();
-		try (InputStream in = new BufferedInputStream(new FileInputStream(file))) {
-			props.load(in);
-		}
-		return props;
-	}
+  /**
+   * Loads properties from a file.
+   */
+  public static Properties loadFromFile(File file) throws IOException {
+    Properties props = new Properties();
+    try (InputStream in = new BufferedInputStream(new FileInputStream(file))) {
+      props.load(in);
+    }
+    return props;
+  }
 
-	/**
-	 * Loads properties from a module or classpath resource.
-	 * <ol>
-	 * <li>Attempts to locate the resource with {@link Class#getResourceAsStream(java.lang.String)}</li>
-	 * <li>If resource name begins with a slash (/):
-	 *   <ol type="a">
-	 *   <li>Strip all beginning slashes (/) from resource name</li>
-	 *   <li>
-	 *     If {@link Thread#getContextClassLoader()} is non-null, attempts to locate the resource with
-	 *     {@link ClassLoader#getResourceAsStream(java.lang.String)}.
-	 *   </li>
-	 *   <li>
-	 *     Otherwise, attempts to locate the resource with
-	 *     {@link ClassLoader#getSystemResourceAsStream(java.lang.String)}.
-	 *   </li>
-	 *   </ol>
-	 * </ol>
-	 */
-	public static Properties loadFromResource(Class<?> clazz, String resource) throws IOException {
-		Properties props = new Properties();
-		InputStream in = clazz.getResourceAsStream(resource);
-		if(in == null && resource.startsWith("/")) {
-			// Try ClassLoader for when modules enabled
-			String name = resource;
-			do {
-				name = name.substring(1);
-			} while(name.startsWith("/"));
-			ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-			in = (classloader != null)
-				? classloader.getResourceAsStream(name)
-				: ClassLoader.getSystemResourceAsStream(name);
-		}
-		if(in == null) throw new LocalizedIOException(RESOURCES, "readProperties.resourceNotFound", resource);
-		try {
-			props.load(in);
-		} finally {
-			in.close();
-		}
-		return props;
-	}
+  /**
+   * Loads properties from a module or classpath resource.
+   * <ol>
+   * <li>Attempts to locate the resource with {@link Class#getResourceAsStream(java.lang.String)}</li>
+   * <li>If resource name begins with a slash (/):
+   *   <ol type="a">
+   *   <li>Strip all beginning slashes (/) from resource name</li>
+   *   <li>
+   *     If {@link Thread#getContextClassLoader()} is non-null, attempts to locate the resource with
+   *     {@link ClassLoader#getResourceAsStream(java.lang.String)}.
+   *   </li>
+   *   <li>
+   *     Otherwise, attempts to locate the resource with
+   *     {@link ClassLoader#getSystemResourceAsStream(java.lang.String)}.
+   *   </li>
+   *   </ol>
+   * </ol>
+   */
+  public static Properties loadFromResource(Class<?> clazz, String resource) throws IOException {
+    Properties props = new Properties();
+    InputStream in = clazz.getResourceAsStream(resource);
+    if (in == null && resource.startsWith("/")) {
+      // Try ClassLoader for when modules enabled
+      String name = resource;
+      do {
+        name = name.substring(1);
+      } while (name.startsWith("/"));
+      ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+      in = (classloader != null)
+        ? classloader.getResourceAsStream(name)
+        : ClassLoader.getSystemResourceAsStream(name);
+    }
+    if (in == null) {
+      throw new LocalizedIOException(RESOURCES, "readProperties.resourceNotFound", resource);
+    }
+    try {
+      props.load(in);
+    } finally {
+      in.close();
+    }
+    return props;
+  }
 }

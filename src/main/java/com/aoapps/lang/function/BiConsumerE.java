@@ -36,14 +36,14 @@ import java.util.function.BiConsumer;
 @FunctionalInterface
 public interface BiConsumerE<T, U, Ex extends Throwable> {
 
-	void accept(T t, U u) throws Ex;
+  void accept(T t, U u) throws Ex;
 
-	default BiConsumerE<T, U, Ex> andThen(BiConsumerE<? super T, ? super U, ? extends Ex> after) throws Ex {
-		Objects.requireNonNull(after);
+  default BiConsumerE<T, U, Ex> andThen(BiConsumerE<? super T, ? super U, ? extends Ex> after) throws Ex {
+    Objects.requireNonNull(after);
 
-		return (l, r) -> {
-			accept(l, r);
-			after.accept(l, r);
-		};
-	}
+    return (l, r) -> {
+      accept(l, r);
+      after.accept(l, r);
+    };
+  }
 }

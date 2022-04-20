@@ -34,40 +34,46 @@ import java.util.function.BiFunction;
  */
 public final class BiFunctions {
 
-	/** Make no instances. */
-	private BiFunctions() {throw new AssertionError();}
+  /** Make no instances. */
+  private BiFunctions() {
+    throw new AssertionError();
+  }
 
-	/**
-	 * Lazily evaluates a set of bifunctions, returning the first non-null result or {@link Optional#EMPTY} when no result.
-	 *
-	 * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T, U, R> Optional<R> coalesce(T t, U u, BiFunction<? super T, ? super U, ? extends R> ... functions) {
-		R r = null;
-		if(functions != null) {
-			for(BiFunction<? super T, ? super U, ? extends R> function : functions) {
-				r = function.apply(t, u);
-				if(r != null) break;
-			}
-		}
-		return Optional.ofNullable(r);
-	}
+  /**
+   * Lazily evaluates a set of bifunctions, returning the first non-null result or {@link Optional#EMPTY} when no result.
+   *
+   * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
+   */
+  @SuppressWarnings("unchecked")
+  public static <T, U, R> Optional<R> coalesce(T t, U u, BiFunction<? super T, ? super U, ? extends R> ... functions) {
+    R r = null;
+    if (functions != null) {
+      for (BiFunction<? super T, ? super U, ? extends R> function : functions) {
+        r = function.apply(t, u);
+        if (r != null) {
+          break;
+        }
+      }
+    }
+    return Optional.ofNullable(r);
+  }
 
-	/**
-	 * Lazily evaluates a set of bifunctions, returning the first non-null result or {@link Optional#EMPTY} when no result.
-	 *
-	 * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T, U, R, Ex extends Throwable> Optional<R> coalesceE(T t, U u, BiFunctionE<? super T, ? super U, ? extends R, ? extends Ex> ... functions) throws Ex {
-		R r = null;
-		if(functions != null) {
-			for(BiFunctionE<? super T, ? super U, ? extends R, ? extends Ex> function : functions) {
-				r = function.apply(t, u);
-				if(r != null) break;
-			}
-		}
-		return Optional.ofNullable(r);
-	}
+  /**
+   * Lazily evaluates a set of bifunctions, returning the first non-null result or {@link Optional#EMPTY} when no result.
+   *
+   * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
+   */
+  @SuppressWarnings("unchecked")
+  public static <T, U, R, Ex extends Throwable> Optional<R> coalesceE(T t, U u, BiFunctionE<? super T, ? super U, ? extends R, ? extends Ex> ... functions) throws Ex {
+    R r = null;
+    if (functions != null) {
+      for (BiFunctionE<? super T, ? super U, ? extends R, ? extends Ex> function : functions) {
+        r = function.apply(t, u);
+        if (r != null) {
+          break;
+        }
+      }
+    }
+    return Optional.ofNullable(r);
+  }
 }

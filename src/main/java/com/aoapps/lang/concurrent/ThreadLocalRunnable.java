@@ -31,30 +31,35 @@ package com.aoapps.lang.concurrent;
  */
 public class ThreadLocalRunnable implements Runnable {
 
-	private final Runnable task;
-	private final ThreadLocal<?> threadLocal;
-	private final Object value;
+  private final Runnable task;
+  private final ThreadLocal<?> threadLocal;
+  private final Object value;
 
-	public ThreadLocalRunnable(Runnable task, ThreadLocal<?> threadLocal) {
-		this.task = task;
-		this.threadLocal = threadLocal;
-		this.value = threadLocal.get();
-	}
+  public ThreadLocalRunnable(Runnable task, ThreadLocal<?> threadLocal) {
+    this.task = task;
+    this.threadLocal = threadLocal;
+    this.value = threadLocal.get();
+  }
 
-	@Override
-	public void run() {
-		@SuppressWarnings("unchecked")
-		ThreadLocal<Object> tl = (ThreadLocal<Object>)threadLocal;
-		Object oldValue = tl.get();
-		Object newValue = value;
-		try {
-			if(oldValue != newValue) tl.set(newValue);
-			task.run();
-		} finally {
-			if(oldValue != newValue) {
-				if(oldValue == null) tl.remove();
-				else tl.set(oldValue);
-			}
-		}
-	}
+  @Override
+  public void run() {
+    @SuppressWarnings("unchecked")
+    ThreadLocal<Object> tl = (ThreadLocal<Object>)threadLocal;
+    Object oldValue = tl.get();
+    Object newValue = value;
+    try {
+      if (oldValue != newValue) {
+        tl.set(newValue);
+      }
+      task.run();
+    } finally {
+      if (oldValue != newValue) {
+        if (oldValue == null) {
+          tl.remove();
+        } else {
+          tl.set(oldValue);
+        }
+      }
+    }
+  }
 }

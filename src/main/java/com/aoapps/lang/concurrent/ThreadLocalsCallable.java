@@ -33,50 +33,53 @@ import java.util.concurrent.Callable;
  */
 public class ThreadLocalsCallable<T> implements Callable<T> {
 
-	private final Callable<T> task;
-	private final ThreadLocal<?>[] threadLocals;
-	private final Object[] values;
+  private final Callable<T> task;
+  private final ThreadLocal<?>[] threadLocals;
+  private final Object[] values;
 
-	public ThreadLocalsCallable(Callable<T> task, ThreadLocal<?> ... threadLocals) {
-		this.task = task;
-		this.threadLocals = threadLocals;
-		int len = threadLocals.length;
-		Object[] vals = new Object[len];
-		for(int i = 0; i < len; i++) {
-			vals[i] = threadLocals[i].get();
-		}
-		this.values = vals;
-	}
+  public ThreadLocalsCallable(Callable<T> task, ThreadLocal<?> ... threadLocals) {
+    this.task = task;
+    this.threadLocals = threadLocals;
+    int len = threadLocals.length;
+    Object[] vals = new Object[len];
+    for (int i = 0; i < len; i++) {
+      vals[i] = threadLocals[i].get();
+    }
+    this.values = vals;
+  }
 
-	@Override
-	public T call() throws Exception {
-		ThreadLocal<?>[] tls = this.threadLocals;
-		int len = tls.length;
-		Object[] oldValues = new Object[len];
-		for(int i = 0; i < len; i++) {
-			oldValues[i] = tls[i].get();
-		}
-		Object[] newValues = this.values;
-		try {
-			for(int i = 0; i < len; i++) {
-				Object newValue = newValues[i];
-				if(oldValues[i] != newValue) {
-					@SuppressWarnings("unchecked")
-					ThreadLocal<Object> tl = (ThreadLocal<Object>)tls[i];
-					tl.set(newValue);
-				}
-			}
-			return task.call();
-		} finally {
-			for(int i = 0; i < len; i++) {
-				Object oldValue = oldValues[i];
-				if(oldValue != newValues[i]) {
-					@SuppressWarnings("unchecked")
-					ThreadLocal<Object> tl = (ThreadLocal<Object>)tls[i];
-					if(oldValue == null) tl.remove();
-					else tl.set(oldValue);
-				}
-			}
-		}
-	}
+  @Override
+  public T call() throws Exception {
+    ThreadLocal<?>[] tls = this.threadLocals;
+    int len = tls.length;
+    Object[] oldValues = new Object[len];
+    for (int i = 0; i < len; i++) {
+      oldValues[i] = tls[i].get();
+    }
+    Object[] newValues = this.values;
+    try {
+      for (int i = 0; i < len; i++) {
+        Object newValue = newValues[i];
+        if (oldValues[i] != newValue) {
+          @SuppressWarnings("unchecked")
+          ThreadLocal<Object> tl = (ThreadLocal<Object>)tls[i];
+          tl.set(newValue);
+        }
+      }
+      return task.call();
+    } finally {
+      for (int i = 0; i < len; i++) {
+        Object oldValue = oldValues[i];
+        if (oldValue != newValues[i]) {
+          @SuppressWarnings("unchecked")
+          ThreadLocal<Object> tl = (ThreadLocal<Object>)tls[i];
+          if (oldValue == null) {
+            tl.remove();
+          } else {
+            tl.set(oldValue);
+          }
+        }
+      }
+    }
+  }
 }

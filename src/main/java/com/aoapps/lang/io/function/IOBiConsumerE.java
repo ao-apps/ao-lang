@@ -37,14 +37,14 @@ import java.util.function.BiConsumer;
 @FunctionalInterface
 public interface IOBiConsumerE<T, U, Ex extends Throwable> {
 
-	void accept(T t, U u) throws IOException, Ex;
+  void accept(T t, U u) throws IOException, Ex;
 
-	default IOBiConsumerE<T, U, Ex> andThen(IOBiConsumerE<? super T, ? super U, ? extends Ex> after) throws IOException, Ex {
-		Objects.requireNonNull(after);
+  default IOBiConsumerE<T, U, Ex> andThen(IOBiConsumerE<? super T, ? super U, ? extends Ex> after) throws IOException, Ex {
+    Objects.requireNonNull(after);
 
-		return (l, r) -> {
-			accept(l, r);
-			after.accept(l, r);
-		};
-	}
+    return (l, r) -> {
+      accept(l, r);
+      after.accept(l, r);
+    };
+  }
 }

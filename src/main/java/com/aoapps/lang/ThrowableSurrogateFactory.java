@@ -36,20 +36,20 @@ import com.aoapps.lang.exception.WrappedException;
 @FunctionalInterface
 public interface ThrowableSurrogateFactory<X extends Throwable> {
 
-	/**
-	 * Creates a new {@link Throwable} surrogate, when possible to create with a compatible state.
-	 *
-	 * @param  template  The created surrogate must be of the same type as the template, and must include all
-	 *                   template-type-specific state.  If unable to copy the state, then no surrogate should be
-	 *                   created.
-	 *
-	 * @param  cause  The cause that should be used for the newly created surrogate.  This may or may not be the same as
-	 *                the template.  This may or may not have the template in its change of causes or suppression lists.
-	 *                It is allowed to further wrap the cause if necessary to create the surrogate, such as with
-	 *                {@link WrappedException} or {@link WrappedError}.
-	 *
-	 * @return  A new throwable instance of the same type as the template, with compatible state, and the given cause
-	 *          either directly or wrapped.  If unable to create a compatible surrogate, returns {@code null}.
-	 */
-	X newSurrogate(X template, Throwable cause);
+  /**
+   * Creates a new {@link Throwable} surrogate, when possible to create with a compatible state.
+   *
+   * @param  template  The created surrogate must be of the same type as the template, and must include all
+   *                   template-type-specific state.  If unable to copy the state, then no surrogate should be
+   *                   created.
+   *
+   * @param  cause  The cause that should be used for the newly created surrogate.  This may or may not be the same as
+   *                the template.  This may or may not have the template in its change of causes or suppression lists.
+   *                It is allowed to further wrap the cause if necessary to create the surrogate, such as with
+   *                {@link WrappedException} or {@link WrappedError}.
+   *
+   * @return  A new throwable instance of the same type as the template, with compatible state, and the given cause
+   *          either directly or wrapped.  If unable to create a compatible surrogate, returns {@code null}.
+   */
+  X newSurrogate(X template, Throwable cause);
 }

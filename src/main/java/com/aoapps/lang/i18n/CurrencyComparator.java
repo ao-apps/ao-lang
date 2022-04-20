@@ -34,24 +34,24 @@ import java.util.Currency;
  */
 public final class CurrencyComparator implements Comparator<Currency>, Serializable {
 
-	private static final long serialVersionUID = -6360174337692570997L;
+  private static final long serialVersionUID = -6360174337692570997L;
 
-	private static final CurrencyComparator singleton = new CurrencyComparator();
+  private static final CurrencyComparator singleton = new CurrencyComparator();
 
-	public static CurrencyComparator getInstance() {
-		return singleton;
-	}
+  public static CurrencyComparator getInstance() {
+    return singleton;
+  }
 
-	private CurrencyComparator() {
-		// Do nothing
-	}
+  private CurrencyComparator() {
+    // Do nothing
+  }
 
-	private Object readResolve() {
-		return getInstance();
-	}
+  private Object readResolve() {
+    return getInstance();
+  }
 
-	@Override
-	public int compare(Currency o1, Currency o2) {
-		return o1.getCurrencyCode().compareTo(o2.getCurrencyCode());
-	}
+  @Override
+  public int compare(Currency o1, Currency o2) {
+    return o1.getCurrencyCode().compareTo(o2.getCurrencyCode());
+  }
 }

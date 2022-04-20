@@ -32,43 +32,45 @@ import java.util.Collection;
  */
 public final class Statistics {
 
-	/** Make no instances. */
-	private Statistics() {throw new AssertionError();}
+  /** Make no instances. */
+  private Statistics() {
+    throw new AssertionError();
+  }
 
-	/**
-	 * Computes the average of a set of samples.  <code>null</code> values will be
-	 * ignored, not contributing to the average in any way.
-	 *
-	 * @param samples must have at least one sample
-	 *
-	 * @return  Double.NaN if there are no samples
-	 */
-	public static double mean(Collection<? extends Number> samples) {
-		double sum = 0;
-		int numSamples = 0;
-		for(Number sample : samples) {
-			if(sample!=null) {
-				sum += sample.doubleValue();
-				numSamples++;
-			}
-		}
-		return sum / numSamples;
-	}
+  /**
+   * Computes the average of a set of samples.  <code>null</code> values will be
+   * ignored, not contributing to the average in any way.
+   *
+   * @param samples must have at least one sample
+   *
+   * @return  Double.NaN if there are no samples
+   */
+  public static double mean(Collection<? extends Number> samples) {
+    double sum = 0;
+    int numSamples = 0;
+    for (Number sample : samples) {
+      if (sample != null) {
+        sum += sample.doubleValue();
+        numSamples++;
+      }
+    }
+    return sum / numSamples;
+  }
 
-	/**
-	 * Computes the standard deviation of a set of samples.  <code>null</code> values will be
-	 * ignored, not contributing to the deviation in any way.  This does not use Bessel's correction.
-	 */
-	public static double standardDeviation(double mean, Collection<? extends Number> samples) {
-		double sum = 0;
-		int numSamples = 0;
-		for(Number sample : samples) {
-			if(sample!=null) {
-				double diff = sample.doubleValue()-mean;
-				sum += diff * diff;
-				numSamples++;
-			}
-		}
-		return Math.sqrt(sum/numSamples);
-	}
+  /**
+   * Computes the standard deviation of a set of samples.  <code>null</code> values will be
+   * ignored, not contributing to the deviation in any way.  This does not use Bessel's correction.
+   */
+  public static double standardDeviation(double mean, Collection<? extends Number> samples) {
+    double sum = 0;
+    int numSamples = 0;
+    for (Number sample : samples) {
+      if (sample != null) {
+        double diff = sample.doubleValue()-mean;
+        sum += diff * diff;
+        numSamples++;
+      }
+    }
+    return Math.sqrt(sum/numSamples);
+  }
 }

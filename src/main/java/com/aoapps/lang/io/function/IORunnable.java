@@ -33,6 +33,6 @@ import java.io.IOException;
 @FunctionalInterface
 public interface IORunnable extends IORunnableE<RuntimeException> {
 
-	@Override
-	void run() throws IOException;
+  @Override
+  void run() throws IOException;
 }

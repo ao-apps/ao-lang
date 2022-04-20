@@ -34,6 +34,6 @@ import java.util.function.BiConsumer;
 @FunctionalInterface
 public interface IOBiConsumer<T, U> extends IOBiConsumerE<T, U, RuntimeException> {
 
-	@Override
-	void accept(T t, U u) throws IOException;
+  @Override
+  void accept(T t, U u) throws IOException;
 }

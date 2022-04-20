@@ -33,54 +33,56 @@ import java.util.ResourceBundle;
  */
 public class NullArgumentException extends IllegalArgumentException {
 
-	private static final Resources RESOURCES = Resources.getResources(
-		ResourceBundle::getBundle,
-		NullArgumentException.class.getPackage(),
-		"i18n_res.ApplicationResources",
-		NullArgumentException.class.getSimpleName() + '.'
-	);
+  private static final Resources RESOURCES = Resources.getResources(
+    ResourceBundle::getBundle,
+    NullArgumentException.class.getPackage(),
+    "i18n_res.ApplicationResources",
+    NullArgumentException.class.getSimpleName() + '.'
+  );
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * Checks an argument and throws an exception if null.
-	 */
-	public static <T> T checkNotNull(T argument) throws NullArgumentException {
-		return checkNotNull(argument, null);
-	}
+  /**
+   * Checks an argument and throws an exception if null.
+   */
+  public static <T> T checkNotNull(T argument) throws NullArgumentException {
+    return checkNotNull(argument, null);
+  }
 
-	/**
-	 * Checks an argument and throws an exception if null.
-	 */
-	public static <T> T checkNotNull(T argument, String argumentName) throws NullArgumentException {
-		if(argument==null) throw new NullArgumentException(argumentName);
-		return argument;
-	}
+  /**
+   * Checks an argument and throws an exception if null.
+   */
+  public static <T> T checkNotNull(T argument, String argumentName) throws NullArgumentException {
+    if (argument == null) {
+      throw new NullArgumentException(argumentName);
+    }
+    return argument;
+  }
 
-	private final String argument;
+  private final String argument;
 
-	public NullArgumentException(String argument) {
-		super(argument==null ? RESOURCES.getMessage("message.noName") : RESOURCES.getMessage("message", argument));
-		this.argument = argument;
-	}
+  public NullArgumentException(String argument) {
+    super(argument == null ? RESOURCES.getMessage("message.noName") : RESOURCES.getMessage("message", argument));
+    this.argument = argument;
+  }
 
-	@Override
-	public String getLocalizedMessage() {
-		return argument==null ? RESOURCES.getMessage("message.noName") : RESOURCES.getMessage("message", argument);
-	}
+  @Override
+  public String getLocalizedMessage() {
+    return argument == null ? RESOURCES.getMessage("message.noName") : RESOURCES.getMessage("message", argument);
+  }
 
-	/**
-	 * Gets the name of the argument that was null.
-	 */
-	public String getArgument() {
-		return argument;
-	}
+  /**
+   * Gets the name of the argument that was null.
+   */
+  public String getArgument() {
+    return argument;
+  }
 
-	static {
-		Throwables.registerSurrogateFactory(NullArgumentException.class, (template, cause) -> {
-			NullArgumentException newEx = new NullArgumentException(template.argument);
-			newEx.initCause(cause);
-			return newEx;
-		});
-	}
+  static {
+    Throwables.registerSurrogateFactory(NullArgumentException.class, (template, cause) -> {
+      NullArgumentException newEx = new NullArgumentException(template.argument);
+      newEx.initCause(cause);
+      return newEx;
+    });
+  }
 }

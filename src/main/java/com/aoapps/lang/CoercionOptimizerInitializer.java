@@ -32,9 +32,9 @@ import java.util.ServiceLoader;
  */
 public interface CoercionOptimizerInitializer extends Runnable {
 
-	/**
-	 * @see  Coercion#registerOptimizer(com.aoapps.lang.CoercionOptimizer)
-	 */
-	@Override
-	void run();
+  /**
+   * @see  Coercion#registerOptimizer(com.aoapps.lang.CoercionOptimizer)
+   */
+  @Override
+  void run();
 }

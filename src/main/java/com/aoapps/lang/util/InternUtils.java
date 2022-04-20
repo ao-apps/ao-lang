@@ -28,22 +28,28 @@ package com.aoapps.lang.util;
  */
 public final class InternUtils {
 
-	/** Make no instances. */
-	private InternUtils() {throw new AssertionError();}
+  /** Make no instances. */
+  private InternUtils() {
+    throw new AssertionError();
+  }
 
-	/**
-	 * Interns the object, return null when null.
-	 */
-	public static <T extends Internable<T>> T intern(T value) {
-		if(value==null) return null;
-		return value.intern();
-	}
+  /**
+   * Interns the object, return null when null.
+   */
+  public static <T extends Internable<T>> T intern(T value) {
+    if (value == null) {
+      return null;
+    }
+    return value.intern();
+  }
 
-	/**
-	 * Null-safe intern: interns a String if it is not null, returns null if parameter is null.
-	 */
-	public static String intern(String s) {
-		if(s == null) return null;
-		return s.intern();
-	}
+  /**
+   * Null-safe intern: interns a String if it is not null, returns null if parameter is null.
+   */
+  public static String intern(String s) {
+    if (s == null) {
+      return null;
+    }
+    return s.intern();
+  }
 }

@@ -36,22 +36,22 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface FunctionE<T, R, Ex extends Throwable> {
 
-	R apply(T t) throws Ex;
+  R apply(T t) throws Ex;
 
-	default <V> FunctionE<V, R, Ex> compose(FunctionE<? super V, ? extends T, ? extends Ex> before) throws Ex {
-		Objects.requireNonNull(before);
-		return v -> apply(before.apply(v));
-	}
+  default <V> FunctionE<V, R, Ex> compose(FunctionE<? super V, ? extends T, ? extends Ex> before) throws Ex {
+    Objects.requireNonNull(before);
+    return v -> apply(before.apply(v));
+  }
 
-	default <V> FunctionE<T, V, Ex> andThen(FunctionE<? super R, ? extends V, ? extends Ex> after) throws Ex {
-		Objects.requireNonNull(after);
-		return t -> after.apply(apply(t));
-	}
+  default <V> FunctionE<T, V, Ex> andThen(FunctionE<? super R, ? extends V, ? extends Ex> after) throws Ex {
+    Objects.requireNonNull(after);
+    return t -> after.apply(apply(t));
+  }
 
-	/**
-	 * @param  <Ex>  An arbitrary exception type that may be thrown
-	 */
-	static <T, Ex extends Throwable> FunctionE<T, T, Ex> identity() {
-		return t -> t;
-	}
+  /**
+   * @param  <Ex>  An arbitrary exception type that may be thrown
+   */
+  static <T, Ex extends Throwable> FunctionE<T, T, Ex> identity() {
+    return t -> t;
+  }
 }

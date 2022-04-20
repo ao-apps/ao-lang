@@ -34,40 +34,46 @@ import java.util.function.Supplier;
  */
 public final class Suppliers {
 
-	/** Make no instances. */
-	private Suppliers() {throw new AssertionError();}
+  /** Make no instances. */
+  private Suppliers() {
+    throw new AssertionError();
+  }
 
-	/**
-	 * Lazily evaluates a set of suppliers, returning the first non-null result or {@link Optional#EMPTY} when no result.
-	 *
-	 * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> Optional<T> coalesce(Supplier<? extends T> ... suppliers) {
-		T t = null;
-		if(suppliers != null) {
-			for(Supplier<? extends T> supplier : suppliers) {
-				t = supplier.get();
-				if(t != null) break;
-			}
-		}
-		return Optional.ofNullable(t);
-	}
+  /**
+   * Lazily evaluates a set of suppliers, returning the first non-null result or {@link Optional#EMPTY} when no result.
+   *
+   * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> Optional<T> coalesce(Supplier<? extends T> ... suppliers) {
+    T t = null;
+    if (suppliers != null) {
+      for (Supplier<? extends T> supplier : suppliers) {
+        t = supplier.get();
+        if (t != null) {
+          break;
+        }
+      }
+    }
+    return Optional.ofNullable(t);
+  }
 
-	/**
-	 * Lazily evaluates a set of suppliers, returning the first non-null result or {@link Optional#EMPTY} when no result.
-	 *
-	 * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T, Ex extends Throwable> Optional<T> coalesceE(SupplierE<? extends T, ? extends Ex> ... suppliers) throws Ex {
-		T t = null;
-		if(suppliers != null) {
-			for(SupplierE<? extends T, ? extends Ex> supplier : suppliers) {
-				t = supplier.get();
-				if(t != null) break;
-			}
-		}
-		return Optional.ofNullable(t);
-	}
+  /**
+   * Lazily evaluates a set of suppliers, returning the first non-null result or {@link Optional#EMPTY} when no result.
+   *
+   * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
+   */
+  @SuppressWarnings("unchecked")
+  public static <T, Ex extends Throwable> Optional<T> coalesceE(SupplierE<? extends T, ? extends Ex> ... suppliers) throws Ex {
+    T t = null;
+    if (suppliers != null) {
+      for (SupplierE<? extends T, ? extends Ex> supplier : suppliers) {
+        t = supplier.get();
+        if (t != null) {
+          break;
+        }
+      }
+    }
+    return Optional.ofNullable(t);
+  }
 }

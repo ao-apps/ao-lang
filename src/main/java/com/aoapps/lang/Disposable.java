@@ -35,10 +35,10 @@ package com.aoapps.lang;
 @Deprecated
 public interface Disposable {
 
-	/**
-	 * Disposes of this object instance.
-	 *
-	 * If already disposed, no action will be taken and no exception thrown.
-	 */
-	void dispose();
+  /**
+   * Disposes of this object instance.
+   *
+   * If already disposed, no action will be taken and no exception thrown.
+   */
+  void dispose();
 }

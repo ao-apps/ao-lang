@@ -37,16 +37,16 @@ import java.io.Writer;
 @FunctionalInterface
 public interface CoercionOptimizer {
 
-	/**
-	 * Unwraps a writer to expose any wrapped writer.  The wrapped writer is
-	 * only returned when it is write-through, meaning the wrapper doesn't modify
-	 * the data written, and writes to the wrapped writer immediately (no buffering).
-	 *
-	 * @param out      the writer to try unwrapping
-	 * @param encoder  the encoder being used or {@code null} for none
-	 *
-	 * @return  The functionally equivalent, but more efficient/direct, writer
-	 *          or {@code out} when nothing to unwrap
-	 */
-	Writer optimize(Writer out, Encoder encoder);
+  /**
+   * Unwraps a writer to expose any wrapped writer.  The wrapped writer is
+   * only returned when it is write-through, meaning the wrapper doesn't modify
+   * the data written, and writes to the wrapped writer immediately (no buffering).
+   *
+   * @param out      the writer to try unwrapping
+   * @param encoder  the encoder being used or {@code null} for none
+   *
+   * @return  The functionally equivalent, but more efficient/direct, writer
+   *          or {@code out} when nothing to unwrap
+   */
+  Writer optimize(Writer out, Encoder encoder);
 }

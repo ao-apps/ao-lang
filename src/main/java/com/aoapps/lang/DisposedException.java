@@ -33,27 +33,27 @@ package com.aoapps.lang;
 @Deprecated
 public class DisposedException extends IllegalStateException {
 
-	private static final long serialVersionUID = 2L;
+  private static final long serialVersionUID = 2L;
 
-	public DisposedException() {
-		super();
-	}
+  public DisposedException() {
+    super();
+  }
 
-	public DisposedException(String message) {
-		super(message);
-	}
+  public DisposedException(String message) {
+    super(message);
+  }
 
-	public DisposedException(Throwable cause) {
-		super(cause);
-	}
+  public DisposedException(Throwable cause) {
+    super(cause);
+  }
 
-	public DisposedException(String message, Throwable cause) {
-		super(message, cause);
-	}
+  public DisposedException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-	static {
-		Throwables.registerSurrogateFactory(DisposedException.class, (template, cause) ->
-			new DisposedException(template.getMessage(), cause)
-		);
-	}
+  static {
+    Throwables.registerSurrogateFactory(DisposedException.class, (template, cause) ->
+      new DisposedException(template.getMessage(), cause)
+    );
+  }
 }

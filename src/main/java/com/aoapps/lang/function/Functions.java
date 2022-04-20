@@ -34,40 +34,46 @@ import java.util.function.Function;
  */
 public final class Functions {
 
-	/** Make no instances. */
-	private Functions() {throw new AssertionError();}
+  /** Make no instances. */
+  private Functions() {
+    throw new AssertionError();
+  }
 
-	/**
-	 * Lazily evaluates a set of functions, returning the first non-null result or {@link Optional#EMPTY} when no result.
-	 *
-	 * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T, R> Optional<R> coalesce(T t, Function<? super T, ? extends R> ... functions) {
-		R r = null;
-		if(functions != null) {
-			for(Function<? super T, ? extends R> function : functions) {
-				r = function.apply(t);
-				if(r != null) break;
-			}
-		}
-		return Optional.ofNullable(r);
-	}
+  /**
+   * Lazily evaluates a set of functions, returning the first non-null result or {@link Optional#EMPTY} when no result.
+   *
+   * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
+   */
+  @SuppressWarnings("unchecked")
+  public static <T, R> Optional<R> coalesce(T t, Function<? super T, ? extends R> ... functions) {
+    R r = null;
+    if (functions != null) {
+      for (Function<? super T, ? extends R> function : functions) {
+        r = function.apply(t);
+        if (r != null) {
+          break;
+        }
+      }
+    }
+    return Optional.ofNullable(r);
+  }
 
-	/**
-	 * Lazily evaluates a set of functions, returning the first non-null result or {@link Optional#EMPTY} when no result.
-	 *
-	 * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T, R, Ex extends Throwable> Optional<R> coalesceE(T t, FunctionE<? super T, ? extends R, ? extends Ex> ... functions) throws Ex {
-		R r = null;
-		if(functions != null) {
-			for(FunctionE<? super T, ? extends R, ? extends Ex> function : functions) {
-				r = function.apply(t);
-				if(r != null) break;
-			}
-		}
-		return Optional.ofNullable(r);
-	}
+  /**
+   * Lazily evaluates a set of functions, returning the first non-null result or {@link Optional#EMPTY} when no result.
+   *
+   * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
+   */
+  @SuppressWarnings("unchecked")
+  public static <T, R, Ex extends Throwable> Optional<R> coalesceE(T t, FunctionE<? super T, ? extends R, ? extends Ex> ... functions) throws Ex {
+    R r = null;
+    if (functions != null) {
+      for (FunctionE<? super T, ? extends R, ? extends Ex> function : functions) {
+        r = function.apply(t);
+        if (r != null) {
+          break;
+        }
+      }
+    }
+    return Optional.ofNullable(r);
+  }
 }

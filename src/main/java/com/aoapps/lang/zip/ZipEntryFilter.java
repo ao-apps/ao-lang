@@ -31,5 +31,5 @@ import java.util.zip.ZipEntry;
 @FunctionalInterface
 public interface ZipEntryFilter {
 
-	boolean accept(ZipEntry entry);
+  boolean accept(ZipEntry entry);
 }

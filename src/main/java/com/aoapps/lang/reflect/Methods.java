@@ -35,47 +35,49 @@ import java.lang.reflect.Method;
  */
 public final class Methods {
 
-	/** Make no instances. */
-	private Methods() {throw new AssertionError();}
+  /** Make no instances. */
+  private Methods() {
+    throw new AssertionError();
+  }
 
-	/**
-	 * Invokes the provided method on the given object.
-	 * This is convenient, but not so fast.  Where repeated calls will be made to the method,
-	 * us the full reflection API.
-	 */
-	public static <T> T invoke(Class<T> returnType, Object target, String methodName) throws ReflectionException {
-		return invoke(returnType, target, methodName, EmptyArrays.EMPTY_CLASS_ARRAY, EmptyArrays.EMPTY_OBJECT_ARRAY);
-	}
+  /**
+   * Invokes the provided method on the given object.
+   * This is convenient, but not so fast.  Where repeated calls will be made to the method,
+   * us the full reflection API.
+   */
+  public static <T> T invoke(Class<T> returnType, Object target, String methodName) throws ReflectionException {
+    return invoke(returnType, target, methodName, EmptyArrays.EMPTY_CLASS_ARRAY, EmptyArrays.EMPTY_OBJECT_ARRAY);
+  }
 
-	/**
-	 * Invokes the provided method on the given object.
-	 * This is convenient, but not so fast.  Where repeated calls will be made to the method,
-	 * us the full reflection API.
-	 */
-	public static <T> T invoke(Class<T> returnType, Object target, String methodName, Class<?> parameterType, Object parameterValue) throws ReflectionException {
-		return invoke(returnType, target, methodName, new Class<?>[] {parameterType}, new Object[] {parameterValue});
-	}
+  /**
+   * Invokes the provided method on the given object.
+   * This is convenient, but not so fast.  Where repeated calls will be made to the method,
+   * us the full reflection API.
+   */
+  public static <T> T invoke(Class<T> returnType, Object target, String methodName, Class<?> parameterType, Object parameterValue) throws ReflectionException {
+    return invoke(returnType, target, methodName, new Class<?>[] {parameterType}, new Object[] {parameterValue});
+  }
 
-	/**
-	 * Invokes the provided method on the given object.
-	 * This is convenient, but not so fast.  Where repeated calls will be made to the method,
-	 * us the full reflection API.
-	 */
-	// TODO: varargs?
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <T> T invoke(Class<T> returnType, Object target, String methodName, Class<?>[] parameterTypes, Object[] parameterValues) throws ReflectionException {
-		try {
-			try {
-				Method method = target.getClass().getMethod(methodName, parameterTypes);
-				Object result = method.invoke(target, parameterValues);
-				return returnType.cast(result);
-			} catch(InvocationTargetException e) {
-				// Unwrap cause for more direct stack traces
-				Throwable cause = e.getCause();
-				throw (cause == null) ? e : cause;
-			}
-		} catch(Throwable t) {
-			throw Throwables.wrap(t, ReflectionException.class, ReflectionException::new);
-		}
-	}
+  /**
+   * Invokes the provided method on the given object.
+   * This is convenient, but not so fast.  Where repeated calls will be made to the method,
+   * us the full reflection API.
+   */
+  // TODO: varargs?
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static <T> T invoke(Class<T> returnType, Object target, String methodName, Class<?>[] parameterTypes, Object[] parameterValues) throws ReflectionException {
+    try {
+      try {
+        Method method = target.getClass().getMethod(methodName, parameterTypes);
+        Object result = method.invoke(target, parameterValues);
+        return returnType.cast(result);
+      } catch (InvocationTargetException e) {
+        // Unwrap cause for more direct stack traces
+        Throwable cause = e.getCause();
+        throw (cause == null) ? e : cause;
+      }
+    } catch (Throwable t) {
+      throw Throwables.wrap(t, ReflectionException.class, ReflectionException::new);
+    }
+  }
 }

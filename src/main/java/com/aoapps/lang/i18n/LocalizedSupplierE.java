@@ -39,9 +39,9 @@ import java.util.function.Supplier;
 @FunctionalInterface
 public interface LocalizedSupplierE<T, Ex extends Throwable> {
 
-	default T get(Resources resources, String key) throws Ex {
-		return get(resources, key, EmptyArrays.EMPTY_SERIALIZABLE_ARRAY);
-	}
+  default T get(Resources resources, String key) throws Ex {
+    return get(resources, key, EmptyArrays.EMPTY_SERIALIZABLE_ARRAY);
+  }
 
-	T get(Resources resources, String key, Serializable... args) throws Ex;
+  T get(Resources resources, String key, Serializable... args) throws Ex;
 }

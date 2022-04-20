@@ -36,10 +36,10 @@ import java.util.function.BiFunction;
 @FunctionalInterface
 public interface BiFunctionE<T, U, R, Ex extends Throwable> {
 
-	R apply(T t, U u) throws Ex;
+  R apply(T t, U u) throws Ex;
 
-	default <V> BiFunctionE<T, U, V, Ex> andThen(FunctionE<? super R, ? extends V, ? extends Ex> after) throws Ex {
-		Objects.requireNonNull(after);
-		return (T t, U u) -> after.apply(apply(t, u));
-	}
+  default <V> BiFunctionE<T, U, V, Ex> andThen(FunctionE<? super R, ? extends V, ? extends Ex> after) throws Ex {
+    Objects.requireNonNull(after);
+    return (T t, U u) -> after.apply(apply(t, u));
+  }
 }

@@ -33,26 +33,26 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class AtomicSequence implements Sequence {
 
-	private final AtomicLong counter;
+  private final AtomicLong counter;
 
-	/**
-	 * Starts at the value of 1.
-	 */
-	public AtomicSequence() {
-		this(1);
-	}
+  /**
+   * Starts at the value of 1.
+   */
+  public AtomicSequence() {
+    this(1);
+  }
 
-	public AtomicSequence(long initialValue) {
-		counter = new AtomicLong(initialValue);
-	}
+  public AtomicSequence(long initialValue) {
+    counter = new AtomicLong(initialValue);
+  }
 
-	@Override
-	public long getNextSequenceValue() {
-		return counter.getAndIncrement();
-	}
+  @Override
+  public long getNextSequenceValue() {
+    return counter.getAndIncrement();
+  }
 
-	@Override
-	public void setNextSequenceValue(long nextValue) {
-		counter.set(nextValue);
-	}
+  @Override
+  public void setNextSequenceValue(long nextValue) {
+    counter.set(nextValue);
+  }
 }

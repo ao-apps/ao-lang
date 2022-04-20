@@ -36,19 +36,19 @@ import java.util.function.BiPredicate;
 @FunctionalInterface
 public interface BiPredicateE<T, U, Ex extends Throwable> {
 
-	boolean test(T t, U u) throws Ex;
+  boolean test(T t, U u) throws Ex;
 
-	default BiPredicateE<T, U, Ex> and(BiPredicateE<? super T, ? super U, ? extends Ex> other) throws Ex {
-		Objects.requireNonNull(other);
-		return (T t, U u) -> test(t, u) && other.test(t, u);
-	}
+  default BiPredicateE<T, U, Ex> and(BiPredicateE<? super T, ? super U, ? extends Ex> other) throws Ex {
+    Objects.requireNonNull(other);
+    return (T t, U u) -> test(t, u) && other.test(t, u);
+  }
 
-	default BiPredicateE<T, U, Ex> negate() throws Ex {
-		return (T t, U u) -> !test(t, u);
-	}
+  default BiPredicateE<T, U, Ex> negate() throws Ex {
+    return (T t, U u) -> !test(t, u);
+  }
 
-	default BiPredicateE<T, U, Ex> or(BiPredicateE<? super T, ? super U, ? extends Ex> other) throws Ex {
-		Objects.requireNonNull(other);
-		return (T t, U u) -> test(t, u) || other.test(t, u);
-	}
+  default BiPredicateE<T, U, Ex> or(BiPredicateE<? super T, ? super U, ? extends Ex> other) throws Ex {
+    Objects.requireNonNull(other);
+    return (T t, U u) -> test(t, u) || other.test(t, u);
+  }
 }

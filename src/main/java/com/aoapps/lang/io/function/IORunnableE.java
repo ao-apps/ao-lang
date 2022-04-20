@@ -35,5 +35,5 @@ import java.io.IOException;
 @FunctionalInterface
 public interface IORunnableE<Ex extends Throwable> {
 
-	void run() throws IOException, Ex;
+  void run() throws IOException, Ex;
 }

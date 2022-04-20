@@ -32,5 +32,5 @@ package com.aoapps.lang.dto;
  */
 public interface DtoFactory<B> {
 
-	B getDto();
+  B getDto();
 }

@@ -40,18 +40,18 @@ import java.io.IOException;
  */
 public interface NoClose extends Closeable {
 
-	/**
-	 * Determines if calls to {@link #close()} will be ignored.
-	 * This value must not change over time; it may be queried once, repeatedly, or never.
-	 */
-	default boolean isNoClose() {
-		return true;
-	}
+  /**
+   * Determines if calls to {@link #close()} will be ignored.
+   * This value must not change over time; it may be queried once, repeatedly, or never.
+   */
+  default boolean isNoClose() {
+    return true;
+  }
 
-	/**
-	 * Calls to close are ignored when {@link #isNoClose()}, otherwise some action might be taken which means close
-	 * calls to this object may not be skipped or assumed to be ignored.
-	 */
-	@Override
-	void close() throws IOException;
+  /**
+   * Calls to close are ignored when {@link #isNoClose()}, otherwise some action might be taken which means close
+   * calls to this object may not be skipped or assumed to be ignored.
+   */
+  @Override
+  void close() throws IOException;
 }

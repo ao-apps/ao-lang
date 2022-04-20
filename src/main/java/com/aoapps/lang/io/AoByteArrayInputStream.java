@@ -34,44 +34,44 @@ import java.io.IOException;
  */
 public class AoByteArrayInputStream extends ByteArrayInputStream {
 
-	public AoByteArrayInputStream(byte[] buf) {
-		super(buf);
-	}
+  public AoByteArrayInputStream(byte[] buf) {
+    super(buf);
+  }
 
-	/**
-	 * Provides direct access to the internal byte[] to avoid unnecessary
-	 * copying of the array.
-	 */
-	public byte[] getInternalByteArray() {
-		return this.buf;
-	}
+  /**
+   * Provides direct access to the internal byte[] to avoid unnecessary
+   * copying of the array.
+   */
+  public byte[] getInternalByteArray() {
+    return this.buf;
+  }
 
-	public void fillFrom(DataInput in) throws IOException {
-		synchronized(this) {
-			in.readFully(buf);
-			mark=0;
-			pos=0;
-			count=buf.length;
-		}
-	}
+  public void fillFrom(DataInput in) throws IOException {
+    synchronized (this) {
+      in.readFully(buf);
+      mark=0;
+      pos=0;
+      count=buf.length;
+    }
+  }
 
-	public void fillFrom(DataInput in, int len) throws IOException {
-		synchronized(this) {
-			in.readFully(buf, 0, len);
-			mark=0;
-			pos=0;
-			count=len;
-		}
-	}
+  public void fillFrom(DataInput in, int len) throws IOException {
+    synchronized (this) {
+      in.readFully(buf, 0, len);
+      mark=0;
+      pos=0;
+      count=len;
+    }
+  }
 
-	/* TODO: This requires code left back in ao-hodgepodge.  Is it used anywhere?
-	public void fillFrom(com.aoapps.persistence.PersistentBuffer pbuffer, long position, int len) throws IOException {
-		synchronized(this) {
-			pbuffer.get(position, buf, 0, len);
-			mark=0;
-			pos=0;
-			count=len;
-		}
-	}
-	 */
+  /* TODO: This requires code left back in ao-hodgepodge.  Is it used anywhere?
+  public void fillFrom(com.aoapps.persistence.PersistentBuffer pbuffer, long position, int len) throws IOException {
+    synchronized (this) {
+      pbuffer.get(position, buf, 0, len);
+      mark=0;
+      pos=0;
+      count=len;
+    }
+  }
+   */
 }

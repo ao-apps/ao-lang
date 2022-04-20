@@ -36,81 +36,87 @@ import java.io.Writer;
  */
 public final class WriterOutputStream extends OutputStream implements NoClose {
 
-	private final Writer out;
+  private final Writer out;
 
-	/**
-	 * The conversions are done in this buffer for minimal memory allocation.
-	 * Released on close.
-	 */
-	private char[] buff=BufferManager.getChars();
+  /**
+   * The conversions are done in this buffer for minimal memory allocation.
+   * Released on close.
+   */
+  private char[] buff=BufferManager.getChars();
 
-	/**
-	 * Create a new PrintWriter, without automatic line flushing.
-	 *
-	 * @param  out        A character-output stream
-	 */
-	public WriterOutputStream(Writer out) {
-		this.out=out;
-	}
+  /**
+   * Create a new PrintWriter, without automatic line flushing.
+   *
+   * @param  out        A character-output stream
+   */
+  public WriterOutputStream(Writer out) {
+    this.out=out;
+  }
 
-	@Override
-	public boolean isNoClose() {
-		// Note: It is OK if close is never called, so OK to optimize away close() when wrapping a NoClose output.
-		return (out instanceof NoClose) && ((NoClose)out).isNoClose();
-	}
+  @Override
+  public boolean isNoClose() {
+    // Note: It is OK if close is never called, so OK to optimize away close() when wrapping a NoClose output.
+    return (out instanceof NoClose) && ((NoClose)out).isNoClose();
+  }
 
-	@Override
-	public void close() throws IOException {
-		synchronized(this) {
-			out.close();
-			if(buff!=null) {
-				BufferManager.release(buff, false);
-				buff=null;
-			}
-		}
-	}
+  @Override
+  public void close() throws IOException {
+    synchronized (this) {
+      out.close();
+      if (buff != null) {
+        BufferManager.release(buff, false);
+        buff=null;
+      }
+    }
+  }
 
-	@Override
-	public void flush() throws IOException {
-		out.flush();
-	}
+  @Override
+  public void flush() throws IOException {
+    out.flush();
+  }
 
-	@Override
-	public void write(byte[] b, int off, int len) throws IOException {
-		synchronized(this) {
-			if (b == null) throw new NullPointerException();
-			int pos=0;
-			while(pos<len) {
-				int blockSize=len-pos;
-				if(blockSize>BufferManager.BUFFER_SIZE) blockSize=BufferManager.BUFFER_SIZE;
-				for(int cpos=0;cpos<blockSize;cpos++) buff[cpos]=(char)b[off+(pos++)];
-				out.write(buff, 0, blockSize);
-			}
-		}
-	}
+  @Override
+  public void write(byte[] b, int off, int len) throws IOException {
+    synchronized (this) {
+      if (b == null) {
+        throw new NullPointerException();
+      }
+      int pos=0;
+      while (pos<len) {
+        int blockSize=len-pos;
+        if (blockSize>BufferManager.BUFFER_SIZE) {
+          blockSize=BufferManager.BUFFER_SIZE;
+        }
+        for (int cpos=0;cpos<blockSize;cpos++) {
+          buff[cpos]=(char)b[off+(pos++)];
+        }
+        out.write(buff, 0, blockSize);
+      }
+    }
+  }
 
-	@Override
-	public void write(int b) throws IOException {
-		out.write(b);
-	}
+  @Override
+  public void write(int b) throws IOException {
+    out.write(b);
+  }
 
-	/*
-	 * It isn't important to release buff with newer implementation.
-	 * Removing finalize to save garbage collector work.
-	 *
-	 * @deprecated The finalization mechanism is inherently problematic.
-	 *
-	@Deprecated // Java 9: (since="9")
-	@Override
-	protected void finalize() throws Throwable {
-		try {
-			if(buff!=null) {
-				BufferManager.release(buff, false);
-				buff=null;
-			}
-		} finally {
-			super.finalize();
-		}
-	}
-	*/
+  /*
+   * It isn't important to release buff with newer implementation.
+   * Removing finalize to save garbage collector work.
+   *
+   * @deprecated The finalization mechanism is inherently problematic.
+   *
+  @Deprecated // Java 9: (since="9")
+  @Override
+  protected void finalize() throws Throwable {
+    try {
+      if (buff != null) {
+        BufferManager.release(buff, false);
+        buff=null;
+      }
+    } finally {
+      super.finalize();
+    }
+  }
+  */
 }

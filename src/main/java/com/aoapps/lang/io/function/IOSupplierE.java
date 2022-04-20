@@ -36,5 +36,5 @@ import java.util.function.Supplier;
 @FunctionalInterface
 public interface IOSupplierE<T, Ex extends Throwable> {
 
-	T get() throws IOException, Ex;
+  T get() throws IOException, Ex;
 }

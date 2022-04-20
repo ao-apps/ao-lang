@@ -33,75 +33,77 @@ import java.util.Set;
  */
 public final class Classes {
 
-	/** Make no instances. */
-	private Classes() {throw new AssertionError();}
+  /** Make no instances. */
+  private Classes() {
+    throw new AssertionError();
+  }
 
-	private static <T> void addAllClasses(Set<Class<? extends T>> classes, Set<Class<?>> notAssignable, Class<?> current, Class<T> upperBound) {
-		while(current != null) {
-			if(upperBound.isAssignableFrom(current)) {
-				if(classes.add(current.asSubclass(upperBound))) {
-					for(Class<?> iface : current.getInterfaces()) {
-						addAllClasses(classes, notAssignable, iface, upperBound);
-					}
-				} else {
-					// This class has already been mapped
-					break;
-				}
-			} else {
-				if(notAssignable.add(current)) {
-					for(Class<?> iface : current.getInterfaces()) {
-						addAllClasses(classes, notAssignable, iface, upperBound);
-					}
-				} else {
-					// This class has already been mapped
-					break;
-				}
-			}
-			current = current.getSuperclass();
-		}
-	}
+  private static <T> void addAllClasses(Set<Class<? extends T>> classes, Set<Class<?>> notAssignable, Class<?> current, Class<T> upperBound) {
+    while (current != null) {
+      if (upperBound.isAssignableFrom(current)) {
+        if (classes.add(current.asSubclass(upperBound))) {
+          for (Class<?> iface : current.getInterfaces()) {
+            addAllClasses(classes, notAssignable, iface, upperBound);
+          }
+        } else {
+          // This class has already been mapped
+          break;
+        }
+      } else {
+        if (notAssignable.add(current)) {
+          for (Class<?> iface : current.getInterfaces()) {
+            addAllClasses(classes, notAssignable, iface, upperBound);
+          }
+        } else {
+          // This class has already been mapped
+          break;
+        }
+      }
+      current = current.getSuperclass();
+    }
+  }
 
-	/**
-	 * Gets all classes and interfaces for a class, up to and including the given upper bound.
-	 * <p>
-	 * More precisely: gets all the classes that the given class either extends
-	 * or implements, including all its parent classes and interfaces implemented
-	 * by parent classes, that are {@link Class#isAssignableFrom(java.lang.Class)
-	 * assignable from} the given upper bound.
-	 * </p>
-	 */
-	public static <T> Set<Class<? extends T>> getAllClasses(Class<? extends T> clazz, Class<T> upperBound) {
-		Set<Class<? extends T>> classes = new LinkedHashSet<>();
-		Set<Class<?>> notAssignable = new LinkedHashSet<>();
-		addAllClasses(classes, notAssignable, clazz, upperBound);
-		return classes;
-	}
+  /**
+   * Gets all classes and interfaces for a class, up to and including the given upper bound.
+   * <p>
+   * More precisely: gets all the classes that the given class either extends
+   * or implements, including all its parent classes and interfaces implemented
+   * by parent classes, that are {@link Class#isAssignableFrom(java.lang.Class)
+   * assignable from} the given upper bound.
+   * </p>
+   */
+  public static <T> Set<Class<? extends T>> getAllClasses(Class<? extends T> clazz, Class<T> upperBound) {
+    Set<Class<? extends T>> classes = new LinkedHashSet<>();
+    Set<Class<?>> notAssignable = new LinkedHashSet<>();
+    addAllClasses(classes, notAssignable, clazz, upperBound);
+    return classes;
+  }
 
-	private static void addAllClasses(Set<Class<?>> classes, Class<?> current) {
-		while(current != null) {
-			if(classes.add(current)) {
-				for(Class<?> iface : current.getInterfaces()) {
-					addAllClasses(classes, iface);
-				}
-			} else {
-				// This class has already been mapped
-				break;
-			}
-			current = current.getSuperclass();
-		}
-	}
+  private static void addAllClasses(Set<Class<?>> classes, Class<?> current) {
+    while (current != null) {
+      if (classes.add(current)) {
+        for (Class<?> iface : current.getInterfaces()) {
+          addAllClasses(classes, iface);
+        }
+      } else {
+        // This class has already been mapped
+        break;
+      }
+      current = current.getSuperclass();
+    }
+  }
 
-	/**
-	 * Gets all classes and interfaces for a class.
-	 * <p>
-	 * More precisely: gets all the classes that the given class either extends
-	 * or implements, including all its parent classes and interfaces implemented
-	 * by parent classes.
-	 * </p>
-	 */
-	public static Set<Class<?>> getAllClasses(Class<?> clazz) {
-		Set<Class<?>> classes = new LinkedHashSet<>();
-		addAllClasses(classes, clazz);
-		return classes;
-	}
+  /**
+   * Gets all classes and interfaces for a class.
+   * <p>
+   * More precisely: gets all the classes that the given class either extends
+   * or implements, including all its parent classes and interfaces implemented
+   * by parent classes.
+   * </p>
+   */
+  public static Set<Class<?>> getAllClasses(Class<?> clazz) {
+    Set<Class<?>> classes = new LinkedHashSet<>();
+    addAllClasses(classes, clazz);
+    return classes;
+  }
 }

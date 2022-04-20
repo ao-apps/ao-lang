@@ -36,5 +36,5 @@ import java.util.concurrent.Callable;
 @FunctionalInterface
 public interface CallableE<V, Ex extends Throwable> {
 
-	V call() throws Ex;
+  V call() throws Ex;
 }

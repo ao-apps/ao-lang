@@ -34,72 +34,74 @@ import java.util.Locale;
  */
 public class LocaleString {
 
-	private final Locale locale;
-	private final String value;
+  private final Locale locale;
+  private final String value;
 
-	public LocaleString(Locale locale, String value) {
-		this.locale = NullArgumentException.checkNotNull(locale, "locale");
-		this.value = NullArgumentException.checkNotNull(value, "value");
-	}
+  public LocaleString(Locale locale, String value) {
+    this.locale = NullArgumentException.checkNotNull(locale, "locale");
+    this.value = NullArgumentException.checkNotNull(value, "value");
+  }
 
-	@Override
-	public String toString() {
-		return value;
-	}
+  @Override
+  public String toString() {
+    return value;
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		if(!(obj instanceof LocaleString)) return false;
-		LocaleString other = (LocaleString)obj;
-		return
-			locale.equals(other.locale)
-			&& value.equals(other.value)
-		;
-	}
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof LocaleString)) {
+      return false;
+    }
+    LocaleString other = (LocaleString)obj;
+    return
+      locale.equals(other.locale)
+      && value.equals(other.value)
+    ;
+  }
 
-	@Override
-	public int hashCode() {
-		int hash = locale.hashCode();
-		hash = hash * 31 + value.hashCode();
-		return hash;
-	}
+  @Override
+  public int hashCode() {
+    int hash = locale.hashCode();
+    hash = hash * 31 + value.hashCode();
+    return hash;
+  }
 
-	public Locale getLocale() {
-		return locale;
-	}
+  public Locale getLocale() {
+    return locale;
+  }
 
-	public String getValue() {
-		return value;
-	}
+  public String getValue() {
+    return value;
+  }
 
-	public LocaleString toLowerCase() {
-		String newValue = value.toLowerCase(locale);
-		return newValue == value ? this : new LocaleString(locale, newValue);
-	}
+  public LocaleString toLowerCase() {
+    String newValue = value.toLowerCase(locale);
+    return newValue == value ? this : new LocaleString(locale, newValue);
+  }
 
-	public LocaleString toUpperCase() {
-		String newValue = value.toUpperCase(locale);
-		return newValue == value ? this : new LocaleString(locale, newValue);
-	}
+  public LocaleString toUpperCase() {
+    String newValue = value.toUpperCase(locale);
+    return newValue == value ? this : new LocaleString(locale, newValue);
+  }
 
-	public LocaleString trim() {
-		String newValue = value.trim();
-		return newValue == value ? this : new LocaleString(locale, newValue);
-	}
+  public LocaleString trim() {
+    String newValue = value.trim();
+    return newValue == value ? this : new LocaleString(locale, newValue);
+  }
 
-	public boolean isEmpty() {
-		return value.isEmpty();
-	}
+  public boolean isEmpty() {
+    return value.isEmpty();
+  }
 
-	public boolean startsWith(String prefix) {
-		return value.startsWith(prefix);
-	}
+  public boolean startsWith(String prefix) {
+    return value.startsWith(prefix);
+  }
 
-	public boolean startsWith(String prefix, int offset) {
-		return value.startsWith(prefix, offset);
-	}
+  public boolean startsWith(String prefix, int offset) {
+    return value.startsWith(prefix, offset);
+  }
 
-	public boolean endsWith(String prefix) {
-		return value.endsWith(prefix);
-	}
+  public boolean endsWith(String prefix) {
+    return value.endsWith(prefix);
+  }
 }

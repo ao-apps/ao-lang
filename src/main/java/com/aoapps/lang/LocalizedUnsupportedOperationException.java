@@ -34,67 +34,67 @@ import java.io.Serializable;
  */
 public class LocalizedUnsupportedOperationException extends UnsupportedOperationException implements LocalizedException {
 
-	private static final long serialVersionUID = 3L;
+  private static final long serialVersionUID = 3L;
 
-	protected final Resources resources;
-	protected final String key;
-	protected final Serializable[] args;
+  protected final Resources resources;
+  protected final String key;
+  protected final Serializable[] args;
 
-	public LocalizedUnsupportedOperationException(Resources resources, String key) {
-		super(resources.getMessage(key));
-		this.resources = resources;
-		this.key = key;
-		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
-	}
+  public LocalizedUnsupportedOperationException(Resources resources, String key) {
+    super(resources.getMessage(key));
+    this.resources = resources;
+    this.key = key;
+    this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
+  }
 
-	public LocalizedUnsupportedOperationException(Resources resources, String key, Serializable... args) {
-		super(resources.getMessage(key, (Object[])args));
-		this.resources = resources;
-		this.key = key;
-		this.args = args;
-	}
+  public LocalizedUnsupportedOperationException(Resources resources, String key, Serializable... args) {
+    super(resources.getMessage(key, (Object[])args));
+    this.resources = resources;
+    this.key = key;
+    this.args = args;
+  }
 
-	public LocalizedUnsupportedOperationException(Throwable cause, Resources resources, String key) {
-		super(resources.getMessage(key), cause);
-		this.resources = resources;
-		this.key = key;
-		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
-	}
+  public LocalizedUnsupportedOperationException(Throwable cause, Resources resources, String key) {
+    super(resources.getMessage(key), cause);
+    this.resources = resources;
+    this.key = key;
+    this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
+  }
 
-	public LocalizedUnsupportedOperationException(Throwable cause, Resources resources, String key, Serializable... args) {
-		super(resources.getMessage(key, (Object[])args), cause);
-		this.resources = resources;
-		this.key = key;
-		this.args = args;
-	}
+  public LocalizedUnsupportedOperationException(Throwable cause, Resources resources, String key, Serializable... args) {
+    super(resources.getMessage(key, (Object[])args), cause);
+    this.resources = resources;
+    this.key = key;
+    this.args = args;
+  }
 
-	@Override
-	public String getLocalizedMessage() {
-		return resources.getMessage(key, (Object[])args);
-	}
+  @Override
+  public String getLocalizedMessage() {
+    return resources.getMessage(key, (Object[])args);
+  }
 
-	@Override
-	public final Resources getResources() {
-		return resources;
-	}
+  @Override
+  public final Resources getResources() {
+    return resources;
+  }
 
-	@Override
-	public final String getKey() {
-		return key;
-	}
+  @Override
+  public final String getKey() {
+    return key;
+  }
 
-	/**
-	 * @return  No defensive copy
-	 */
-	@Override
-	@SuppressWarnings("ReturnOfCollectionOrArrayField")
-	public final Serializable[] getArgs() {
-		return args;
-	}
+  /**
+   * @return  No defensive copy
+   */
+  @Override
+  @SuppressWarnings("ReturnOfCollectionOrArrayField")
+  public final Serializable[] getArgs() {
+    return args;
+  }
 
-	static {
-		Throwables.registerSurrogateFactory(LocalizedUnsupportedOperationException.class, (template, cause) ->
-			new LocalizedUnsupportedOperationException(cause, template.resources, template.key, template.args)
-		);
-	}
+  static {
+    Throwables.registerSurrogateFactory(LocalizedUnsupportedOperationException.class, (template, cause) ->
+      new LocalizedUnsupportedOperationException(cause, template.resources, template.key, template.args)
+    );
+  }
 }

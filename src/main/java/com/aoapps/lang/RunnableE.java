@@ -33,5 +33,5 @@ package com.aoapps.lang;
 @FunctionalInterface
 public interface RunnableE<Ex extends Throwable> {
 
-	void run() throws Ex;
+  void run() throws Ex;
 }

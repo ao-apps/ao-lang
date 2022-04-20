@@ -34,47 +34,53 @@ import java.io.OutputStream;
  */
 public final class SniffInputStream extends InputStream {
 
-	private final InputStream in;
-	private final OutputStream out;
+  private final InputStream in;
+  private final OutputStream out;
 
-	public SniffInputStream(InputStream in, OutputStream out) {
-		this.in = in;
-		this.out = out;
-	}
+  public SniffInputStream(InputStream in, OutputStream out) {
+    this.in = in;
+    this.out = out;
+  }
 
-	@Override
-	public int read() throws IOException {
-		int b = in.read();
-		if(b != -1) out.write(b);
-		return b;
-	}
+  @Override
+  public int read() throws IOException {
+    int b = in.read();
+    if (b != -1) {
+      out.write(b);
+    }
+    return b;
+  }
 
-	@Override
-	public int read(byte[] b) throws IOException {
-		int numBytes = in.read(b);
-		if(numBytes > 0) out.write(b, 0, numBytes);
-		return numBytes;
-	}
+  @Override
+  public int read(byte[] b) throws IOException {
+    int numBytes = in.read(b);
+    if (numBytes > 0) {
+      out.write(b, 0, numBytes);
+    }
+    return numBytes;
+  }
 
-	@Override
-	public int read(byte[] b, int off, int len) throws IOException {
-		int numBytes = in.read(b, off, len);
-		if(numBytes > 0) out.write(b, off, numBytes);
-		return numBytes;
-	}
+  @Override
+  public int read(byte[] b, int off, int len) throws IOException {
+    int numBytes = in.read(b, off, len);
+    if (numBytes > 0) {
+      out.write(b, off, numBytes);
+    }
+    return numBytes;
+  }
 
-	// skip uses the default InputStream implementation to ensure skipped bytes are still sniffed.
+  // skip uses the default InputStream implementation to ensure skipped bytes are still sniffed.
 
-	@Override
-	public int available() throws IOException {
-		return in.available();
-	}
+  @Override
+  public int available() throws IOException {
+    return in.available();
+  }
 
-	@Override
-	public void close() throws IOException {
-		in.close();
-		out.flush();
-	}
+  @Override
+  public void close() throws IOException {
+    in.close();
+    out.flush();
+  }
 
-	// mark/reset not supported
+  // mark/reset not supported
 }

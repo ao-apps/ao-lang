@@ -35,34 +35,34 @@ import java.io.RandomAccessFile;
  */
 public class AoByteArrayOutputStream extends ByteArrayOutputStream {
 
-	public AoByteArrayOutputStream() {
-		super();
-	}
+  public AoByteArrayOutputStream() {
+    super();
+  }
 
-	public AoByteArrayOutputStream(int size) {
-		super(size);
-	}
+  public AoByteArrayOutputStream(int size) {
+    super(size);
+  }
 
-	/**
-	 * Provides direct access to the internal byte[] to avoid unnecessary
-	 * copying of the array.
-	 */
-	public byte[] getInternalByteArray() {
-		return this.buf;
-	}
+  /**
+   * Provides direct access to the internal byte[] to avoid unnecessary
+   * copying of the array.
+   */
+  public byte[] getInternalByteArray() {
+    return this.buf;
+  }
 
-	/**
-	 * Writes a portion of the contents of the buffer to another byte stream.
-	 */
-	public synchronized void writeTo(OutputStream out, int off, int len) throws IOException {
-		out.write(buf, off, len);
-	}
+  /**
+   * Writes a portion of the contents of the buffer to another byte stream.
+   */
+  public synchronized void writeTo(OutputStream out, int off, int len) throws IOException {
+    out.write(buf, off, len);
+  }
 
-	public synchronized void writeTo(RandomAccessFile raf) throws IOException {
-		raf.write(buf, 0, count);
-	}
+  public synchronized void writeTo(RandomAccessFile raf) throws IOException {
+    raf.write(buf, 0, count);
+  }
 
-	public synchronized void writeTo(RandomAccessFile raf, int off, int len) throws IOException {
-		raf.write(buf, off, len);
-	}
+  public synchronized void writeTo(RandomAccessFile raf, int off, int len) throws IOException {
+    raf.write(buf, off, len);
+  }
 }

@@ -31,6 +31,6 @@ package com.aoapps.lang;
  */
 @FunctionalInterface
 public interface Freezable<F> {
-	
-	F freeze();
+
+  F freeze();
 }

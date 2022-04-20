@@ -37,10 +37,10 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface IOConsumerE<T, Ex extends Throwable> {
 
-	void accept(T t) throws IOException, Ex;
+  void accept(T t) throws IOException, Ex;
 
-	default IOConsumerE<T, Ex> andThen(IOConsumerE<? super T, ? extends Ex> after) throws IOException, Ex {
-		Objects.requireNonNull(after);
-		return t -> { accept(t); after.accept(t); };
-	}
+  default IOConsumerE<T, Ex> andThen(IOConsumerE<? super T, ? extends Ex> after) throws IOException, Ex {
+    Objects.requireNonNull(after);
+    return t -> { accept(t); after.accept(t); };
+  }
 }

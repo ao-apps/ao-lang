@@ -33,31 +33,31 @@ import java.util.ResourceBundle;
  */
 public final class ValidResult implements ValidationResult {
 
-	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ValidResult.class);
+  private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, ValidResult.class);
 
-	private static final long serialVersionUID = -5742207860354792003L;
+  private static final long serialVersionUID = -5742207860354792003L;
 
-	private static final ValidResult singleton = new ValidResult();
+  private static final ValidResult singleton = new ValidResult();
 
-	public static ValidResult getInstance() {
-		return singleton;
-	}
+  public static ValidResult getInstance() {
+    return singleton;
+  }
 
-	private ValidResult() {
-		// Do nothing
-	}
+  private ValidResult() {
+    // Do nothing
+  }
 
-	private Object readResolve() {
-		return singleton;
-	}
+  private Object readResolve() {
+    return singleton;
+  }
 
-	@Override
-	public boolean isValid() {
-		return true;
-	}
+  @Override
+  public boolean isValid() {
+    return true;
+  }
 
-	@Override
-	public String toString() {
-		return RESOURCES.getMessage("toString");
-	}
+  @Override
+  public String toString() {
+    return RESOURCES.getMessage("toString");
+  }
 }

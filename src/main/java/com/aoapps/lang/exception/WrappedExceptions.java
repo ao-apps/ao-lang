@@ -39,51 +39,57 @@ import java.util.List;
  */
 public class WrappedExceptions extends RuntimeException {
 
-	private static final long serialVersionUID = -3938902089134728394L;
+  private static final long serialVersionUID = -3938902089134728394L;
 
-	/**
-	 * Gets an unmodifiable, unique set of exceptions.
-	 */
-	private static List<Throwable> getUniqueCauses(Throwable ... causes) {
-		int len = causes.length;
-		List<Throwable> uniqueCauses = new ArrayList<>(len);
-		for(Throwable cause : causes) {
-			if(cause!=null && !uniqueCauses.contains(cause)) uniqueCauses.add(cause);
-		}
-		// return AoCollections.optimalUnmodifiableList(uniqueCauses);
-		return Collections.unmodifiableList(uniqueCauses);
-	}
+  /**
+   * Gets an unmodifiable, unique set of exceptions.
+   */
+  private static List<Throwable> getUniqueCauses(Throwable ... causes) {
+    int len = causes.length;
+    List<Throwable> uniqueCauses = new ArrayList<>(len);
+    for (Throwable cause : causes) {
+      if (cause != null && !uniqueCauses.contains(cause)) {
+        uniqueCauses.add(cause);
+      }
+    }
+    // return AoCollections.optimalUnmodifiableList(uniqueCauses);
+    return Collections.unmodifiableList(uniqueCauses);
+  }
 
-	private final List<Throwable> causes;
+  private final List<Throwable> causes;
 
-	@SuppressWarnings("OverridableMethodCallInConstructor")
-	public WrappedExceptions(Throwable ... causes) {
-		super();
-		this.causes = getUniqueCauses(causes);
-		if(!this.causes.isEmpty()) initCause(this.causes.get(0));
-	}
+  @SuppressWarnings("OverridableMethodCallInConstructor")
+  public WrappedExceptions(Throwable ... causes) {
+    super();
+    this.causes = getUniqueCauses(causes);
+    if (!this.causes.isEmpty()) {
+      initCause(this.causes.get(0));
+    }
+  }
 
-	@SuppressWarnings("OverridableMethodCallInConstructor")
-	public WrappedExceptions(String message, Throwable ... causes) {
-		super(message);
-		this.causes = getUniqueCauses(causes);
-		if(!this.causes.isEmpty()) initCause(this.causes.get(0));
-	}
+  @SuppressWarnings("OverridableMethodCallInConstructor")
+  public WrappedExceptions(String message, Throwable ... causes) {
+    super(message);
+    this.causes = getUniqueCauses(causes);
+    if (!this.causes.isEmpty()) {
+      initCause(this.causes.get(0));
+    }
+  }
 
-	/**
-	 * Gets the unmodifiable list of causes.  The first cause is also
-	 * the value returned from getCause();
-	 *
-	 * @return  No defensive copy
-	 */
-	@SuppressWarnings("ReturnOfCollectionOrArrayField")
-	public List<Throwable> getCauses() {
-		return causes;
-	}
+  /**
+   * Gets the unmodifiable list of causes.  The first cause is also
+   * the value returned from getCause();
+   *
+   * @return  No defensive copy
+   */
+  @SuppressWarnings("ReturnOfCollectionOrArrayField")
+  public List<Throwable> getCauses() {
+    return causes;
+  }
 
-	static {
-		Throwables.registerSurrogateFactory(WrappedExceptions.class, (template, cause) ->
-			new WrappedExceptions(template.getMessage(), cause)
-		);
-	}
+  static {
+    Throwables.registerSurrogateFactory(WrappedExceptions.class, (template, cause) ->
+      new WrappedExceptions(template.getMessage(), cause)
+    );
+  }
 }

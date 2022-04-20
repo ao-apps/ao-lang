@@ -39,90 +39,92 @@ import javax.swing.text.Segment;
  */
 public class AppendableWriter extends Writer implements NoClose {
 
-	/**
-	 * Wraps the given {@link Appendable} if it is not already
-	 * a {@link Writer}.
-	 *
-	 * @return  The given out, if it is already a {@link Writer}, otherwise an
-	 *          {@link AppendableWriter} wrapping out.
-	 */
-	public static Writer wrap(Appendable out) {
-		if(out instanceof Writer) return (Writer)out;
-		return new AppendableWriter(out);
-	}
+  /**
+   * Wraps the given {@link Appendable} if it is not already
+   * a {@link Writer}.
+   *
+   * @return  The given out, if it is already a {@link Writer}, otherwise an
+   *          {@link AppendableWriter} wrapping out.
+   */
+  public static Writer wrap(Appendable out) {
+    if (out instanceof Writer) {
+      return (Writer)out;
+    }
+    return new AppendableWriter(out);
+  }
 
-	private final Appendable out;
+  private final Appendable out;
 
-	public AppendableWriter(Appendable out) {
-		this.out = out;
-	}
+  public AppendableWriter(Appendable out) {
+    this.out = out;
+  }
 
-	/**
-	 * Gets the wrapped appendable.
-	 */
-	public Appendable getOut() {
-		return out;
-	}
+  /**
+   * Gets the wrapped appendable.
+   */
+  public Appendable getOut() {
+    return out;
+  }
 
-	@Override
-	public void write(int c) throws IOException {
-		out.append((char)c);
-	}
+  @Override
+  public void write(int c) throws IOException {
+    out.append((char)c);
+  }
 
-	@Override
-	public void write(char[] cbuf) throws IOException {
-		out.append(new Segment(cbuf, 0, cbuf.length));
-	}
+  @Override
+  public void write(char[] cbuf) throws IOException {
+    out.append(new Segment(cbuf, 0, cbuf.length));
+  }
 
-	@Override
-	public void write(char[] cbuf, int off, int len) throws IOException {
-		out.append(new Segment(cbuf, off, len));
-	}
+  @Override
+  public void write(char[] cbuf, int off, int len) throws IOException {
+    out.append(new Segment(cbuf, off, len));
+  }
 
-	@Override
-	public void write(String str) throws IOException {
-		out.append(str);
-	}
+  @Override
+  public void write(String str) throws IOException {
+    out.append(str);
+  }
 
-	@Override
-	public void write(String str, int off, int len) throws IOException {
-		out.append(str, off, off + len);
-	}
+  @Override
+  public void write(String str, int off, int len) throws IOException {
+    out.append(str, off, off + len);
+  }
 
-	@Override
-	public AppendableWriter append(CharSequence csq) throws IOException {
-		out.append(csq);
-		return this;
-	}
+  @Override
+  public AppendableWriter append(CharSequence csq) throws IOException {
+    out.append(csq);
+    return this;
+  }
 
-	@Override
-	public AppendableWriter append(CharSequence csq, int start, int end) throws IOException {
-		out.append(csq, start, end);
-		return this;
-	}
+  @Override
+  public AppendableWriter append(CharSequence csq, int start, int end) throws IOException {
+    out.append(csq, start, end);
+    return this;
+  }
 
-	@Override
-	public AppendableWriter append(char c) throws IOException {
-		out.append(c);
-		return this;
-	}
+  @Override
+  public AppendableWriter append(char c) throws IOException {
+    out.append(c);
+    return this;
+  }
 
-	@Override
-	public void flush() throws IOException {
-		if(out instanceof Flushable) {
-			((Flushable)out).flush();
-		}
-	}
+  @Override
+  public void flush() throws IOException {
+    if (out instanceof Flushable) {
+      ((Flushable)out).flush();
+    }
+  }
 
-	@Override
-	public boolean isNoClose() {
-		return (out instanceof NoClose) && ((NoClose)out).isNoClose();
-	}
+  @Override
+  public boolean isNoClose() {
+    return (out instanceof NoClose) && ((NoClose)out).isNoClose();
+  }
 
-	@Override
-	public void close() throws IOException {
-		if(out instanceof Closeable) {
-			((Closeable)out).close();
-		}
-	}
+  @Override
+  public void close() throws IOException {
+    if (out instanceof Closeable) {
+      ((Closeable)out).close();
+    }
+  }
 }

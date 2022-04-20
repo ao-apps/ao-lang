@@ -38,45 +38,45 @@ import java.io.Serializable;
  */
 public abstract class Scope<C> implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	protected Scope() {
-		// Do nothing
-	}
+  protected Scope() {
+    // Do nothing
+  }
 
-	/**
-	 * {@link com.aoapps.lang.attribute.Attribute}: Uses the given context within this scope, still needs name.
-	 */
-	public abstract Context<C> context(C context);
+  /**
+   * {@link com.aoapps.lang.attribute.Attribute}: Uses the given context within this scope, still needs name.
+   */
+  public abstract Context<C> context(C context);
 
-	/**
-	 * {@link com.aoapps.lang.attribute.Attribute}: Has scope and name, still needs context.
-	 */
-	public abstract static class Attribute<C, T> implements Serializable {
+  /**
+   * {@link com.aoapps.lang.attribute.Attribute}: Has scope and name, still needs context.
+   */
+  public abstract static class Attribute<C, T> implements Serializable {
 
-		private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-		protected final String name;
+    protected final String name;
 
-		protected Attribute(String name) {
-			this.name = name;
-		}
+    protected Attribute(String name) {
+      this.name = name;
+    }
 
-		/**
-		 * Gets the attribute name.
-		 */
-		public String getName() {
-			return name;
-		}
+    /**
+     * Gets the attribute name.
+     */
+    public String getName() {
+      return name;
+    }
 
-		/**
-		 * {@link com.aoapps.lang.attribute.Attribute}: Uses the given context within this scope and name.
-		 */
-		public abstract com.aoapps.lang.attribute.Attribute<C, T> context(C context);
-	}
+    /**
+     * {@link com.aoapps.lang.attribute.Attribute}: Uses the given context within this scope and name.
+     */
+    public abstract com.aoapps.lang.attribute.Attribute<C, T> context(C context);
+  }
 
-	/**
-	 * {@link com.aoapps.lang.attribute.Attribute}: Uses the given name within this scope, still needs context.
-	 */
-	public abstract <T> Attribute<C, T> attribute(String name);
+  /**
+   * {@link com.aoapps.lang.attribute.Attribute}: Uses the given name within this scope, still needs context.
+   */
+  public abstract <T> Attribute<C, T> attribute(String name);
 }

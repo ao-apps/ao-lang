@@ -32,34 +32,36 @@ import java.io.OutputStream;
  */
 public class NoCloseOutputStream extends FilterOutputStream implements NoClose {
 
-	/**
-	 * Returns {@code out} when it is already a {@link NoClose} and {@link NoClose#isNoClose()}, otherwise
-	 * returns a new {@link NoCloseOutputStream} wrapping {@code out}.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <O extends OutputStream & NoClose> O wrap(OutputStream out) {
-		if(out instanceof NoClose && ((NoClose)out).isNoClose()) return (O)out;
-		return (O)new NoCloseOutputStream(out);
-	}
+  /**
+   * Returns {@code out} when it is already a {@link NoClose} and {@link NoClose#isNoClose()}, otherwise
+   * returns a new {@link NoCloseOutputStream} wrapping {@code out}.
+   */
+  @SuppressWarnings("unchecked")
+  public static <O extends OutputStream & NoClose> O wrap(OutputStream out) {
+    if (out instanceof NoClose && ((NoClose)out).isNoClose()) {
+      return (O)out;
+    }
+    return (O)new NoCloseOutputStream(out);
+  }
 
-	/**
-	 * @deprecated  Please use {@link #wrap(java.io.OutputStream)} to skip wrapping when possible.
-	 */
-	@Deprecated
-	public NoCloseOutputStream(OutputStream out) {
-		super(out);
-	}
+  /**
+   * @deprecated  Please use {@link #wrap(java.io.OutputStream)} to skip wrapping when possible.
+   */
+  @Deprecated
+  public NoCloseOutputStream(OutputStream out) {
+    super(out);
+  }
 
-	@Override
-	public void write(byte[] b, int off, int len) throws IOException {
-		out.write(b, off, len);
-	}
+  @Override
+  public void write(byte[] b, int off, int len) throws IOException {
+    out.write(b, off, len);
+  }
 
-	/**
-	 * Does not close the wrapped stream.
-	 */
-	@Override
-	public void close() {
-		// Do nothing
-	}
+  /**
+   * Does not close the wrapped stream.
+   */
+  @Override
+  public void close() {
+    // Do nothing
+  }
 }

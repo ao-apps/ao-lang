@@ -33,8 +33,10 @@ import java.util.Locale;
  */
 public final class ThreadLocaleImpl {
 
-	/** Make no instances. */
-	private ThreadLocaleImpl() {throw new AssertionError();}
+  /** Make no instances. */
+  private ThreadLocaleImpl() {
+    throw new AssertionError();
+  }
 
-	public static final ThreadLocal<Locale> locale = ThreadLocal.withInitial(Locale::getDefault);
+  public static final ThreadLocal<Locale> locale = ThreadLocal.withInitial(Locale::getDefault);
 }

@@ -35,50 +35,52 @@ import java.util.Arrays;
 @Deprecated
 public final class ObjectUtils {
 
-	/** Make no instances. */
-	private ObjectUtils() {throw new AssertionError();}
+  /** Make no instances. */
+  private ObjectUtils() {
+    throw new AssertionError();
+  }
 
-	/**
-	 * Gets {@linkplain Object#hashCode() the hashCode for an object}
-	 * or {@code 0} when {@code null}.
-	 *
-	 * @deprecated  use {@link java.util.Objects#hashCode(java.lang.Object)} as of Java 1.7.
-	 */
-	@Deprecated
-	public static int hashCode(Object obj) {
-		return (obj != null) ? obj.hashCode() : 0;
-	}
+  /**
+   * Gets {@linkplain Object#hashCode() the hashCode for an object}
+   * or {@code 0} when {@code null}.
+   *
+   * @deprecated  use {@link java.util.Objects#hashCode(java.lang.Object)} as of Java 1.7.
+   */
+  @Deprecated
+  public static int hashCode(Object obj) {
+    return (obj != null) ? obj.hashCode() : 0;
+  }
 
-	/**
-	 * Gets {@linkplain Arrays#hashCode(java.lang.Object[]) the hashCode for a set of objects}
-	 * {@code 0} when {@code null}.
-	 *
-	 * @deprecated  use {@link java.util.Objects#hash(java.lang.Object...)} as of Java 1.7.
-	 */
-	@Deprecated
-	public static int hash(Object... values) {
-		return Arrays.hashCode(values);
-	}
+  /**
+   * Gets {@linkplain Arrays#hashCode(java.lang.Object[]) the hashCode for a set of objects}
+   * {@code 0} when {@code null}.
+   *
+   * @deprecated  use {@link java.util.Objects#hash(java.lang.Object...)} as of Java 1.7.
+   */
+  @Deprecated
+  public static int hash(Object... values) {
+    return Arrays.hashCode(values);
+  }
 
-	/**
-	 * Compares {@linkplain Object#equals(java.lang.Object) the equality of two objects},
-	 * including their {@code null} states.
-	 *
-	 * @deprecated  use java.util.Objects#equals(Object, Object) as of Java 1.7.
-	 */
-	@Deprecated
-	public static boolean equals(Object obj1, Object obj2) {
-		return (obj1 == obj2) || (obj1 != null && obj1.equals(obj2));
-	}
+  /**
+   * Compares {@linkplain Object#equals(java.lang.Object) the equality of two objects},
+   * including their {@code null} states.
+   *
+   * @deprecated  use java.util.Objects#equals(Object, Object) as of Java 1.7.
+   */
+  @Deprecated
+  public static boolean equals(Object obj1, Object obj2) {
+    return (obj1 == obj2) || (obj1 != null && obj1.equals(obj2));
+  }
 
-	/**
-	 * Calls {@link Object#toString()} if non-{@code null},
-	 * returns {@code null} when {@code null}.
-	 *
-	 * @deprecated  use {@link java.util.Objects#toString(java.lang.Object, java.lang.String)} as of Java 1.7.
-	 */
-	@Deprecated
-	public static String toString(Object obj) {
-		return (obj == null) ? null : obj.toString();
-	}
+  /**
+   * Calls {@link Object#toString()} if non-{@code null},
+   * returns {@code null} when {@code null}.
+   *
+   * @deprecated  use {@link java.util.Objects#toString(java.lang.Object, java.lang.String)} as of Java 1.7.
+   */
+  @Deprecated
+  public static String toString(Object obj) {
+    return (obj == null) ? null : obj.toString();
+  }
 }

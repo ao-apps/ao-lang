@@ -38,22 +38,22 @@ import java.util.Enumeration;
  */
 public abstract class Context<C> {
 
-	protected Context() {
-		// Do nothing
-	}
+  protected Context() {
+    // Do nothing
+  }
 
-	/**
-	 * Gets the scope for this context.
-	 */
-	public abstract Scope<C> getScope();
+  /**
+   * Gets the scope for this context.
+   */
+  public abstract Scope<C> getScope();
 
-	/**
-	 * {@link Attribute}: Uses the given name within this scope and context.
-	 */
-	public abstract <T> Attribute<C, T> attribute(String name);
+  /**
+   * {@link Attribute}: Uses the given name within this scope and context.
+   */
+  public abstract <T> Attribute<C, T> attribute(String name);
 
-	/**
-	 * Gets the attribute names within this scope and context.
-	 */
-	public abstract Enumeration<String> getAttributeNames();
+  /**
+   * Gets the attribute names within this scope and context.
+   */
+  public abstract Enumeration<String> getAttributeNames();
 }

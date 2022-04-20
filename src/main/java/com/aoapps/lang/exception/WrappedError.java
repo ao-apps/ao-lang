@@ -44,70 +44,74 @@ import com.aoapps.lang.Throwables;
  */
 public class WrappedError extends Error implements ExtraInfo {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private final Object[] extraInfo;
+  private final Object[] extraInfo;
 
-	/**
-	 * Uses extra info of the original cause when it is an {@link ExtraInfo}.
-	 */
-	public WrappedError(Throwable cause) {
-		super(cause);
-		this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
-	}
+  /**
+   * Uses extra info of the original cause when it is an {@link ExtraInfo}.
+   */
+  public WrappedError(Throwable cause) {
+    super(cause);
+    this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
+  }
 
-	/**
-	 * @param  extraInfo No defensive copy
-	 */
-	public WrappedError(Throwable cause, Object... extraInfo) {
-		super(cause);
-		this.extraInfo = extraInfo;
-	}
+  /**
+   * @param  extraInfo No defensive copy
+   */
+  public WrappedError(Throwable cause, Object... extraInfo) {
+    super(cause);
+    this.extraInfo = extraInfo;
+  }
 
-	/**
-	 * Uses extra info of the original cause when it is an {@link ExtraInfo}.
-	 */
-	public WrappedError(String message, Throwable cause) {
-		super(message, cause);
-		this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
-	}
+  /**
+   * Uses extra info of the original cause when it is an {@link ExtraInfo}.
+   */
+  public WrappedError(String message, Throwable cause) {
+    super(message, cause);
+    this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
+  }
 
-	/**
-	 * @param  extraInfo No defensive copy
-	 */
-	public WrappedError(String message, Throwable cause, Object... extraInfo) {
-		super(message, cause);
-		this.extraInfo = extraInfo;
-	}
+  /**
+   * @param  extraInfo No defensive copy
+   */
+  public WrappedError(String message, Throwable cause, Object... extraInfo) {
+    super(message, cause);
+    this.extraInfo = extraInfo;
+  }
 
-	@Override
-	public String getMessage() {
-		String message = super.getMessage();
-		if(message != null) return message;
-		Throwable cause = getCause();
-		return (cause == null) ? null : cause.getMessage();
-	}
+  @Override
+  public String getMessage() {
+    String message = super.getMessage();
+    if (message != null) {
+      return message;
+    }
+    Throwable cause = getCause();
+    return (cause == null) ? null : cause.getMessage();
+  }
 
-	@Override
-	public String getLocalizedMessage() {
-		String message = super.getMessage();
-		if(message != null) return message;
-		Throwable cause = getCause();
-		return (cause == null) ? null : cause.getLocalizedMessage();
-	}
+  @Override
+  public String getLocalizedMessage() {
+    String message = super.getMessage();
+    if (message != null) {
+      return message;
+    }
+    Throwable cause = getCause();
+    return (cause == null) ? null : cause.getLocalizedMessage();
+  }
 
-	/**
-	 * @return  No defensive copy
-	 */
-	@Override
-	@SuppressWarnings("ReturnOfCollectionOrArrayField")
-	public Object[] getExtraInfo() {
-		return extraInfo;
-	}
+  /**
+   * @return  No defensive copy
+   */
+  @Override
+  @SuppressWarnings("ReturnOfCollectionOrArrayField")
+  public Object[] getExtraInfo() {
+    return extraInfo;
+  }
 
-	static {
-		Throwables.registerSurrogateFactory(WrappedError.class, (template, cause) ->
-			new WrappedError(template.getMessage(), cause, template.extraInfo)
-		);
-	}
+  static {
+    Throwables.registerSurrogateFactory(WrappedError.class, (template, cause) ->
+      new WrappedError(template.getMessage(), cause, template.extraInfo)
+    );
+  }
 }

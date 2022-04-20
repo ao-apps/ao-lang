@@ -37,22 +37,22 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface IOFunctionE<T, R, Ex extends Throwable> {
 
-	R apply(T t) throws IOException, Ex;
+  R apply(T t) throws IOException, Ex;
 
-	default <V> IOFunctionE<V, R, Ex> compose(IOFunctionE<? super V, ? extends T, ? extends Ex> before) throws IOException, Ex {
-		Objects.requireNonNull(before);
-		return v -> apply(before.apply(v));
-	}
+  default <V> IOFunctionE<V, R, Ex> compose(IOFunctionE<? super V, ? extends T, ? extends Ex> before) throws IOException, Ex {
+    Objects.requireNonNull(before);
+    return v -> apply(before.apply(v));
+  }
 
-	default <V> IOFunctionE<T, V, Ex> andThen(IOFunctionE<? super R, ? extends V, ? extends Ex> after) throws IOException, Ex {
-		Objects.requireNonNull(after);
-		return t -> after.apply(apply(t));
-	}
+  default <V> IOFunctionE<T, V, Ex> andThen(IOFunctionE<? super R, ? extends V, ? extends Ex> after) throws IOException, Ex {
+    Objects.requireNonNull(after);
+    return t -> after.apply(apply(t));
+  }
 
-	/**
-	 * @param  <Ex>  An arbitrary exception type that may be thrown
-	 */
-	static <T, Ex extends Throwable> IOFunctionE<T, T, Ex> identity() {
-		return t -> t;
-	}
+  /**
+   * @param  <Ex>  An arbitrary exception type that may be thrown
+   */
+  static <T, Ex extends Throwable> IOFunctionE<T, T, Ex> identity() {
+    return t -> t;
+  }
 }

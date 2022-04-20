@@ -21,13 +21,13 @@
  * along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
  */
 module com.aoapps.lang.devel {
-	exports com.aoapps.lang.i18n_res;
-	exports com.aoapps.lang.io.i18n;
-	exports com.aoapps.lang.util.i18n;
-	exports com.aoapps.lang.validation.i18n;
-	// Direct
-	requires com.aoapps.hodgepodge; // <groupId>com.aoapps</groupId><artifactId>ao-hodgepodge</artifactId>
-	requires static jsr305; // <groupId>com.google.code.findbugs</groupId><artifactId>jsr305</artifactId>
-	// Java SE
-	requires java.logging;
+  exports com.aoapps.lang.i18n_res;
+  exports com.aoapps.lang.io.i18n;
+  exports com.aoapps.lang.util.i18n;
+  exports com.aoapps.lang.validation.i18n;
+  // Direct
+  requires com.aoapps.hodgepodge; // <groupId>com.aoapps</groupId><artifactId>ao-hodgepodge</artifactId>
+  requires static jsr305; // <groupId>com.google.code.findbugs</groupId><artifactId>jsr305</artifactId>
+  // Java SE
+  requires java.logging;
 }

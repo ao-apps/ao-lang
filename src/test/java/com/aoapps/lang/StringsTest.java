@@ -35,34 +35,34 @@ import junit.framework.TestSuite;
  */
 public class StringsTest extends TestCase {
 
-	public StringsTest(String testName) {
-		super(testName);
-	}
+  public StringsTest(String testName) {
+    super(testName);
+  }
 
-	public static Test suite() {
-		return new TestSuite(StringsTest.class);
-	}
+  public static Test suite() {
+    return new TestSuite(StringsTest.class);
+  }
 
-	/**
-	 * A fast pseudo-random number generator for non-cryptographic purposes.
-	 */
-	private static final Random fastRandom = new Random(IoUtils.bufferToLong(new SecureRandom().generateSeed(Long.BYTES)));
+  /**
+   * A fast pseudo-random number generator for non-cryptographic purposes.
+   */
+  private static final Random fastRandom = new Random(IoUtils.bufferToLong(new SecureRandom().generateSeed(Long.BYTES)));
 
-	public void testConvertToFromHexInt() {
-		for(int i=0; i<1000; i++) {
-			int before = fastRandom.nextInt();
-			@SuppressWarnings("deprecation")
-			int after = Strings.convertIntArrayFromHex(Strings.convertToHex(before).toCharArray());
-			assertEquals(before, after);
-		}
-	}
+  public void testConvertToFromHexInt() {
+    for (int i=0; i<1000; i++) {
+      int before = fastRandom.nextInt();
+      @SuppressWarnings("deprecation")
+      int after = Strings.convertIntArrayFromHex(Strings.convertToHex(before).toCharArray());
+      assertEquals(before, after);
+    }
+  }
 
-	public void testConvertToFromHexLong() {
-		for(int i=0; i<1000; i++) {
-			long before = fastRandom.nextLong();
-			@SuppressWarnings("deprecation")
-			long after = Strings.convertLongArrayFromHex(Strings.convertToHex(before).toCharArray());
-			assertEquals(before, after);
-		}
-	}
+  public void testConvertToFromHexLong() {
+    for (int i=0; i<1000; i++) {
+      long before = fastRandom.nextLong();
+      @SuppressWarnings("deprecation")
+      long after = Strings.convertLongArrayFromHex(Strings.convertToHex(before).toCharArray());
+      assertEquals(before, after);
+    }
+  }
 }

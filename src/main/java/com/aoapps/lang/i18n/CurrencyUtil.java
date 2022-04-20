@@ -33,46 +33,48 @@ import java.util.Locale;
  */
 public final class CurrencyUtil {
 
-	/** Make no instances. */
-	private CurrencyUtil() {throw new AssertionError();}
+  /** Make no instances. */
+  private CurrencyUtil() {
+    throw new AssertionError();
+  }
 
-	/**
-	 * Gets a symbol for a currency in the provided locale, with some extra hard-coded value when the Java
-	 * runtime returns the {@link Currency#getCurrencyCode() currencyCode} as the symbol.
-	 * {@link Currency#getSymbol(java.util.Locale)} does not seem to be as fully implemented as desired.
-	 *
-	 * @see  Currency#getSymbol(java.util.Locale)
-	 */
-	public static String getSymbol(Currency currency, Locale locale) {
-		String symbol = currency.getSymbol(locale);
-		String currencyCode = currency.getCurrencyCode();
-		if(symbol.equals(currencyCode)) {
-			switch(currencyCode) {
-				case "USD" : return "$";
-				case "EUR" : return "€";
-				case "JPY" : return "¥";
-				case "CAD" : {
-					// https://www.btb.termiumplus.gc.ca/tpv2guides/guides/wrtps/index-eng.html?lang=eng&lettr=indx_catlog_c&page=9Rl-N63dyxbA.html
-					if(Locale.FRENCH.getLanguage().equals(locale.getLanguage())) {
-						return "$\u00A0CA"; // non-breaking space
-					} else {
-						return "Can$";
-					}
-				}
-			}
-		}
-		return symbol;
-	}
+  /**
+   * Gets a symbol for a currency in the provided locale, with some extra hard-coded value when the Java
+   * runtime returns the {@link Currency#getCurrencyCode() currencyCode} as the symbol.
+   * {@link Currency#getSymbol(java.util.Locale)} does not seem to be as fully implemented as desired.
+   *
+   * @see  Currency#getSymbol(java.util.Locale)
+   */
+  public static String getSymbol(Currency currency, Locale locale) {
+    String symbol = currency.getSymbol(locale);
+    String currencyCode = currency.getCurrencyCode();
+    if (symbol.equals(currencyCode)) {
+      switch (currencyCode) {
+        case "USD" : return "$";
+        case "EUR" : return "€";
+        case "JPY" : return "¥";
+        case "CAD" : {
+          // https://www.btb.termiumplus.gc.ca/tpv2guides/guides/wrtps/index-eng.html?lang=eng&lettr=indx_catlog_c&page=9Rl-N63dyxbA.html
+          if (Locale.FRENCH.getLanguage().equals(locale.getLanguage())) {
+            return "$\u00A0CA"; // non-breaking space
+          } else {
+            return "Can$";
+          }
+        }
+      }
+    }
+    return symbol;
+  }
 
-	/**
-	 * Gets a symbol for a currency in the current thread locale, with some extra hard-coded value when the Java
-	 * runtime returns the currencyCode as the symbol.
-	 * {@link Currency#getSymbol(java.util.Locale)} does not seem to be as fully implemented as desired.
-	 *
-	 * @see  Currency#getSymbol(java.util.Locale)
-	 * @see  ThreadLocale
-	 */
-	public static String getSymbol(Currency currency) {
-		return getSymbol(currency, ThreadLocale.get());
-	}
+  /**
+   * Gets a symbol for a currency in the current thread locale, with some extra hard-coded value when the Java
+   * runtime returns the currencyCode as the symbol.
+   * {@link Currency#getSymbol(java.util.Locale)} does not seem to be as fully implemented as desired.
+   *
+   * @see  Currency#getSymbol(java.util.Locale)
+   * @see  ThreadLocale
+   */
+  public static String getSymbol(Currency currency) {
+    return getSymbol(currency, ThreadLocale.get());
+  }
 }

@@ -30,38 +30,38 @@ import java.io.OutputStream;
  */
 public final class NullOutputStream extends OutputStream implements NoClose {
 
-	private static final NullOutputStream instance = new NullOutputStream();
+  private static final NullOutputStream instance = new NullOutputStream();
 
-	public static NullOutputStream getInstance() {
-		return instance;
-	}
+  public static NullOutputStream getInstance() {
+    return instance;
+  }
 
-	private NullOutputStream() {
-		// Do nothing
-	}
+  private NullOutputStream() {
+    // Do nothing
+  }
 
-	@Override
-	public void close() {
-		// Do nothing
-	}
+  @Override
+  public void close() {
+    // Do nothing
+  }
 
-	@Override
-	public void flush() {
-		// Do nothing
-	}
+  @Override
+  public void flush() {
+    // Do nothing
+  }
 
-	@Override
-	public void write(byte[] b) {
-		// Do nothing
-	}
+  @Override
+  public void write(byte[] b) {
+    // Do nothing
+  }
 
-	@Override
-	public void write(byte[] b, int off, int len) {
-		// Do nothing
-	}
+  @Override
+  public void write(byte[] b, int off, int len) {
+    // Do nothing
+  }
 
-	@Override
-	public void write(int b) {
-		// Do nothing
-	}
+  @Override
+  public void write(int b) {
+    // Do nothing
+  }
 }

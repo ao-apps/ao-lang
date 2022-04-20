@@ -34,5 +34,5 @@ package com.aoapps.lang;
 @FunctionalInterface
 public interface CallableE<V, Ex extends Exception> {
 
-	V call() throws Ex;
+  V call() throws Ex;
 }

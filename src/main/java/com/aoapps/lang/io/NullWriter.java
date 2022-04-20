@@ -31,63 +31,63 @@ import java.io.Writer;
 // Java 11: Deprecate in favor of Writer.nullWriter()
 public final class NullWriter extends Writer implements NoClose {
 
-	private static final NullWriter instance = new NullWriter();
+  private static final NullWriter instance = new NullWriter();
 
-	public static NullWriter getInstance() {
-		return instance;
-	}
+  public static NullWriter getInstance() {
+    return instance;
+  }
 
-	private NullWriter() {
-		// Do nothing
-	}
+  private NullWriter() {
+    // Do nothing
+  }
 
-	@Override
-	public void write(int c) {
-		// Do nothing
-	}
+  @Override
+  public void write(int c) {
+    // Do nothing
+  }
 
-	@Override
-	public void write(char[] cbuf) {
-		// Do nothing
-	}
+  @Override
+  public void write(char[] cbuf) {
+    // Do nothing
+  }
 
-	@Override
-	public void write(char[] cbuf, int off, int len) {
-		// Do nothing
-	}
+  @Override
+  public void write(char[] cbuf, int off, int len) {
+    // Do nothing
+  }
 
-	@Override
-	public void write(String str) {
-		// Do nothing
-	}
+  @Override
+  public void write(String str) {
+    // Do nothing
+  }
 
-	@Override
-	public void write(String str, int off, int len) {
-		// Do nothing
-	}
+  @Override
+  public void write(String str, int off, int len) {
+    // Do nothing
+  }
 
-	@Override
-	public NullWriter append(CharSequence csq) {
-		return this;
-	}
+  @Override
+  public NullWriter append(CharSequence csq) {
+    return this;
+  }
 
-	@Override
-	public NullWriter append(CharSequence csq, int start, int end) {
-		return this;
-	}
+  @Override
+  public NullWriter append(CharSequence csq, int start, int end) {
+    return this;
+  }
 
-	@Override
-	public NullWriter append(char c) {
-		return this;
-	}
+  @Override
+  public NullWriter append(char c) {
+    return this;
+  }
 
-	@Override
-	public void flush() {
-		// Do nothing
-	}
+  @Override
+  public void flush() {
+    // Do nothing
+  }
 
-	@Override
-	public void close() {
-		// Do nothing
-	}
+  @Override
+  public void close() {
+    // Do nothing
+  }
 }

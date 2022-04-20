@@ -30,20 +30,22 @@ package com.aoapps.lang;
  */
 public final class EnumUtils {
 
-	/** Make no instances. */
-	private EnumUtils() {throw new AssertionError();}
+  /** Make no instances. */
+  private EnumUtils() {
+    throw new AssertionError();
+  }
 
-	/**
-	 * Gets the greater of two enums.
-	 */
-	public static <E extends Enum<E>> E max(E e1, E e2) {
-		return e1.compareTo(e2) >= 0 ? e1 : e2;
-	}
+  /**
+   * Gets the greater of two enums.
+   */
+  public static <E extends Enum<E>> E max(E e1, E e2) {
+    return e1.compareTo(e2) >= 0 ? e1 : e2;
+  }
 
-	/**
-	 * Gets the lesser of two enums.
-	 */
-	public static <E extends Enum<E>> E min(E e1, E e2) {
-		return e1.compareTo(e2) <= 0 ? e1 : e2;
-	}
+  /**
+   * Gets the lesser of two enums.
+   */
+  public static <E extends Enum<E>> E min(E e1, E e2) {
+    return e1.compareTo(e2) <= 0 ? e1 : e2;
+  }
 }

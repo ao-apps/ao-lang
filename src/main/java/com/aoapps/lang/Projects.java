@@ -43,239 +43,241 @@ import java.util.regex.Pattern;
  */
 public final class Projects {
 
-	/** Make no instances. */
-	private Projects() {throw new AssertionError();}
+  /** Make no instances. */
+  private Projects() {
+    throw new AssertionError();
+  }
 
-	private static final Logger logger = Logger.getLogger(Projects.class.getName());
+  private static final Logger logger = Logger.getLogger(Projects.class.getName());
 
-	/**
-	 * Reads the <code>pom.properties</code> from the given input stream.
-	 */
-	public static String readVersion(String resource, InputStream in, String groupId, String artifactId) throws IOException {
-		String version = null;
-		if(in != null) {
-			Properties p = new Properties();
-			p.load(in);
-			assert groupId.equals(p.getProperty("groupId"));
-			assert artifactId.equals(p.getProperty("artifactId"));
-			version = p.getProperty("version");
-			if(version != null) {
-				if(logger.isLoggable(Level.FINE)) {
-					logger.log(Level.FINE, "Version \"" + version + "\" found from resource: " + resource);
-				}
-			} else {
-				if(logger.isLoggable(Level.WARNING)) {
-					logger.log(Level.WARNING, "Resource does not contain \"version\": " + resource);
-				}
-			}
-		} else {
-			if(logger.isLoggable(Level.FINE)) {
-				logger.log(Level.FINE, "Resource not found: " + resource);
-			}
-		}
-		return version;
-	}
+  /**
+   * Reads the <code>pom.properties</code> from the given input stream.
+   */
+  public static String readVersion(String resource, InputStream in, String groupId, String artifactId) throws IOException {
+    String version = null;
+    if (in != null) {
+      Properties p = new Properties();
+      p.load(in);
+      assert groupId.equals(p.getProperty("groupId"));
+      assert artifactId.equals(p.getProperty("artifactId"));
+      version = p.getProperty("version");
+      if (version != null) {
+        if (logger.isLoggable(Level.FINE)) {
+          logger.log(Level.FINE, "Version \"" + version + "\" found from resource: " + resource);
+        }
+      } else {
+        if (logger.isLoggable(Level.WARNING)) {
+          logger.log(Level.WARNING, "Resource does not contain \"version\": " + resource);
+        }
+      }
+    } else {
+      if (logger.isLoggable(Level.FINE)) {
+        logger.log(Level.FINE, "Resource not found: " + resource);
+      }
+    }
+    return version;
+  }
 
-	/**
-	 * Reads the <code>pom.properties</code> from the given source.
-	 */
-	public static String readVersion(Function<String, InputStream> getResourceAsStream, String groupId, String artifactId) throws IOException {
-		String resource = "/META-INF/maven/" + groupId + '/' + artifactId + "/pom.properties";
-		try (InputStream in = getResourceAsStream.apply(resource)) {
-			return readVersion(resource, in, groupId, artifactId);
-		}
-	}
+  /**
+   * Reads the <code>pom.properties</code> from the given source.
+   */
+  public static String readVersion(Function<String, InputStream> getResourceAsStream, String groupId, String artifactId) throws IOException {
+    String resource = "/META-INF/maven/" + groupId + '/' + artifactId + "/pom.properties";
+    try (InputStream in = getResourceAsStream.apply(resource)) {
+      return readVersion(resource, in, groupId, artifactId);
+    }
+  }
 
-	/**
-	 * Gets the version from a Maven <code>pom.properties</code> file and the given classloader.
-	 *
-	 * @param  cl  The classloader to use.  When {@code null}, will use {@link ClassLoader#getSystemResourceAsStream(java.lang.String)}.
-	 *
-	 * @return  The version or {@code null} when not found.
-	 */
-	public static String getVersion(ClassLoader cl, String groupId, String artifactId) {
-		try {
-			return readVersion(
-				(cl == null) ? ClassLoader::getSystemResourceAsStream : cl::getResourceAsStream,
-				groupId,
-				artifactId
-			);
-		} catch(IOException e) {
-			throw new UncheckedIOException(e);
-		}
-	}
+  /**
+   * Gets the version from a Maven <code>pom.properties</code> file and the given classloader.
+   *
+   * @param  cl  The classloader to use.  When {@code null}, will use {@link ClassLoader#getSystemResourceAsStream(java.lang.String)}.
+   *
+   * @return  The version or {@code null} when not found.
+   */
+  public static String getVersion(ClassLoader cl, String groupId, String artifactId) {
+    try {
+      return readVersion(
+        (cl == null) ? ClassLoader::getSystemResourceAsStream : cl::getResourceAsStream,
+        groupId,
+        artifactId
+      );
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
+  }
 
-	/**
-	 * Gets the version from a Maven <code>pom.properties</code> file and the given classloader,
-	 * falling back to the provided default.
-	 *
-	 * @param  cl  The classloader to use.  When {@code null}, will use {@link ClassLoader#getSystemResourceAsStream(java.lang.String)}.
-	 *
-	 * @return  The version or {@code null} when not found.
-	 */
-	public static String getVersion(ClassLoader cl, String groupId, String artifactId, String def) {
-		String version = getVersion(cl, groupId, artifactId);
-		if(version == null) {
-			if(logger.isLoggable(Level.FINE)) {
-				logger.log(Level.FINE, "Using provided default version for project \"" + groupId + ":" + artifactId + "\": " + def);
-			}
-			return def;
-		} else {
-			return version;
-		}
-	}
+  /**
+   * Gets the version from a Maven <code>pom.properties</code> file and the given classloader,
+   * falling back to the provided default.
+   *
+   * @param  cl  The classloader to use.  When {@code null}, will use {@link ClassLoader#getSystemResourceAsStream(java.lang.String)}.
+   *
+   * @return  The version or {@code null} when not found.
+   */
+  public static String getVersion(ClassLoader cl, String groupId, String artifactId, String def) {
+    String version = getVersion(cl, groupId, artifactId);
+    if (version == null) {
+      if (logger.isLoggable(Level.FINE)) {
+        logger.log(Level.FINE, "Using provided default version for project \"" + groupId + ":" + artifactId + "\": " + def);
+      }
+      return def;
+    } else {
+      return version;
+    }
+  }
 
-	/**
-	 * Gets the version from a Maven <code>pom.properties</code> file.
-	 * <p>
-	 * Searches the unnamed module via {@link ClassLoader#getResourceAsStream(java.lang.String)}.
-	 * </p>
-	 *
-	 * @return  The version or {@code null} when not found.
-	 */
-	public static String getVersion(String groupId, String artifactId) {
-		return getVersion(Projects.class.getClassLoader(), groupId, artifactId);
-	}
+  /**
+   * Gets the version from a Maven <code>pom.properties</code> file.
+   * <p>
+   * Searches the unnamed module via {@link ClassLoader#getResourceAsStream(java.lang.String)}.
+   * </p>
+   *
+   * @return  The version or {@code null} when not found.
+   */
+  public static String getVersion(String groupId, String artifactId) {
+    return getVersion(Projects.class.getClassLoader(), groupId, artifactId);
+  }
 
-	/**
-	 * Gets the version from a Maven <code>pom.properties</code> file,
-	 * falling back to the provided default.
-	 * <p>
-	 * Searches the unnamed module via {@link ClassLoader#getResourceAsStream(java.lang.String)}.
-	 * </p>
-	 *
-	 * @return  The version or {@code null} when not found.
-	 */
-	public static String getVersion(String groupId, String artifactId, String def) {
-		String version = getVersion(groupId, artifactId);
-		if(version == null) {
-			if(logger.isLoggable(Level.FINE)) {
-				logger.log(Level.FINE, "Using provided default version for project \"" + groupId + ":" + artifactId + "\": " + def);
-			}
-			return def;
-		} else {
-			return version;
-		}
-	}
+  /**
+   * Gets the version from a Maven <code>pom.properties</code> file,
+   * falling back to the provided default.
+   * <p>
+   * Searches the unnamed module via {@link ClassLoader#getResourceAsStream(java.lang.String)}.
+   * </p>
+   *
+   * @return  The version or {@code null} when not found.
+   */
+  public static String getVersion(String groupId, String artifactId, String def) {
+    String version = getVersion(groupId, artifactId);
+    if (version == null) {
+      if (logger.isLoggable(Level.FINE)) {
+        logger.log(Level.FINE, "Using provided default version for project \"" + groupId + ":" + artifactId + "\": " + def);
+      }
+      return def;
+    } else {
+      return version;
+    }
+  }
 
-	/**
-	 * Gets the version from {@link Package#getImplementationVersion()}, falling back
-	 * to {@link Package#getSpecificationVersion()}.
-	 *
-	 * @return  The version or {@code null} when not found.
-	 */
-	public static String getVersion(Package pk) {
-		if(pk == null) {
-			if(logger.isLoggable(Level.FINE)) {
-				logger.log(Level.FINE, "No package provided");
-			}
-			return null;
-		}
-		String version = pk.getImplementationVersion();
-		if(version != null) {
-			if(logger.isLoggable(Level.FINE)) {
-				logger.log(Level.FINE, "Using implementation version \"" + version + "\" for package: " + pk);
-			}
-			return version;
-		}
-		version = pk.getSpecificationVersion();
-		if(version != null) {
-			if(logger.isLoggable(Level.FINE)) {
-				logger.log(Level.FINE, "Using specification version \"" + version + "\" for package: " + pk);
-			}
-			return version;
-		}
-		if(logger.isLoggable(Level.FINE)) {
-			logger.log(Level.FINE, "Did not find any version information for package: " + pk);
-		}
-		return null;
-	}
+  /**
+   * Gets the version from {@link Package#getImplementationVersion()}, falling back
+   * to {@link Package#getSpecificationVersion()}.
+   *
+   * @return  The version or {@code null} when not found.
+   */
+  public static String getVersion(Package pk) {
+    if (pk == null) {
+      if (logger.isLoggable(Level.FINE)) {
+        logger.log(Level.FINE, "No package provided");
+      }
+      return null;
+    }
+    String version = pk.getImplementationVersion();
+    if (version != null) {
+      if (logger.isLoggable(Level.FINE)) {
+        logger.log(Level.FINE, "Using implementation version \"" + version + "\" for package: " + pk);
+      }
+      return version;
+    }
+    version = pk.getSpecificationVersion();
+    if (version != null) {
+      if (logger.isLoggable(Level.FINE)) {
+        logger.log(Level.FINE, "Using specification version \"" + version + "\" for package: " + pk);
+      }
+      return version;
+    }
+    if (logger.isLoggable(Level.FINE)) {
+      logger.log(Level.FINE, "Did not find any version information for package: " + pk);
+    }
+    return null;
+  }
 
-	/**
-	 * Gets the version from {@link Package#getImplementationVersion()}, falling back
-	 * to {@link Package#getSpecificationVersion()} then the provided default.
-	 *
-	 * @return  The version or {@code null} when not found.
-	 */
-	public static String getVersion(Package pk, String def) {
-		String version = getVersion(pk);
-		if(version == null) {
-			if(logger.isLoggable(Level.FINE)) {
-				logger.log(Level.FINE, "Using provided default version for package \"" + pk + "\": " + def);
-			}
-			return def;
-		} else {
-			return version;
-		}
-	}
+  /**
+   * Gets the version from {@link Package#getImplementationVersion()}, falling back
+   * to {@link Package#getSpecificationVersion()} then the provided default.
+   *
+   * @return  The version or {@code null} when not found.
+   */
+  public static String getVersion(Package pk, String def) {
+    String version = getVersion(pk);
+    if (version == null) {
+      if (logger.isLoggable(Level.FINE)) {
+        logger.log(Level.FINE, "Using provided default version for package \"" + pk + "\": " + def);
+      }
+      return def;
+    } else {
+      return version;
+    }
+  }
 
-	/**
-	 * Gets the version from a Maven <code>pom.properties</code> file,
-	 * falling back to {@link Package#getImplementationVersion()} then
-	 * {@link Package#getSpecificationVersion()}.
-	 * <p>
-	 * Supports named modules via {@link Class#getResourceAsStream(java.lang.String)}.
-	 * </p>
-	 *
-	 * @return  The version or {@code null} when not found.
-	 */
-	public static String getVersion(Class<?> clazz, String groupId, String artifactId) {
-		try {
-			String version = readVersion(
-				clazz::getResourceAsStream,
-				groupId,
-				artifactId
-			);
-			if(version == null) {
-				version = getVersion(clazz.getPackage());
-			}
-			return version;
-		} catch(IOException e) {
-			throw new UncheckedIOException(e);
-		}
-	}
+  /**
+   * Gets the version from a Maven <code>pom.properties</code> file,
+   * falling back to {@link Package#getImplementationVersion()} then
+   * {@link Package#getSpecificationVersion()}.
+   * <p>
+   * Supports named modules via {@link Class#getResourceAsStream(java.lang.String)}.
+   * </p>
+   *
+   * @return  The version or {@code null} when not found.
+   */
+  public static String getVersion(Class<?> clazz, String groupId, String artifactId) {
+    try {
+      String version = readVersion(
+        clazz::getResourceAsStream,
+        groupId,
+        artifactId
+      );
+      if (version == null) {
+        version = getVersion(clazz.getPackage());
+      }
+      return version;
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
+  }
 
-	/**
-	 * Gets the version from a Maven <code>pom.properties</code> file,
-	 * falling back to {@link Package#getImplementationVersion()} then
-	 * {@link Package#getSpecificationVersion()} then the provided default.
-	 * <p>
-	 * Supports named modules via {@link Class#getResourceAsStream(java.lang.String)}.
-	 * </p>
-	 *
-	 * @return  The version or {@code null} when not found.
-	 */
-	public static String getVersion(Class<?> clazz, String groupId, String artifactId, String def) {
-		String version = getVersion(clazz, groupId, artifactId);
-		if(version == null) {
-			if(logger.isLoggable(Level.FINE)) {
-				logger.log(Level.FINE, "Using provided default version for project \"" + groupId + ":" + artifactId + "\" or class \"" + clazz + "\": " + def);
-			}
-			return def;
-		} else {
-			return version;
-		}
-	}
+  /**
+   * Gets the version from a Maven <code>pom.properties</code> file,
+   * falling back to {@link Package#getImplementationVersion()} then
+   * {@link Package#getSpecificationVersion()} then the provided default.
+   * <p>
+   * Supports named modules via {@link Class#getResourceAsStream(java.lang.String)}.
+   * </p>
+   *
+   * @return  The version or {@code null} when not found.
+   */
+  public static String getVersion(Class<?> clazz, String groupId, String artifactId, String def) {
+    String version = getVersion(clazz, groupId, artifactId);
+    if (version == null) {
+      if (logger.isLoggable(Level.FINE)) {
+        logger.log(Level.FINE, "Using provided default version for project \"" + groupId + ":" + artifactId + "\" or class \"" + clazz + "\": " + def);
+      }
+      return def;
+    } else {
+      return version;
+    }
+  }
 
-	private static final Pattern RELEASE = Pattern.compile("(.+)-([0-9]+)$");
+  private static final Pattern RELEASE = Pattern.compile("(.+)-([0-9]+)$");
 
-	/**
-	 * Some projects are packaged with an additional release beyond their effective version number,
-	 * separated by a single hypen.
-	 * This release is optional, and expected to be numeric only.
-	 */
-	public static String stripRelease(String version) {
-		Matcher matcher = RELEASE.matcher(version);
-		return matcher.matches() ? matcher.group(1) : version;
-	}
+  /**
+   * Some projects are packaged with an additional release beyond their effective version number,
+   * separated by a single hypen.
+   * This release is optional, and expected to be numeric only.
+   */
+  public static String stripRelease(String version) {
+    Matcher matcher = RELEASE.matcher(version);
+    return matcher.matches() ? matcher.group(1) : version;
+  }
 
-	/**
-	 * Some projects are packaged with an additional release beyond their effective version number,
-	 * separated by a single hypen.
-	 * This release is optional, and expected to be numeric only.
-	 */
-	public static String getRelease(String version) {
-		Matcher matcher = RELEASE.matcher(version);
-		return matcher.matches() ? matcher.group(2) : null;
-	}
+  /**
+   * Some projects are packaged with an additional release beyond their effective version number,
+   * separated by a single hypen.
+   * This release is optional, and expected to be numeric only.
+   */
+  public static String getRelease(String version) {
+    Matcher matcher = RELEASE.matcher(version);
+    return matcher.matches() ? matcher.group(2) : null;
+  }
 }

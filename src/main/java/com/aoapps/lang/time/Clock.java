@@ -37,22 +37,24 @@ package com.aoapps.lang.time;
 @Deprecated
 public final class Clock {
 
-	/** Make no instances. */
-	private Clock() {throw new AssertionError();}
+  /** Make no instances. */
+  private Clock() {
+    throw new AssertionError();
+  }
 
-	/**
-	 * Gets the current time with up to millisecond precision.
-	 *
-	 * @see  System#currentTimeMillis()
-	 */
-	public static Instant instant() {
-		long millis = System.currentTimeMillis();
-		long seconds = millis / 1000;
-		int nanos = (int)(millis % 1000) * 1000000;
-		if(nanos < 0) {
-			seconds--;
-			nanos += 1000000000;
-		}
-		return new Instant(seconds, nanos);
-	}
+  /**
+   * Gets the current time with up to millisecond precision.
+   *
+   * @see  System#currentTimeMillis()
+   */
+  public static Instant instant() {
+    long millis = System.currentTimeMillis();
+    long seconds = millis / 1000;
+    int nanos = (int)(millis % 1000) * 1000000;
+    if (nanos < 0) {
+      seconds--;
+      nanos += 1000000000;
+    }
+    return new Instant(seconds, nanos);
+  }
 }

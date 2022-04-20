@@ -34,50 +34,50 @@ import java.io.Serializable;
  */
 public final class InvalidResult implements ValidationResult {
 
-	private static final long serialVersionUID = -105878200149461063L;
+  private static final long serialVersionUID = -105878200149461063L;
 
-	private final Resources resources;
-	private final String key;
-	private final Serializable[] args;
+  private final Resources resources;
+  private final String key;
+  private final Serializable[] args;
 
-	public InvalidResult(Resources resources, String key) {
-		this.resources = resources;
-		this.key = key;
-		this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
-	}
+  public InvalidResult(Resources resources, String key) {
+    this.resources = resources;
+    this.key = key;
+    this.args = EmptyArrays.EMPTY_SERIALIZABLE_ARRAY;
+  }
 
-	/**
-	 * @param  args  No defensive copy
-	 */
-	public InvalidResult(Resources resources, String key, Serializable... args) {
-		this.resources = resources;
-		this.key = key;
-		this.args = args;
-	}
+  /**
+   * @param  args  No defensive copy
+   */
+  public InvalidResult(Resources resources, String key, Serializable... args) {
+    this.resources = resources;
+    this.key = key;
+    this.args = args;
+  }
 
-	@Override
-	public boolean isValid() {
-		return false;
-	}
+  @Override
+  public boolean isValid() {
+    return false;
+  }
 
-	@Override
-	public String toString() {
-		return resources.getMessage(key, (Object[])args);
-	}
+  @Override
+  public String toString() {
+    return resources.getMessage(key, (Object[])args);
+  }
 
-	public Resources getResources() {
-		return resources;
-	}
+  public Resources getResources() {
+    return resources;
+  }
 
-	public String getKey() {
-		return key;
-	}
+  public String getKey() {
+    return key;
+  }
 
-	/**
-	 * @return  No defensive copy.
-	 */
-	@SuppressWarnings("ReturnOfCollectionOrArrayField")
-	public Serializable[] getArgs() {
-		return args;
-	}
+  /**
+   * @return  No defensive copy.
+   */
+  @SuppressWarnings("ReturnOfCollectionOrArrayField")
+  public Serializable[] getArgs() {
+    return args;
+  }
 }

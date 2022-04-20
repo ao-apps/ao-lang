@@ -34,10 +34,10 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface IOFunction<T, R> extends IOFunctionE<T, R, RuntimeException> {
 
-	@Override
-	R apply(T t) throws IOException;
+  @Override
+  R apply(T t) throws IOException;
 
-	static <T> IOFunction<T, T> identity() {
-		return t -> t;
-	}
+  static <T> IOFunction<T, T> identity() {
+    return t -> t;
+  }
 }

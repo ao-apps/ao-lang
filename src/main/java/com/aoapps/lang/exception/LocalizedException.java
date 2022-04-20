@@ -34,15 +34,15 @@ import java.io.Serializable;
  */
 public interface LocalizedException {
 
-	String getLocalizedMessage();
+  String getLocalizedMessage();
 
-	/**
-	 * Gets the resources used to generate the message or {@code null} when the message is not localized and uses a
-	 * default.
-	 */
-	Resources getResources();
+  /**
+   * Gets the resources used to generate the message or {@code null} when the message is not localized and uses a
+   * default.
+   */
+  Resources getResources();
 
-	String getKey();
+  String getKey();
 
-	Serializable[] getArgs();
+  Serializable[] getArgs();
 }

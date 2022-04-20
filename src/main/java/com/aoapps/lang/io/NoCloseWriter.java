@@ -31,29 +31,31 @@ import java.io.Writer;
  */
 public class NoCloseWriter extends FilterWriter implements NoClose {
 
-	/**
-	 * Returns {@code out} when it is already a {@link NoClose} and {@link NoClose#isNoClose()}, otherwise
-	 * returns a new {@link NoCloseWriter} wrapping {@code out}.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <W extends Writer & NoClose> W wrap(Writer out) {
-		if(out instanceof NoClose && ((NoClose)out).isNoClose()) return (W)out;
-		return (W)new NoCloseWriter(out);
-	}
+  /**
+   * Returns {@code out} when it is already a {@link NoClose} and {@link NoClose#isNoClose()}, otherwise
+   * returns a new {@link NoCloseWriter} wrapping {@code out}.
+   */
+  @SuppressWarnings("unchecked")
+  public static <W extends Writer & NoClose> W wrap(Writer out) {
+    if (out instanceof NoClose && ((NoClose)out).isNoClose()) {
+      return (W)out;
+    }
+    return (W)new NoCloseWriter(out);
+  }
 
-	/**
-	 * @deprecated  Please use {@link #wrap(java.io.Writer)} to skip wrapping when possible.
-	 */
-	@Deprecated
-	public NoCloseWriter(Writer out) {
-		super(out);
-	}
+  /**
+   * @deprecated  Please use {@link #wrap(java.io.Writer)} to skip wrapping when possible.
+   */
+  @Deprecated
+  public NoCloseWriter(Writer out) {
+    super(out);
+  }
 
-	/**
-	 * Does not close the wrapped writer.
-	 */
-	@Override
-	public void close() {
-		// Do nothing
-	}
+  /**
+   * Does not close the wrapped writer.
+   */
+  @Override
+  public void close() {
+    // Do nothing
+  }
 }

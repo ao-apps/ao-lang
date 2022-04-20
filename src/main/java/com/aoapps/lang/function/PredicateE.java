@@ -36,37 +36,37 @@ import java.util.function.Predicate;
 @FunctionalInterface
 public interface PredicateE<T, Ex extends Throwable> {
 
-	boolean test(T t) throws Ex;
+  boolean test(T t) throws Ex;
 
-	default PredicateE<T, Ex> and(PredicateE<? super T, ? extends Ex> other) throws Ex {
-		Objects.requireNonNull(other);
-		return t -> test(t) && other.test(t);
-	}
+  default PredicateE<T, Ex> and(PredicateE<? super T, ? extends Ex> other) throws Ex {
+    Objects.requireNonNull(other);
+    return t -> test(t) && other.test(t);
+  }
 
-	default PredicateE<T, Ex> negate() throws Ex {
-		return t -> !test(t);
-	}
+  default PredicateE<T, Ex> negate() throws Ex {
+    return t -> !test(t);
+  }
 
-	default PredicateE<T, Ex> or(PredicateE<? super T, ? extends Ex> other) throws Ex {
-		Objects.requireNonNull(other);
-		return t -> test(t) || other.test(t);
-	}
+  default PredicateE<T, Ex> or(PredicateE<? super T, ? extends Ex> other) throws Ex {
+    Objects.requireNonNull(other);
+    return t -> test(t) || other.test(t);
+  }
 
-	/**
-	 * @param  <Ex>  An arbitrary exception type that may be thrown
-	 */
-	static <T, Ex extends Throwable> PredicateE<T, Ex> isEqual(Object targetRef) {
-		return (null == targetRef)
-			? Objects::isNull
-			: targetRef::equals;
-	}
+  /**
+   * @param  <Ex>  An arbitrary exception type that may be thrown
+   */
+  static <T, Ex extends Throwable> PredicateE<T, Ex> isEqual(Object targetRef) {
+    return (null == targetRef)
+      ? Objects::isNull
+      : targetRef::equals;
+  }
 
-	/**
-	 * @param  <Ex>  An arbitrary exception type that may be thrown
-	 */
-	@SuppressWarnings("unchecked")
-	static <T, Ex extends Throwable> PredicateE<T, Ex> not(PredicateE<? super T, ? extends Ex> target) throws Ex {
-		Objects.requireNonNull(target);
-		return (PredicateE<T, Ex>)target.negate();
-	}
+  /**
+   * @param  <Ex>  An arbitrary exception type that may be thrown
+   */
+  @SuppressWarnings("unchecked")
+  static <T, Ex extends Throwable> PredicateE<T, Ex> not(PredicateE<? super T, ? extends Ex> target) throws Ex {
+    Objects.requireNonNull(target);
+    return (PredicateE<T, Ex>)target.negate();
+  }
 }

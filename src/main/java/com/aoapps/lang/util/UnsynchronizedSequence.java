@@ -31,26 +31,26 @@ package com.aoapps.lang.util;
  */
 public class UnsynchronizedSequence implements Sequence {
 
-	private long counter;
+  private long counter;
 
-	/**
-	 * Starts at the value of 1.
-	 */
-	public UnsynchronizedSequence() {
-		this(1);
-	}
+  /**
+   * Starts at the value of 1.
+   */
+  public UnsynchronizedSequence() {
+    this(1);
+  }
 
-	public UnsynchronizedSequence(long initialValue) {
-		counter = initialValue;
-	}
+  public UnsynchronizedSequence(long initialValue) {
+    counter = initialValue;
+  }
 
-	@Override
-	public long getNextSequenceValue() {
-		return counter++;
-	}
+  @Override
+  public long getNextSequenceValue() {
+    return counter++;
+  }
 
-	@Override
-	public void setNextSequenceValue(long nextValue) {
-		counter = nextValue;
-	}
+  @Override
+  public void setNextSequenceValue(long nextValue) {
+    counter = nextValue;
+  }
 }

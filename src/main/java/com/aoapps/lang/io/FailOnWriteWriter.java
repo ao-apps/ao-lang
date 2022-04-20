@@ -30,65 +30,65 @@ import java.util.ResourceBundle;
 
 public final class FailOnWriteWriter extends Writer implements NoClose {
 
-	private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, FailOnWriteWriter.class);
+  private static final Resources RESOURCES = Resources.getResources(ResourceBundle::getBundle, FailOnWriteWriter.class);
 
-	private static final FailOnWriteWriter instance = new FailOnWriteWriter();
+  private static final FailOnWriteWriter instance = new FailOnWriteWriter();
 
-	public static FailOnWriteWriter getInstance() {
-		return instance;
-	}
+  public static FailOnWriteWriter getInstance() {
+    return instance;
+  }
 
-	private FailOnWriteWriter() {
-		// Do nothing
-	}
+  private FailOnWriteWriter() {
+    // Do nothing
+  }
 
-	@Override
-	public void write(int c) throws IOException {
-		throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
-	}
+  @Override
+  public void write(int c) throws IOException {
+    throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
+  }
 
-	@Override
-	public void write(char[] cbuf) throws IOException {
-		throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
-	}
+  @Override
+  public void write(char[] cbuf) throws IOException {
+    throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
+  }
 
-	@Override
-	public void write(char[] cbuf, int off, int len) throws IOException {
-		throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
-	}
+  @Override
+  public void write(char[] cbuf, int off, int len) throws IOException {
+    throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
+  }
 
-	@Override
-	public void write(String str) throws IOException {
-		throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
-	}
+  @Override
+  public void write(String str) throws IOException {
+    throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
+  }
 
-	@Override
-	public void write(String str, int off, int len) throws IOException {
-		throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
-	}
+  @Override
+  public void write(String str, int off, int len) throws IOException {
+    throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
+  }
 
-	@Override
-	public FailOnWriteWriter append(CharSequence csq) throws IOException {
-		throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
-	}
+  @Override
+  public FailOnWriteWriter append(CharSequence csq) throws IOException {
+    throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
+  }
 
-	@Override
-	public FailOnWriteWriter append(CharSequence csq, int start, int end) throws IOException {
-		throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
-	}
+  @Override
+  public FailOnWriteWriter append(CharSequence csq, int start, int end) throws IOException {
+    throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
+  }
 
-	@Override
-	public FailOnWriteWriter append(char c) throws IOException {
-		throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
-	}
+  @Override
+  public FailOnWriteWriter append(char c) throws IOException {
+    throw new LocalizedIOException(RESOURCES, "noOutputAllowed");
+  }
 
-	@Override
-	public void flush() {
-		// Do nothing
-	}
+  @Override
+  public void flush() {
+    // Do nothing
+  }
 
-	@Override
-	public void close() {
-		// Do nothing
-	}
+  @Override
+  public void close() {
+    // Do nothing
+  }
 }

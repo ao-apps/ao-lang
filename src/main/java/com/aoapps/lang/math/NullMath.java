@@ -30,48 +30,50 @@ package com.aoapps.lang.math;
  */
 public final class NullMath {
 
-	/** Make no instances. */
-	private NullMath() {throw new AssertionError();}
+  /** Make no instances. */
+  private NullMath() {
+    throw new AssertionError();
+  }
 
-	/**
-	 * Adds two integers together while allowing null.
-	 *
-	 * @return  the sum or null when both arguments are null
-	 */
-	public static Integer add(Integer i1, Integer i2) {
-		if(i1 == null) {
-			if(i2 == null) {
-				return null;
-			} else {
-				return i2;
-			}
-		} else {
-			if(i2 == null) {
-				return i1;
-			} else {
-				return i1 + i2;
-			}
-		}
-	}
+  /**
+   * Adds two integers together while allowing null.
+   *
+   * @return  the sum or null when both arguments are null
+   */
+  public static Integer add(Integer i1, Integer i2) {
+    if (i1 == null) {
+      if (i2 == null) {
+        return null;
+      } else {
+        return i2;
+      }
+    } else {
+      if (i2 == null) {
+        return i1;
+      } else {
+        return i1 + i2;
+      }
+    }
+  }
 
-	/**
-	 * Subtractions one integers from another while allowing null.
-	 *
-	 * @return  the difference or null when both arguments are null
-	 */
-	public static Integer sub(Integer i1, Integer i2) {
-		if(i1 == null) {
-			if(i2 == null) {
-				return null;
-			} else {
-				return -i2;
-			}
-		} else {
-			if(i2 == null) {
-				return i1;
-			} else {
-				return i1 - i2;
-			}
-		}
-	}
+  /**
+   * Subtractions one integers from another while allowing null.
+   *
+   * @return  the difference or null when both arguments are null
+   */
+  public static Integer sub(Integer i1, Integer i2) {
+    if (i1 == null) {
+      if (i2 == null) {
+        return null;
+      } else {
+        return -i2;
+      }
+    } else {
+      if (i2 == null) {
+        return i1;
+      } else {
+        return i1 - i2;
+      }
+    }
+  }
 }

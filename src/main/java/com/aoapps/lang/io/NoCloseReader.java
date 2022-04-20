@@ -31,29 +31,31 @@ import java.io.Reader;
  */
 public class NoCloseReader extends FilterReader implements NoClose {
 
-	/**
-	 * Returns {@code in} when it is already a {@link NoClose} and {@link NoClose#isNoClose()}, otherwise
-	 * returns a new {@link NoCloseReader} wrapping {@code in}.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <R extends Reader & NoClose> R wrap(Reader in) {
-		if(in instanceof NoClose && ((NoClose)in).isNoClose()) return (R)in;
-		return (R)new NoCloseReader(in);
-	}
+  /**
+   * Returns {@code in} when it is already a {@link NoClose} and {@link NoClose#isNoClose()}, otherwise
+   * returns a new {@link NoCloseReader} wrapping {@code in}.
+   */
+  @SuppressWarnings("unchecked")
+  public static <R extends Reader & NoClose> R wrap(Reader in) {
+    if (in instanceof NoClose && ((NoClose)in).isNoClose()) {
+      return (R)in;
+    }
+    return (R)new NoCloseReader(in);
+  }
 
-	/**
-	 * @deprecated  Please use {@link #wrap(java.io.Reader)} to skip wrapping when possible.
-	 */
-	@Deprecated
-	public NoCloseReader(Reader in) {
-		super(in);
-	}
+  /**
+   * @deprecated  Please use {@link #wrap(java.io.Reader)} to skip wrapping when possible.
+   */
+  @Deprecated
+  public NoCloseReader(Reader in) {
+    super(in);
+  }
 
-	/**
-	 * Does not close the wrapped reader.
-	 */
-	@Override
-	public void close() {
-		// Do nothing
-	}
+  /**
+   * Does not close the wrapped reader.
+   */
+  @Override
+  public void close() {
+    // Do nothing
+  }
 }

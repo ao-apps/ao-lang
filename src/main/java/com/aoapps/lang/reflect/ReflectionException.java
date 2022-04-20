@@ -31,35 +31,39 @@ import com.aoapps.lang.Throwables;
 // TODO: Deprecate in favor of ReflectiveOperationException, which is a checked exception?
 public class ReflectionException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	public ReflectionException(Throwable cause) {
-		super(cause);
-	}
+  public ReflectionException(Throwable cause) {
+    super(cause);
+  }
 
-	protected ReflectionException(String message, Throwable cause) {
-		super(message, cause);
-	}
+  protected ReflectionException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-	@Override
-	public String getMessage() {
-		String message = super.getMessage();
-		if(message != null) return message;
-		Throwable cause = getCause();
-		return (cause == null) ? null : cause.getMessage();
-	}
+  @Override
+  public String getMessage() {
+    String message = super.getMessage();
+    if (message != null) {
+      return message;
+    }
+    Throwable cause = getCause();
+    return (cause == null) ? null : cause.getMessage();
+  }
 
-	@Override
-	public String getLocalizedMessage() {
-		String message = super.getMessage();
-		if(message != null) return message;
-		Throwable cause = getCause();
-		return (cause == null) ? null : cause.getLocalizedMessage();
-	}
+  @Override
+  public String getLocalizedMessage() {
+    String message = super.getMessage();
+    if (message != null) {
+      return message;
+    }
+    Throwable cause = getCause();
+    return (cause == null) ? null : cause.getLocalizedMessage();
+  }
 
-	static {
-		Throwables.registerSurrogateFactory(ReflectionException.class, (template, cause) ->
-			new ReflectionException(template.getMessage(), cause)
-		);
-	}
+  static {
+    Throwables.registerSurrogateFactory(ReflectionException.class, (template, cause) ->
+      new ReflectionException(template.getMessage(), cause)
+    );
+  }
 }

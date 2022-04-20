@@ -32,15 +32,17 @@ import java.io.Serializable;
  */
 public final class EmptyArrays {
 
-	/** Make no instances. */
-	private EmptyArrays() {throw new AssertionError();}
+  /** Make no instances. */
+  private EmptyArrays() {
+    throw new AssertionError();
+  }
 
-	public static final byte[] EMPTY_BYTE_ARRAY = {};
-	public static final char[] EMPTY_CHAR_ARRAY = {};
-	public static final int[] EMPTY_INT_ARRAY = {};
-	public static final long[] EMPTY_LONG_ARRAY = {};
-	public static final Class<?>[] EMPTY_CLASS_ARRAY = {};
-	public static final Object[] EMPTY_OBJECT_ARRAY = {};
-	public static final Serializable[] EMPTY_SERIALIZABLE_ARRAY = {};
-	public static final String[] EMPTY_STRING_ARRAY = {};
+  public static final byte[] EMPTY_BYTE_ARRAY = {};
+  public static final char[] EMPTY_CHAR_ARRAY = {};
+  public static final int[] EMPTY_INT_ARRAY = {};
+  public static final long[] EMPTY_LONG_ARRAY = {};
+  public static final Class<?>[] EMPTY_CLASS_ARRAY = {};
+  public static final Object[] EMPTY_OBJECT_ARRAY = {};
+  public static final Serializable[] EMPTY_SERIALIZABLE_ARRAY = {};
+  public static final String[] EMPTY_STRING_ARRAY = {};
 }

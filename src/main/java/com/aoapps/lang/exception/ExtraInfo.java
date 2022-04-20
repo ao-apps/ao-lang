@@ -30,10 +30,10 @@ package com.aoapps.lang.exception;
  */
 public interface ExtraInfo {
 
-	/**
-	 * Gets the optional extra info associated with an exception.
-	 *
-	 * @return  No defensive copy is guaranteed or necessary
-	 */
-	Object[] getExtraInfo();
+  /**
+   * Gets the optional extra info associated with an exception.
+   *
+   * @return  No defensive copy is guaranteed or necessary
+   */
+  Object[] getExtraInfo();
 }

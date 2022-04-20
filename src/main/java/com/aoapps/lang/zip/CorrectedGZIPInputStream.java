@@ -34,31 +34,35 @@ import java.util.zip.GZIPInputStream;
  */
 public class CorrectedGZIPInputStream extends GZIPInputStream {
 
-	public CorrectedGZIPInputStream(InputStream in) throws IOException {
-		super(in);
-	}
+  public CorrectedGZIPInputStream(InputStream in) throws IOException {
+    super(in);
+  }
 
-	public CorrectedGZIPInputStream(InputStream in, int size) throws IOException {
-		super(in, size);
-	}
+  public CorrectedGZIPInputStream(InputStream in, int size) throws IOException {
+    super(in, size);
+  }
 
-	private static class FoundErrorLock {/* Empty lock class to help heap profile */}
-	private final FoundErrorLock foundErrorLock=new FoundErrorLock();
-	private boolean foundError=false;
+  private static class FoundErrorLock {/* Empty lock class to help heap profile */}
+  private final FoundErrorLock foundErrorLock=new FoundErrorLock();
+  private boolean foundError=false;
 
-	@Override
-	public int read(byte[] buf, int off, int len) throws IOException {
-		synchronized(foundErrorLock) {
-			if(foundError) return -1;
-			try {
-				return super.read(buf, off, len);
-			} catch(IOException err) {
-				String message=err.getMessage();
-				if(message.contains("Corrupt GZIP trailer")) {
-					foundError=true;
-					return -1;
-				} else throw err;
-			}
-		}
-	}
+  @Override
+  public int read(byte[] buf, int off, int len) throws IOException {
+    synchronized (foundErrorLock) {
+      if (foundError) {
+        return -1;
+      }
+      try {
+        return super.read(buf, off, len);
+      } catch (IOException err) {
+        String message=err.getMessage();
+        if (message.contains("Corrupt GZIP trailer")) {
+          foundError=true;
+          return -1;
+        } else {
+          throw err;
+        }
+      }
+    }
+  }
 }

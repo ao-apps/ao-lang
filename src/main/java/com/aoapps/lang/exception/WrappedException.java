@@ -49,313 +49,317 @@ import java.util.concurrent.Callable;
  */
 public class WrappedException extends RuntimeException implements ExtraInfo {
 
-	private static final long serialVersionUID = -987777760527780052L;
+  private static final long serialVersionUID = -987777760527780052L;
 
-	/**
-	 * Invokes the given callable, wrapping any checked exceptions.
-	 */
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V call(Callable<V> callable) {
-		try {
-			return callable.call();
-		} catch(Throwable t) {
-			throw Throwables.wrap(t, WrappedException.class, WrappedException::new);
-		}
-	}
+  /**
+   * Invokes the given callable, wrapping any checked exceptions.
+   */
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static <V> V call(Callable<V> callable) {
+    try {
+      return callable.call();
+    } catch (Throwable t) {
+      throw Throwables.wrap(t, WrappedException.class, WrappedException::new);
+    }
+  }
 
-	/**
-	 * Invokes the given callable, wrapping any checked exceptions.
-	 *
-	 * @deprecated  Please use {@link #call(java.util.concurrent.Callable)}
-	 */
-	@Deprecated
-	public static <V> V wrapChecked(Callable<V> callable) {
-		return call(callable);
-	}
+  /**
+   * Invokes the given callable, wrapping any checked exceptions.
+   *
+   * @deprecated  Please use {@link #call(java.util.concurrent.Callable)}
+   */
+  @Deprecated
+  public static <V> V wrapChecked(Callable<V> callable) {
+    return call(callable);
+  }
 
-	/**
-	 * Invokes the given callable, wrapping any checked exceptions.
-	 */
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V call(Callable<V> callable, Object... extraInfo) {
-		try {
-			return callable.call();
-		} catch(Throwable t) {
-			throw Throwables.wrap(t, WrappedException.class,
-				cause -> new WrappedException(cause, extraInfo));
-		}
-	}
+  /**
+   * Invokes the given callable, wrapping any checked exceptions.
+   */
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static <V> V call(Callable<V> callable, Object... extraInfo) {
+    try {
+      return callable.call();
+    } catch (Throwable t) {
+      throw Throwables.wrap(t, WrappedException.class,
+        cause -> new WrappedException(cause, extraInfo));
+    }
+  }
 
-	/**
-	 * Invokes the given callable, wrapping any checked exceptions.
-	 *
-	 * @deprecated  Please use {@link #call(java.util.concurrent.Callable, java.lang.Object...)}
-	 */
-	@Deprecated
-	public static <V> V wrapChecked(Callable<V> callable, Object... extraInfo) {
-		return call(callable, extraInfo);
-	}
+  /**
+   * Invokes the given callable, wrapping any checked exceptions.
+   *
+   * @deprecated  Please use {@link #call(java.util.concurrent.Callable, java.lang.Object...)}
+   */
+  @Deprecated
+  public static <V> V wrapChecked(Callable<V> callable, Object... extraInfo) {
+    return call(callable, extraInfo);
+  }
 
-	/**
-	 * Invokes the given callable, wrapping any checked exceptions.
-	 */
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V call(Callable<V> callable, String message) {
-		try {
-			return callable.call();
-		} catch(Throwable t) {
-			throw Throwables.wrap(t, WrappedException.class,
-				cause -> new WrappedException(message, cause));
-		}
-	}
+  /**
+   * Invokes the given callable, wrapping any checked exceptions.
+   */
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static <V> V call(Callable<V> callable, String message) {
+    try {
+      return callable.call();
+    } catch (Throwable t) {
+      throw Throwables.wrap(t, WrappedException.class,
+        cause -> new WrappedException(message, cause));
+    }
+  }
 
-	/**
-	 * Invokes the given callable, wrapping any checked exceptions.
-	 *
-	 * @deprecated  Please use {@link #call(java.util.concurrent.Callable, java.lang.String)}
-	 */
-	@Deprecated
-	public static <V> V wrapChecked(Callable<V> callable, String message) {
-		return call(callable, message);
-	}
+  /**
+   * Invokes the given callable, wrapping any checked exceptions.
+   *
+   * @deprecated  Please use {@link #call(java.util.concurrent.Callable, java.lang.String)}
+   */
+  @Deprecated
+  public static <V> V wrapChecked(Callable<V> callable, String message) {
+    return call(callable, message);
+  }
 
-	/**
-	 * Invokes the given callable, wrapping any checked exceptions.
-	 */
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V call(Callable<V> callable, String message, Object... extraInfo) {
-		try {
-			return callable.call();
-		} catch(Throwable t) {
-			throw Throwables.wrap(t, WrappedException.class,
-				cause -> new WrappedException(message, cause, extraInfo));
-		}
-	}
+  /**
+   * Invokes the given callable, wrapping any checked exceptions.
+   */
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static <V> V call(Callable<V> callable, String message, Object... extraInfo) {
+    try {
+      return callable.call();
+    } catch (Throwable t) {
+      throw Throwables.wrap(t, WrappedException.class,
+        cause -> new WrappedException(message, cause, extraInfo));
+    }
+  }
 
-	/**
-	 * Invokes the given callable, wrapping any checked exceptions.
-	 *
-	 * @deprecated  Please use {@link #call(java.util.concurrent.Callable, java.lang.String, java.lang.Object...)}
-	 */
-	@Deprecated
-	public static <V> V wrapChecked(Callable<V> callable, String message, Object... extraInfo) {
-		return call(callable, message, extraInfo);
-	}
+  /**
+   * Invokes the given callable, wrapping any checked exceptions.
+   *
+   * @deprecated  Please use {@link #call(java.util.concurrent.Callable, java.lang.String, java.lang.Object...)}
+   */
+  @Deprecated
+  public static <V> V wrapChecked(Callable<V> callable, String message, Object... extraInfo) {
+    return call(callable, message, extraInfo);
+  }
 
-	/**
-	 * Invokes the given callable, wrapping any checked exceptions.
-	 */
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V callE(CallableE<V, ?> callable) {
-		try {
-			return callable.call();
-		} catch(Throwable t) {
-			throw Throwables.wrap(t, WrappedException.class, WrappedException::new);
-		}
-	}
+  /**
+   * Invokes the given callable, wrapping any checked exceptions.
+   */
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static <V> V callE(CallableE<V, ?> callable) {
+    try {
+      return callable.call();
+    } catch (Throwable t) {
+      throw Throwables.wrap(t, WrappedException.class, WrappedException::new);
+    }
+  }
 
-	/**
-	 * Invokes the given callable, wrapping any checked exceptions.
-	 */
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V callE(CallableE<V, ?> callable, Object... extraInfo) {
-		try {
-			return callable.call();
-		} catch(Throwable t) {
-			throw Throwables.wrap(t, WrappedException.class,
-				cause -> new WrappedException(cause, extraInfo));
-		}
-	}
+  /**
+   * Invokes the given callable, wrapping any checked exceptions.
+   */
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static <V> V callE(CallableE<V, ?> callable, Object... extraInfo) {
+    try {
+      return callable.call();
+    } catch (Throwable t) {
+      throw Throwables.wrap(t, WrappedException.class,
+        cause -> new WrappedException(cause, extraInfo));
+    }
+  }
 
-	/**
-	 * Invokes the given callable, wrapping any checked exceptions.
-	 */
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V callE(CallableE<V, ?> callable, String message) {
-		try {
-			return callable.call();
-		} catch(Throwable t) {
-			throw Throwables.wrap(t, WrappedException.class,
-				cause -> new WrappedException(message, cause));
-		}
-	}
+  /**
+   * Invokes the given callable, wrapping any checked exceptions.
+   */
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static <V> V callE(CallableE<V, ?> callable, String message) {
+    try {
+      return callable.call();
+    } catch (Throwable t) {
+      throw Throwables.wrap(t, WrappedException.class,
+        cause -> new WrappedException(message, cause));
+    }
+  }
 
-	/**
-	 * Invokes the given callable, wrapping any checked exceptions.
-	 */
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static <V> V callE(CallableE<V, ?> callable, String message, Object... extraInfo) {
-		try {
-			return callable.call();
-		} catch(Throwable t) {
-			throw Throwables.wrap(t, WrappedException.class,
-				cause -> new WrappedException(message, cause, extraInfo));
-		}
-	}
+  /**
+   * Invokes the given callable, wrapping any checked exceptions.
+   */
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static <V> V callE(CallableE<V, ?> callable, String message, Object... extraInfo) {
+    try {
+      return callable.call();
+    } catch (Throwable t) {
+      throw Throwables.wrap(t, WrappedException.class,
+        cause -> new WrappedException(message, cause, extraInfo));
+    }
+  }
 
-	/**
-	 * Invokes the given runnable, wrapping any checked exceptions.
-	 */
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static void runE(RunnableE<?> runnable) {
-		try {
-			runnable.run();
-		} catch(Throwable t) {
-			throw Throwables.wrap(t, WrappedException.class, WrappedException::new);
-		}
-	}
+  /**
+   * Invokes the given runnable, wrapping any checked exceptions.
+   */
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static void runE(RunnableE<?> runnable) {
+    try {
+      runnable.run();
+    } catch (Throwable t) {
+      throw Throwables.wrap(t, WrappedException.class, WrappedException::new);
+    }
+  }
 
-	/**
-	 * Invokes the given runnable, wrapping any checked exceptions.
-	 */
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static void runE(RunnableE<?> runnable, Object... extraInfo) {
-		try {
-			runnable.run();
-		} catch(Throwable t) {
-			throw Throwables.wrap(t, WrappedException.class,
-				cause -> new WrappedException(cause, extraInfo));
-		}
-	}
+  /**
+   * Invokes the given runnable, wrapping any checked exceptions.
+   */
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static void runE(RunnableE<?> runnable, Object... extraInfo) {
+    try {
+      runnable.run();
+    } catch (Throwable t) {
+      throw Throwables.wrap(t, WrappedException.class,
+        cause -> new WrappedException(cause, extraInfo));
+    }
+  }
 
-	/**
-	 * Invokes the given runnable, wrapping any checked exceptions.
-	 */
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static void runE(RunnableE<?> runnable, String message) {
-		try {
-			runnable.run();
-		} catch(Throwable t) {
-			throw Throwables.wrap(t, WrappedException.class,
-				cause -> new WrappedException(message, cause));
-		}
-	}
+  /**
+   * Invokes the given runnable, wrapping any checked exceptions.
+   */
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static void runE(RunnableE<?> runnable, String message) {
+    try {
+      runnable.run();
+    } catch (Throwable t) {
+      throw Throwables.wrap(t, WrappedException.class,
+        cause -> new WrappedException(message, cause));
+    }
+  }
 
-	/**
-	 * Invokes the given runnable, wrapping any checked exceptions.
-	 */
-	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
-	public static void runE(RunnableE<?> runnable, String message, Object... extraInfo) {
-		try {
-			runnable.run();
-		} catch(Throwable t) {
-			throw Throwables.wrap(t, WrappedException.class,
-				cause -> new WrappedException(message, cause, extraInfo));
-		}
-	}
+  /**
+   * Invokes the given runnable, wrapping any checked exceptions.
+   */
+  @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
+  public static void runE(RunnableE<?> runnable, String message, Object... extraInfo) {
+    try {
+      runnable.run();
+    } catch (Throwable t) {
+      throw Throwables.wrap(t, WrappedException.class,
+        cause -> new WrappedException(message, cause, extraInfo));
+    }
+  }
 
-	private final Object[] extraInfo;
+  private final Object[] extraInfo;
 
-	/**
-	 * @deprecated Please provide cause.
-	 */
-	@Deprecated
-	public WrappedException() {
-		super();
-		this.extraInfo = null;
-	}
+  /**
+   * @deprecated Please provide cause.
+   */
+  @Deprecated
+  public WrappedException() {
+    super();
+    this.extraInfo = null;
+  }
 
-	/**
-	 * @deprecated Please provide cause.
-	 */
-	@Deprecated
-	public WrappedException(String message) {
-		super(message);
-		this.extraInfo = null;
-	}
+  /**
+   * @deprecated Please provide cause.
+   */
+  @Deprecated
+  public WrappedException(String message) {
+    super(message);
+    this.extraInfo = null;
+  }
 
-	/**
-	 * Uses extra info of the original cause when it is an {@link ExtraInfo}.
-	 */
-	public WrappedException(Throwable cause) {
-		super(cause);
-		this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
-	}
+  /**
+   * Uses extra info of the original cause when it is an {@link ExtraInfo}.
+   */
+  public WrappedException(Throwable cause) {
+    super(cause);
+    this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
+  }
 
-	/**
-	 * @deprecated  Please use {@link UncheckedIOException}.
-	 */
-	@Deprecated
-	public WrappedException(IOException cause) {
-		this((Throwable)cause);
-	}
+  /**
+   * @deprecated  Please use {@link UncheckedIOException}.
+   */
+  @Deprecated
+  public WrappedException(IOException cause) {
+    this((Throwable)cause);
+  }
 
-	/**
-	 * @param  extraInfo No defensive copy
-	 */
-	public WrappedException(Throwable cause, Object... extraInfo) {
-		super(cause);
-		this.extraInfo = extraInfo;
-	}
+  /**
+   * @param  extraInfo No defensive copy
+   */
+  public WrappedException(Throwable cause, Object... extraInfo) {
+    super(cause);
+    this.extraInfo = extraInfo;
+  }
 
-	/**
-	 * @deprecated  Please use {@link UncheckedIOException}.
-	 */
-	@Deprecated
-	public WrappedException(IOException cause, Object... extraInfo) {
-		this((Throwable)cause, extraInfo);
-	}
+  /**
+   * @deprecated  Please use {@link UncheckedIOException}.
+   */
+  @Deprecated
+  public WrappedException(IOException cause, Object... extraInfo) {
+    this((Throwable)cause, extraInfo);
+  }
 
-	/**
-	 * Uses extra info of the original cause when it is an {@link ExtraInfo}.
-	 */
-	public WrappedException(String message, Throwable cause) {
-		super(message, cause);
-		this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
-	}
+  /**
+   * Uses extra info of the original cause when it is an {@link ExtraInfo}.
+   */
+  public WrappedException(String message, Throwable cause) {
+    super(message, cause);
+    this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
+  }
 
-	/**
-	 * @deprecated  Please use {@link UncheckedIOException}.
-	 */
-	@Deprecated
-	public WrappedException(String message, IOException cause) {
-		this(message, (Throwable)cause);
-	}
+  /**
+   * @deprecated  Please use {@link UncheckedIOException}.
+   */
+  @Deprecated
+  public WrappedException(String message, IOException cause) {
+    this(message, (Throwable)cause);
+  }
 
-	/**
-	 * @param  extraInfo No defensive copy
-	 */
-	public WrappedException(String message, Throwable cause, Object... extraInfo) {
-		super(message, cause);
-		this.extraInfo = extraInfo;
-	}
+  /**
+   * @param  extraInfo No defensive copy
+   */
+  public WrappedException(String message, Throwable cause, Object... extraInfo) {
+    super(message, cause);
+    this.extraInfo = extraInfo;
+  }
 
-	/**
-	 * @deprecated  Please use {@link UncheckedIOException}.
-	 */
-	@Deprecated
-	public WrappedException(String message, IOException cause, Object... extraInfo) {
-		this(message, (Throwable)cause, extraInfo);
-	}
+  /**
+   * @deprecated  Please use {@link UncheckedIOException}.
+   */
+  @Deprecated
+  public WrappedException(String message, IOException cause, Object... extraInfo) {
+    this(message, (Throwable)cause, extraInfo);
+  }
 
-	@Override
-	public String getMessage() {
-		String message = super.getMessage();
-		if(message != null) return message;
-		Throwable cause = getCause();
-		return (cause == null) ? null : cause.getMessage();
-	}
+  @Override
+  public String getMessage() {
+    String message = super.getMessage();
+    if (message != null) {
+      return message;
+    }
+    Throwable cause = getCause();
+    return (cause == null) ? null : cause.getMessage();
+  }
 
-	@Override
-	public String getLocalizedMessage() {
-		String message = super.getMessage();
-		if(message != null) return message;
-		Throwable cause = getCause();
-		return (cause == null) ? null : cause.getLocalizedMessage();
-	}
+  @Override
+  public String getLocalizedMessage() {
+    String message = super.getMessage();
+    if (message != null) {
+      return message;
+    }
+    Throwable cause = getCause();
+    return (cause == null) ? null : cause.getLocalizedMessage();
+  }
 
-	/**
-	 * @return  No defensive copy
-	 */
-	@Override
-	@SuppressWarnings("ReturnOfCollectionOrArrayField")
-	public Object[] getExtraInfo() {
-		return extraInfo;
-	}
+  /**
+   * @return  No defensive copy
+   */
+  @Override
+  @SuppressWarnings("ReturnOfCollectionOrArrayField")
+  public Object[] getExtraInfo() {
+    return extraInfo;
+  }
 
-	static {
-		Throwables.registerSurrogateFactory(WrappedException.class, (template, cause) ->
-			new WrappedException(template.getMessage(), cause, template.extraInfo)
-		);
-	}
+  static {
+    Throwables.registerSurrogateFactory(WrappedException.class, (template, cause) ->
+      new WrappedException(template.getMessage(), cause, template.extraInfo)
+    );
+  }
 }

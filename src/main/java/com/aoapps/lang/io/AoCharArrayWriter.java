@@ -34,85 +34,89 @@ import java.io.Writer;
  * @author  AO Industries, Inc.
  */
 public class AoCharArrayWriter
-	extends CharArrayWriter
-	implements Writable
+  extends CharArrayWriter
+  implements Writable
 {
 
-	public AoCharArrayWriter() {
-		super();
-	}
+  public AoCharArrayWriter() {
+    super();
+  }
 
-	public AoCharArrayWriter(int initialSize) {
-		super(initialSize);
-	}
+  public AoCharArrayWriter(int initialSize) {
+    super(initialSize);
+  }
 
-	public char[] getInternalCharArray() {
-		return this.buf;
-	}
+  public char[] getInternalCharArray() {
+    return this.buf;
+  }
 
-	@Override
-	public long getLength() {
-		return size();
-	}
+  @Override
+  public long getLength() {
+    return size();
+  }
 
-	@Override
-	public boolean isFastToString() {
-		return false;
-	}
+  @Override
+  public boolean isFastToString() {
+    return false;
+  }
 
-	/**
-	 * Converts a portion of the input data to a string.
-	 *
-	 * @return the string.
-	 */
-	@SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
-	public String toString(int off, int len) {
-		synchronized(lock) {
-			return new String(buf, off, len);
-		}
-	}
+  /**
+   * Converts a portion of the input data to a string.
+   *
+   * @return the string.
+   */
+  @SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
+  public String toString(int off, int len) {
+    synchronized (lock) {
+      return new String(buf, off, len);
+    }
+  }
 
-	/**
-	 * Writes a portion of the contents of the buffer to another character stream.
-	 */
-	@Override
-	@SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
-	public void writeTo(Writer out, long off, long len) throws IOException {
-		synchronized(lock) {
-			if((off+len)>count) throw new IndexOutOfBoundsException();
-			out.write(
-				buf,
-				SafeMath.castInt(off),
-				SafeMath.castInt(len)
-			);
-		}
-	}
+  /**
+   * Writes a portion of the contents of the buffer to another character stream.
+   */
+  @Override
+  @SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
+  public void writeTo(Writer out, long off, long len) throws IOException {
+    synchronized (lock) {
+      if ((off+len)>count) {
+        throw new IndexOutOfBoundsException();
+      }
+      out.write(
+        buf,
+        SafeMath.castInt(off),
+        SafeMath.castInt(len)
+      );
+    }
+  }
 
-	@Override
-	@SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
-	public void writeTo(Encoder encoder, Writer out) throws IOException {
-		synchronized(lock) {
-			encoder.write(buf, 0, count, out);
-		}
-	}
+  @Override
+  @SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
+  public void writeTo(Encoder encoder, Writer out) throws IOException {
+    synchronized (lock) {
+      encoder.write(buf, 0, count, out);
+    }
+  }
 
-	@Override
-	@SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
-	public void writeTo(Encoder encoder, Writer out, long off, long len) throws IOException {
-		synchronized(lock) {
-			if((off+len)>count) throw new IndexOutOfBoundsException();
-			encoder.write(
-				buf,
-				SafeMath.castInt(off),
-				SafeMath.castInt(len),
-				out
-			);
-		}
-	}
+  @Override
+  @SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
+  public void writeTo(Encoder encoder, Writer out, long off, long len) throws IOException {
+    synchronized (lock) {
+      if ((off+len)>count) {
+        throw new IndexOutOfBoundsException();
+      }
+      encoder.write(
+        buf,
+        SafeMath.castInt(off),
+        SafeMath.castInt(len),
+        out
+      );
+    }
+  }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public Writable trim() throws IOException {
-		throw new com.aoapps.lang.exception.NotImplementedException("TODO: Not supported yet.");
-	}
+  @Override
+  @SuppressWarnings("deprecation")
+  public Writable trim() throws IOException {
+    throw new com.aoapps.lang.exception.NotImplementedException("TODO: Not supported yet.");
+  }
 }

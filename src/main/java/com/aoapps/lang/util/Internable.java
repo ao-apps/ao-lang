@@ -33,5 +33,5 @@ package com.aoapps.lang.util;
  */
 public interface Internable<T extends Internable<T>> {
 
-	T intern();
+  T intern();
 }

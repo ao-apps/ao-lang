@@ -32,9 +32,9 @@ import java.util.ServiceLoader;
  */
 public interface ThrowableSurrogateFactoryInitializer extends Runnable {
 
-	/**
-	 * @see  Throwables#registerSurrogateFactory(java.lang.Class, com.aoapps.lang.ThrowableSurrogateFactory)
-	 */
-	@Override
-	void run();
+  /**
+   * @see  Throwables#registerSurrogateFactory(java.lang.Class, com.aoapps.lang.ThrowableSurrogateFactory)
+   */
+  @Override
+  void run();
 }

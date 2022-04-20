@@ -34,6 +34,6 @@ import java.util.function.Supplier;
 @FunctionalInterface
 public interface IOSupplier<T> extends IOSupplierE<T, RuntimeException> {
 
-	@Override
-	T get() throws IOException;
+  @Override
+  T get() throws IOException;
 }

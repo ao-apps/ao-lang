@@ -30,10 +30,10 @@ package com.aoapps.lang.util;
  */
 public interface Sequence {
 
-	/**
-	 * Gets the next value from the sequence.
-	 */
-	long getNextSequenceValue();
+  /**
+   * Gets the next value from the sequence.
+   */
+  long getNextSequenceValue();
 
-	void setNextSequenceValue(long nextValue);
+  void setNextSequenceValue(long nextValue);
 }
