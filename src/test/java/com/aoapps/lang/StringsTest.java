@@ -49,7 +49,7 @@ public class StringsTest extends TestCase {
   private static final Random fastRandom = new Random(IoUtils.bufferToLong(new SecureRandom().generateSeed(Long.BYTES)));
 
   public void testConvertToFromHexInt() {
-    for (int i=0; i<1000; i++) {
+    for (int i = 0; i < 1000; i++) {
       int before = fastRandom.nextInt();
       @SuppressWarnings("deprecation")
       int after = Strings.convertIntArrayFromHex(Strings.convertToHex(before).toCharArray());
@@ -58,7 +58,7 @@ public class StringsTest extends TestCase {
   }
 
   public void testConvertToFromHexLong() {
-    for (int i=0; i<1000; i++) {
+    for (int i = 0; i < 1000; i++) {
       long before = fastRandom.nextLong();
       @SuppressWarnings("deprecation")
       long after = Strings.convertLongArrayFromHex(Strings.convertToHex(before).toCharArray());

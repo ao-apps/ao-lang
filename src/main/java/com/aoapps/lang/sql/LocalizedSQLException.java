@@ -51,7 +51,7 @@ public class LocalizedSQLException extends SQLException implements LocalizedExce
   }
 
   public LocalizedSQLException(String sqlState, int vendorCode, Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args), sqlState, vendorCode);
+    super(resources.getMessage(key, (Object[]) args), sqlState, vendorCode);
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -65,7 +65,7 @@ public class LocalizedSQLException extends SQLException implements LocalizedExce
   }
 
   public LocalizedSQLException(String sqlState, Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args), sqlState);
+    super(resources.getMessage(key, (Object[]) args), sqlState);
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -79,7 +79,7 @@ public class LocalizedSQLException extends SQLException implements LocalizedExce
   }
 
   public LocalizedSQLException(String sqlState, Throwable cause, Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args), sqlState, cause);
+    super(resources.getMessage(key, (Object[]) args), sqlState, cause);
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -93,7 +93,7 @@ public class LocalizedSQLException extends SQLException implements LocalizedExce
   }
 
   public LocalizedSQLException(String sqlState, int vendorCode, Throwable cause, Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args), sqlState, vendorCode, cause);
+    super(resources.getMessage(key, (Object[]) args), sqlState, vendorCode, cause);
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -101,7 +101,7 @@ public class LocalizedSQLException extends SQLException implements LocalizedExce
 
   @Override
   public String getLocalizedMessage() {
-    return resources.getMessage(key, (Object[])args);
+    return resources.getMessage(key, (Object[]) args);
   }
 
   @Override
@@ -125,14 +125,14 @@ public class LocalizedSQLException extends SQLException implements LocalizedExce
 
   static {
     Throwables.registerSurrogateFactory(LocalizedSQLException.class, (template, cause) ->
-      new LocalizedSQLException(
-        template.getSQLState(),
-        template.getErrorCode(),
-        cause,
-        template.resources,
-        template.key,
-        template.args
-      )
+        new LocalizedSQLException(
+            template.getSQLState(),
+            template.getErrorCode(),
+            cause,
+            template.resources,
+            template.key,
+            template.args
+        )
     );
   }
 }

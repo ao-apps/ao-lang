@@ -108,7 +108,7 @@ public class Resources implements Serializable {
    */
   @Deprecated
   public static Resources getResources(String baseName, String prefix) {
-    return getResources((SerializableBiFunction<String, Locale, ResourceBundle>)null, baseName, prefix);
+    return getResources((SerializableBiFunction<String, Locale, ResourceBundle>) null, baseName, prefix);
   }
 
   /**
@@ -155,7 +155,7 @@ public class Resources implements Serializable {
    */
   @Deprecated
   public static Resources getResources(String baseName) {
-    return getResources((SerializableBiFunction<String, Locale, ResourceBundle>)null, baseName, null);
+    return getResources((SerializableBiFunction<String, Locale, ResourceBundle>) null, baseName, null);
   }
 
   /**
@@ -192,9 +192,9 @@ public class Resources implements Serializable {
    */
   public static Resources getResources(SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor, Package pack, String name, String prefix) {
     return getResources(
-      bundleAccessor,
-      (name == null) ? (pack.getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME) : (pack.getName() + '.' + name),
-      prefix
+        bundleAccessor,
+        (name == null) ? (pack.getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME) : (pack.getName() + '.' + name),
+        prefix
     );
   }
 
@@ -484,9 +484,9 @@ public class Resources implements Serializable {
   private final String prefix;
 
   private Resources(
-    SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor,
-    String baseName,
-    String prefix
+      SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor,
+      String baseName,
+      String prefix
   ) {
     this.bundleAccessor = bundleAccessor;
     this.baseName = Objects.requireNonNull(baseName);
@@ -516,8 +516,8 @@ public class Resources implements Serializable {
    */
   public ResourceBundle getResourceBundle(Locale locale) {
     return (bundleAccessor != null)
-      ? bundleAccessor.apply(baseName, locale)
-      : ResourceBundle.getBundle(baseName, locale);
+        ? bundleAccessor.apply(baseName, locale)
+        : ResourceBundle.getBundle(baseName, locale);
   }
 
   /**
@@ -557,19 +557,19 @@ public class Resources implements Serializable {
       resource = getResourceBundle(locale).getString(key);
       if (resource == null && logger.isLoggable(Level.FINE)) {
         logger.fine(
-          "Bundle lookup failed: baseName = \"" + baseName + "\", locale = \"" + locale + "\", key = \"" + key + '"'
+            "Bundle lookup failed: baseName = \"" + baseName + "\", locale = \"" + locale + "\", key = \"" + key + '"'
         );
       }
     } catch (MissingResourceException err) {
       if (logger.isLoggable(Level.FINER)) {
         logger.log(
-          Level.FINER,
-          "Bundle lookup failed: baseName = \"" + baseName + "\", locale = \"" + locale + "\", key = \"" + key + '"',
-          err
+            Level.FINER,
+            "Bundle lookup failed: baseName = \"" + baseName + "\", locale = \"" + locale + "\", key = \"" + key + '"',
+            err
         );
       } else if (logger.isLoggable(Level.FINE)) {
         logger.fine(
-          "Bundle lookup failed: baseName = \"" + baseName + "\", locale = \"" + locale + "\", key = \"" + key + "\" (enable FINER logging for stack trace)"
+            "Bundle lookup failed: baseName = \"" + baseName + "\", locale = \"" + locale + "\", key = \"" + key + "\" (enable FINER logging for stack trace)"
         );
       }
       // resource remains null
@@ -589,7 +589,7 @@ public class Resources implements Serializable {
         result = new String(resource);
       } else {
         // newString is a new string due to StringBuffer...toString
-        result = MessageFormatFactory.getMessageFormat(resource, locale).format(args, new StringBuffer(resource.length()<<1), null).toString();
+        result = MessageFormatFactory.getMessageFormat(resource, locale).format(args, new StringBuffer(resource.length() << 1), null).toString();
       }
       // Call any listeners
       for (Listener l : listeners) {

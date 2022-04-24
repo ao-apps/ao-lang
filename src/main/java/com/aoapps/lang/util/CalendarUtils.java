@@ -349,14 +349,14 @@ public final class CalendarUtils {
    */
   public static GregorianCalendar parseDateTime(String dateTime, TimeZone timeZone) throws IllegalArgumentException {
     return parseDateTime(
-      dateTime,
-      timeZone,
-      (GregorianCalendar gcal, int nanos) -> {
-        if ((nanos % 1000000) != 0) {
-          throw new IllegalArgumentException("Only millisecond precision supported: nanos: " + nanos);
+        dateTime,
+        timeZone,
+        (GregorianCalendar gcal, int nanos) -> {
+          if ((nanos % 1000000) != 0) {
+            throw new IllegalArgumentException("Only millisecond precision supported: nanos: " + nanos);
+          }
+          return gcal;
         }
-        return gcal;
-      }
     );
   }
 

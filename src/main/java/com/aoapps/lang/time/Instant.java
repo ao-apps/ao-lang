@@ -63,8 +63,8 @@ public class Instant implements Comparable<Instant>, Serializable {
       throw new IllegalArgumentException("Period (.) not found: " + s);
     }
     return new Instant(
-      Long.parseLong(s.substring(0, dotPos)),
-      Integer.parseInt(s.substring(dotPos + 1))
+        Long.parseLong(s.substring(0, dotPos)),
+        Integer.parseInt(s.substring(dotPos + 1))
     );
   }
 
@@ -108,9 +108,9 @@ public class Instant implements Comparable<Instant>, Serializable {
 
   static String toString(long epochSecond, int nano) {
     StringBuilder sb = new StringBuilder(
-      20 // Length of "-9223372036854775808"
-      + 1 // "."
-      + 9 // Nanoseconds
+        20 // Length of "-9223372036854775808"
+            + 1 // "."
+            + 9 // Nanoseconds
     );
     sb.append(epochSecond).append('.');
     if (nano < 100000000) {
@@ -151,14 +151,14 @@ public class Instant implements Comparable<Instant>, Serializable {
     if (!(obj instanceof Instant)) {
       return false;
     }
-    return equals((Instant)obj);
+    return equals((Instant) obj);
   }
 
   public boolean equals(Instant other) {
     return
-      other != null
-      && epochSecond == other.epochSecond
-      && nano == other.nano
+        other != null
+            && epochSecond == other.epochSecond
+            && nano == other.nano
     ;
   }
 
@@ -216,7 +216,7 @@ public class Instant implements Comparable<Instant>, Serializable {
       return this;
     }
     long newSeconds = this.epochSecond + nanosToAdd / NANOS_PER_SECOND;
-    int newNanos = this.nano + (int)(nanosToAdd % NANOS_PER_SECOND);
+    int newNanos = this.nano + (int) (nanosToAdd % NANOS_PER_SECOND);
     if (newNanos >= NANOS_PER_SECOND) {
       newSeconds++;
       newNanos -= NANOS_PER_SECOND;

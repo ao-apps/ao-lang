@@ -51,7 +51,7 @@ public class LocalizedTimeoutException extends TimeoutException implements Local
   }
 
   public LocalizedTimeoutException(Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args));
+    super(resources.getMessage(key, (Object[]) args));
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -59,7 +59,7 @@ public class LocalizedTimeoutException extends TimeoutException implements Local
 
   @Override
   public String getLocalizedMessage() {
-    return resources.getMessage(key, (Object[])args);
+    return resources.getMessage(key, (Object[]) args);
   }
 
   @Override
@@ -84,7 +84,7 @@ public class LocalizedTimeoutException extends TimeoutException implements Local
   static {
     Throwables.registerSurrogateFactory(LocalizedTimeoutException.class, (template, cause) -> {
       LocalizedTimeoutException newEx = new LocalizedTimeoutException(
-        template.resources, template.key, template.args
+          template.resources, template.key, template.args
       );
       newEx.initCause(cause);
       return newEx;

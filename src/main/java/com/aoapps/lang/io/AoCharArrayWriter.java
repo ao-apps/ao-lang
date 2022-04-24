@@ -34,8 +34,8 @@ import java.io.Writer;
  * @author  AO Industries, Inc.
  */
 public class AoCharArrayWriter
-  extends CharArrayWriter
-  implements Writable
+    extends CharArrayWriter
+    implements Writable
 {
 
   public AoCharArrayWriter() {
@@ -79,13 +79,13 @@ public class AoCharArrayWriter
   @SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
   public void writeTo(Writer out, long off, long len) throws IOException {
     synchronized (lock) {
-      if ((off+len)>count) {
+      if ((off + len) > count) {
         throw new IndexOutOfBoundsException();
       }
       out.write(
-        buf,
-        SafeMath.castInt(off),
-        SafeMath.castInt(len)
+          buf,
+          SafeMath.castInt(off),
+          SafeMath.castInt(len)
       );
     }
   }
@@ -102,14 +102,14 @@ public class AoCharArrayWriter
   @SuppressWarnings("SynchronizeOnNonFinalField") // Cannot change Writer api
   public void writeTo(Encoder encoder, Writer out, long off, long len) throws IOException {
     synchronized (lock) {
-      if ((off+len)>count) {
+      if ((off + len) > count) {
         throw new IndexOutOfBoundsException();
       }
       encoder.write(
-        buf,
-        SafeMath.castInt(off),
-        SafeMath.castInt(len),
-        out
+          buf,
+          SafeMath.castInt(off),
+          SafeMath.castInt(len),
+          out
       );
     }
   }

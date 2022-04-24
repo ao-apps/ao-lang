@@ -181,26 +181,26 @@ public final class AutoCloseables {
    *                 wrapped via {@code xSupplier}
    */
   public static <X extends Throwable> void closeAndThrow(
-    Throwable t0,
-    Class<? extends X> xClass,
-    Function<? super Throwable, ? extends X> xSupplier,
-    AutoCloseable closeable
+      Throwable t0,
+      Class<? extends X> xClass,
+      Function<? super Throwable, ? extends X> xSupplier,
+      AutoCloseable closeable
   ) throws Error, RuntimeException, X {
     Throwable t = closeAndCatch(t0, closeable);
     if (t != null) {
       if (t instanceof Error) {
-        throw (Error)t;
+        throw (Error) t;
       }
       if (t instanceof RuntimeException) {
-        throw (RuntimeException)t;
+        throw (RuntimeException) t;
       }
       if (xClass.isInstance(t)) {
         throw xClass.cast(t);
       }
       X newExc = xSupplier.apply(t);
       if (
-        t instanceof InterruptedException
-        && !(newExc instanceof InterruptedException)
+          t instanceof InterruptedException
+              && !(newExc instanceof InterruptedException)
       ) {
         // Restore the interrupted status
         Thread.currentThread().interrupt();
@@ -235,9 +235,9 @@ public final class AutoCloseables {
    *                 wrapped via {@code xSupplier}
    */
   public static <X extends Throwable> void closeAndThrow(
-    Class<? extends X> xClass,
-    Function<? super Throwable, ? extends X> xSupplier,
-    AutoCloseable closeable
+      Class<? extends X> xClass,
+      Function<? super Throwable, ? extends X> xSupplier,
+      AutoCloseable closeable
   ) throws Error, RuntimeException, X {
     closeAndThrow(null, xClass, xSupplier, closeable);
   }
@@ -271,26 +271,26 @@ public final class AutoCloseables {
    *                 wrapped via {@code xSupplier}
    */
   public static <X extends Throwable> void closeAndThrow(
-    Throwable t0,
-    Class<? extends X> xClass,
-    Function<? super Throwable, ? extends X> xSupplier,
-    AutoCloseable ... closeable
+      Throwable t0,
+      Class<? extends X> xClass,
+      Function<? super Throwable, ? extends X> xSupplier,
+      AutoCloseable ... closeable
   ) throws Error, RuntimeException, X {
     Throwable t = closeAndCatch(t0, closeable);
     if (t != null) {
       if (t instanceof Error) {
-        throw (Error)t;
+        throw (Error) t;
       }
       if (t instanceof RuntimeException) {
-        throw (RuntimeException)t;
+        throw (RuntimeException) t;
       }
       if (xClass.isInstance(t)) {
         throw xClass.cast(t);
       }
       X newExc = xSupplier.apply(t);
       if (
-        t instanceof InterruptedException
-        && !(newExc instanceof InterruptedException)
+          t instanceof InterruptedException
+              && !(newExc instanceof InterruptedException)
       ) {
         // Restore the interrupted status
         Thread.currentThread().interrupt();
@@ -325,9 +325,9 @@ public final class AutoCloseables {
    *                 wrapped via {@code xSupplier}
    */
   public static <X extends Throwable> void closeAndThrow(
-    Class<? extends X> xClass,
-    Function<? super Throwable, ? extends X> xSupplier,
-    AutoCloseable ... closeable
+      Class<? extends X> xClass,
+      Function<? super Throwable, ? extends X> xSupplier,
+      AutoCloseable ... closeable
   ) throws Error, RuntimeException, X {
     closeAndThrow(null, xClass, xSupplier, closeable);
   }
@@ -361,26 +361,26 @@ public final class AutoCloseables {
    *                 wrapped via {@code xSupplier}
    */
   public static <X extends Throwable> void closeAndThrow(
-    Throwable t0,
-    Class<? extends X> xClass,
-    Function<? super Throwable, ? extends X> xSupplier,
-    Iterable<? extends AutoCloseable> closeable
+      Throwable t0,
+      Class<? extends X> xClass,
+      Function<? super Throwable, ? extends X> xSupplier,
+      Iterable<? extends AutoCloseable> closeable
   ) throws Error, RuntimeException, X {
     Throwable t = closeAndCatch(t0, closeable);
     if (t != null) {
       if (t instanceof Error) {
-        throw (Error)t;
+        throw (Error) t;
       }
       if (t instanceof RuntimeException) {
-        throw (RuntimeException)t;
+        throw (RuntimeException) t;
       }
       if (xClass.isInstance(t)) {
         throw xClass.cast(t);
       }
       X newExc = xSupplier.apply(t);
       if (
-        t instanceof InterruptedException
-        && !(newExc instanceof InterruptedException)
+          t instanceof InterruptedException
+              && !(newExc instanceof InterruptedException)
       ) {
         // Restore the interrupted status
         Thread.currentThread().interrupt();
@@ -415,9 +415,9 @@ public final class AutoCloseables {
    *                 wrapped via {@code xSupplier}
    */
   public static <X extends Throwable> void closeAndThrow(
-    Class<? extends X> xClass,
-    Function<? super Throwable, ? extends X> xSupplier,
-    Iterable<? extends AutoCloseable> closeable
+      Class<? extends X> xClass,
+      Function<? super Throwable, ? extends X> xSupplier,
+      Iterable<? extends AutoCloseable> closeable
   ) throws Error, RuntimeException, X {
     closeAndThrow(null, xClass, xSupplier, closeable);
   }
@@ -464,15 +464,15 @@ public final class AutoCloseables {
    * @see  Throwables#wrap(java.lang.Throwable, java.lang.Class, java.util.function.Function)
    */
   public static <X extends Throwable> X closeAndWrap(
-    Throwable t0,
-    Class<? extends X> xClass,
-    Function<? super Throwable, ? extends X> xSupplier,
-    AutoCloseable closeable
+      Throwable t0,
+      Class<? extends X> xClass,
+      Function<? super Throwable, ? extends X> xSupplier,
+      AutoCloseable closeable
   ) {
     return Throwables.wrap(
-      closeAndCatch(t0, closeable),
-      xClass,
-      xSupplier
+        closeAndCatch(t0, closeable),
+        xClass,
+        xSupplier
     );
   }
 
@@ -518,15 +518,15 @@ public final class AutoCloseables {
    * @see  Throwables#wrap(java.lang.Throwable, java.lang.Class, java.util.function.Function)
    */
   public static <X extends Throwable> X closeAndWrap(
-    Throwable t0,
-    Class<? extends X> xClass,
-    Function<? super Throwable, ? extends X> xSupplier,
-    AutoCloseable ... closeable
+      Throwable t0,
+      Class<? extends X> xClass,
+      Function<? super Throwable, ? extends X> xSupplier,
+      AutoCloseable ... closeable
   ) {
     return Throwables.wrap(
-      closeAndCatch(t0, closeable),
-      xClass,
-      xSupplier
+        closeAndCatch(t0, closeable),
+        xClass,
+        xSupplier
     );
   }
 
@@ -572,15 +572,15 @@ public final class AutoCloseables {
    * @see  Throwables#wrap(java.lang.Throwable, java.lang.Class, java.util.function.Function)
    */
   public static <X extends Throwable> X closeAndWrap(
-    Throwable t0,
-    Class<? extends X> xClass,
-    Function<? super Throwable, ? extends X> xSupplier,
-    Iterable<? extends AutoCloseable> closeable
+      Throwable t0,
+      Class<? extends X> xClass,
+      Function<? super Throwable, ? extends X> xSupplier,
+      Iterable<? extends AutoCloseable> closeable
   ) {
     return Throwables.wrap(
-      closeAndCatch(t0, closeable),
-      xClass,
-      xSupplier
+        closeAndCatch(t0, closeable),
+        xClass,
+        xSupplier
     );
   }
 }

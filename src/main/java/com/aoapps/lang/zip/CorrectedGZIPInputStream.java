@@ -42,9 +42,11 @@ public class CorrectedGZIPInputStream extends GZIPInputStream {
     super(in, size);
   }
 
-  private static class FoundErrorLock {/* Empty lock class to help heap profile */}
-  private final FoundErrorLock foundErrorLock=new FoundErrorLock();
-  private boolean foundError=false;
+  private static class FoundErrorLock {
+    // Empty lock class to help heap profile
+  }
+  private final FoundErrorLock foundErrorLock = new FoundErrorLock();
+  private boolean foundError = false;
 
   @Override
   public int read(byte[] buf, int off, int len) throws IOException {
@@ -55,9 +57,9 @@ public class CorrectedGZIPInputStream extends GZIPInputStream {
       try {
         return super.read(buf, off, len);
       } catch (IOException err) {
-        String message=err.getMessage();
+        String message = err.getMessage();
         if (message.contains("Corrupt GZIP trailer")) {
-          foundError=true;
+          foundError = true;
           return -1;
         } else {
           throw err;

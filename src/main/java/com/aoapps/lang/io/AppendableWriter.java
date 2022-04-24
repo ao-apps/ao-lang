@@ -48,7 +48,7 @@ public class AppendableWriter extends Writer implements NoClose {
    */
   public static Writer wrap(Appendable out) {
     if (out instanceof Writer) {
-      return (Writer)out;
+      return (Writer) out;
     }
     return new AppendableWriter(out);
   }
@@ -68,7 +68,7 @@ public class AppendableWriter extends Writer implements NoClose {
 
   @Override
   public void write(int c) throws IOException {
-    out.append((char)c);
+    out.append((char) c);
   }
 
   @Override
@@ -112,19 +112,19 @@ public class AppendableWriter extends Writer implements NoClose {
   @Override
   public void flush() throws IOException {
     if (out instanceof Flushable) {
-      ((Flushable)out).flush();
+      ((Flushable) out).flush();
     }
   }
 
   @Override
   public boolean isNoClose() {
-    return (out instanceof NoClose) && ((NoClose)out).isNoClose();
+    return (out instanceof NoClose) && ((NoClose) out).isNoClose();
   }
 
   @Override
   public void close() throws IOException {
     if (out instanceof Closeable) {
-      ((Closeable)out).close();
+      ((Closeable) out).close();
     }
   }
 }

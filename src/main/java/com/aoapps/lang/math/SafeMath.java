@@ -47,7 +47,7 @@ public final class SafeMath {
     if (value > Byte.MAX_VALUE) {
       throw new ArithmeticException("byte overflow: " + value);
     }
-    return (byte)value;
+    return (byte) value;
   }
 
   /**
@@ -62,7 +62,7 @@ public final class SafeMath {
     if (value > Byte.MAX_VALUE) {
       throw new ArithmeticException("byte overflow: " + value);
     }
-    return (byte)value;
+    return (byte) value;
   }
 
   /**
@@ -77,7 +77,7 @@ public final class SafeMath {
     if (value > Short.MAX_VALUE) {
       throw new ArithmeticException("short overflow: " + value);
     }
-    return (short)value;
+    return (short) value;
   }
 
   /**
@@ -92,7 +92,7 @@ public final class SafeMath {
     if (value > Short.MAX_VALUE) {
       throw new ArithmeticException("short overflow: " + value);
     }
-    return (short)value;
+    return (short) value;
   }
 
   /**
@@ -107,7 +107,7 @@ public final class SafeMath {
     if (value > Integer.MAX_VALUE) {
       throw new ArithmeticException("int overflow: " + value);
     }
-    return (int)value;
+    return (int) value;
   }
 
   /**
@@ -143,11 +143,11 @@ public final class SafeMath {
    * Computes the average of two values without overflow or underflow.
    */
   public static int avg(int value1, int value2) {
-    return (int)(
-      (
-        (long)value1
-        + (long)value2
-      ) / 2
+    return (int) (
+        (
+            (long) value1
+                + (long) value2
+        ) / 2
     );
   }
 
@@ -159,6 +159,6 @@ public final class SafeMath {
   public static int avg(int ... values) {
     long sum = 0;
     for (int value : values) sum += value;
-    return (int)(sum / values.length);
+    return (int) (sum / values.length);
   }
 }

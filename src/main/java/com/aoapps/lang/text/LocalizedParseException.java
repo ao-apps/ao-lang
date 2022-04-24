@@ -51,7 +51,7 @@ public class LocalizedParseException extends ParseException implements Localized
   }
 
   public LocalizedParseException(int errorOffset, Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args), errorOffset);
+    super(resources.getMessage(key, (Object[]) args), errorOffset);
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -59,7 +59,7 @@ public class LocalizedParseException extends ParseException implements Localized
 
   @Override
   public String getLocalizedMessage() {
-    return resources.getMessage(key, (Object[])args);
+    return resources.getMessage(key, (Object[]) args);
   }
 
   @Override
@@ -84,7 +84,7 @@ public class LocalizedParseException extends ParseException implements Localized
   static {
     Throwables.registerSurrogateFactory(LocalizedParseException.class, (template, cause) -> {
       LocalizedParseException newEx = new LocalizedParseException(
-        template.getErrorOffset(), template.resources, template.key, template.args
+          template.getErrorOffset(), template.resources, template.key, template.args
       );
       newEx.initCause(cause);
       return newEx;

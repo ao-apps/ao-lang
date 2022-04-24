@@ -105,7 +105,7 @@ public abstract class Attribute<C, T> {
    * @see  Map#compute(java.lang.Object, java.util.function.BiFunction)
    */
   public abstract <Ex extends Throwable> T compute(
-    BiFunctionE<? super String, ? super T, ? extends T, ? extends Ex> remappingFunction
+      BiFunctionE<? super String, ? super T, ? extends T, ? extends Ex> remappingFunction
   ) throws Ex;
 
   /**
@@ -116,7 +116,7 @@ public abstract class Attribute<C, T> {
    * @see  Map#computeIfAbsent(java.lang.Object, java.util.function.Function)
    */
   public abstract <Ex extends Throwable> T computeIfAbsent(
-    FunctionE<? super String, ? extends T, ? extends Ex> mappingFunction
+      FunctionE<? super String, ? extends T, ? extends Ex> mappingFunction
   ) throws Ex;
 
   /**
@@ -127,7 +127,7 @@ public abstract class Attribute<C, T> {
    * @see  Map#computeIfPresent(java.lang.Object, java.util.function.BiFunction)
    */
   public abstract <Ex extends Throwable> T computeIfPresent(
-    BiFunctionE<? super String, ? super T, ? extends T, ? extends Ex> remappingFunction
+      BiFunctionE<? super String, ? super T, ? extends T, ? extends Ex> remappingFunction
   ) throws Ex;
 
   /**
@@ -155,8 +155,8 @@ public abstract class Attribute<C, T> {
    * @see  Map#merge(java.lang.Object, java.lang.Object, java.util.function.BiFunction)
    */
   public abstract <Ex extends Throwable> T merge(
-    T value,
-    BiFunctionE<? super T, ? super T, ? extends T, ? extends Ex> remappingFunction
+      T value,
+      BiFunctionE<? super T, ? super T, ? extends T, ? extends Ex> remappingFunction
   ) throws Ex;
 
   /**
@@ -256,7 +256,7 @@ public abstract class Attribute<C, T> {
      */
     public <C> Scope.Attribute<C, T> scope(Class<C> contextType) {
       @SuppressWarnings("unchecked")
-      ServiceLoader<ScopeFactory<C, T>> loader = (ServiceLoader)ServiceLoader.load(ContextFactory.class);
+      ServiceLoader<ScopeFactory<C, T>> loader = (ServiceLoader) ServiceLoader.load(ContextFactory.class);
       Iterator<ScopeFactory<C, T>> iter = loader.iterator();
       while (iter.hasNext()) {
         Scope.Attribute<C, T> attribute = iter.next().attribute(contextType, name);
@@ -265,8 +265,8 @@ public abstract class Attribute<C, T> {
         }
       }
       throw new IllegalArgumentException(
-        "No factory registered for scope for context type \""
-        + (contextType == null ? "null" : contextType.toGenericString()) + "\""
+          "No factory registered for scope for context type \""
+              + (contextType == null ? "null" : contextType.toGenericString()) + "\""
       );
     }
 
@@ -276,6 +276,7 @@ public abstract class Attribute<C, T> {
     public <C> Scope.Attribute<C, T> scope(Scope<C> scope) {
       return scope.attribute(name);
     }
+
     // </editor-fold>
 
     // <editor-fold desc="Context">
@@ -302,7 +303,7 @@ public abstract class Attribute<C, T> {
      */
     public <C> Attribute<C, T> context(C context) {
       @SuppressWarnings("unchecked")
-      ServiceLoader<ContextFactory<C, T>> loader = (ServiceLoader)ServiceLoader.load(ContextFactory.class);
+      ServiceLoader<ContextFactory<C, T>> loader = (ServiceLoader) ServiceLoader.load(ContextFactory.class);
       Iterator<ContextFactory<C, T>> iter = loader.iterator();
       while (iter.hasNext()) {
         Attribute<C, T> attribute = iter.next().attribute(context, name);
@@ -311,8 +312,8 @@ public abstract class Attribute<C, T> {
         }
       }
       throw new IllegalArgumentException(
-        "No factory registered for context of type \""
-        + (context == null ? "null" : context.getClass().toGenericString()) + "\": " + context
+          "No factory registered for context of type \""
+              + (context == null ? "null" : context.getClass().toGenericString()) + "\": " + context
       );
     }
     // </editor-fold>

@@ -80,7 +80,7 @@ public final class Coercion {
   public static String toString(Object value) {
     // Support Optional
     while (value instanceof Optional) {
-      value = ((Optional<?>)value).orElse(null);
+      value = ((Optional<?>) value).orElse(null);
     }
     // If A is null, then the result is "".
     if (value == null) {
@@ -88,7 +88,7 @@ public final class Coercion {
     }
     // If A is a string, then the result is A.
     if (value instanceof String) {
-      return (String)value;
+      return (String) value;
     }
     // If is a Writable, support optimizations
     if (value instanceof Writable) {
@@ -105,7 +105,7 @@ public final class Coercion {
     }
     // Support char[]
     if (value instanceof char[]) {
-      char[] chs = (char[])value;
+      char[] chs = (char[]) value;
       return chs.length == 0 ? "" : new String(chs);
     }
     // If is a DOM node, serialize the output
@@ -127,8 +127,8 @@ public final class Coercion {
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
         transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
         transformer.transform(
-          new DOMSource((Node)value),
-          new StreamResult(buffer)
+            new DOMSource((Node) value),
+            new StreamResult(buffer)
         );
         return buffer.toString();
       } catch (TransformerException e) {
@@ -179,8 +179,8 @@ public final class Coercion {
     }
     if (newOut != original && logger.isLoggable(Level.FINER)) {
       logger.finer(
-        "Writer optimized from " + original.getClass().getName() + " to " + newOut.getClass().getName()
-        + " with encoder " + (encoder == null ? null : encoder.getClass().getName())
+          "Writer optimized from " + original.getClass().getName() + " to " + newOut.getClass().getName()
+              + " with encoder " + (encoder == null ? null : encoder.getClass().getName())
       );
     }
     return newOut;
@@ -198,7 +198,7 @@ public final class Coercion {
    */
   public static Appendable optimize(Appendable out, Encoder encoder) {
     if (out instanceof Writer) {
-      return optimize((Writer)out, encoder);
+      return optimize((Writer) out, encoder);
     }
     return out;
   }
@@ -245,19 +245,19 @@ public final class Coercion {
   public static void write(Object value, Writer out, boolean outOptimized) throws IOException {
     // Support Optional
     while (value instanceof Optional) {
-      value = ((Optional<?>)value).orElse(null);
+      value = ((Optional<?>) value).orElse(null);
     }
     // If A is null, then the result is "".
     if (value != null) {
       assert out != null;
       if (out instanceof EncoderWriter) {
         // Unwrap media writer and use encoder directly
-        EncoderWriter encoderWriter = (EncoderWriter)out;
+        EncoderWriter encoderWriter = (EncoderWriter) out;
         write(
-          value,
-          encoderWriter.getEncoder(),
-          encoderWriter.getOut(),
-          true // EncoderWriter always optimizes out
+            value,
+            encoderWriter.getEncoder(),
+            encoderWriter.getOut(),
+            true // EncoderWriter always optimizes out
         );
       } else {
         // Optimize output
@@ -270,10 +270,10 @@ public final class Coercion {
         }
         if (value instanceof String) {
           // If A is a string, then the result is A.
-          optimized.write((String)value);
+          optimized.write((String) value);
         } else if (value instanceof Writable) {
           // If is a Writable, support optimizations
-          Writable writable = (Writable)value;
+          Writable writable = (Writable) value;
           if (writable.isFastToString()) {
             optimized.write(writable.toString());
           } else {
@@ -282,14 +282,14 @@ public final class Coercion {
           }
         } else if (value instanceof Segment) {
           // Support Segment
-          Segment s = (Segment)value;
+          Segment s = (Segment) value;
           optimized.write(s.array, s.offset, s.count);
         } else if (value instanceof CharSequence) {
           // Support CharSequence
-          optimized.append((CharSequence)value);
+          optimized.append((CharSequence) value);
         } else if (value instanceof char[]) {
           // Support char[]
-          optimized.write((char[])value);
+          optimized.write((char[]) value);
         } else if (value instanceof Node) {
           // If is a DOM node, serialize the output
           try {
@@ -308,8 +308,8 @@ public final class Coercion {
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
             transformer.transform(
-              new DOMSource((Node)value),
-              new StreamResult(optimized)
+                new DOMSource((Node) value),
+                new StreamResult(optimized)
             );
           } catch (TransformerException e) {
             throw new IOException(e);
@@ -370,7 +370,7 @@ public final class Coercion {
     } else {
       // Support Optional
       while (value instanceof Optional) {
-        value = ((Optional<?>)value).orElse(null);
+        value = ((Optional<?>) value).orElse(null);
       }
       // If A is null, then the result is "".
       if (value != null) {
@@ -385,10 +385,10 @@ public final class Coercion {
         // Write through the given encoder
         if (value instanceof String) {
           // If A is a string, then the result is A.
-          encoder.write((String)value, optimized);
+          encoder.write((String) value, optimized);
         } else if (value instanceof Writable) {
           // If is a Writable, support optimizations
-          Writable writable = (Writable)value;
+          Writable writable = (Writable) value;
           if (writable.isFastToString()) {
             encoder.write(writable.toString(), optimized);
           } else {
@@ -397,14 +397,14 @@ public final class Coercion {
           }
         } else if (value instanceof Segment) {
           // Support Segment
-          Segment s = (Segment)value;
+          Segment s = (Segment) value;
           encoder.write(s.array, s.offset, s.count, optimized);
         } else if (value instanceof CharSequence) {
           // Support CharSequence
-          encoder.append((CharSequence)value, optimized);
+          encoder.append((CharSequence) value, optimized);
         } else if (value instanceof char[]) {
           // Support char[]
-          encoder.write((char[])value, optimized);
+          encoder.write((char[]) value, optimized);
         } else if (value instanceof Node) {
           // If is a DOM node, serialize the output
           try {
@@ -423,8 +423,8 @@ public final class Coercion {
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
             transformer.transform(
-              new DOMSource((Node)value),
-              new StreamResult(new EncoderWriter(encoder, optimized, true))
+                new DOMSource((Node) value),
+                new StreamResult(new EncoderWriter(encoder, optimized, true))
             );
           } catch (TransformerException e) {
             throw new IOException(e);
@@ -478,11 +478,11 @@ public final class Coercion {
   public static void append(Object value, Appendable out, boolean outOptimized) throws IOException {
     assert out != null;
     if (out instanceof Writer) {
-      write(value, (Writer)out, outOptimized);
+      write(value, (Writer) out, outOptimized);
     } else {
       // Support Optional
       while (value instanceof Optional) {
-        value = ((Optional<?>)value).orElse(null);
+        value = ((Optional<?>) value).orElse(null);
       }
       // If A is null, then the result is "".
       if (value != null) {
@@ -496,10 +496,10 @@ public final class Coercion {
         }
         if (value instanceof String) {
           // If A is a string, then the result is A.
-          optimized.append((String)value);
+          optimized.append((String) value);
         } else if (value instanceof Writable) {
           // If is a Writable, support optimizations
-          Writable writable = (Writable)value;
+          Writable writable = (Writable) value;
           if (writable.isFastToString()) {
             optimized.append(writable.toString());
           } else {
@@ -508,10 +508,10 @@ public final class Coercion {
           }
         } else if (value instanceof CharSequence) {
           // Support Segment and CharSequence
-          optimized.append((CharSequence)value);
+          optimized.append((CharSequence) value);
         } else if (value instanceof char[]) {
           // Support char[]
-          char[] chs = (char[])value;
+          char[] chs = (char[]) value;
           int chsLen = chs.length;
           if (chsLen > 0) {
             optimized.append(new Segment(chs, 0, chsLen));
@@ -534,8 +534,8 @@ public final class Coercion {
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
             transformer.transform(
-              new DOMSource((Node)value),
-              new StreamResult(AppendableWriter.wrap(optimized))
+                new DOMSource((Node) value),
+                new StreamResult(AppendableWriter.wrap(optimized))
             );
           } catch (TransformerException e) {
             throw new IOException(e);
@@ -594,11 +594,11 @@ public final class Coercion {
     if (encoder == null) {
       append(value, out, outOptimized);
     } else if (out instanceof Writer) {
-      write(value, encoder, (Writer)out, outOptimized);
+      write(value, encoder, (Writer) out, outOptimized);
     } else {
       // Support Optional
       while (value instanceof Optional) {
-        value = ((Optional<?>)value).orElse(null);
+        value = ((Optional<?>) value).orElse(null);
       }
       // If A is null, then the result is "".
       if (value != null) {
@@ -613,10 +613,10 @@ public final class Coercion {
         // Write through the given encoder
         if (value instanceof String) {
           // If A is a string, then the result is A.
-          encoder.append((String)value, optimized);
+          encoder.append((String) value, optimized);
         } else if (value instanceof Writable) {
           // If is a Writable, support optimizations
-          Writable writable = (Writable)value;
+          Writable writable = (Writable) value;
           if (writable.isFastToString()) {
             encoder.append(writable.toString(), optimized);
           } else {
@@ -625,10 +625,10 @@ public final class Coercion {
           }
         } else if (value instanceof CharSequence) {
           // Support Segment and CharSequence
-          encoder.append((CharSequence)value, optimized);
+          encoder.append((CharSequence) value, optimized);
         } else if (value instanceof char[]) {
           // Support char[]
-          char[] chs = (char[])value;
+          char[] chs = (char[]) value;
           int chsLen = chs.length;
           if (chsLen > 0) {
             encoder.append(new Segment(chs, 0, chsLen), optimized);
@@ -651,8 +651,8 @@ public final class Coercion {
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
             transformer.transform(
-              new DOMSource((Node)value),
-              new StreamResult(new EncoderWriter(encoder, AppendableWriter.wrap(optimized), true))
+                new DOMSource((Node) value),
+                new StreamResult(new EncoderWriter(encoder, AppendableWriter.wrap(optimized), true))
             );
           } catch (TransformerException e) {
             throw new IOException(e);
@@ -682,23 +682,23 @@ public final class Coercion {
   public static boolean isEmpty(Object value) throws IOException {
     // Support Optional
     while (value instanceof Optional) {
-      value = ((Optional<?>)value).orElse(null);
+      value = ((Optional<?>) value).orElse(null);
     }
     if (value == null) {
       // If A is null, then the result is "".
       return true;
     } else if (value instanceof String) {
       // If A is a string, then the result is A.
-      return ((String)value).isEmpty();
+      return ((String) value).isEmpty();
     } else if (value instanceof Writable) {
       // If is a Writable, support optimizations
-      return ((Writable)value).getLength() == 0;
+      return ((Writable) value).getLength() == 0;
     } else if (value instanceof CharSequence) {
       // Support Segment and CharSequence
-      return ((CharSequence)value).length() == 0;
+      return ((CharSequence) value).length() == 0;
     } else if (value instanceof char[]) {
       // Support char[]
-      return ((char[])value).length == 0;
+      return ((char[]) value).length == 0;
     } else if (value instanceof Node) {
       // If is a DOM node, serialize the output
       return false; // There is a node, is not empty
@@ -727,23 +727,23 @@ public final class Coercion {
   public static Object nullIfEmpty(Object value) throws IOException {
     // Support Optional
     while (value instanceof Optional) {
-      value = ((Optional<?>)value).orElse(null);
+      value = ((Optional<?>) value).orElse(null);
     }
     if (value == null) {
       // If A is null, then the result is "".
       return null;
     } else if (value instanceof String) {
       // If A is a string, then the result is A.
-      return Strings.nullIfEmpty((String)value);
+      return Strings.nullIfEmpty((String) value);
     } else if (value instanceof Writable) {
       // If is a Writable, support optimizations
-      return ((Writable)value).getLength() == 0 ? null : value;
+      return ((Writable) value).getLength() == 0 ? null : value;
     } else if (value instanceof CharSequence) {
       // Support Segment and CharSequence
-      return ((CharSequence)value).length() == 0 ? null : value;
+      return ((CharSequence) value).length() == 0 ? null : value;
     } else if (value instanceof char[]) {
       // Support char[]
-      return ((char[])value).length == 0 ? null : value;
+      return ((char[]) value).length == 0 ? null : value;
     } else if (value instanceof Node) {
       // If is a DOM node, serialize the output
       return value; // There is a node, is not empty
@@ -775,17 +775,17 @@ public final class Coercion {
   public static Object trim(Object value) throws IOException {
     // Support Optional
     while (value instanceof Optional) {
-      value = ((Optional<?>)value).orElse(null);
+      value = ((Optional<?>) value).orElse(null);
     }
     if (value == null) {
       // If A is null, then the result is "".
       return null;
     } else if (value instanceof String) {
       // If A is a string, then the result is A.
-      return Strings.trim((String)value);
+      return Strings.trim((String) value);
     } else if (value instanceof Writable) {
       // If is a Writable, support optimizations
-      Writable writable = (Writable)value;
+      Writable writable = (Writable) value;
       if (writable.isFastToString()) {
         return Strings.trim(writable.toString());
       } else {
@@ -793,11 +793,11 @@ public final class Coercion {
       }
     } else if (value instanceof CharSequence) {
       // Support Segment and CharSequence
-      CharSequence cs = Strings.trim((CharSequence)value);
+      CharSequence cs = Strings.trim((CharSequence) value);
       return cs.length() == 0 ? "" : cs;
     } else if (value instanceof char[]) {
       // Support char[]
-      char[] chs = (char[])value;
+      char[] chs = (char[]) value;
       int chsLen = chs.length;
       if (chsLen == 0) {
         return "";
@@ -805,8 +805,8 @@ public final class Coercion {
       CharSequence cs = Strings.trim(new Segment(chs, 0, chsLen));
       return
           (cs.length() == 0) ? ""       // Now empty
-        : (cs.length() == chsLen) ? chs // Unchanged
-        : cs;                           // Trimmed
+              : (cs.length() == chsLen) ? chs // Unchanged
+              : cs;                           // Trimmed
     } else if (value instanceof Node) {
       // If is a DOM node, serialize the output
       return value; // There is a node, is not empty
@@ -839,17 +839,17 @@ public final class Coercion {
   public static Object trimNullIfEmpty(Object value) throws IOException {
     // Support Optional
     while (value instanceof Optional) {
-      value = ((Optional<?>)value).orElse(null);
+      value = ((Optional<?>) value).orElse(null);
     }
     if (value == null) {
       // If A is null, then the result is "".
       return null;
     } else if (value instanceof String) {
       // If A is a string, then the result is A.
-      return Strings.trimNullIfEmpty((String)value);
+      return Strings.trimNullIfEmpty((String) value);
     } else if (value instanceof Writable) {
       // If is a Writable, support optimizations
-      Writable writable = (Writable)value;
+      Writable writable = (Writable) value;
       if (writable.isFastToString()) {
         return Strings.trimNullIfEmpty(writable.toString());
       } else {
@@ -858,10 +858,10 @@ public final class Coercion {
       }
     } else if (value instanceof CharSequence) {
       // Support Segment and CharSequence
-      return Strings.trimNullIfEmpty((CharSequence)value);
+      return Strings.trimNullIfEmpty((CharSequence) value);
     } else if (value instanceof char[]) {
       // Support char[]
-      char[] chs = (char[])value;
+      char[] chs = (char[]) value;
       int chsLen = chs.length;
       if (chsLen == 0) {
         return null;
@@ -869,8 +869,8 @@ public final class Coercion {
       CharSequence cs = Strings.trimNullIfEmpty(new Segment(chs, 0, chsLen));
       return
           (cs == null) ? null           // Now empty
-        : (cs.length() == chsLen) ? chs // Unchanged
-        : cs;                           // Trimmed
+              : (cs.length() == chsLen) ? chs // Unchanged
+              : cs;                           // Trimmed
     } else if (value instanceof Node) {
       // If is a DOM node, serialize the output
       return value; // There is a node, is not empty

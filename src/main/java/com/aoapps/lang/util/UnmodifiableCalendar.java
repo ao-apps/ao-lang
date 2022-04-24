@@ -46,7 +46,7 @@ public final class UnmodifiableCalendar extends Calendar implements Cloneable {
     if (cal == null) {
       return null;
     } else if (cal instanceof UnmodifiableCalendar) {
-      return (UnmodifiableCalendar)cal;
+      return (UnmodifiableCalendar) cal;
     } else {
       return new UnmodifiableCalendar(cal);
     }
@@ -54,14 +54,14 @@ public final class UnmodifiableCalendar extends Calendar implements Cloneable {
 
   private static Calendar unwrap(Calendar cal) {
     if (cal instanceof UnmodifiableCalendar) {
-      return ((UnmodifiableCalendar)cal).wrapped;
+      return ((UnmodifiableCalendar) cal).wrapped;
     }
     return cal;
   }
 
   private static Object unwrap(Object when) {
     if (when instanceof UnmodifiableCalendar) {
-      return ((UnmodifiableCalendar)when).wrapped;
+      return ((UnmodifiableCalendar) when).wrapped;
     }
     return when;
   }
@@ -73,9 +73,9 @@ public final class UnmodifiableCalendar extends Calendar implements Cloneable {
     if (cal == null) {
       return null;
     } else if (cal instanceof UnmodifiableCalendar) {
-      cal = ((UnmodifiableCalendar)cal).wrapped;
+      cal = ((UnmodifiableCalendar) cal).wrapped;
     }
-    return (Calendar)cal.clone();
+    return (Calendar) cal.clone();
   }
 
   /**
@@ -88,7 +88,7 @@ public final class UnmodifiableCalendar extends Calendar implements Cloneable {
     } else if (clazz.isInstance(cal)) {
       return true;
     } else if (cal instanceof UnmodifiableCalendar) {
-      if (clazz.isInstance(((UnmodifiableCalendar)cal).wrapped)) {
+      if (clazz.isInstance(((UnmodifiableCalendar) cal).wrapped)) {
         return true;
       }
     }
@@ -127,7 +127,7 @@ public final class UnmodifiableCalendar extends Calendar implements Cloneable {
 
   @Override
   public UnmodifiableCalendar clone() {
-    return new UnmodifiableCalendar((Calendar)wrapped.clone());
+    return new UnmodifiableCalendar((Calendar) wrapped.clone());
   }
 
   @Override

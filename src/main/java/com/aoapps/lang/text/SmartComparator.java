@@ -108,7 +108,7 @@ public class SmartComparator implements Comparator<Object> {
     if (pos == len) {
       return new Token(TokenType.EMPTY, value, pos, len);
     }
-    for (int i=pos; i<len; i++) {
+    for (int i = pos; i < len; i++) {
       // Check if is a number at the current index
       boolean isNumeric;
       boolean dotUsed;
@@ -118,8 +118,8 @@ public class SmartComparator implements Comparator<Object> {
         char ch2;
         // #
         if (
-          ch1 >= '0'
-          && ch1 <= '9'
+            ch1 >= '0'
+                && ch1 <= '9'
         ) {
           isNumeric = true;
           dotUsed = false;
@@ -127,10 +127,10 @@ public class SmartComparator implements Comparator<Object> {
         }
         // .#
         else if (
-          ch1 == '.'
-          && i < (len-1)
-          && (ch2 = value.charAt(i+1)) >= '0'
-          && ch2 <= '9'
+            ch1 == '.'
+                && i < (len - 1)
+                && (ch2 = value.charAt(i + 1)) >= '0'
+                && ch2 <= '9'
         ) {
           isNumeric = true;
           dotUsed = true;
@@ -138,10 +138,10 @@ public class SmartComparator implements Comparator<Object> {
         }
         // -#
         else if (
-          ch1 == '-'
-          && i < (len-1)
-          && (ch2 = value.charAt(i+1)) >= '0'
-          && ch2 <= '9'
+            ch1 == '-'
+                && i < (len - 1)
+                && (ch2 = value.charAt(i + 1)) >= '0'
+                && ch2 <= '9'
         ) {
           isNumeric = true;
           dotUsed = false;
@@ -149,11 +149,11 @@ public class SmartComparator implements Comparator<Object> {
         }
         // -.#
         else if (
-          ch1 == '-'
-          && i < (len-2)
-          && value.charAt(i+1) == '.'
-          && (ch2 = value.charAt(i+2)) >= '0'
-          && ch2 <= '9'
+            ch1 == '-'
+                && i < (len - 2)
+                && value.charAt(i + 1) == '.'
+                && (ch2 = value.charAt(i + 2)) >= '0'
+                && ch2 <= '9'
         ) {
           isNumeric = true;
           dotUsed = true;
@@ -168,14 +168,14 @@ public class SmartComparator implements Comparator<Object> {
       if (isNumeric) {
         if (i == pos) {
           // Starts with numeric, find end of numeric range
-          for (i += prefixLen; i<len; i++) {
+          for (i += prefixLen; i < len; i++) {
             char ch = value.charAt(i);
             if (ch == '.') {
               if (dotUsed) {
                 break;
               }
               dotUsed = true;
-            } else if (ch<'0' || ch>'9') {
+            } else if (ch < '0' || ch > '9') {
               break;
             }
           }
@@ -199,8 +199,8 @@ public class SmartComparator implements Comparator<Object> {
   @Override
   public int compare(Object o1, Object o2) {
     return compare(
-      Objects.toString(o1, null),
-      Objects.toString(o2, null)
+        Objects.toString(o1, null),
+        Objects.toString(o2, null)
     );
   }
 

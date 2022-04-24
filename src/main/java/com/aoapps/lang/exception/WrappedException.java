@@ -82,7 +82,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
       return callable.call();
     } catch (Throwable t) {
       throw Throwables.wrap(t, WrappedException.class,
-        cause -> new WrappedException(cause, extraInfo));
+          cause -> new WrappedException(cause, extraInfo));
     }
   }
 
@@ -105,7 +105,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
       return callable.call();
     } catch (Throwable t) {
       throw Throwables.wrap(t, WrappedException.class,
-        cause -> new WrappedException(message, cause));
+          cause -> new WrappedException(message, cause));
     }
   }
 
@@ -128,7 +128,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
       return callable.call();
     } catch (Throwable t) {
       throw Throwables.wrap(t, WrappedException.class,
-        cause -> new WrappedException(message, cause, extraInfo));
+          cause -> new WrappedException(message, cause, extraInfo));
     }
   }
 
@@ -163,7 +163,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
       return callable.call();
     } catch (Throwable t) {
       throw Throwables.wrap(t, WrappedException.class,
-        cause -> new WrappedException(cause, extraInfo));
+          cause -> new WrappedException(cause, extraInfo));
     }
   }
 
@@ -176,7 +176,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
       return callable.call();
     } catch (Throwable t) {
       throw Throwables.wrap(t, WrappedException.class,
-        cause -> new WrappedException(message, cause));
+          cause -> new WrappedException(message, cause));
     }
   }
 
@@ -189,7 +189,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
       return callable.call();
     } catch (Throwable t) {
       throw Throwables.wrap(t, WrappedException.class,
-        cause -> new WrappedException(message, cause, extraInfo));
+          cause -> new WrappedException(message, cause, extraInfo));
     }
   }
 
@@ -214,7 +214,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
       runnable.run();
     } catch (Throwable t) {
       throw Throwables.wrap(t, WrappedException.class,
-        cause -> new WrappedException(cause, extraInfo));
+          cause -> new WrappedException(cause, extraInfo));
     }
   }
 
@@ -227,7 +227,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
       runnable.run();
     } catch (Throwable t) {
       throw Throwables.wrap(t, WrappedException.class,
-        cause -> new WrappedException(message, cause));
+          cause -> new WrappedException(message, cause));
     }
   }
 
@@ -240,7 +240,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
       runnable.run();
     } catch (Throwable t) {
       throw Throwables.wrap(t, WrappedException.class,
-        cause -> new WrappedException(message, cause, extraInfo));
+          cause -> new WrappedException(message, cause, extraInfo));
     }
   }
 
@@ -269,7 +269,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
    */
   public WrappedException(Throwable cause) {
     super(cause);
-    this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
+    this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo) cause).getExtraInfo() : null;
   }
 
   /**
@@ -277,7 +277,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
    */
   @Deprecated
   public WrappedException(IOException cause) {
-    this((Throwable)cause);
+    this((Throwable) cause);
   }
 
   /**
@@ -293,7 +293,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
    */
   @Deprecated
   public WrappedException(IOException cause, Object... extraInfo) {
-    this((Throwable)cause, extraInfo);
+    this((Throwable) cause, extraInfo);
   }
 
   /**
@@ -301,7 +301,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
    */
   public WrappedException(String message, Throwable cause) {
     super(message, cause);
-    this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
+    this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo) cause).getExtraInfo() : null;
   }
 
   /**
@@ -309,7 +309,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
    */
   @Deprecated
   public WrappedException(String message, IOException cause) {
-    this(message, (Throwable)cause);
+    this(message, (Throwable) cause);
   }
 
   /**
@@ -325,7 +325,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
    */
   @Deprecated
   public WrappedException(String message, IOException cause, Object... extraInfo) {
-    this(message, (Throwable)cause, extraInfo);
+    this(message, (Throwable) cause, extraInfo);
   }
 
   @Override
@@ -359,7 +359,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
 
   static {
     Throwables.registerSurrogateFactory(WrappedException.class, (template, cause) ->
-      new WrappedException(template.getMessage(), cause, template.extraInfo)
+        new WrappedException(template.getMessage(), cause, template.extraInfo)
     );
   }
 }

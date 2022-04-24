@@ -50,7 +50,7 @@ public final class Clock {
   public static Instant instant() {
     long millis = System.currentTimeMillis();
     long seconds = millis / 1000;
-    int nanos = (int)(millis % 1000) * 1000000;
+    int nanos = (int) (millis % 1000) * 1000000;
     if (nanos < 0) {
       seconds--;
       nanos += 1000000000;

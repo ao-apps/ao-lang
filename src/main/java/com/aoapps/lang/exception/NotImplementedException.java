@@ -56,7 +56,7 @@ public class NotImplementedException extends RuntimeException {
 
   static {
     Throwables.registerSurrogateFactory(NotImplementedException.class, (template, cause) ->
-      new NotImplementedException(template.getMessage(), cause)
+        new NotImplementedException(template.getMessage(), cause)
     );
   }
 }

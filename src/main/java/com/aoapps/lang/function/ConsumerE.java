@@ -40,6 +40,9 @@ public interface ConsumerE<T, Ex extends Throwable> {
 
   default ConsumerE<T, Ex> andThen(ConsumerE<? super T, ? extends Ex> after) throws Ex {
     Objects.requireNonNull(after);
-    return t -> { accept(t); after.accept(t); };
+    return t -> {
+      accept(t);
+      after.accept(t);
+    };
   }
 }

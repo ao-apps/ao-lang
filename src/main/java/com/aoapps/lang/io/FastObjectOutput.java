@@ -52,7 +52,7 @@ public class FastObjectOutput implements ObjectOutput {
   public static FastObjectOutput wrap(ObjectOutput out) throws IOException {
     FastObjectOutput fastOut;
     if (out instanceof FastObjectOutput) {
-      fastOut = (FastObjectOutput)out;
+      fastOut = (FastObjectOutput) out;
     } else {
       fastOut = threadFastObjectOutput.get();
       if (fastOut == null) {
@@ -69,19 +69,19 @@ public class FastObjectOutput implements ObjectOutput {
   }
 
   static final int
-    // The object is null
-    NULL = 0,
-    // The object uses standard serialization
-    STANDARD = NULL + 1,
-    // The object is of a previously unseen class
-    FAST_NEW = STANDARD + 1,
-    // The object is the same class as the previous object
-    FAST_SAME = FAST_NEW + 1,
-    // The object is of a class that has already been seen, and uses the next two bytes as its class ID - (255 - FAST_SEEN_INT)
-    FAST_SEEN_SHORT = FAST_SAME + 1,
-    // The object is of a class that has already been seen, and uses the next four bytes as its class ID
-    FAST_SEEN_INT = FAST_SEEN_SHORT + 1
-    // The remaining values are for direct already seen classes between 0 <= ID < (255-FAST_SEEN_INT)
+      // The object is null
+      NULL = 0,
+      // The object uses standard serialization
+      STANDARD = NULL + 1,
+      // The object is of a previously unseen class
+      FAST_NEW = STANDARD + 1,
+      // The object is the same class as the previous object
+      FAST_SAME = FAST_NEW + 1,
+      // The object is of a class that has already been seen, and uses the next two bytes as its class ID - (255 - FAST_SEEN_INT)
+      FAST_SEEN_SHORT = FAST_SAME + 1,
+      // The object is of a class that has already been seen, and uses the next four bytes as its class ID
+      FAST_SEEN_INT = FAST_SEEN_SHORT + 1
+  // The remaining values are for direct already seen classes between 0 <= ID < (255-FAST_SEEN_INT)
   ;
 
   private final ObjectOutput out;
@@ -150,7 +150,7 @@ public class FastObjectOutput implements ObjectOutput {
     if (obj == null) {
       out.write(NULL);
     } else if (obj instanceof FastExternalizable) {
-      writeFastObject((FastExternalizable)obj);
+      writeFastObject((FastExternalizable) obj);
     } else {
       out.write(STANDARD);
       out.writeObject(obj);
@@ -188,7 +188,7 @@ public class FastObjectOutput implements ObjectOutput {
           } else if (classId <= (65536 + (255 - FAST_SEEN_INT))) {
             // 251 through 65786
             out.write(FAST_SEEN_SHORT);
-            int offset = classId - (255-FAST_SEEN_INT);
+            int offset = classId - (255 - FAST_SEEN_INT);
             assert offset >= 0;
             assert offset <= 65535;
             out.writeShort(offset);

@@ -62,7 +62,7 @@ public final class InvalidResult implements ValidationResult {
 
   @Override
   public String toString() {
-    return resources.getMessage(key, (Object[])args);
+    return resources.getMessage(key, (Object[]) args);
   }
 
   public Resources getResources() {

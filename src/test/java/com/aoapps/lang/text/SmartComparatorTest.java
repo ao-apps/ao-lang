@@ -68,117 +68,117 @@ public class SmartComparatorTest extends TestCase {
   public void testNextToken() {
     // Numbers by self
     doTestNextToken(
-      "1", 0,
-      SmartComparator.TokenType.NUMERIC, 0, 1
+        "1", 0,
+        SmartComparator.TokenType.NUMERIC, 0, 1
     );
     doTestNextToken(
-      "1.", 0,
-      SmartComparator.TokenType.NUMERIC, 0, 2
+        "1.", 0,
+        SmartComparator.TokenType.NUMERIC, 0, 2
     );
     doTestNextToken(
-      "1.1", 0,
-      SmartComparator.TokenType.NUMERIC, 0, 3
+        "1.1", 0,
+        SmartComparator.TokenType.NUMERIC, 0, 3
     );
     doTestNextToken(
-      "-1.1", 0,
-      SmartComparator.TokenType.NUMERIC, 0, 4
+        "-1.1", 0,
+        SmartComparator.TokenType.NUMERIC, 0, 4
     );
     // Duplicate periods
     doTestNextToken(
-      "1..", 0,
-      SmartComparator.TokenType.NUMERIC, 0, 2
+        "1..", 0,
+        SmartComparator.TokenType.NUMERIC, 0, 2
     );
     doTestNextToken(
-      "1.1.", 0,
-      SmartComparator.TokenType.NUMERIC, 0, 3
+        "1.1.", 0,
+        SmartComparator.TokenType.NUMERIC, 0, 3
     );
     doTestNextToken(
-      "-1.1.", 0,
-      SmartComparator.TokenType.NUMERIC, 0, 4
+        "-1.1.", 0,
+        SmartComparator.TokenType.NUMERIC, 0, 4
     );
     // String by itself
     doTestNextToken(
-      "Dan", 0,
-      SmartComparator.TokenType.STRING, 0, 3
+        "Dan", 0,
+        SmartComparator.TokenType.STRING, 0, 3
     );
     // Numbers before strings
     doTestNextToken(
-      "1Dan", 0,
-      SmartComparator.TokenType.NUMERIC, 0, 1
+        "1Dan", 0,
+        SmartComparator.TokenType.NUMERIC, 0, 1
     );
     doTestNextToken(
-      "1Dan", 1,
-      SmartComparator.TokenType.STRING, 1, 4
+        "1Dan", 1,
+        SmartComparator.TokenType.STRING, 1, 4
     );
     doTestNextToken(
-      ".1Dan", 0,
-      SmartComparator.TokenType.NUMERIC, 0, 2
+        ".1Dan", 0,
+        SmartComparator.TokenType.NUMERIC, 0, 2
     );
     doTestNextToken(
-      ".1Dan", 2,
-      SmartComparator.TokenType.STRING, 2, 5
+        ".1Dan", 2,
+        SmartComparator.TokenType.STRING, 2, 5
     );
     doTestNextToken(
-      "-1Dan", 0,
-      SmartComparator.TokenType.NUMERIC, 0, 2
+        "-1Dan", 0,
+        SmartComparator.TokenType.NUMERIC, 0, 2
     );
     doTestNextToken(
-      "-1Dan", 2,
-      SmartComparator.TokenType.STRING, 2, 5
+        "-1Dan", 2,
+        SmartComparator.TokenType.STRING, 2, 5
     );
     doTestNextToken(
-      "-1.Dan", 0,
-      SmartComparator.TokenType.NUMERIC, 0, 3
+        "-1.Dan", 0,
+        SmartComparator.TokenType.NUMERIC, 0, 3
     );
     doTestNextToken(
-      "-1.Dan", 3,
-      SmartComparator.TokenType.STRING, 3, 6
+        "-1.Dan", 3,
+        SmartComparator.TokenType.STRING, 3, 6
     );
     // Strings before numbers
     doTestNextToken(
-      "Dan1", 0,
-      SmartComparator.TokenType.STRING, 0, 3
+        "Dan1", 0,
+        SmartComparator.TokenType.STRING, 0, 3
     );
     doTestNextToken(
-      "Dan1", 3,
-      SmartComparator.TokenType.NUMERIC, 3, 4
+        "Dan1", 3,
+        SmartComparator.TokenType.NUMERIC, 3, 4
     );
     doTestNextToken(
-      "Dan.1", 0,
-      SmartComparator.TokenType.STRING, 0, 3
+        "Dan.1", 0,
+        SmartComparator.TokenType.STRING, 0, 3
     );
     doTestNextToken(
-      "Dan.1", 3,
-      SmartComparator.TokenType.NUMERIC, 3, 5
+        "Dan.1", 3,
+        SmartComparator.TokenType.NUMERIC, 3, 5
     );
     doTestNextToken(
-      "Dan-1", 0,
-      SmartComparator.TokenType.STRING, 0, 3
+        "Dan-1", 0,
+        SmartComparator.TokenType.STRING, 0, 3
     );
     doTestNextToken(
-      "Dan-1", 3,
-      SmartComparator.TokenType.NUMERIC, 3, 5
+        "Dan-1", 3,
+        SmartComparator.TokenType.NUMERIC, 3, 5
     );
     doTestNextToken(
-      "Dan-1.", 0,
-      SmartComparator.TokenType.STRING, 0, 3
+        "Dan-1.", 0,
+        SmartComparator.TokenType.STRING, 0, 3
     );
     doTestNextToken(
-      "Dan-1.", 3,
-      SmartComparator.TokenType.NUMERIC, 3, 6
+        "Dan-1.", 3,
+        SmartComparator.TokenType.NUMERIC, 3, 6
     );
     // Ending with partial numeric beginning
     doTestNextToken(
-      "Dan-", 0,
-      SmartComparator.TokenType.STRING, 0, 4
+        "Dan-", 0,
+        SmartComparator.TokenType.STRING, 0, 4
     );
     doTestNextToken(
-      "Dan.", 0,
-      SmartComparator.TokenType.STRING, 0, 4
+        "Dan.", 0,
+        SmartComparator.TokenType.STRING, 0, 4
     );
     doTestNextToken(
-      "Dan-.", 0,
-      SmartComparator.TokenType.STRING, 0, 5
+        "Dan-.", 0,
+        SmartComparator.TokenType.STRING, 0, 5
     );
   }
 
@@ -215,65 +215,65 @@ public class SmartComparatorTest extends TestCase {
 
   public void testSort() {
     String[] testValues = {
-      "-10",
-      "-10.",
-      "-10.0",
-      "-10.00",
-      "-10.000",
-      "-1",
-      "-1.",
-      "-1.0",
-      "-1.00",
-      "-1.000",
-      "-.1",
-      "-.10",
-      "-.100",
-      "-.1000",
-      "-0.1",
-      "-0.10",
-      "-0.100",
-      "-0.1000",
-      "-.0",
-      "-.00",
-      "-.000",
-      "-0",
-      "-0.",
-      "-0.0",
-      "-0.00",
-      "-0.000",
-      ".0",
-      ".00",
-      ".000",
-      "0",
-      "0.",
-      "0.0",
-      "0.00",
-      "0.000",
-      ".1",
-      ".10",
-      ".100",
-      ".1000",
-      "0.1",
-      "0.10",
-      "0.100",
-      "0.1000",
-      "1",
-      "1.",
-      "1.0",
-      "1.00",
-      "1.000",
-      "10",
-      "10.",
-      "10.0",
-      "10.00",
-      "10.000"
+        "-10",
+        "-10.",
+        "-10.0",
+        "-10.00",
+        "-10.000",
+        "-1",
+        "-1.",
+        "-1.0",
+        "-1.00",
+        "-1.000",
+        "-.1",
+        "-.10",
+        "-.100",
+        "-.1000",
+        "-0.1",
+        "-0.10",
+        "-0.100",
+        "-0.1000",
+        "-.0",
+        "-.00",
+        "-.000",
+        "-0",
+        "-0.",
+        "-0.0",
+        "-0.00",
+        "-0.000",
+        ".0",
+        ".00",
+        ".000",
+        "0",
+        "0.",
+        "0.0",
+        "0.00",
+        "0.000",
+        ".1",
+        ".10",
+        ".100",
+        ".1000",
+        "0.1",
+        "0.10",
+        "0.100",
+        "0.1000",
+        "1",
+        "1.",
+        "1.0",
+        "1.00",
+        "1.000",
+        "10",
+        "10.",
+        "10.0",
+        "10.00",
+        "10.000"
     };
     String[] shuffled = Arrays.copyOf(testValues, testValues.length);
     Collections.shuffle(Arrays.asList(shuffled));
     Arrays.sort(shuffled, comparator);
     assertEquals(
-      Arrays.asList(testValues),
-      Arrays.asList(shuffled)
+        Arrays.asList(testValues),
+        Arrays.asList(shuffled)
     );
   }
 }

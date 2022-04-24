@@ -49,18 +49,18 @@ public class AoByteArrayInputStream extends ByteArrayInputStream {
   public void fillFrom(DataInput in) throws IOException {
     synchronized (this) {
       in.readFully(buf);
-      mark=0;
-      pos=0;
-      count=buf.length;
+      mark = 0;
+      pos = 0;
+      count = buf.length;
     }
   }
 
   public void fillFrom(DataInput in, int len) throws IOException {
     synchronized (this) {
       in.readFully(buf, 0, len);
-      mark=0;
-      pos=0;
-      count=len;
+      mark = 0;
+      pos = 0;
+      count = len;
     }
   }
 

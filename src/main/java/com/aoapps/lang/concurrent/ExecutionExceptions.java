@@ -83,9 +83,9 @@ public final class ExecutionExceptions {
    * @see  Throwables#newSurrogate(java.lang.Throwable, java.lang.Throwable)
    */
   public static <X extends Throwable> void wrapAndThrow(
-    ExecutionException ee,
-    Class<? extends X> xClass,
-    BiFunction<? super String, ? super ExecutionException, ? extends X> xSupplier
+      ExecutionException ee,
+      Class<? extends X> xClass,
+      BiFunction<? super String, ? super ExecutionException, ? extends X> xSupplier
   ) throws X {
     if (ee != null) {
       Throwable cause = ee.getCause();
@@ -97,8 +97,8 @@ public final class ExecutionExceptions {
         } else {
           X newExc = xSupplier.apply(template.getMessage(), ee);
           if (
-            cause instanceof InterruptedException
-            && !(newExc instanceof InterruptedException)
+              cause instanceof InterruptedException
+                  && !(newExc instanceof InterruptedException)
           ) {
             // Restore the interrupted status
             Thread.currentThread().interrupt();
@@ -154,9 +154,9 @@ public final class ExecutionExceptions {
    * @see  Throwables#newSurrogate(java.lang.Throwable, java.lang.Throwable)
    */
   public static <X extends Throwable> void wrapAndThrowWithTemplate(
-    ExecutionException ee,
-    Class<? extends X> xClass,
-    BiFunction<? super X, ? super ExecutionException, ? extends X> xSupplier
+      ExecutionException ee,
+      Class<? extends X> xClass,
+      BiFunction<? super X, ? super ExecutionException, ? extends X> xSupplier
   ) throws X {
     if (ee != null) {
       Throwable cause = ee.getCause();
@@ -168,8 +168,8 @@ public final class ExecutionExceptions {
         } else {
           X newExc = xSupplier.apply(template, ee);
           if (
-            cause instanceof InterruptedException
-            && !(newExc instanceof InterruptedException)
+              cause instanceof InterruptedException
+                  && !(newExc instanceof InterruptedException)
           ) {
             // Restore the interrupted status
             Thread.currentThread().interrupt();

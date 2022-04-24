@@ -44,7 +44,7 @@ public class ThreadLocalRunnable implements Runnable {
   @Override
   public void run() {
     @SuppressWarnings("unchecked")
-    ThreadLocal<Object> tl = (ThreadLocal<Object>)threadLocal;
+    ThreadLocal<Object> tl = (ThreadLocal<Object>) threadLocal;
     Object oldValue = tl.get();
     Object newValue = value;
     try {

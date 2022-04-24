@@ -98,9 +98,9 @@ public final class Projects {
   public static String getVersion(ClassLoader cl, String groupId, String artifactId) {
     try {
       return readVersion(
-        (cl == null) ? ClassLoader::getSystemResourceAsStream : cl::getResourceAsStream,
-        groupId,
-        artifactId
+          (cl == null) ? ClassLoader::getSystemResourceAsStream : cl::getResourceAsStream,
+          groupId,
+          artifactId
       );
     } catch (IOException e) {
       throw new UncheckedIOException(e);
@@ -224,9 +224,9 @@ public final class Projects {
   public static String getVersion(Class<?> clazz, String groupId, String artifactId) {
     try {
       String version = readVersion(
-        clazz::getResourceAsStream,
-        groupId,
-        artifactId
+          clazz::getResourceAsStream,
+          groupId,
+          artifactId
       );
       if (version == null) {
         version = getVersion(clazz.getPackage());

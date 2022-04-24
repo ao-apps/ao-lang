@@ -48,7 +48,7 @@ public class LocalizedIllegalStateException extends IllegalStateException implem
   }
 
   public LocalizedIllegalStateException(Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args));
+    super(resources.getMessage(key, (Object[]) args));
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -62,7 +62,7 @@ public class LocalizedIllegalStateException extends IllegalStateException implem
   }
 
   public LocalizedIllegalStateException(Throwable cause, Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args), cause);
+    super(resources.getMessage(key, (Object[]) args), cause);
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -70,7 +70,7 @@ public class LocalizedIllegalStateException extends IllegalStateException implem
 
   @Override
   public String getLocalizedMessage() {
-    return resources.getMessage(key, (Object[])args);
+    return resources.getMessage(key, (Object[]) args);
   }
 
   @Override
@@ -94,7 +94,7 @@ public class LocalizedIllegalStateException extends IllegalStateException implem
 
   static {
     Throwables.registerSurrogateFactory(LocalizedIllegalStateException.class, (template, cause) ->
-      new LocalizedIllegalStateException(cause, template.resources, template.key, template.args)
+        new LocalizedIllegalStateException(cause, template.resources, template.key, template.args)
     );
   }
 }

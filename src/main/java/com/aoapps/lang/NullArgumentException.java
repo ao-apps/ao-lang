@@ -34,10 +34,10 @@ import java.util.ResourceBundle;
 public class NullArgumentException extends IllegalArgumentException {
 
   private static final Resources RESOURCES = Resources.getResources(
-    ResourceBundle::getBundle,
-    NullArgumentException.class.getPackage(),
-    "i18n_res.ApplicationResources",
-    NullArgumentException.class.getSimpleName() + '.'
+      ResourceBundle::getBundle,
+      NullArgumentException.class.getPackage(),
+      "i18n_res.ApplicationResources",
+      NullArgumentException.class.getSimpleName() + '.'
   );
 
   private static final long serialVersionUID = 1L;

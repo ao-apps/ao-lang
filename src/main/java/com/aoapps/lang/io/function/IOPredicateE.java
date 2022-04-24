@@ -58,8 +58,8 @@ public interface IOPredicateE<T, Ex extends Throwable> {
    */
   static <T, Ex extends Throwable> IOPredicateE<T, Ex> isEqual(Object targetRef) {
     return (null == targetRef)
-      ? Objects::isNull
-      : targetRef::equals;
+        ? Objects::isNull
+        : targetRef::equals;
   }
 
   /**
@@ -68,6 +68,6 @@ public interface IOPredicateE<T, Ex extends Throwable> {
   @SuppressWarnings("unchecked")
   static <T, Ex extends Throwable> IOPredicateE<T, Ex> not(IOPredicateE<? super T, ? extends Ex> target) throws IOException, Ex {
     Objects.requireNonNull(target);
-    return (IOPredicateE<T, Ex>)target.negate();
+    return (IOPredicateE<T, Ex>) target.negate();
   }
 }

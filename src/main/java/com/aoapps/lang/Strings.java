@@ -42,18 +42,18 @@ public final class Strings {
   }
 
   private static final String[] MONTHS = {
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
   };
 
   /**
@@ -66,7 +66,7 @@ public final class Strings {
 
   // TODO: This list is probably not very complete from a Unicode perspective.
   // TDOO: What does the Character class offer?
-  private static final char[] wordWrapChars = { ' ', '\t', '-', '=', ',', ';' };
+  private static final char[] wordWrapChars = {' ', '\t', '-', '=', ',', ';'};
 
   private static final String lineSeparator = System.lineSeparator();
 
@@ -189,19 +189,19 @@ public final class Strings {
   }
 
   public static boolean containsIgnoreCase(String line, String word) {
-    int word_len=word.length();
-    int line_len=line.length();
-    int end_pos=line_len-word_len;
+    int word_len = word.length();
+    int line_len = line.length();
+    int end_pos = line_len - word_len;
     Loop:
-    for (int c=0;c <= end_pos;c++) {
-      for (int d=0;d<word_len;d++) {
-        char ch1=line.charAt(c+d);
-        char ch2=word.charAt(d);
+    for (int c = 0; c <= end_pos; c++) {
+      for (int d = 0; d < word_len; d++) {
+        char ch1 = line.charAt(c + d);
+        char ch2 = word.charAt(d);
         if (ch1 >= 'A' && ch1 <= 'Z') {
-          ch1+='a'-'A';
+          ch1 += 'a' - 'A';
         }
         if (ch2 >= 'A' && ch2 <= 'Z') {
-          ch2+='a'-'A';
+          ch2 += 'a' - 'A';
         }
         if (ch1 != ch2) {
           continue Loop;
@@ -217,19 +217,19 @@ public final class Strings {
    */
   @SuppressWarnings("AssignmentToForLoopParameter")
   public static int countOccurrences(byte[] buff, int len, String word) {
-    int wordlen=word.length();
-    int end=len-wordlen;
-    int count=0;
+    int wordlen = word.length();
+    int end = len - wordlen;
+    int count = 0;
     Loop:
-    for (int c=0;c <= end;c++) {
-      for (int d=0;d<wordlen;d++) {
-        char ch1=(char)buff[c+d];
+    for (int c = 0; c <= end; c++) {
+      for (int d = 0; d < wordlen; d++) {
+        char ch1 = (char) buff[c + d];
         if (ch1 <= 'Z' && ch1 >= 'A') {
-          ch1+='a'-'A';
+          ch1 += 'a' - 'A';
         }
-        char ch2=word.charAt(d);
+        char ch2 = word.charAt(d);
         if (ch2 <= 'Z' && ch2 >= 'A') {
-          ch2+='a'-'A';
+          ch2 += 'a' - 'A';
         }
         if (ch1 != ch2) {
           continue Loop;
@@ -246,19 +246,19 @@ public final class Strings {
    */
   @SuppressWarnings("AssignmentToForLoopParameter")
   public static int countOccurrences(byte[] buff, String word) {
-    int wordlen=word.length();
-    int end=buff.length-wordlen;
-    int count=0;
+    int wordlen = word.length();
+    int end = buff.length - wordlen;
+    int count = 0;
     Loop:
-    for (int c=0;c <= end;c++) {
-      for (int d=0;d<wordlen;d++) {
-        char ch1=(char)buff[c+d];
+    for (int c = 0; c <= end; c++) {
+      for (int d = 0; d < wordlen; d++) {
+        char ch1 = (char) buff[c + d];
         if (ch1 <= 'Z' && ch1 >= 'A') {
-          ch1+='a'-'A';
+          ch1 += 'a' - 'A';
         }
-        char ch2=word.charAt(d);
+        char ch2 = word.charAt(d);
         if (ch2 <= 'Z' && ch2 >= 'A') {
-          ch2+='a'-'A';
+          ch2 += 'a' - 'A';
         }
         if (ch1 != ch2) {
           continue Loop;
@@ -275,19 +275,19 @@ public final class Strings {
    */
   @SuppressWarnings("AssignmentToForLoopParameter")
   public static int countOccurrences(String line, String word) {
-    int wordlen=word.length();
-    int end=line.length()-wordlen;
-    int count=0;
+    int wordlen = word.length();
+    int end = line.length() - wordlen;
+    int count = 0;
     Loop:
-    for (int c=0;c <= end;c++) {
-      for (int d=0;d<wordlen;d++) {
-        char ch1=line.charAt(c+d);
+    for (int c = 0; c <= end; c++) {
+      for (int d = 0; d < wordlen; d++) {
+        char ch1 = line.charAt(c + d);
         if (ch1 <= 'Z' && ch1 >= 'A') {
-          ch1+='a'-'A';
+          ch1 += 'a' - 'A';
         }
-        char ch2=word.charAt(d);
+        char ch2 = word.charAt(d);
         if (ch2 <= 'Z' && ch2 >= 'A') {
-          ch2+='a'-'A';
+          ch2 += 'a' - 'A';
         }
         if (ch1 != ch2) {
           continue Loop;
@@ -308,11 +308,11 @@ public final class Strings {
 
     long days = time / 86400000;
     time -= days * 86400000;
-    int hours = (int)(time / 3600000);
+    int hours = (int) (time / 3600000);
     time -= hours * 3600000;
-    int minutes = (int)(time / 60000);
+    int minutes = (int) (time / 60000);
     time -= minutes * 60000;
-    int seconds = (int)(time / 1000);
+    int seconds = (int) (time / 1000);
     time -= seconds * 1000;
     if (days == 0) {
       if (hours == 0) {
@@ -367,11 +367,11 @@ public final class Strings {
 
     long days = time / 86400000;
     time -= days * 86400000;
-    int hours = (int)(time / 3600000);
+    int hours = (int) (time / 3600000);
     time -= hours * 3600000;
-    int minutes = (int)(time / 60000);
+    int minutes = (int) (time / 60000);
     time -= minutes * 60000;
-    int seconds = (int)(time / 1000);
+    int seconds = (int) (time / 1000);
     time -= seconds * 1000;
 
     if (days > 0) {
@@ -480,7 +480,7 @@ public final class Strings {
       lastpos = pos + 1;
       pos = string.indexOf(ch, lastpos);
     } while (pos != -1);
-    if (lastpos<len) {
+    if (lastpos < len) {
       sb.append(string, lastpos, len);
     }
     return sb.toString();
@@ -504,7 +504,7 @@ public final class Strings {
       lastpos = pos + findLen;
       pos = string.indexOf(find, lastpos);
     } while (pos != -1);
-    if (lastpos<len) {
+    if (lastpos < len) {
       sb.append(string, lastpos, len);
     }
     return sb.toString();
@@ -526,7 +526,7 @@ public final class Strings {
         pos = string.indexOf(find, lastpos);
       } while (pos != -1);
       int len = string.length();
-      if (lastpos<len) {
+      if (lastpos < len) {
         out.append(string, lastpos, len);
       }
     }
@@ -549,7 +549,7 @@ public final class Strings {
         pos = string.indexOf(find, lastpos);
       } while (pos != -1);
       int len = string.length();
-      if (lastpos<len) {
+      if (lastpos < len) {
         out.append(string, lastpos, len);
       }
     }
@@ -574,7 +574,7 @@ public final class Strings {
           pos = string.indexOf(find, lastpos);
         } while (pos != -1);
         int len = string.length();
-        if (lastpos<len) {
+        if (lastpos < len) {
           encoder.append(string, lastpos, len, out);
         }
       }
@@ -601,7 +601,7 @@ public final class Strings {
           pos = string.indexOf(find, lastpos);
         } while (pos != -1);
         int len = string.length();
-        if (lastpos<len) {
+        if (lastpos < len) {
           encoder.append(string, lastpos, len, out);
         }
       }
@@ -613,12 +613,12 @@ public final class Strings {
    */
   public static void replace(StringBuffer sb, String find, String replacement) {
     int pos = 0;
-    while (pos<sb.length()) {
+    while (pos < sb.length()) {
       pos = sb.indexOf(find, pos);
       if (pos == -1) {
         break;
       }
-      sb.replace(pos, pos+find.length(), replacement);
+      sb.replace(pos, pos + find.length(), replacement);
       pos += replacement.length();
     }
   }
@@ -628,12 +628,12 @@ public final class Strings {
    */
   public static void replace(StringBuilder sb, String find, String replacement) {
     int pos = 0;
-    while (pos<sb.length()) {
+    while (pos < sb.length()) {
       pos = sb.indexOf(find, pos);
       if (pos == -1) {
         break;
       }
-      sb.replace(pos, pos+find.length(), replacement);
+      sb.replace(pos, pos + find.length(), replacement);
       pos += replacement.length();
     }
   }
@@ -681,16 +681,16 @@ public final class Strings {
       // Skip past blank space
       int cp;
       while (
-        pos < len
-        && isWhitespace(cp = line.codePointAt(pos))
+          pos < len
+              && isWhitespace(cp = line.codePointAt(pos))
       ) {
         pos += Character.charCount(cp);
       }
       int start = pos;
       // Skip to the next blank space
       while (
-        pos < len
-        && !isWhitespace(cp = line.codePointAt(pos))
+          pos < len
+              && !isWhitespace(cp = line.codePointAt(pos))
       ) {
         pos += Character.charCount(cp);
       }
@@ -707,21 +707,21 @@ public final class Strings {
       // Skip past blank space
       int cp;
       while (
-        pos < len
-        && isWhitespace(cp = line.codePointAt(pos))
+          pos < len
+              && isWhitespace(cp = line.codePointAt(pos))
       ) {
         pos += Character.charCount(cp);
       }
       int start = pos;
       // Skip to the next blank space
       while (
-        pos < len
-        && !isWhitespace(cp = line.codePointAt(pos))
+          pos < len
+              && !isWhitespace(cp = line.codePointAt(pos))
       ) {
         pos += Character.charCount(cp);
       }
-      if (pos>start) {
-        words[wordPos++]=line.substring(start, pos);
+      if (pos > start) {
+        words[wordPos++] = line.substring(start, pos);
       }
     }
 
@@ -744,20 +744,20 @@ public final class Strings {
       // Skip past blank space
       int cp;
       while (
-        pos < len
-        && isWhitespace(cp = line.codePointAt(pos))
+          pos < len
+              && isWhitespace(cp = line.codePointAt(pos))
       ) {
         pos += Character.charCount(cp);
       }
       int start = pos;
       // Skip to the next blank space
       while (
-        pos < len
-        && !isWhitespace(cp = line.codePointAt(pos))
+          pos < len
+              && !isWhitespace(cp = line.codePointAt(pos))
       ) {
         pos += Character.charCount(cp);
       }
-      if (pos>start) {
+      if (pos > start) {
         wordCount++;
       }
     }
@@ -773,16 +773,16 @@ public final class Strings {
       // Skip past blank space
       int cp;
       while (
-        pos < len
-        && isWhitespace(cp = line.codePointAt(pos))
+          pos < len
+              && isWhitespace(cp = line.codePointAt(pos))
       ) {
         pos += Character.charCount(cp);
       }
       int start = pos;
       // Skip to the next blank space
       while (
-        pos < len
-        && !isWhitespace(cp = line.codePointAt(pos))
+          pos < len
+              && !isWhitespace(cp = line.codePointAt(pos))
       ) {
         pos += Character.charCount(cp);
       }
@@ -811,16 +811,16 @@ public final class Strings {
       // Skip past blank space
       int cp;
       while (
-        pos < len
-        && isWhitespace(cp = line.codePointAt(pos))
+          pos < len
+              && isWhitespace(cp = line.codePointAt(pos))
       ) {
         pos += Character.charCount(cp);
       }
       int start = pos;
       // Skip to the next blank space
       while (
-        pos < len
-        && !isWhitespace(cp = line.codePointAt(pos))
+          pos < len
+              && !isWhitespace(cp = line.codePointAt(pos))
       ) {
         pos += Character.charCount(cp);
       }
@@ -840,16 +840,16 @@ public final class Strings {
       // Skip past blank space
       int cp;
       while (
-        pos < len
-        && isWhitespace(cp = line.codePointAt(pos))
+          pos < len
+              && isWhitespace(cp = line.codePointAt(pos))
       ) {
         pos += Character.charCount(cp);
       }
       int start = pos;
       // Skip to the next blank space
       while (
-        pos < len
-        && !isWhitespace(cp = line.codePointAt(pos))
+          pos < len
+              && !isWhitespace(cp = line.codePointAt(pos))
       ) {
         pos += Character.charCount(cp);
       }
@@ -917,7 +917,7 @@ public final class Strings {
       pos++;
     }
     // If ending in a delimeter, add the empty string
-    if (end>begin && line.charAt(end-1) == delim) {
+    if (end > begin && line.charAt(end - 1) == delim) {
       words.add("");
     }
     return words;
@@ -965,20 +965,20 @@ public final class Strings {
       // Skip past blank space
       int cp;
       while (
-        pos < len
-        && (
-          (cp = line.codePointAt(pos)) == ','
-          || isWhitespace(cp)
-        )
+          pos < len
+              && (
+              (cp = line.codePointAt(pos)) == ','
+                  || isWhitespace(cp)
+          )
       ) {
         pos += Character.charCount(cp);
       }
       int start = pos;
       // Skip to the next blank space
       while (
-        pos < len
-        && (cp = line.codePointAt(pos)) != ','
-        && !isWhitespace(cp)
+          pos < len
+              && (cp = line.codePointAt(pos)) != ','
+              && !isWhitespace(cp)
       ) {
         pos += Character.charCount(cp);
       }
@@ -1023,7 +1023,7 @@ public final class Strings {
         useCR = true;
       }
       int linelength = pos == -1 ? string.length() : pos + 1;
-      if ((pos == -1?linelength-1:pos) <= width) {
+      if ((pos == -1 ? linelength - 1 : pos) <= width) {
         // No wrap required
         out.append(string, 0, linelength);
         string = string.substring(linelength);
@@ -1119,13 +1119,19 @@ public final class Strings {
       case '7': return 0x07;
       case '8': return 0x08;
       case '9': return 0x09;
-      case 'a': case 'A': return 0x0a;
-      case 'b': case 'B': return 0x0b;
-      case 'c': case 'C': return 0x0c;
-      case 'd': case 'D': return 0x0d;
-      case 'e': case 'E': return 0x0e;
-      case 'f': case 'F': return 0x0f;
-      default: throw new IllegalArgumentException("Invalid hex character: "+ch);
+      case 'a':
+      case 'A': return 0x0a;
+      case 'b':
+      case 'B': return 0x0b;
+      case 'c':
+      case 'C': return 0x0c;
+      case 'd':
+      case 'D': return 0x0d;
+      case 'e':
+      case 'E': return 0x0e;
+      case 'f':
+      case 'F': return 0x0f;
+      default: throw new IllegalArgumentException("Invalid hex character: " + ch);
     }
   }
 
@@ -1177,8 +1183,8 @@ public final class Strings {
     while (hexPos < hexLen) {
       int h = getHex(hex[hexPos++]);
       int l = getHex(hex[hexPos++]);
-      result[resultPos++] = (byte)(
-        (h<<4) | l
+      result[resultPos++] = (byte) (
+          (h << 4) | l
       );
     }
     return result;
@@ -1227,14 +1233,14 @@ public final class Strings {
       throw new IllegalArgumentException("Too few characters: " + hexLen);
     }
     return
-      (getHex(hex[0]) << 28)
-      | (getHex(hex[1]) << 24)
-      | (getHex(hex[2]) << 20)
-      | (getHex(hex[3]) << 16)
-      | (getHex(hex[4]) << 12)
-      | (getHex(hex[5]) << 8)
-      | (getHex(hex[6]) << 4)
-      | (getHex(hex[7]))
+        (getHex(hex[0]) << 28)
+            | (getHex(hex[1]) << 24)
+            | (getHex(hex[2]) << 20)
+            | (getHex(hex[3]) << 16)
+            | (getHex(hex[4]) << 12)
+            | (getHex(hex[5]) << 8)
+            | (getHex(hex[6]) << 4)
+            | (getHex(hex[7]))
     ;
   }
 
@@ -1245,8 +1251,8 @@ public final class Strings {
    */
   @Deprecated
   public static void convertToHex(long value, Appendable out) throws IOException {
-    convertToHex((int)(value >>> 32), out);
-    convertToHex((int)value, out);
+    convertToHex((int) (value >>> 32), out);
+    convertToHex((int) value, out);
   }
 
   /**
@@ -1275,24 +1281,24 @@ public final class Strings {
       throw new IllegalArgumentException("Too few characters: " + hexLen);
     }
     int h = (getHex(hex[0]) << 28)
-      | (getHex(hex[1]) << 24)
-      | (getHex(hex[2]) << 20)
-      | (getHex(hex[3]) << 16)
-      | (getHex(hex[4]) << 12)
-      | (getHex(hex[5]) << 8)
-      | (getHex(hex[6]) << 4)
-      | (getHex(hex[7]))
+        | (getHex(hex[1]) << 24)
+        | (getHex(hex[2]) << 20)
+        | (getHex(hex[3]) << 16)
+        | (getHex(hex[4]) << 12)
+        | (getHex(hex[5]) << 8)
+        | (getHex(hex[6]) << 4)
+        | (getHex(hex[7]))
     ;
     int l = (getHex(hex[8]) << 28)
-      | (getHex(hex[9]) << 24)
-      | (getHex(hex[10]) << 20)
-      | (getHex(hex[11]) << 16)
-      | (getHex(hex[12]) << 12)
-      | (getHex(hex[13]) << 8)
-      | (getHex(hex[14]) << 4)
-      | (getHex(hex[15]))
+        | (getHex(hex[9]) << 24)
+        | (getHex(hex[10]) << 20)
+        | (getHex(hex[11]) << 16)
+        | (getHex(hex[12]) << 12)
+        | (getHex(hex[13]) << 8)
+        | (getHex(hex[14]) << 4)
+        | (getHex(hex[15]))
     ;
-    return (((long)h) << Integer.SIZE) | (l & 0xffffffffL);
+    return (((long) h) << Integer.SIZE) | (l & 0xffffffffL);
   }
 
   /**
@@ -1324,7 +1330,7 @@ public final class Strings {
       return "1 byte";
     }
     if (size < 1024) {
-      return new StringBuilder().append((int)size).append(" bytes").toString();
+      return new StringBuilder().append((int) size).append(" bytes").toString();
     }
     String unitName;
     long unitSize;
@@ -1347,7 +1353,7 @@ public final class Strings {
     }
     long whole = size / unitSize;
     if (whole < 100) {
-      int fraction = (int)(((size % unitSize) * 10) / unitSize);
+      int fraction = (int) (((size % unitSize) * 10) / unitSize);
       return sb.append(whole).append('.').append(fraction).append(unitName).toString();
     } else {
       return sb.append(whole).append(unitName).toString();
@@ -1380,7 +1386,7 @@ public final class Strings {
       bitRate = (bitRate == Long.MIN_VALUE) ? Long.MAX_VALUE : -bitRate;
     }
     if (bitRate < 1000) {
-      return Integer.toString((int)bitRate);
+      return Integer.toString((int) bitRate);
     }
     String unitName;
     long unitSize;
@@ -1403,7 +1409,7 @@ public final class Strings {
     }
     long whole = bitRate / unitSize;
     if (whole < 100) {
-      int fraction = (int)(((bitRate % unitSize) * 10) / unitSize);
+      int fraction = (int) (((bitRate % unitSize) * 10) / unitSize);
       return sb.append(whole).append('.').append(fraction).append(unitName).toString();
     } else {
       return sb.append(whole).append(unitName).toString();
@@ -1428,14 +1434,14 @@ public final class Strings {
    */
   @SuppressWarnings("AssignmentToForLoopParameter")
   public static int indexOf(String source, String target, int fromIndex, int toIndex) {
-    if (fromIndex>toIndex) {
-      throw new IllegalArgumentException("fromIndex>toIndex: fromIndex="+fromIndex+", toIndex="+toIndex);
+    if (fromIndex > toIndex) {
+      throw new IllegalArgumentException("fromIndex>toIndex: fromIndex=" + fromIndex + ", toIndex=" + toIndex);
     }
 
     int sourceCount = source.length();
 
     // This line makes it different than regular String indexOf method.
-    if (toIndex<sourceCount) {
+    if (toIndex < sourceCount) {
       sourceCount = toIndex;
     }
 
@@ -1491,7 +1497,7 @@ public final class Strings {
     if (pos == -1) {
       pos = value.length();
     }
-    if (pos>maxCharacters) {
+    if (pos > maxCharacters) {
       pos = maxCharacters;
     }
     return pos == value.length() ? value : (value.substring(0, pos) + '\u2026');
@@ -1506,8 +1512,7 @@ public final class Strings {
 
   /**
    * Determines if a character is whitespace.
-   * A character is considered whitespace if it is either <code>&lt;= '\u0020'</code>
-   * (for compatibility with {@link String#trim()})
+   * A character is considered whitespace if it is either <code>&lt;= ' '</code> (for compatibility with {@link String#trim()})
    * or matches {@link Character#isWhitespace(char)}.
    */
   public static boolean isWhitespace(char ch) {
@@ -1516,8 +1521,7 @@ public final class Strings {
 
   /**
    * Determines if a code point is whitespace.
-   * A code point is considered whitespace if it is either <code>&lt;= '\u0020'</code>
-   * (for compatibility with {@link String#trim()})
+   * A code point is considered whitespace if it is either <code>&lt;= ' '</code> (for compatibility with {@link String#trim()})
    * or matches {@link Character#isWhitespace(int)}.
    */
   public static boolean isWhitespace(int codePoint) {
@@ -1555,8 +1559,8 @@ public final class Strings {
     assert st  <= len;
     return
         (st == 0 && len == valueLen) ? value // Unchanged
-      : (st == len) ? ""                     // Now empty
-      : value.substring(st, len);            // Trimmed
+            : (st == len) ? ""                     // Now empty
+            : value.substring(st, len);            // Trimmed
   }
 
   /**
@@ -1590,7 +1594,7 @@ public final class Strings {
     assert st  <= len;
     return
         (st == 0 && len == valueLen) ? value // Unchanged
-      : value.subSequence(st, len);          // Trimmed
+            : value.subSequence(st, len);          // Trimmed
   }
 
   /**

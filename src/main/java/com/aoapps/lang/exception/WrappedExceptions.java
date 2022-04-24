@@ -89,7 +89,7 @@ public class WrappedExceptions extends RuntimeException {
 
   static {
     Throwables.registerSurrogateFactory(WrappedExceptions.class, (template, cause) ->
-      new WrappedExceptions(template.getMessage(), cause)
+        new WrappedExceptions(template.getMessage(), cause)
     );
   }
 }

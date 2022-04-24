@@ -51,7 +51,7 @@ public final class ComparatorUtils {
   /**
    * Compares two shorts.
    *
-   * @deprecated  use {@link Short#compare(short,short)} as of Java 1.7.
+   * @deprecated  use {@link Short#compare(short, short)} as of Java 1.7.
    */
   @Deprecated
   public static int compare(short s1, short s2) {
@@ -61,7 +61,7 @@ public final class ComparatorUtils {
   /**
    * Compares two booleans.
    *
-   * @deprecated  use {@link java.lang.Boolean#compare(boolean,boolean)} as of Java 1.7.
+   * @deprecated  use {@link java.lang.Boolean#compare(boolean, boolean)} as of Java 1.7.
    */
   @Deprecated
   public static int compare(boolean b1, boolean b2) {
@@ -71,7 +71,7 @@ public final class ComparatorUtils {
   /**
    * Compares two longs.
    *
-   * @deprecated  use {@link java.lang.Long#compare(long,long)} as of Java 1.7.
+   * @deprecated  use {@link java.lang.Long#compare(long, long)} as of Java 1.7.
    */
   @Deprecated
   public static int compare(long l1, long l2) {

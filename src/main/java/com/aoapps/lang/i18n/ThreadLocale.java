@@ -183,6 +183,6 @@ public final class ThreadLocale {
    */
   @Deprecated
   public static <V> V set(Locale locale, Supplier<V> supplier) {
-    return set(locale, (java.util.function.Supplier<V>)supplier);
+    return set(locale, (java.util.function.Supplier<V>) supplier);
   }
 }

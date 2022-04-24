@@ -152,8 +152,8 @@ public final class XmlUtils {
       public boolean hasNext() {
         // Skip past any non-elements
         while (
-          index < nodeList.getLength()
-          && !(nodeList.item(index) instanceof Element)
+            index < nodeList.getLength()
+                && !(nodeList.item(index) instanceof Element)
         ) {
           index++;
         }
@@ -163,7 +163,7 @@ public final class XmlUtils {
       @Override
       public Element next() throws NoSuchElementException {
         if (hasNext()) {
-          return (Element)nodeList.item(index++);
+          return (Element) nodeList.item(index++);
         } else {
           throw new NoSuchElementException();
         }
@@ -187,7 +187,7 @@ public final class XmlUtils {
         while (index < children.getLength()) {
           Node child = children.item(index);
           if (child instanceof Element) {
-            Element childElem = (Element)child;
+            Element childElem = (Element) child;
             if (childTagName.equals(childElem.getTagName())) {
               break;
             }
@@ -200,7 +200,7 @@ public final class XmlUtils {
       @Override
       public Element next() throws NoSuchElementException {
         if (hasNext()) {
-          return (Element)children.item(index++);
+          return (Element) children.item(index++);
         } else {
           throw new NoSuchElementException();
         }
@@ -218,10 +218,10 @@ public final class XmlUtils {
     Element matched = null;
     {
       NodeList children = element.getChildNodes();
-      for (int index=0, len=children.getLength(); index<len; index++) {
+      for (int index = 0, len = children.getLength(); index < len; index++) {
         Node child = children.item(index);
         if (child instanceof Element) {
-          Element childElem = (Element)child;
+          Element childElem = (Element) child;
           if (childTagName.equals(childElem.getTagName())) {
             if (matched != null) {
               throw new IllegalStateException("More than one child found: " + childTagName);
@@ -252,7 +252,7 @@ public final class XmlUtils {
    */
   @Deprecated
   public static String toString(Document document) throws TransformerException {
-    return toString((Node)document);
+    return toString((Node) document);
   }
 
   public static String toString(Node node) throws TransformerException {
@@ -275,8 +275,8 @@ public final class XmlUtils {
     StringWriter writer = new StringWriter();
     try {
       transformer.transform(
-        new DOMSource(node),
-        new StreamResult(writer)
+          new DOMSource(node),
+          new StreamResult(writer)
       );
     } finally {
       try {
@@ -293,22 +293,22 @@ public final class XmlUtils {
    */
   public static boolean isNameStartChar(int codePoint) {
     return
-      codePoint == ':'
-      || (codePoint >= 'A' && codePoint <= 'Z')
-      || codePoint == '_'
-      || (codePoint >= 'a' && codePoint <= 'z')
-      || (codePoint >= 0xC0 && codePoint <= 0xD6)
-      || (codePoint >= 0xD8 && codePoint <= 0xF6)
-      || (codePoint >= 0xF8 && codePoint <= 0x2FF)
-      || (codePoint >= 0x370 && codePoint <= 0x37D)
-      || (codePoint >= 0x37F && codePoint <= 0x1FFF)
-      || (codePoint >= 0x200C && codePoint <= 0x200D)
-      || (codePoint >= 0x2070 && codePoint <= 0x218F)
-      || (codePoint >= 0x2C00 && codePoint <= 0x2FEF)
-      || (codePoint >= 0x3001 && codePoint <= 0xD7FF)
-      || (codePoint >= 0xF900 && codePoint <= 0xFDCF)
-      || (codePoint >= 0xFDF0 && codePoint <= 0xFFFD)
-      || (codePoint >= 0x10000 && codePoint <= 0xEFFFF);
+        codePoint == ':'
+            || (codePoint >= 'A' && codePoint <= 'Z')
+            || codePoint == '_'
+            || (codePoint >= 'a' && codePoint <= 'z')
+            || (codePoint >= 0xC0 && codePoint <= 0xD6)
+            || (codePoint >= 0xD8 && codePoint <= 0xF6)
+            || (codePoint >= 0xF8 && codePoint <= 0x2FF)
+            || (codePoint >= 0x370 && codePoint <= 0x37D)
+            || (codePoint >= 0x37F && codePoint <= 0x1FFF)
+            || (codePoint >= 0x200C && codePoint <= 0x200D)
+            || (codePoint >= 0x2070 && codePoint <= 0x218F)
+            || (codePoint >= 0x2C00 && codePoint <= 0x2FEF)
+            || (codePoint >= 0x3001 && codePoint <= 0xD7FF)
+            || (codePoint >= 0xF900 && codePoint <= 0xFDCF)
+            || (codePoint >= 0xFDF0 && codePoint <= 0xFFFD)
+            || (codePoint >= 0x10000 && codePoint <= 0xEFFFF);
   }
 
   /**
@@ -316,13 +316,13 @@ public final class XmlUtils {
    */
   public static boolean isNameChar(int codePoint) {
     return
-      isNameStartChar(codePoint)
-      || codePoint == '-'
-      || codePoint == '.'
-      || (codePoint >= '0' && codePoint <= '9')
-      || codePoint == 0xB7
-      || (codePoint >= 0x0300 && codePoint <= 0x036F)
-      || (codePoint >= 0x203F && codePoint <= 0x2040);
+        isNameStartChar(codePoint)
+            || codePoint == '-'
+            || codePoint == '.'
+            || (codePoint >= '0' && codePoint <= '9')
+            || codePoint == 0xB7
+            || (codePoint >= 0x0300 && codePoint <= 0x036F)
+            || (codePoint >= 0x203F && codePoint <= 0x2040);
   }
 
   /**
@@ -389,29 +389,29 @@ public final class XmlUtils {
    */
   public static boolean isHyphen(int codePoint) {
     return
-      codePoint == 0x002D
-      || codePoint == 0x007E
-      // Not in PDF: || codePoint == 0x00AD
-      || codePoint == 0x058A
-      || codePoint == 0x05BE
-      || codePoint == 0x1400
-      || codePoint == 0x1806
-      || (codePoint >= 0x2010 && codePoint <= 0x2015)
-      || codePoint == 0x2053
-      || codePoint == 0x207B
-      || codePoint == 0x208B
-      || codePoint == 0x2212
-      || codePoint == 0x2E17
-      // Not in PDF: || codePoint == 0x2E3A
-      // Not in PDF: || codePoint == 0x2E3B
-      || codePoint == 0x301C
-      || codePoint == 0x3030
-      || codePoint == 0x30A0
-      || codePoint == 0xFE31
-      || codePoint == 0xFE32
-      || codePoint == 0xFE58
-      || codePoint == 0xFE63
-      || codePoint == 0xFF0D;
+        codePoint == 0x002D
+            || codePoint == 0x007E
+            // Not in PDF: || codePoint == 0x00AD
+            || codePoint == 0x058A
+            || codePoint == 0x05BE
+            || codePoint == 0x1400
+            || codePoint == 0x1806
+            || (codePoint >= 0x2010 && codePoint <= 0x2015)
+            || codePoint == 0x2053
+            || codePoint == 0x207B
+            || codePoint == 0x208B
+            || codePoint == 0x2212
+            || codePoint == 0x2E17
+            // Not in PDF: || codePoint == 0x2E3A
+            // Not in PDF: || codePoint == 0x2E3B
+            || codePoint == 0x301C
+            || codePoint == 0x3030
+            || codePoint == 0x30A0
+            || codePoint == 0xFE31
+            || codePoint == 0xFE32
+            || codePoint == 0xFE58
+            || codePoint == 0xFE63
+            || codePoint == 0xFF0D;
   }
 
   /**
@@ -453,17 +453,17 @@ public final class XmlUtils {
         int codePoint = template.codePointAt(pos);
         pos += Character.charCount(codePoint);
         if (
-          isNameChar(codePoint)
-          // Fall-through to hyphen coalesce
-          && codePoint != '-'
+            isNameChar(codePoint)
+                // Fall-through to hyphen coalesce
+                && codePoint != '-'
         ) {
           id.appendCodePoint(codePoint);
           lastCodePoint = codePoint;
         } else if (
-          // Convert space to '-'
-          Character.isWhitespace(codePoint)
-          // Convert other types of hyphens
-          || isHyphen(codePoint)
+            // Convert space to '-'
+            Character.isWhitespace(codePoint)
+                // Convert other types of hyphens
+                || isHyphen(codePoint)
         ) {
           if (!isHyphen(lastCodePoint)) {
             id.append('-');

@@ -64,11 +64,11 @@ public final class Locales {
         if (!(o instanceof CacheKey)) {
           return false;
         }
-        CacheKey other = (CacheKey)o;
+        CacheKey other = (CacheKey) o;
         return
-          language.equals(other.language)
-          && country.equals(other.country)
-          && variant.equals(other.variant)
+            language.equals(other.language)
+                && country.equals(other.country)
+                && variant.equals(other.variant)
         ;
       }
 
@@ -93,9 +93,9 @@ public final class Locales {
       Locale locale = locales.get(key);
       if (locale == null) {
         locale = new Locale(
-          language,
-          country,
-          variant
+            language,
+            country,
+            variant
         );
         Locale existing = locales.putIfAbsent(key, locale);
         if (existing != null) {
@@ -110,8 +110,8 @@ public final class Locales {
       for (Locale locale : Locale.getAvailableLocales()) {
         // Ignore locales with script or extensions for preload, since the rest of this API is unaware of them
         if (
-          locale.getScript().isEmpty()
-          && locale.getExtensionKeys().isEmpty()
+            locale.getScript().isEmpty()
+                && locale.getExtensionKeys().isEmpty()
         ) {
           //System.out.println("preload: " + locale.toString());
           //System.out.println("preload.language     : " + locale.getLanguage());
@@ -120,12 +120,12 @@ public final class Locales {
           //System.out.println("preload.script       : " + locale.getScript());
           //System.out.println("preload.extensionKeys: " + locale.getExtensionKeys());
           locales.put(
-            new CacheKey(
-              locale.getLanguage(),
-              locale.getCountry(),
-              locale.getVariant()
-            ),
-            locale
+              new CacheKey(
+                  locale.getLanguage(),
+                  locale.getCountry(),
+                  locale.getVariant()
+              ),
+              locale
           );
         }
       }
@@ -174,18 +174,18 @@ public final class Locales {
     if (pos == -1) {
       return getCachedLocale(locale, "", "");
     } else {
-      int pos2 = indexOfSeparator(locale, pos+1);
+      int pos2 = indexOfSeparator(locale, pos + 1);
       if (pos2 == -1) {
         return getCachedLocale(
-          locale.substring(0, pos).toLowerCase(Locale.ROOT),
-          locale.substring(pos + 1).toUpperCase(Locale.ROOT),
-          ""
+            locale.substring(0, pos).toLowerCase(Locale.ROOT),
+            locale.substring(pos + 1).toUpperCase(Locale.ROOT),
+            ""
         );
       } else {
         return getCachedLocale(
-          locale.substring(0, pos).toLowerCase(Locale.ROOT),
-          locale.substring(pos + 1, pos2).toUpperCase(Locale.ROOT),
-          locale.substring(pos2 + 1)
+            locale.substring(0, pos).toLowerCase(Locale.ROOT),
+            locale.substring(pos + 1, pos2).toUpperCase(Locale.ROOT),
+            locale.substring(pos2 + 1)
         );
       }
     }
@@ -197,13 +197,13 @@ public final class Locales {
   public static boolean isRightToLeft(Locale locale) {
     String language = locale.getLanguage();
     return
-      // arabic
-      "ar".equals(language)
-      // hebrew
-      || "iw".equals(language) // Java <= 16
-      || "he".equals(language) // Java >= 17
-      // persian
-      || "fa".equals(language)
+        // arabic
+        "ar".equals(language)
+            // hebrew
+            || "iw".equals(language) // Java <= 16
+            || "he".equals(language) // Java >= 17
+            // persian
+            || "fa".equals(language)
     ;
   }
 

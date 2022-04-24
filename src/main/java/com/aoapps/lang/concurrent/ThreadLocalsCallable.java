@@ -62,7 +62,7 @@ public class ThreadLocalsCallable<T> implements Callable<T> {
         Object newValue = newValues[i];
         if (oldValues[i] != newValue) {
           @SuppressWarnings("unchecked")
-          ThreadLocal<Object> tl = (ThreadLocal<Object>)tls[i];
+          ThreadLocal<Object> tl = (ThreadLocal<Object>) tls[i];
           tl.set(newValue);
         }
       }
@@ -72,7 +72,7 @@ public class ThreadLocalsCallable<T> implements Callable<T> {
         Object oldValue = oldValues[i];
         if (oldValue != newValues[i]) {
           @SuppressWarnings("unchecked")
-          ThreadLocal<Object> tl = (ThreadLocal<Object>)tls[i];
+          ThreadLocal<Object> tl = (ThreadLocal<Object>) tls[i];
           if (oldValue == null) {
             tl.remove();
           } else {

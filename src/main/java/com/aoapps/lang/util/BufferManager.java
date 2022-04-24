@@ -82,14 +82,14 @@ public final class BufferManager {
    * Various statistics
    */
   private static final AtomicLong
-    bytesCreates = new AtomicLong(),
-    bytesUses = new AtomicLong(),
-    bytesZeroFills = new AtomicLong(),
-    bytesCollected = new AtomicLong(),
-    charsCreates = new AtomicLong(),
-    charsUses = new AtomicLong(),
-    charsZeroFills = new AtomicLong(),
-    charsCollected = new AtomicLong()
+      bytesCreates = new AtomicLong(),
+      bytesUses = new AtomicLong(),
+      bytesZeroFills = new AtomicLong(),
+      bytesCollected = new AtomicLong(),
+      charsCreates = new AtomicLong(),
+      charsUses = new AtomicLong(),
+      charsZeroFills = new AtomicLong(),
+      charsCollected = new AtomicLong()
   ;
 
   /**
@@ -165,10 +165,11 @@ public final class BufferManager {
     assert !inQueue(myBytes, buffer); // Error if already in the buffer list
     if (zeroFill) {
       bytesZeroFills.getAndIncrement();
-      Arrays.fill(buffer, 0, BUFFER_SIZE, (byte)0);
+      Arrays.fill(buffer, 0, BUFFER_SIZE, (byte) 0);
     }
     myBytes.add(new SoftReference<>(buffer));
   }
+
   private static boolean inQueue(Iterable<SoftReference<byte[]>> myBytes, byte[] buffer) {
     for (SoftReference<byte[]> inQueue : myBytes) {
       if (inQueue.get() == buffer) {
@@ -201,10 +202,11 @@ public final class BufferManager {
     assert !inQueue(myChars, buffer); // Error if already in the buffer list
     if (zeroFill) {
       charsZeroFills.getAndIncrement();
-      Arrays.fill(buffer, 0, BUFFER_SIZE, (char)0);
+      Arrays.fill(buffer, 0, BUFFER_SIZE, (char) 0);
     }
     myChars.add(new SoftReference<>(buffer));
   }
+
   private static boolean inQueue(Iterable<SoftReference<char[]>> myChars, char[] buffer) {
     for (SoftReference<char[]> inQueue : myChars) {
       if (inQueue.get() == buffer) {

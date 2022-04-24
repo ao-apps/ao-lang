@@ -40,7 +40,7 @@ public class ThreadLocalsRunnable implements Runnable {
     this.threadLocals = threadLocals;
     int len = threadLocals.length;
     Object[] vals = new Object[len];
-    for (int i=0; i<len; i++) {
+    for (int i = 0; i < len; i++) {
       vals[i] = threadLocals[i].get();
     }
     this.values = vals;
@@ -51,26 +51,26 @@ public class ThreadLocalsRunnable implements Runnable {
     ThreadLocal<?>[] tls = this.threadLocals;
     int len = tls.length;
     Object[] oldValues = new Object[len];
-    for (int i=0; i<len; i++) {
+    for (int i = 0; i < len; i++) {
       oldValues[i] = tls[i].get();
     }
     Object[] newValues = this.values;
     try {
-      for (int i=0; i<len; i++) {
+      for (int i = 0; i < len; i++) {
         Object newValue = newValues[i];
         if (oldValues[i] != newValue) {
           @SuppressWarnings("unchecked")
-          ThreadLocal<Object> tl = (ThreadLocal<Object>)tls[i];
+          ThreadLocal<Object> tl = (ThreadLocal<Object>) tls[i];
           tl.set(newValue);
         }
       }
       task.run();
     } finally {
-      for (int i=0; i<len; i++) {
+      for (int i = 0; i < len; i++) {
         Object oldValue = oldValues[i];
         if (oldValue != newValues[i]) {
           @SuppressWarnings("unchecked")
-          ThreadLocal<Object> tl = (ThreadLocal<Object>)tls[i];
+          ThreadLocal<Object> tl = (ThreadLocal<Object>) tls[i];
           if (oldValue == null) {
             tl.remove();
           } else {

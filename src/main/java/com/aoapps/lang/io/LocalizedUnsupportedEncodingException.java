@@ -51,7 +51,7 @@ public class LocalizedUnsupportedEncodingException extends UnsupportedEncodingEx
   }
 
   public LocalizedUnsupportedEncodingException(Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args));
+    super(resources.getMessage(key, (Object[]) args));
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -70,7 +70,7 @@ public class LocalizedUnsupportedEncodingException extends UnsupportedEncodingEx
 
   @SuppressWarnings("OverridableMethodCallInConstructor")
   public LocalizedUnsupportedEncodingException(Throwable cause, Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args));
+    super(resources.getMessage(key, (Object[]) args));
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -81,7 +81,7 @@ public class LocalizedUnsupportedEncodingException extends UnsupportedEncodingEx
 
   @Override
   public String getLocalizedMessage() {
-    return resources.getMessage(key, (Object[])args);
+    return resources.getMessage(key, (Object[]) args);
   }
 
   @Override
@@ -105,7 +105,7 @@ public class LocalizedUnsupportedEncodingException extends UnsupportedEncodingEx
 
   static {
     Throwables.registerSurrogateFactory(LocalizedUnsupportedEncodingException.class, (template, cause) ->
-      new LocalizedUnsupportedEncodingException(cause, template.resources, template.key, template.args)
+        new LocalizedUnsupportedEncodingException(cause, template.resources, template.key, template.args)
     );
   }
 }

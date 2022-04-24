@@ -46,11 +46,11 @@ public final class Charsets {
    */
   @Deprecated
   public static final Charset
-    US_ASCII   = StandardCharsets.US_ASCII,
-    ISO_8859_1 = StandardCharsets.ISO_8859_1,
-    UTF_8      = StandardCharsets.UTF_8,
-    UTF_16BE   = StandardCharsets.UTF_16BE,
-    UTF_16LE   = StandardCharsets.UTF_16LE,
-    UTF_16     = StandardCharsets.UTF_16
+      US_ASCII   = StandardCharsets.US_ASCII,
+      ISO_8859_1 = StandardCharsets.ISO_8859_1,
+      UTF_8      = StandardCharsets.UTF_8,
+      UTF_16BE   = StandardCharsets.UTF_16BE,
+      UTF_16LE   = StandardCharsets.UTF_16LE,
+      UTF_16     = StandardCharsets.UTF_16
   ;
 }

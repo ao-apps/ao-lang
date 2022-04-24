@@ -66,11 +66,11 @@ public final class Statistics {
     int numSamples = 0;
     for (Number sample : samples) {
       if (sample != null) {
-        double diff = sample.doubleValue()-mean;
+        double diff = sample.doubleValue() - mean;
         sum += diff * diff;
         numSamples++;
       }
     }
-    return Math.sqrt(sum/numSamples);
+    return Math.sqrt(sum / numSamples);
   }
 }

@@ -40,13 +40,13 @@ public interface IOPredicate<T> extends IOPredicateE<T, RuntimeException> {
 
   static <T> IOPredicate<T> isEqual(Object targetRef) {
     return (null == targetRef)
-      ? Objects::isNull
-      : targetRef::equals;
+        ? Objects::isNull
+        : targetRef::equals;
   }
 
   @SuppressWarnings("unchecked")
   static <T> IOPredicate<T> not(IOPredicate<? super T> target) throws IOException {
     Objects.requireNonNull(target);
-    return (IOPredicate<T>)target.negate();
+    return (IOPredicate<T>) target.negate();
   }
 }

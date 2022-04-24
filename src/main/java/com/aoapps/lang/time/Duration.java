@@ -103,14 +103,14 @@ public class Duration implements Comparable<Duration>, Serializable {
     if (!(obj instanceof Duration)) {
       return false;
     }
-    return equals((Duration)obj);
+    return equals((Duration) obj);
   }
 
   public boolean equals(Duration other) {
     return
-      other != null
-      && seconds == other.seconds
-      && nano == other.nano
+        other != null
+            && seconds == other.seconds
+            && nano == other.nano
     ;
   }
 
@@ -174,8 +174,8 @@ public class Duration implements Comparable<Duration>, Serializable {
    */
   public long toNanos() throws ArithmeticException {
     if (
-      seconds < MINIMUM_NANO_DURATION_SECONDS
-      || seconds > MAXIMUM_NANO_DURATION_SECONDS
+        seconds < MINIMUM_NANO_DURATION_SECONDS
+            || seconds > MAXIMUM_NANO_DURATION_SECONDS
     ) {
       throw new ArithmeticException("seconds out of range " + MINIMUM_NANO_DURATION_SECONDS + "-" + MAXIMUM_NANO_DURATION_SECONDS);
     }

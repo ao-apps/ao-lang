@@ -99,7 +99,7 @@ public interface Writable  {
   default void appendTo(Appendable out) throws IOException {
     assert out != null;
     if (out instanceof Writer) {
-      writeTo((Writer)out);
+      writeTo((Writer) out);
     } else if (isFastToString()) {
       out.append(toString());
     } else {
@@ -115,15 +115,15 @@ public interface Writable  {
   default void appendTo(Appendable out, long start, long end) throws IOException {
     assert out != null;
     if (out instanceof Writer) {
-      writeTo((Writer)out, start, end - start);
+      writeTo((Writer) out, start, end - start);
     } else if (
-         start >= Integer.MIN_VALUE
-      && start <= Integer.MAX_VALUE
-      && end >= Integer.MIN_VALUE
-      && end <= Integer.MAX_VALUE
-      && isFastToString()
+        start >= Integer.MIN_VALUE
+            && start <= Integer.MAX_VALUE
+            && end >= Integer.MIN_VALUE
+            && end <= Integer.MAX_VALUE
+            && isFastToString()
     ) {
-      out.append(toString(), (int)start, (int)end);
+      out.append(toString(), (int) start, (int) end);
     } else {
       writeTo(new AppendableWriter(out), start, end - start);
     }
@@ -141,7 +141,7 @@ public interface Writable  {
     if (encoder == null) {
       appendTo(out);
     } else if (out instanceof Writer) {
-      writeTo(encoder, (Writer)out);
+      writeTo(encoder, (Writer) out);
     } else if (isFastToString()) {
       encoder.append(toString(), out);
     } else {
@@ -161,15 +161,15 @@ public interface Writable  {
     if (encoder == null) {
       appendTo(out, start, end);
     } else if (out instanceof Writer) {
-      writeTo(encoder, (Writer)out, start, end - start);
+      writeTo(encoder, (Writer) out, start, end - start);
     } else if (
-         start >= Integer.MIN_VALUE
-      && start <= Integer.MAX_VALUE
-      && end >= Integer.MIN_VALUE
-      && end <= Integer.MAX_VALUE
-      && isFastToString()
+        start >= Integer.MIN_VALUE
+            && start <= Integer.MAX_VALUE
+            && end >= Integer.MIN_VALUE
+            && end <= Integer.MAX_VALUE
+            && isFastToString()
     ) {
-      encoder.append(toString(), (int)start, (int)end, out);
+      encoder.append(toString(), (int) start, (int) end, out);
     } else {
       writeTo(encoder, new AppendableWriter(out), start, end - start);
     }

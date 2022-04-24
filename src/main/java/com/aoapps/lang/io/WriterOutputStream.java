@@ -42,7 +42,7 @@ public final class WriterOutputStream extends OutputStream implements NoClose {
    * The conversions are done in this buffer for minimal memory allocation.
    * Released on close.
    */
-  private char[] buff=BufferManager.getChars();
+  private char[] buff = BufferManager.getChars();
 
   /**
    * Create a new PrintWriter, without automatic line flushing.
@@ -50,13 +50,13 @@ public final class WriterOutputStream extends OutputStream implements NoClose {
    * @param  out        A character-output stream
    */
   public WriterOutputStream(Writer out) {
-    this.out=out;
+    this.out = out;
   }
 
   @Override
   public boolean isNoClose() {
     // Note: It is OK if close is never called, so OK to optimize away close() when wrapping a NoClose output.
-    return (out instanceof NoClose) && ((NoClose)out).isNoClose();
+    return (out instanceof NoClose) && ((NoClose) out).isNoClose();
   }
 
   @Override
@@ -65,7 +65,7 @@ public final class WriterOutputStream extends OutputStream implements NoClose {
       out.close();
       if (buff != null) {
         BufferManager.release(buff, false);
-        buff=null;
+        buff = null;
       }
     }
   }
@@ -81,14 +81,14 @@ public final class WriterOutputStream extends OutputStream implements NoClose {
       if (b == null) {
         throw new NullPointerException();
       }
-      int pos=0;
-      while (pos<len) {
-        int blockSize=len-pos;
-        if (blockSize>BufferManager.BUFFER_SIZE) {
-          blockSize=BufferManager.BUFFER_SIZE;
+      int pos = 0;
+      while (pos < len) {
+        int blockSize = len - pos;
+        if (blockSize > BufferManager.BUFFER_SIZE) {
+          blockSize = BufferManager.BUFFER_SIZE;
         }
-        for (int cpos=0;cpos<blockSize;cpos++) {
-          buff[cpos]=(char)b[off+(pos++)];
+        for (int cpos = 0; cpos < blockSize; cpos++) {
+          buff[cpos] = (char) b[off + (pos++)];
         }
         out.write(buff, 0, blockSize);
       }

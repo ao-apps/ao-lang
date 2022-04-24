@@ -48,7 +48,7 @@ public class FrozenException extends IllegalStateException {
 
   static {
     Throwables.registerSurrogateFactory(FrozenException.class, (template, cause) ->
-      new FrozenException(template.getMessage(), cause)
+        new FrozenException(template.getMessage(), cause)
     );
   }
 }

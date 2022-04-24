@@ -88,8 +88,8 @@ public final class PropertiesUtils {
       } while (name.startsWith("/"));
       ClassLoader classloader = Thread.currentThread().getContextClassLoader();
       in = (classloader != null)
-        ? classloader.getResourceAsStream(name)
-        : ClassLoader.getSystemResourceAsStream(name);
+          ? classloader.getResourceAsStream(name)
+          : ClassLoader.getSystemResourceAsStream(name);
     }
     if (in == null) {
       throw new LocalizedIOException(RESOURCES, "readProperties.resourceNotFound", resource);

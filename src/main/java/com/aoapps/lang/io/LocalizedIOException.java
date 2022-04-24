@@ -51,7 +51,7 @@ public class LocalizedIOException extends IOException implements LocalizedExcept
   }
 
   public LocalizedIOException(Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args));
+    super(resources.getMessage(key, (Object[]) args));
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -65,7 +65,7 @@ public class LocalizedIOException extends IOException implements LocalizedExcept
   }
 
   public LocalizedIOException(Throwable cause, Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args), cause);
+    super(resources.getMessage(key, (Object[]) args), cause);
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -73,7 +73,7 @@ public class LocalizedIOException extends IOException implements LocalizedExcept
 
   @Override
   public String getLocalizedMessage() {
-    return resources.getMessage(key, (Object[])args);
+    return resources.getMessage(key, (Object[]) args);
   }
 
   @Override
@@ -97,7 +97,7 @@ public class LocalizedIOException extends IOException implements LocalizedExcept
 
   static {
     Throwables.registerSurrogateFactory(LocalizedIOException.class, (template, cause) ->
-      new LocalizedIOException(cause, template.resources, template.key, template.args)
+        new LocalizedIOException(cause, template.resources, template.key, template.args)
     );
   }
 }

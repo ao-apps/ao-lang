@@ -55,7 +55,7 @@ public final class Methods {
    * us the full reflection API.
    */
   public static <T> T invoke(Class<T> returnType, Object target, String methodName, Class<?> parameterType, Object parameterValue) throws ReflectionException {
-    return invoke(returnType, target, methodName, new Class<?>[] {parameterType}, new Object[] {parameterValue});
+    return invoke(returnType, target, methodName, new Class<?>[]{parameterType}, new Object[]{parameterValue});
   }
 
   /**

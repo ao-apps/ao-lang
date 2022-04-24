@@ -37,10 +37,10 @@ public class NoCloseReader extends FilterReader implements NoClose {
    */
   @SuppressWarnings("unchecked")
   public static <R extends Reader & NoClose> R wrap(Reader in) {
-    if (in instanceof NoClose && ((NoClose)in).isNoClose()) {
-      return (R)in;
+    if (in instanceof NoClose && ((NoClose) in).isNoClose()) {
+      return (R) in;
     }
-    return (R)new NoCloseReader(in);
+    return (R) new NoCloseReader(in);
   }
 
   /**

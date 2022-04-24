@@ -48,7 +48,7 @@ public class LocalizedIllegalArgumentException extends IllegalArgumentException 
   }
 
   public LocalizedIllegalArgumentException(Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args));
+    super(resources.getMessage(key, (Object[]) args));
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -62,7 +62,7 @@ public class LocalizedIllegalArgumentException extends IllegalArgumentException 
   }
 
   public LocalizedIllegalArgumentException(Throwable cause, Resources resources, String key, Serializable... args) {
-    super(resources.getMessage(key, (Object[])args), cause);
+    super(resources.getMessage(key, (Object[]) args), cause);
     this.resources = resources;
     this.key = key;
     this.args = args;
@@ -70,7 +70,7 @@ public class LocalizedIllegalArgumentException extends IllegalArgumentException 
 
   @Override
   public String getLocalizedMessage() {
-    return resources.getMessage(key, (Object[])args);
+    return resources.getMessage(key, (Object[]) args);
   }
 
   @Override
@@ -94,7 +94,7 @@ public class LocalizedIllegalArgumentException extends IllegalArgumentException 
 
   static {
     Throwables.registerSurrogateFactory(LocalizedIllegalArgumentException.class, (template, cause) ->
-      new LocalizedIllegalArgumentException(cause, template.resources, template.key, template.args)
+        new LocalizedIllegalArgumentException(cause, template.resources, template.key, template.args)
     );
   }
 }

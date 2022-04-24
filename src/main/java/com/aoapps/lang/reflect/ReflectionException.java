@@ -63,7 +63,7 @@ public class ReflectionException extends RuntimeException {
 
   static {
     Throwables.registerSurrogateFactory(ReflectionException.class, (template, cause) ->
-      new ReflectionException(template.getMessage(), cause)
+        new ReflectionException(template.getMessage(), cause)
     );
   }
 }

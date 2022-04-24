@@ -80,7 +80,7 @@ public class EncoderWriter extends FilterWriter implements NoClose {
 
   @Override
   public boolean isNoClose() {
-    return (out instanceof NoClose) && ((NoClose)out).isNoClose();
+    return (out instanceof NoClose) && ((NoClose) out).isNoClose();
   }
 
   /**

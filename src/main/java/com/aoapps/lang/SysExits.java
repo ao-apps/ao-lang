@@ -167,15 +167,15 @@ public final class SysExits {
       return EX_OK;
     }
     if (
-      t instanceof UnknownHostException
-      || t instanceof java.rmi.UnknownHostException
+        t instanceof UnknownHostException
+            || t instanceof java.rmi.UnknownHostException
     ) {
       return EX_NOHOST;
     }
     if (
-      t instanceof IOError
-      || t instanceof IOException
-      || t instanceof UncheckedIOException
+        t instanceof IOError
+            || t instanceof IOException
+            || t instanceof UncheckedIOException
     ) {
       return EX_IOERR;
     }
@@ -189,8 +189,8 @@ public final class SysExits {
       return EX_PROTOCOL;
     }
     if (
-      t instanceof LoginException
-      || t instanceof SecurityException
+        t instanceof LoginException
+            || t instanceof SecurityException
     ) {
       return EX_NOPERM;
     }

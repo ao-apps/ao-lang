@@ -46,7 +46,7 @@ public class ThreadLocalCallable<T> implements Callable<T> {
   @Override
   public T call() throws Exception {
     @SuppressWarnings("unchecked")
-    ThreadLocal<Object> tl = (ThreadLocal<Object>)threadLocal;
+    ThreadLocal<Object> tl = (ThreadLocal<Object>) threadLocal;
     Object oldValue = tl.get();
     Object newValue = value;
     try {

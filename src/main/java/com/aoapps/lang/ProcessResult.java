@@ -153,9 +153,9 @@ public class ProcessResult {
 
       // Return results
       return new ProcessResult(
-        exitVal,
-        stdout,
-        stderr
+          exitVal,
+          stdout,
+          stderr
       );
     } catch (InterruptedException err) {
       // Restore the interrupted status

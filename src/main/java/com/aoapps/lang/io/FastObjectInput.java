@@ -63,7 +63,7 @@ public class FastObjectInput implements ObjectInput {
   public static FastObjectInput wrap(ObjectInput in) throws IOException {
     FastObjectInput fastIn;
     if (in instanceof FastObjectInput) {
-      fastIn = (FastObjectInput)in;
+      fastIn = (FastObjectInput) in;
     } else {
       fastIn = threadFastObjectInput.get();
       if (fastIn == null) {
@@ -159,7 +159,7 @@ public class FastObjectInput implements ObjectInput {
         return null;
       case FastObjectOutput.STANDARD :
         // This is OK, perhaps we just recently changed this object to now be a fast class
-        return (FastExternalizable)in.readObject();
+        return (FastExternalizable) in.readObject();
       case -1 :
         throw new EOFException();
       default :
@@ -223,14 +223,14 @@ public class FastObjectInput implements ObjectInput {
       }
     }
     try {
-      FastExternalizable obj = (FastExternalizable)lastClass.getConstructor().newInstance();
+      FastExternalizable obj = (FastExternalizable) lastClass.getConstructor().newInstance();
       long actualSerialVersionUID = obj.getSerialVersionUID();
       if (lastSerialVersionUID != actualSerialVersionUID) {
         throw new InvalidClassException(lastClass.getName(), "Mismatched serialVersionUID: expected " + lastSerialVersionUID + ", got " + actualSerialVersionUID);
       }
       obj.readExternal(this);
       if (obj instanceof ObjectInputValidation) {
-        ((ObjectInputValidation)obj).validateObject();
+        ((ObjectInputValidation) obj).validateObject();
       }
       return obj;
     } catch (NoSuchMethodException exc) {

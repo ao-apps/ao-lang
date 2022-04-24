@@ -47,7 +47,7 @@ public final class UnmodifiableDate extends Date implements Cloneable {
    */
   @Override
   public UnmodifiableDate clone() {
-    return (UnmodifiableDate)super.clone();
+    return (UnmodifiableDate) super.clone();
   }
 
   @Deprecated

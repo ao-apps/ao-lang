@@ -70,7 +70,7 @@ public class ValidationException extends Exception {
 
   static {
     Throwables.registerSurrogateFactory(ValidationException.class, (template, cause) ->
-      new ValidationException(cause, template.result)
+        new ValidationException(cause, template.result)
     );
   }
 }

@@ -57,8 +57,8 @@ public interface PredicateE<T, Ex extends Throwable> {
    */
   static <T, Ex extends Throwable> PredicateE<T, Ex> isEqual(Object targetRef) {
     return (null == targetRef)
-      ? Objects::isNull
-      : targetRef::equals;
+        ? Objects::isNull
+        : targetRef::equals;
   }
 
   /**
@@ -67,6 +67,6 @@ public interface PredicateE<T, Ex extends Throwable> {
   @SuppressWarnings("unchecked")
   static <T, Ex extends Throwable> PredicateE<T, Ex> not(PredicateE<? super T, ? extends Ex> target) throws Ex {
     Objects.requireNonNull(target);
-    return (PredicateE<T, Ex>)target.negate();
+    return (PredicateE<T, Ex>) target.negate();
   }
 }

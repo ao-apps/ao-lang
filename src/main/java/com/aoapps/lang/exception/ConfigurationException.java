@@ -61,7 +61,7 @@ public class ConfigurationException extends RuntimeException {
 
   static {
     Throwables.registerSurrogateFactory(ConfigurationException.class, (template, cause) ->
-      new ConfigurationException(template.getMessage(), cause)
+        new ConfigurationException(template.getMessage(), cause)
     );
   }
 }

@@ -33,7 +33,9 @@ public final class RuntimeUtils {
     throw new AssertionError();
   }
 
-  private static class AvailableProcessorsLock {/* Empty lock class to help heap profile */}
+  private static class AvailableProcessorsLock {
+    // Empty lock class to help heap profile
+  }
   private static final AvailableProcessorsLock availableProcessorsLock = new AvailableProcessorsLock();
   private static long availableProcessorsLastRetrieved = Long.MIN_VALUE;
   private static int availableProcessors = 0;
@@ -52,9 +54,9 @@ public final class RuntimeUtils {
     synchronized (availableProcessorsLock) {
       long timeSince;
       if (
-        availableProcessors == 0
-        || (timeSince = availableProcessorsLastRetrieved - currentTime) >= 1000
-        || timeSince <= -1000 // System time set to the past
+          availableProcessors == 0
+              || (timeSince = availableProcessorsLastRetrieved - currentTime) >= 1000
+              || timeSince <= -1000 // System time set to the past
       ) {
         availableProcessors = Runtime.getRuntime().availableProcessors();
         availableProcessorsLastRetrieved = currentTime;

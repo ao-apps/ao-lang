@@ -53,7 +53,7 @@ public class WrappedError extends Error implements ExtraInfo {
    */
   public WrappedError(Throwable cause) {
     super(cause);
-    this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
+    this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo) cause).getExtraInfo() : null;
   }
 
   /**
@@ -69,7 +69,7 @@ public class WrappedError extends Error implements ExtraInfo {
    */
   public WrappedError(String message, Throwable cause) {
     super(message, cause);
-    this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo)cause).getExtraInfo() : null;
+    this.extraInfo = (cause instanceof ExtraInfo) ? ((ExtraInfo) cause).getExtraInfo() : null;
   }
 
   /**
@@ -111,7 +111,7 @@ public class WrappedError extends Error implements ExtraInfo {
 
   static {
     Throwables.registerSurrogateFactory(WrappedError.class, (template, cause) ->
-      new WrappedError(template.getMessage(), cause, template.extraInfo)
+        new WrappedError(template.getMessage(), cause, template.extraInfo)
     );
   }
 }

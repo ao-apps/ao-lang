@@ -61,35 +61,35 @@ public final class GetOpt {
     if (value == null) {
       throw new IllegalArgumentException("value == null");
     } else if (type == String.class) {
-      return (T)value;
-    // Special handling for primitive types
+      return (T) value;
+      // Special handling for primitive types
     } else if (type == Integer.TYPE || type == Integer.class) {
-      return (T)Integer.valueOf(value);
+      return (T) Integer.valueOf(value);
     } else if (type == Long.TYPE || type == Long.class) {
-      return (T)Long.valueOf(value);
+      return (T) Long.valueOf(value);
     } else if (type == Short.TYPE || type == Short.class) {
-      return (T)Short.valueOf(value);
+      return (T) Short.valueOf(value);
     } else if (type == Byte.TYPE || type == Byte.class) {
-      return (T)Byte.valueOf(value);
+      return (T) Byte.valueOf(value);
     } else if (type == Float.TYPE || type == Float.class) {
-      return (T)Float.valueOf(value);
+      return (T) Float.valueOf(value);
     } else if (type == Double.TYPE || type == Double.class) {
-      return (T)Double.valueOf(value);
+      return (T) Double.valueOf(value);
     } else if (type == Boolean.TYPE || type == Boolean.class) {
-      return (T)Boolean.valueOf(value);
+      return (T) Boolean.valueOf(value);
     } else if (type == Character.TYPE || type == Character.class) {
       int len = value.length();
       if (value.length() != 1) {
-        throw new IllegalArgumentException("value.length != 1: "+len);
+        throw new IllegalArgumentException("value.length != 1: " + len);
       }
-      return (T)(Character)value.charAt(0);
+      return (T) (Character) value.charAt(0);
     } else {
       // public static valueOf(String) method
       try {
         Method method = type.getMethod("valueOf", String.class);
         int modifiers = method.getModifiers();
         if (Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers)) {
-          T result = (T)method.invoke(null, value);
+          T result = (T) method.invoke(null, value);
           if (result == null) {
             throw new AssertionError("result == null");
           }
@@ -127,14 +127,14 @@ public final class GetOpt {
    *
    * @return  the converted value or <code>null</code> if not found
    *
-   * @see #parse(String,Class)
+   * @see #parse(String, Class)
    */
   @SuppressWarnings("unchecked")
   public static <T> T getOpt(String[] args, String name, Class<T> type) {
-    final String booleanPrefix = "--"+name;
-    final String paramPrefix = booleanPrefix+'=';
+    final String booleanPrefix = "--" + name;
+    final String paramPrefix = booleanPrefix + '=';
     T value = null;
-    for (int c=0;c<args.length;c++) {
+    for (int c = 0; c < args.length; c++) {
       String arg = args[c];
       if (arg != null) {
         if ("--".equals(arg)) {
@@ -143,7 +143,7 @@ public final class GetOpt {
           value = parse(arg.substring(paramPrefix.length()), type);
           args[c] = null;
         } else if ((type == Boolean.TYPE || type == Boolean.class) && arg.equals(booleanPrefix)) {
-          value = (T)Boolean.TRUE;
+          value = (T) Boolean.TRUE;
           args[c] = null;
         }
       }
@@ -160,19 +160,19 @@ public final class GetOpt {
   public static List<String> getArguments(String[] args) {
     List<String> arguments = new ArrayList<>(args.length);
     int c = 0;
-    for (; c<args.length; c++) {
+    for (; c < args.length; c++) {
       String arg = args[c];
       if (arg != null) {
         if (arg.startsWith("--")) {
           if ("--".equals(arg)) {
             break;
           }
-          throw new IllegalArgumentException("Unexpected parameter: "+arg);
+          throw new IllegalArgumentException("Unexpected parameter: " + arg);
         }
         arguments.add(arg);
       }
     }
-    for (; c<args.length; c++) {
+    for (; c < args.length; c++) {
       String arg = args[c];
       if (arg != null) {
         arguments.add(arg);

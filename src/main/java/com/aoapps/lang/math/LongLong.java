@@ -52,7 +52,7 @@ public class LongLong extends Number implements Comparable<LongLong> {
       // Pad with the sign bit
       byte[] newBytes = new byte[BYTES];
       if ((bytes[0] & 0x80) != 0) {
-        Arrays.fill(newBytes, 0, diff, (byte)0xff);
+        Arrays.fill(newBytes, 0, diff, (byte) 0xff);
       }
       System.arraycopy(bytes, 0, newBytes, diff, bytes.length);
       bytes = newBytes;
@@ -67,8 +67,8 @@ public class LongLong extends Number implements Comparable<LongLong> {
   public static LongLong parseLongLong(String s, int radix) throws NumberFormatException {
     byte[] bytes = parseLongLongToBytes(s, radix);
     return valueOf(
-      IoUtils.bufferToLong(bytes),
-      IoUtils.bufferToLong(bytes, Long.BYTES)
+        IoUtils.bufferToLong(bytes),
+        IoUtils.bufferToLong(bytes, Long.BYTES)
     );
   }
 
@@ -113,11 +113,11 @@ public class LongLong extends Number implements Comparable<LongLong> {
 
   public static LongLong valueOf(long hi, long lo) {
     if (
-      (hi == -1 && lo >= CACHE_MIN && lo < 0)
-      || (hi == 0 && lo <= CACHE_MAX && lo >= 0)
+        (hi == -1 && lo >= CACHE_MIN && lo < 0)
+            || (hi == 0 && lo <= CACHE_MAX && lo >= 0)
     ) {
       // will cache
-      return LongLongCache.cache[(int)lo - CACHE_MIN];
+      return LongLongCache.cache[(int) lo - CACHE_MIN];
     }
     return new LongLong(hi, lo);
   }
@@ -182,17 +182,17 @@ public class LongLong extends Number implements Comparable<LongLong> {
 
   @Override
   public byte byteValue() {
-    return (byte)lo;
+    return (byte) lo;
   }
 
   @Override
   public short shortValue() {
-    return (short)lo;
+    return (short) lo;
   }
 
   @Override
   public int intValue() {
-    return (int)lo;
+    return (int) lo;
   }
 
   @Override
@@ -234,7 +234,7 @@ public class LongLong extends Number implements Comparable<LongLong> {
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof LongLong) {
-      LongLong other = (LongLong)obj;
+      LongLong other = (LongLong) obj;
       return (hi == other.hi) && (lo == other.lo);
     }
     return false;
@@ -277,10 +277,10 @@ public class LongLong extends Number implements Comparable<LongLong> {
 
   @Override
   public int compareTo(LongLong other) {
-    if (hi<other.hi) {
+    if (hi < other.hi) {
       return -1;
     }
-    if (hi>other.hi) {
+    if (hi > other.hi) {
       return 1;
     }
     //return (lo<other.lo ? -1 : (lo == other.lo ? 0 : 1));
@@ -297,17 +297,17 @@ public class LongLong extends Number implements Comparable<LongLong> {
     return Long.compareUnsigned(lo, other.lo);
   }
 
-    /**
-     * The number of bits used to represent a {@link LongLong} value in two's
-     * complement binary form.
-     */
-    public static final int SIZE = Long.SIZE * 2;
+  /**
+   * The number of bits used to represent a {@link LongLong} value in two's
+   * complement binary form.
+   */
+  public static final int SIZE = Long.SIZE * 2;
 
-    /**
-     * The number of bytes used to represent a {@link LongLong} value in two's
-     * complement binary form.
-     */
-    public static final int BYTES = SIZE / Byte.SIZE;
+  /**
+   * The number of bytes used to represent a {@link LongLong} value in two's
+   * complement binary form.
+   */
+  public static final int BYTES = SIZE / Byte.SIZE;
 
 
   public LongLong highestOneBit() {
@@ -341,7 +341,7 @@ public class LongLong extends Number implements Comparable<LongLong> {
   public int numberOfLeadingZeros() {
     int leading = Long.numberOfLeadingZeros(hi);
     if (leading == 64) {
-      leading+=Long.numberOfLeadingZeros(lo);
+      leading += Long.numberOfLeadingZeros(lo);
     }
     return leading;
   }
@@ -349,7 +349,7 @@ public class LongLong extends Number implements Comparable<LongLong> {
   public int numberOfTrailingZeros() {
     int trailing = Long.numberOfTrailingZeros(lo);
     if (trailing == 64) {
-      trailing+=Long.numberOfTrailingZeros(hi);
+      trailing += Long.numberOfTrailingZeros(hi);
     }
     return trailing;
   }
@@ -431,8 +431,8 @@ public class LongLong extends Number implements Comparable<LongLong> {
   public LongLong negate() {
     byte[] bytes = getBytes(getBigInteger().negate());
     return valueOf(
-      IoUtils.bufferToLong(bytes),
-      IoUtils.bufferToLong(bytes, Long.BYTES)
+        IoUtils.bufferToLong(bytes),
+        IoUtils.bufferToLong(bytes, Long.BYTES)
     );
   }
 

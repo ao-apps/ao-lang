@@ -52,10 +52,10 @@ public class LocaleString {
     if (!(obj instanceof LocaleString)) {
       return false;
     }
-    LocaleString other = (LocaleString)obj;
+    LocaleString other = (LocaleString) obj;
     return
-      locale.equals(other.locale)
-      && value.equals(other.value)
+        locale.equals(other.locale)
+            && value.equals(other.value)
     ;
   }
 

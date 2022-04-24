@@ -148,17 +148,17 @@ public final class Money implements FastExternalizable, Comparable<Money> {
     if (!(o instanceof Money)) {
       return false;
     }
-    Money other = (Money)o;
+    Money other = (Money) o;
     return
-      currency == other.currency
-      && value == other.value
-      && scale == other.scale;
+        currency == other.currency
+            && value == other.value
+            && scale == other.scale;
   }
 
   @Override
   public int hashCode() {
     int hash = currency.getCurrencyCode().hashCode();
-    hash = hash * 31 + (int)value;
+    hash = hash * 31 + (int) value;
     hash = hash * 31 + scale;
     return hash;
   }
@@ -223,7 +223,7 @@ public final class Money implements FastExternalizable, Comparable<Money> {
 
   public Money add(Money addend) throws ArithmeticException {
     if (currency != addend.currency) {
-      throw new ArithmeticException("currency != addend.currency: "+currency+" != "+addend.currency);
+      throw new ArithmeticException("currency != addend.currency: " + currency + " != " + addend.currency);
     }
     return new Money(currency, getValue().add(addend.getValue()));
   }
@@ -256,7 +256,7 @@ public final class Money implements FastExternalizable, Comparable<Money> {
 
   public Money subtract(Money subtrahend) throws ArithmeticException {
     if (currency != subtrahend.currency) {
-      throw new ArithmeticException("currency != subtrahend.currency: "+currency+" != "+subtrahend.currency);
+      throw new ArithmeticException("currency != subtrahend.currency: " + currency + " != " + subtrahend.currency);
     }
     return new Money(currency, getValue().subtract(subtrahend.getValue()));
   }
@@ -269,7 +269,7 @@ public final class Money implements FastExternalizable, Comparable<Money> {
    *
    * @see  FastExternalizable
    */
-  @Deprecated/* Java 9: (forRemoval = true) */
+  @Deprecated // Java 9: (forRemoval = true)
   public Money() {
     // Do nothing
   }

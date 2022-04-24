@@ -79,23 +79,23 @@ public final class FileUtils {
   public static void deleteRecursive(File file) throws IOException {
     Path deleteMe = file.toPath();
     Files.walkFileTree(
-      deleteMe,
-      // Java 9: new SimpleFileVisitor<>
-      new SimpleFileVisitor<Path>() {
-        @Override
-        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-          Files.delete(file);
-          return FileVisitResult.CONTINUE;
-        }
-        @Override
-        public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-          if (exc != null) {
-            throw exc;
+        deleteMe,
+        // Java 9: new SimpleFileVisitor<>
+        new SimpleFileVisitor<Path>() {
+          @Override
+          public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+            Files.delete(file);
+            return FileVisitResult.CONTINUE;
           }
-          Files.delete(dir);
-          return FileVisitResult.CONTINUE;
+          @Override
+          public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+            if (exc != null) {
+              throw exc;
+            }
+            Files.delete(dir);
+            return FileVisitResult.CONTINUE;
+          }
         }
-      }
     );
     assert !Files.exists(deleteMe, LinkOption.NOFOLLOW_LINKS);
   }
@@ -106,7 +106,7 @@ public final class FileUtils {
   public static boolean contentEquals(File file, byte[] contents) throws IOException {
     {
       final long length = file.length();
-      if (length>Integer.MAX_VALUE) {
+      if (length > Integer.MAX_VALUE) {
         return false;
       }
       // Be careful about file.length() returning zero on error - always read file for zero case - no shortcut.
@@ -132,7 +132,7 @@ public final class FileUtils {
     try (
       InputStream in1 = new BufferedInputStream(new FileInputStream(file1));
       InputStream in2 = new BufferedInputStream(new FileInputStream(file2))
-    ) {
+        ) {
       while (true) {
         int b1 = in1.read();
         int b2 = in2.read();
@@ -157,7 +157,7 @@ public final class FileUtils {
       int result = 1;
       int readVal;
       while ((readVal = in.read()) != -1) {
-        result = 31 * result + (byte)readVal;
+        result = 31 * result + (byte) readVal;
       }
       return result;
     }
@@ -353,7 +353,7 @@ public final class FileUtils {
     if (fileFilter == null || fileFilter.accept(from)) {
       if (from.isDirectory()) {
         if (to.exists()) {
-          throw new IOException("Directory exists: "+to);
+          throw new IOException("Directory exists: " + to);
         }
         long modified = from.lastModified();
         Files.createDirectory(to.toPath()).toFile();
@@ -361,9 +361,9 @@ public final class FileUtils {
         if (list != null) {
           for (String child : list) {
             copyRecursive(
-              new File(from, child),
-              new File(to, child),
-              fileFilter
+                new File(from, child),
+                new File(to, child),
+                fileFilter
             );
           }
         }
@@ -372,11 +372,11 @@ public final class FileUtils {
         }
       } else if (from.isFile()) {
         if (to.exists()) {
-          throw new IOException("File exists: "+to);
+          throw new IOException("File exists: " + to);
         }
         copy(from, to);
       } else {
-        throw new IOException("Neither directory not file: "+to);
+        throw new IOException("Neither directory not file: " + to);
       }
     }
   }
@@ -386,16 +386,16 @@ public final class FileUtils {
    * If no extension, returns an empty string.
    */
   public static String getExtension(String path) {
-    int pos=path.lastIndexOf('.');
-    if (pos<1) {
+    int pos = path.lastIndexOf('.');
+    if (pos < 1) {
       return "";
     }
     // If a / follows the ., then no extension
-    int pos2=path.indexOf('/', pos+1);
+    int pos2 = path.indexOf('/', pos + 1);
     if (pos2 != -1) {
       return "";
     }
-    return path.substring(pos+1);
+    return path.substring(pos + 1);
   }
 
   /**
@@ -415,7 +415,7 @@ public final class FileUtils {
   public static File getFile(URL url, String urlEncoding, boolean deleteOnExit) throws IOException {
     if ("file".equalsIgnoreCase(url.getProtocol())) {
       String path = url.getFile();
-      if (path.length()>0) {
+      if (path.length() > 0) {
         File file = new File(URLDecoder.decode(path, urlEncoding).replace('/', File.separatorChar));
         if (file.exists() && file.isFile()) {
           return file;
@@ -446,7 +446,7 @@ public final class FileUtils {
    */
   public static void rename(File from, File to) throws IOException {
     if (!from.renameTo(to)) {
-      throw new IOException("Unable to atomically rename \""+from+"\" to \""+to+'"');
+      throw new IOException("Unable to atomically rename \"" + from + "\" to \"" + to + '"');
     }
   }
 
@@ -463,7 +463,7 @@ public final class FileUtils {
         copy(from, to);
         Files.delete(from.toPath());
       } catch (IOException e) {
-        throw new IOException("Unable to non-atomically rename \""+from+"\" to \""+to+'"', e);
+        throw new IOException("Unable to non-atomically rename \"" + from + "\" to \"" + to + '"', e);
       }
     }
   }
@@ -485,7 +485,7 @@ public final class FileUtils {
    */
   public static String readFileAsString(File file, Charset charset) throws IOException {
     long len = file.length();
-    StringBuilder sb = len > 0 && len <= Integer.MAX_VALUE ? new StringBuilder((int)len) : new StringBuilder();
+    StringBuilder sb = len > 0 && len <= Integer.MAX_VALUE ? new StringBuilder((int) len) : new StringBuilder();
     try (Reader in = new InputStreamReader(new FileInputStream(file), charset)) {
       char[] buff = BufferManager.getChars();
       try {

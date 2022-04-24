@@ -46,8 +46,8 @@ public class LocalesTest extends TestCase {
     for (Locale locale : Locale.getAvailableLocales()) {
       // Ignore locales with script or extensions for preload, since the rest of this API is unaware of them
       if (
-        locale.getScript().isEmpty()
-        && locale.getExtensionKeys().isEmpty()
+          locale.getScript().isEmpty()
+              && locale.getExtensionKeys().isEmpty()
       ) {
         Locale parsed = Locales.parseLocale(locale.toString());
         //System.out.println(locale+"->"+parsed);

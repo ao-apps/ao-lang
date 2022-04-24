@@ -58,7 +58,7 @@ public final class ZipUtils {
    *
    * @return  the time assuming GMT zone or <code>-1</code> if not specified.
    *
-   * @see #setZipEntryTime(ZipEntry,long)
+   * @see #setZipEntryTime(ZipEntry, long)
    */
   public static long getZipEntryTime(ZipEntry entry) {
     long time = entry.getTime();
@@ -114,7 +114,7 @@ public final class ZipUtils {
    */
   public static void createZipFile(File file, ZipOutputStream zipOut, String path) throws IOException {
     final String filename = file.getName();
-    final String newPath = path.isEmpty() ? filename : (path+'/'+filename);
+    final String newPath = path.isEmpty() ? filename : (path + '/' + filename);
     if (file.isDirectory()) {
       // Add directory
       ZipEntry zipEntry = new ZipEntry(newPath + '/');
@@ -254,7 +254,7 @@ public final class ZipUtils {
    */
   @SuppressWarnings("deprecation")
   public static void mergeUnzip(ZipEntryFilter filter, File destination, File ... zipFiles) throws IOException {
-    if (zipFiles.length>0) {
+    if (zipFiles.length > 0) {
       if (zipFiles.length == 1) {
         unzip(zipFiles[0], "", destination, filter);
       } else {

@@ -38,10 +38,10 @@ public class NoCloseOutputStream extends FilterOutputStream implements NoClose {
    */
   @SuppressWarnings("unchecked")
   public static <O extends OutputStream & NoClose> O wrap(OutputStream out) {
-    if (out instanceof NoClose && ((NoClose)out).isNoClose()) {
-      return (O)out;
+    if (out instanceof NoClose && ((NoClose) out).isNoClose()) {
+      return (O) out;
     }
-    return (O)new NoCloseOutputStream(out);
+    return (O) new NoCloseOutputStream(out);
   }
 
   /**

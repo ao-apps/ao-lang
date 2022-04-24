@@ -42,7 +42,7 @@ public final class UnsignedLong {
 
   private static BigInteger getUnsigned(long value) {
     BigInteger bigValue = BigInteger.valueOf(value);
-    if (value<0) {
+    if (value < 0) {
       bigValue = bigValue.add(TWO_POWER_64).and(TWO_POWER_64_MINUS_1);
     }
     return bigValue;

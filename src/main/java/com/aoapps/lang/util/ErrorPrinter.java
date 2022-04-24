@@ -132,8 +132,8 @@ public final class ErrorPrinter {
       synchronized (statements) {
         List<String> causes = statements.get(key);
         return (causes == null)
-          ? Collections.emptyList()
-          : Collections.unmodifiableList(new ArrayList<>(causes));
+            ? Collections.emptyList()
+            : Collections.unmodifiableList(new ArrayList<>(causes));
       }
     }
   }
@@ -144,7 +144,7 @@ public final class ErrorPrinter {
   @Deprecated
   @SuppressWarnings("UseOfSystemOutOrSystemErr")
   public static void printStackTraces(Throwable t) {
-    printStackTraces(t, System.err, (Object[])null);
+    printStackTraces(t, System.err, (Object[]) null);
   }
 
   /**
@@ -157,7 +157,7 @@ public final class ErrorPrinter {
   }
 
   public static void printStackTraces(Throwable t, Appendable out) {
-    printStackTraces(t, out, (Object[])null);
+    printStackTraces(t, out, (Object[]) null);
   }
 
   private static void appendln(Appendable out) {
@@ -219,11 +219,12 @@ public final class ErrorPrinter {
       try {
         appendln(new java.util.Date(System.currentTimeMillis()).toString(), out);
       } catch (Exception err) {
-        append("Unable to display date: ", out); appendln(err.toString(), out);
+        append("Unable to display date: ", out);
+        appendln(err.toString(), out);
       }
 
       // Extra info
-      if (extraInfo != null && extraInfo.length>0) {
+      if (extraInfo != null && extraInfo.length > 0) {
         appendln("    Extra Information", out);
         for (Object ei : extraInfo) {
           append("        ", out);
@@ -233,7 +234,7 @@ public final class ErrorPrinter {
 
       // Threads
       appendln("    Threading", out);
-      Thread thread=Thread.currentThread();
+      Thread thread = Thread.currentThread();
       appendln("        Thread", out);
       append("            ID..........: ", out);
       appendln(Long.toString(thread.getId()), out);
@@ -252,13 +253,17 @@ public final class ErrorPrinter {
           String classname = tg.getClass().getName();
           int maxPriority = tg.getMaxPriority();
           appendln("        ThreadGroup", out);
-          append("            Name........: ", out); appendln(name, out);
-          append("            Class.......: ", out); appendln(classname, out);
-          append("            Max Priority: ", out); appendln(maxPriority, out);
+          append("            Name........: ", out);
+          appendln(name, out);
+          append("            Class.......: ", out);
+          appendln(classname, out);
+          append("            Max Priority: ", out);
+          appendln(maxPriority, out);
           tg = tg.getParent();
         }
       } catch (SecurityException err) {
-        append("Unable to print all Thread Groups: ", out); appendln(err.toString(), out);
+        append("Unable to print all Thread Groups: ", out);
+        appendln(err.toString(), out);
       }
 
       appendln("    Exceptions", out);
@@ -279,7 +284,7 @@ public final class ErrorPrinter {
       // Flush output
       try {
         if (out instanceof Flushable) {
-          ((Flushable)out).flush();
+          ((Flushable) out).flush();
         }
       } catch (IOException err) {
         // Ignored
@@ -351,11 +356,11 @@ public final class ErrorPrinter {
     appendln(thrown.getClass().getName(), out);
     String message = thrown.getMessage();
     if (message != null) {
-      CustomMessageHandler.printMessage(out, indent+4, "Message...........: ", message);
+      CustomMessageHandler.printMessage(out, indent + 4, "Message...........: ", message);
     }
     String localizedMessage = thrown.getLocalizedMessage();
     if (localizedMessage != null && !localizedMessage.equals(message)) {
-      CustomMessageHandler.printMessage(out, indent+4, "Localized Message.: ", localizedMessage);
+      CustomMessageHandler.printMessage(out, indent + 4, "Localized Message.: ", localizedMessage);
     }
     synchronized (customMessageHandlers) {
       for (CustomMessageHandler handler : customMessageHandlers) {
@@ -363,7 +368,7 @@ public final class ErrorPrinter {
       }
     }
     if (thrown instanceof ExtraInfo) {
-      Object[] extraInfo = ((ExtraInfo)thrown).getExtraInfo();
+      Object[] extraInfo = ((ExtraInfo) thrown).getExtraInfo();
       if (extraInfo != null && extraInfo.length > 0) {
         indent(out, indent + 4);
         appendln("Extra Information", out);
@@ -374,7 +379,7 @@ public final class ErrorPrinter {
       }
     }
     if (thrown instanceof SQLException) {
-      SQLException sql=(SQLException)thrown;
+      SQLException sql = (SQLException) thrown;
       indent(out, indent + 4);
       append("SQL Error Code....: ", out);
       appendln(sql.getErrorCode(), out);
@@ -383,7 +388,7 @@ public final class ErrorPrinter {
       appendln(sql.getSQLState(), out);
     } else if (thrown instanceof AccessControlException) {
       try {
-        AccessControlException ace = (AccessControlException)thrown;
+        AccessControlException ace = (AccessControlException) thrown;
         Permission permission = ace.getPermission();
         indent(out, indent + 4);
         append("Permission........: ", out);
@@ -402,7 +407,8 @@ public final class ErrorPrinter {
           appendln(permission.getActions(), out);
         }
       } catch (SecurityException err) {
-        appendln("Permission........: Unable to get permission details: ", out); append(err.toString(), out);
+        appendln("Permission........: Unable to get permission details: ", out);
+        append(err.toString(), out);
       }
     }
     // SQL Statements (not within SQLException, since they can be associated with any throwable)
@@ -427,14 +433,14 @@ public final class ErrorPrinter {
     }
     indent(out, indent + 4);
     appendln("Stack Trace", out);
-    StackTraceElement[] stack=thrown.getStackTrace();
+    StackTraceElement[] stack = thrown.getStackTrace();
     for (StackTraceElement ste : stack) {
       indent(out, indent + 8);
       append("at ", out);
       appendln(ste.toString(), out);
     }
     if (thrown instanceof WrappedExceptions) {
-      for (Throwable cause : ((WrappedExceptions)thrown).getCauses()) {
+      for (Throwable cause : ((WrappedExceptions) thrown).getCauses()) {
         if (!isClosed(cause, closed)) {
           closed.add(cause);
           indent(out, indent + 4);
@@ -443,7 +449,7 @@ public final class ErrorPrinter {
         }
       }
     } else {
-      Throwable cause=thrown.getCause();
+      Throwable cause = thrown.getCause();
       if (cause != null) {
         if (!isClosed(cause, closed)) {
           closed.add(cause);
@@ -455,10 +461,10 @@ public final class ErrorPrinter {
     }
     // Uses reflection avoid binding to JspException directly.
     try {
-      Class<?> clazz=thrown.getClass();
+      Class<?> clazz = thrown.getClass();
       if (isSubclass(clazz, "javax.servlet.jsp.JspException")) {
-        Method method=clazz.getMethod("getRootCause");
-        Throwable rootCause=(Throwable)method.invoke(thrown);
+        Method method = clazz.getMethod("getRootCause");
+        Throwable rootCause = (Throwable) method.invoke(thrown);
         if (rootCause != null) {
           if (!isClosed(rootCause, closed)) {
             closed.add(rootCause);
@@ -469,23 +475,23 @@ public final class ErrorPrinter {
         }
       }
     } catch (
-      // OK, future versions of JspException might not have getRootCause
-      NoSuchMethodException
-      // OK, future versions of JspException could make it private
-      | IllegalAccessException
-      // Ignored because we are dealing with one exception at a time
-      // Afterall, this is the exception handling code
-      | InvocationTargetException
-      ignored
+        // OK, future versions of JspException might not have getRootCause
+        NoSuchMethodException
+            // OK, future versions of JspException could make it private
+            | IllegalAccessException
+            // Ignored because we are dealing with one exception at a time
+            // Afterall, this is the exception handling code
+            | InvocationTargetException
+            ignored
     ) {
       // Do nothing
     }
     // Uses reflection avoid binding to ServletException directly.
     try {
-      Class<?> clazz=thrown.getClass();
+      Class<?> clazz = thrown.getClass();
       if (isSubclass(clazz, "javax.servlet.ServletException")) {
-        Method method=clazz.getMethod("getRootCause");
-        Throwable rootCause=(Throwable)method.invoke(thrown);
+        Method method = clazz.getMethod("getRootCause");
+        Throwable rootCause = (Throwable) method.invoke(thrown);
         if (rootCause != null) {
           if (!isClosed(rootCause, closed)) {
             closed.add(rootCause);
@@ -496,14 +502,14 @@ public final class ErrorPrinter {
         }
       }
     } catch (
-      // OK, future versions of ServletException might not have getRootCause
-      NoSuchMethodException
-      // OK, future versions of ServletException could make it private
-      | IllegalAccessException
-      // Ignored because we are dealing with one exception at a time
-      // Afterall, this is the exception handling code
-      | InvocationTargetException
-      ignored
+        // OK, future versions of ServletException might not have getRootCause
+        NoSuchMethodException
+            // OK, future versions of ServletException could make it private
+            | IllegalAccessException
+            // Ignored because we are dealing with one exception at a time
+            // Afterall, this is the exception handling code
+            | InvocationTargetException
+            ignored
     ) {
       // Do nothing
     }
@@ -516,7 +522,7 @@ public final class ErrorPrinter {
       }
     }
     if (thrown instanceof SQLException) {
-      SQLException nextSQL = ((SQLException)thrown).getNextException();
+      SQLException nextSQL = ((SQLException) thrown).getNextException();
       if (nextSQL != null) {
         List<SQLException> nextSQLs = new ArrayList<>();
         do {
@@ -537,7 +543,7 @@ public final class ErrorPrinter {
       if (clazz.getName().equals(classname)) {
         return true;
       }
-      clazz=clazz.getSuperclass();
+      clazz = clazz.getSuperclass();
     }
     return false;
   }
@@ -547,7 +553,7 @@ public final class ErrorPrinter {
    * as efficient as directly writing the report due to the extra buffering.
    */
   public static String getStackTraces(Throwable t) {
-    return getStackTraces(t, (Object[])null);
+    return getStackTraces(t, (Object[]) null);
   }
 
   /**

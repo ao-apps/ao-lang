@@ -40,7 +40,7 @@ public final class WriterFacade extends Writer implements NoClose {
    */
   public static WriterFacade getInstance(Writer out) {
     if (out instanceof WriterFacade) {
-      return (WriterFacade)out;
+      return (WriterFacade) out;
     }
     return new WriterFacade(out);
   }
@@ -102,7 +102,7 @@ public final class WriterFacade extends Writer implements NoClose {
 
   @Override
   public boolean isNoClose() {
-    return (out instanceof NoClose) && ((NoClose)out).isNoClose();
+    return (out instanceof NoClose) && ((NoClose) out).isNoClose();
   }
 
   @Override

@@ -126,7 +126,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
     if (!(o instanceof Monies)) {
       return false;
     }
-    Monies other = (Monies)o;
+    Monies other = (Monies) o;
     return monies.equals(other.monies);
   }
 
