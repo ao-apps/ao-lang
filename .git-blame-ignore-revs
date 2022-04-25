@@ -25,3 +25,6 @@ ec86d50d44b44cdd8bdd1be896e63af283577f32
 
 # Fixed indent.
 0e7cc64698cd5245cc9202e151fd6beb8e4aeb83
+
+# Performed automatic source code clean-up with rewrite-maven-plugin
+3102f065c9fb699739c1a9d9c9642ca6f46abe33
