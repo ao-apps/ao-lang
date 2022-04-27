@@ -60,4 +60,4 @@ module com.aoapps.lang {
   requires java.sql.rowset;
   requires java.xml;
   requires java.xml.crypto;
-}
+} // TODO: Avoiding rewrite-maven-plugin-4.22.2 truncation
