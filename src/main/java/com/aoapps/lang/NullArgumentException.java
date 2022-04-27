@@ -79,7 +79,7 @@ public class NullArgumentException extends IllegalArgumentException {
   }
 
   static {
-    Throwables.registerSurrogateFactory(NullArgumentException.class, (template, cause) -> {
+    Throwables.registerSurrogateFactory(NullArgumentException.class, (NullArgumentException template, Throwable cause) -> {
       NullArgumentException newEx = new NullArgumentException(template.argument);
       newEx.initCause(cause);
       return newEx;

@@ -87,18 +87,18 @@ public class FastObjectInput implements ObjectInput {
    */
   private final List<Class<?>> classesById = new ArrayList<>();
   private final List<Long> serialVersionUIDsById = new ArrayList<>();
-  private int nextClassId = 0;
+  private int nextClassId;
 
-  private Class<?> lastClass = null;
-  private long lastSerialVersionUID = 0;
+  private Class<?> lastClass;
+  private long lastSerialVersionUID;
 
   /**
    * A mapping of generated IDs to strings.
    */
   private final List<String> stringsById = new ArrayList<>();
-  private int nextStringId = 0;
+  private int nextStringId;
 
-  private String lastString = null;
+  private String lastString;
 
   private FastObjectInput(ObjectInput in) {
     this.in = in;

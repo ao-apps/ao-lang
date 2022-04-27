@@ -46,7 +46,7 @@ public class CorrectedGZIPInputStream extends GZIPInputStream {
     // Empty lock class to help heap profile
   }
   private final FoundErrorLock foundErrorLock = new FoundErrorLock();
-  private boolean foundError = false;
+  private boolean foundError;
 
   @Override
   public int read(byte[] buf, int off, int len) throws IOException {

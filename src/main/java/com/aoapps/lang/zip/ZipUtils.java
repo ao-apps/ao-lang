@@ -147,7 +147,7 @@ public final class ZipUtils {
     unzip(sourceFile, "", destination, null);
   }
 
-  private static final Comparator<File> reverseFileComparator = (f1, f2) -> {
+  private static final Comparator<File> reverseFileComparator = (File f1, File f2) -> {
     try {
       String path1 = f1.getCanonicalPath();
       String path2 = f2.getCanonicalPath();

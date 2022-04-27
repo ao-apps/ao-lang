@@ -235,7 +235,7 @@ public final class Strings {
           continue Loop;
         }
       }
-      c += (wordlen - 1);
+      c += wordlen - 1;
       count++;
     }
     return count;
@@ -264,7 +264,7 @@ public final class Strings {
           continue Loop;
         }
       }
-      c += (wordlen - 1);
+      c += wordlen - 1;
       count++;
     }
     return count;
@@ -293,7 +293,7 @@ public final class Strings {
           continue Loop;
         }
       }
-      c += (wordlen - 1);
+      c += wordlen - 1;
       count++;
     }
     return count;
@@ -1390,7 +1390,7 @@ public final class Strings {
     }
     String unitName;
     long unitSize;
-    if (bitRate < (1000_000)) {
+    if (bitRate < 1000_000) {
       unitName = " k";
       unitSize = 1000;
     } else if (bitRate < 1000_000_000) {
@@ -1448,7 +1448,7 @@ public final class Strings {
     int targetCount = target.length();
 
     if (fromIndex >= sourceCount) {
-      return (targetCount == 0 ? sourceCount : -1);
+      return targetCount == 0 ? sourceCount : -1;
     }
     if (fromIndex < 0) {
       fromIndex = 0;

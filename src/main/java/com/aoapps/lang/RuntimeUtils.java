@@ -34,11 +34,13 @@ public final class RuntimeUtils {
   }
 
   private static class AvailableProcessorsLock {
-    // Empty lock class to help heap profile
+    private AvailableProcessorsLock() {
+      // Empty lock class to help heap profile
+    }
   }
   private static final AvailableProcessorsLock availableProcessorsLock = new AvailableProcessorsLock();
   private static long availableProcessorsLastRetrieved = Long.MIN_VALUE;
-  private static int availableProcessors = 0;
+  private static int availableProcessors;
 
   /**
    * Faster way to get the number of processors in the system.

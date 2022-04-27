@@ -479,12 +479,12 @@ public final class Throwables {
     registerSurrogateFactory(javax.imageio.IIOException.class, (template, cause) -> new javax.imageio.IIOException(template.getMessage(), cause));
     registerSurrogateFactory(javax.imageio.metadata.IIOInvalidTreeException.class, (template, cause) -> new javax.imageio.metadata.IIOInvalidTreeException(template.getMessage(), cause, template.getOffendingNode()));
     registerSurrogateFactory(java.nio.channels.InterruptedByTimeoutException.class, (template, cause) -> initCause(new java.nio.channels.InterruptedByTimeoutException(), cause)); // Does not accept message
-    registerSurrogateFactory(java.io.InterruptedIOException.class, (template, cause) -> {
+    registerSurrogateFactory(java.io.InterruptedIOException.class, (java.io.InterruptedIOException template, Throwable cause) -> {
       java.io.InterruptedIOException newEx = initCause(new java.io.InterruptedIOException(template.getMessage()), cause);
       newEx.bytesTransferred = template.bytesTransferred;
       return newEx;
     });
-    registerSurrogateFactory(java.net.SocketTimeoutException.class, (template, cause) -> {
+    registerSurrogateFactory(java.net.SocketTimeoutException.class, (java.net.SocketTimeoutException template, Throwable cause) -> {
       java.net.SocketTimeoutException newEx = initCause(new java.net.SocketTimeoutException(template.getMessage()), cause);
       newEx.bytesTransferred = template.bytesTransferred;
       return newEx;
@@ -819,7 +819,7 @@ public final class Throwables {
     registerSurrogateFactory(java.rmi.server.ServerNotActiveException.class, (template, cause) -> initCause(new java.rmi.server.ServerNotActiveException(template.getMessage()), cause));
     // javax.xml.soap.SOAPException: Not in Java SE 11, don't add dependency on jaxb
     registerSurrogateFactory(java.sql.SQLException.class, (template, cause) -> new java.sql.SQLException(template.getMessage(), template.getSQLState(), template.getErrorCode(), cause));
-    registerSurrogateFactory(java.sql.BatchUpdateException.class, (template, cause) -> {
+    registerSurrogateFactory(java.sql.BatchUpdateException.class, (java.sql.BatchUpdateException template, Throwable cause) -> {
       int[] updateCounts = template.getUpdateCounts();
       if (updateCounts != null) {
         return new java.sql.BatchUpdateException(
@@ -856,7 +856,7 @@ public final class Throwables {
     registerSurrogateFactory(java.sql.SQLWarning.class, (template, cause) -> new java.sql.SQLWarning(template.getMessage(), template.getSQLState(), template.getErrorCode(), cause));
     registerSurrogateFactory(java.sql.DataTruncation.class, (template, cause) -> new java.sql.DataTruncation(template.getIndex(), template.getParameter(), template.getRead(), template.getDataSize(), template.getTransferSize(), cause)); // Does not accept message
     registerSurrogateFactory(javax.sql.rowset.spi.SyncFactoryException.class, (template, cause) -> initCause(new javax.sql.rowset.spi.SyncFactoryException(template.getMessage()), cause));
-    registerSurrogateFactory(javax.sql.rowset.spi.SyncProviderException.class, (template, cause) -> {
+    registerSurrogateFactory(javax.sql.rowset.spi.SyncProviderException.class, (javax.sql.rowset.spi.SyncProviderException template, Throwable cause) -> {
       javax.sql.rowset.spi.SyncProviderException newEx = initCause(new javax.sql.rowset.spi.SyncProviderException(template.getMessage()), cause);
       newEx.setSyncResolver(template.getSyncResolver());
       return newEx;
@@ -916,7 +916,7 @@ public final class Throwables {
     // org.omg.PortableServer.POAPackage.WrongAdapter: Removed in Java 11
     // org.omg.PortableServer.POAPackage.WrongPolicy: Removed in Java 11
     // org.omg.CORBA.WrongTransaction: Removed in Java 11
-    registerSurrogateFactory(javax.transaction.xa.XAException.class, (template, cause) -> {
+    registerSurrogateFactory(javax.transaction.xa.XAException.class, (javax.transaction.xa.XAException template, Throwable cause) -> {
       javax.transaction.xa.XAException newEx = initCause(new javax.transaction.xa.XAException(template.getMessage()), cause);
       newEx.errorCode = template.errorCode;
       return newEx;

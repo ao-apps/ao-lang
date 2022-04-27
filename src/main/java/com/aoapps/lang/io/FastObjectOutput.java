@@ -91,15 +91,15 @@ public class FastObjectOutput implements ObjectOutput {
    * A mapping of classes to generated IDs.
    */
   private final Map<Class<?>, Integer> classesMap = new HashMap<>();
-  private int nextClassId = 0;
-  private Class<?> lastClass = null;
+  private int nextClassId;
+  private Class<?> lastClass;
 
   /**
    * A mapping of fast string IDs.
    */
   private final Map<String, Integer> stringsMap = new HashMap<>();
-  private int nextStringId = 0;
-  private String lastString = null;
+  private int nextStringId;
+  private String lastString;
 
   private FastObjectOutput(ObjectOutput out) {
     this.out = out;

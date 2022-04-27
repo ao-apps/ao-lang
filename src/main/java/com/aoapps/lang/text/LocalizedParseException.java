@@ -82,7 +82,7 @@ public class LocalizedParseException extends ParseException implements Localized
   }
 
   static {
-    Throwables.registerSurrogateFactory(LocalizedParseException.class, (template, cause) -> {
+    Throwables.registerSurrogateFactory(LocalizedParseException.class, (LocalizedParseException template, Throwable cause) -> {
       LocalizedParseException newEx = new LocalizedParseException(
           template.getErrorOffset(), template.resources, template.key, template.args
       );

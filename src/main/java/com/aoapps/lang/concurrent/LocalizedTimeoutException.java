@@ -82,7 +82,7 @@ public class LocalizedTimeoutException extends TimeoutException implements Local
   }
 
   static {
-    Throwables.registerSurrogateFactory(LocalizedTimeoutException.class, (template, cause) -> {
+    Throwables.registerSurrogateFactory(LocalizedTimeoutException.class, (LocalizedTimeoutException template, Throwable cause) -> {
       LocalizedTimeoutException newEx = new LocalizedTimeoutException(
           template.resources, template.key, template.args
       );

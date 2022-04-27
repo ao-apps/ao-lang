@@ -181,7 +181,9 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
     BigDecimal[] results = new BigDecimal[len];
     if (totalSignum == 0) {
       // Shortcut for zero, just copy into the results
-      for (int i = 0; i < len; i++) results[i] = total;
+      for (int i = 0; i < len; i++) {
+        results[i] = total;
+      }
     } else {
       switch (distributionMethod) {
         case PROPORTIONAL: {
@@ -199,7 +201,9 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
             }
             remaining = remaining.subtract(result);
             BigFraction divisor = BigFraction.ONE.subtract(fractionAltered);
-            for (int d = c - 1; d >= 0; d--) fractionAltereds[d] = fractionAltereds[d].divide(divisor);
+            for (int d = c - 1; d >= 0; d--) {
+              fractionAltereds[d] = fractionAltereds[d].divide(divisor);
+            }
 
             BigFraction fractionOrdered = fractionOrdereds[c];
             for (int d = 0; d < len; d++) {

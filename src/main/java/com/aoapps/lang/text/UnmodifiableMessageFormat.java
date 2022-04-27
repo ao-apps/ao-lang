@@ -37,7 +37,7 @@ public class UnmodifiableMessageFormat extends MessageFormat {
 
   private static final long serialVersionUID = 1L;
 
-  private boolean initCompleted = false;
+  private boolean initCompleted;
 
   /* Unused 2013-09-27
   public UnmodifiableMessageFormat(String pattern) {

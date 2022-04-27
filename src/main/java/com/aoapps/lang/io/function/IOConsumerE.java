@@ -41,7 +41,7 @@ public interface IOConsumerE<T, Ex extends Throwable> {
 
   default IOConsumerE<T, Ex> andThen(IOConsumerE<? super T, ? extends Ex> after) throws IOException, Ex {
     Objects.requireNonNull(after);
-    return t -> {
+    return (T t) -> {
       accept(t);
       after.accept(t);
     };

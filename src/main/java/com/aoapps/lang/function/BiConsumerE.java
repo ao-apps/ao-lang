@@ -41,7 +41,7 @@ public interface BiConsumerE<T, U, Ex extends Throwable> {
   default BiConsumerE<T, U, Ex> andThen(BiConsumerE<? super T, ? super U, ? extends Ex> after) throws Ex {
     Objects.requireNonNull(after);
 
-    return (l, r) -> {
+    return (T l, U r) -> {
       accept(l, r);
       after.accept(l, r);
     };
