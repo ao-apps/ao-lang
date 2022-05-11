@@ -32,8 +32,9 @@ import java.util.Map;
 
 /**
  * Utilities to write {@link FastExternalizable}, {@link Externalizable}, and {@link Serializable} objects.
- *
+ * <p>
  * When multiple objects are being written, this avoids the repetitive writing of classnames and serialVersionUIDs.
+ * </p>
  *
  * @author  AO Industries, Inc.
  */
@@ -68,21 +69,36 @@ public class FastObjectOutput implements ObjectOutput {
     return fastOut;
   }
 
-  static final int
-      // The object is null
-      NULL = 0,
-      // The object uses standard serialization
-      STANDARD = NULL + 1,
-      // The object is of a previously unseen class
-      FAST_NEW = STANDARD + 1,
-      // The object is the same class as the previous object
-      FAST_SAME = FAST_NEW + 1,
-      // The object is of a class that has already been seen, and uses the next two bytes as its class ID - (255 - FAST_SEEN_INT)
-      FAST_SEEN_SHORT = FAST_SAME + 1,
-      // The object is of a class that has already been seen, and uses the next four bytes as its class ID
-      FAST_SEEN_INT = FAST_SEEN_SHORT + 1
+  /**
+   * The object is null.
+   */
+  static final int NULL = 0;
+
+  /**
+   * The object uses standard serialization.
+   */
+  static final int STANDARD = NULL + 1;
+
+  /**
+   * The object is of a previously unseen class.
+   */
+  static final int FAST_NEW = STANDARD + 1;
+
+  /**
+   * The object is the same class as the previous object.
+   */
+  static final int FAST_SAME = FAST_NEW + 1;
+
+  /**
+   * The object is of a class that has already been seen, and uses the next two bytes as its class ID - (255 - FAST_SEEN_INT).
+   */
+  static final int FAST_SEEN_SHORT = FAST_SAME + 1;
+
+  /**
+   * The object is of a class that has already been seen, and uses the next four bytes as its class ID.
+   */
+  static final int FAST_SEEN_INT = FAST_SEEN_SHORT + 1;
   // The remaining values are for direct already seen classes between 0 <= ID < (255-FAST_SEEN_INT)
-  ;
 
   private final ObjectOutput out;
   private int wrapCount;

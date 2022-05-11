@@ -101,6 +101,8 @@ public class WrappedError extends Error implements ExtraInfo {
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @return  No defensive copy
    */
   @Override

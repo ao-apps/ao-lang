@@ -100,7 +100,7 @@ public final class GetOpt {
         Throwable cause = e.getCause();
         throw Throwables.wrap((cause == null) ? e : cause, WrappedException.class, WrappedException::new);
       } catch (NoSuchMethodException | IllegalAccessException e) {
-        // Fall-through to try constructor
+        // fall-through to try constructor
       }
       // public constructor with single String parameter
       try {

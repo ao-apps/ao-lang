@@ -95,6 +95,8 @@ public class LocalizedUnsupportedEncodingException extends UnsupportedEncodingEx
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @return  No defensive copy
    */
   @Override

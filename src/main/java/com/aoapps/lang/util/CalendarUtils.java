@@ -94,6 +94,7 @@ public final class CalendarUtils {
    * Allows negative years like "-344-01-23".
    * Allows shorter months and days like "1976-1-9".
    *
+   * @param yyyy_mm_dd  The date in YYYY-MM-DD format.
    * @param timeZone  The time zone to use or {@code null} to use the default time zone
    */
   public static GregorianCalendar parseDate(String yyyy_mm_dd, TimeZone timeZone) throws IllegalArgumentException {
@@ -101,7 +102,9 @@ public final class CalendarUtils {
       return null;
     }
 
-    final int year, month, day;
+    final int year;
+    final int month;
+    final int day;
 
     yyyy_mm_dd = yyyy_mm_dd.trim();
     int pos1 = yyyy_mm_dd.indexOf('-', 1); // Start search at second character to allow negative years: -1000-01-23
@@ -138,6 +141,8 @@ public final class CalendarUtils {
    * Gets the date from the "YYYY-MM-DD" format in the default time zone or {@code null} if the parameter is {@code null}.
    * Allows negative years like "-344-01-23".
    * Allows shorter months and days like "1976-1-9".
+   *
+   * @param yyyy_mm_dd  The date in YYYY-MM-DD format.
    */
   public static GregorianCalendar parseDate(String yyyy_mm_dd) throws IllegalArgumentException {
     return parseDate(yyyy_mm_dd, null);
@@ -246,7 +251,13 @@ public final class CalendarUtils {
       return null;
     }
 
-    final int year, month, day, hour, minute, second, nanos;
+    final int year;
+    final int month;
+    final int day;
+    final int hour;
+    final int minute;
+    final int second;
+    final int nanos;
 
     dateTime = dateTime.trim();
     int pos1 = dateTime.indexOf('-', 1); // Start search at second character to allow negative years: -1000-01-23

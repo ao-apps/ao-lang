@@ -37,8 +37,9 @@ public interface Disposable {
 
   /**
    * Disposes of this object instance.
-   *
+   * <p>
    * If already disposed, no action will be taken and no exception thrown.
+   * </p>
    */
   void dispose();
 }

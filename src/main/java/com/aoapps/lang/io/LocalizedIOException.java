@@ -87,6 +87,8 @@ public class LocalizedIOException extends IOException implements LocalizedExcept
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @return  No defensive copy
    */
   @Override

@@ -40,17 +40,13 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
 
   private static final long serialVersionUID = 6382807525128346490L;
 
-  private static final BigInteger
-      ONE_HUNDRED = BigInteger.valueOf(100),
-      ONE_THOUSAND = BigInteger.valueOf(1000),
-      TEN_THOUSAND = BigInteger.valueOf(10000),
-      ONE_HUNDRED_THOUSAND = BigInteger.valueOf(100000)
-  ;
+  private static final BigInteger ONE_HUNDRED = BigInteger.valueOf(100);
+  private static final BigInteger ONE_THOUSAND = BigInteger.valueOf(1000);
+  private static final BigInteger TEN_THOUSAND = BigInteger.valueOf(10000);
+  private static final BigInteger ONE_HUNDRED_THOUSAND = BigInteger.valueOf(100000);
 
-  public static final BigFraction
-      ZERO = new BigFraction(0, 1, false),
-      ONE = new BigFraction(1, 1, false)
-  ;
+  public static final BigFraction ZERO = new BigFraction(0, 1, false);
+  public static final BigFraction ONE = new BigFraction(1, 1, false);
 
   public static BigFraction valueOf(long numerator, long denominator, boolean displayPercentage) throws NumberFormatException {
     if (!displayPercentage && denominator == 1) {
@@ -416,7 +412,7 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
   }
 
   /**
-   * Gets this fraction as a BigInteger using <code>RoundingMode.UNNECESSARY</code>
+   * Gets this fraction as a BigInteger using <code>RoundingMode.UNNECESSARY</code>.
    */
   public BigInteger getBigInteger() throws ArithmeticException {
     return getBigInteger(RoundingMode.UNNECESSARY);
@@ -430,7 +426,7 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
   }
 
   /**
-   * Gets this fraction as a BigDecimal using <code>RoundingMode.UNNECESSARY</code>
+   * Gets this fraction as a BigDecimal using <code>RoundingMode.UNNECESSARY</code>.
    */
   public BigDecimal getBigDecimal(int scale) throws ArithmeticException {
     return getBigDecimal(scale, RoundingMode.UNNECESSARY);
@@ -467,8 +463,7 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
     return
         displayPercentage == other.displayPercentage
             && numerator.equals(other.numerator)
-            && denominator.equals(other.denominator)
-    ;
+            && denominator.equals(other.denominator);
   }
 
   @Override
@@ -511,8 +506,9 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
 
   /**
    * Adds two fractions, returning the value in lowest terms.
-   *
+   * <p>
    * If either is a percentage, the result will be a percentage.
+   * </p>
    */
   public BigFraction add(BigFraction val) {
     if (denominator.compareTo(val.denominator) == 0) {
@@ -532,8 +528,9 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
 
   /**
    * Subtracts two fractions, returning the value in lowest terms.
-   *
+   * <p>
    * If either is a percentage, the result will be a percentage.
+   * </p>
    */
   public BigFraction subtract(BigFraction val) {
     if (denominator.compareTo(val.denominator) == 0) {
@@ -553,8 +550,9 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
 
   /**
    * Multiplies two fractions, returning the value in lowest terms.
-   *
+   * <p>
    * If both are percentages, the result will be a percentage.
+   * </p>
    */
   public BigFraction multiply(BigFraction val) {
     if (val.compareTo(ONE) == 0) {

@@ -64,13 +64,12 @@ public final class UnsignedLong {
     return getUnsigned(dividend).remainder(getUnsigned(divisor)).longValue();
   }
 
-  /**
-   * Multiplies two unsigned long values.
-   */
-  /* Not necessary, regular multiplication should be OK
-  public static long multiply(long factor1, long factor2) {
-    // This may not be very fast, but it is simple to implement
-    return getUnsigned(factor1).multiply(getUnsigned(factor2)).longValue();
-  }
-   */
+  // Not necessary, regular multiplication should be OK
+  ///**
+  // * Multiplies two unsigned long values.
+  // */
+  //public static long multiply(long factor1, long factor2) {
+  //  // This may not be very fast, but it is simple to implement
+  //  return getUnsigned(factor1).multiply(getUnsigned(factor2)).longValue();
+  //}
 }

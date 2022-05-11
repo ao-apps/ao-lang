@@ -125,19 +125,12 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         <configuration>
           <instructions>
             <Private-Package>
-              com.aoapps.lang.i18n_res;-split-package:=first,
+              com.aoapps.lang.i18nres;-split-package:=first,
               com.aoapps.lang.io.i18n;-split-package:=first,
               com.aoapps.lang.util.i18n;-split-package:=first,
               com.aoapps.lang.validation.i18n;-split-package:=first
             </Private-Package>
           </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId><artifactId>maven-checkstyle-plugin</artifactId>
-        <configuration>
-          <!-- TODO: Clean-up Checkstyle -->
-          <failOnViolation>false</failOnViolation>
         </configuration>
       </plugin>
     </plugins>

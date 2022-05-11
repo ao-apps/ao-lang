@@ -128,7 +128,7 @@ public class ProcessResult {
       stderrThread.join();
 
       // Wait for process to exit
-      int exitVal = process.waitFor();
+      final int exitVal = process.waitFor();
 
       // Check for exceptions in threads
       if (stdoutException != null) {

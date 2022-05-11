@@ -94,8 +94,7 @@ public class SmartComparator implements Comparator<Object> {
         tokenType == other.tokenType
         && begin == other.begin
         && end == other.end
-        && value.equals(other.value)
-      ;
+        && value.equals(other.value);
     }*/
   }
 
@@ -113,57 +112,54 @@ public class SmartComparator implements Comparator<Object> {
       boolean isNumeric;
       boolean dotUsed;
       int prefixLen;
-      {
-        char ch1 = value.charAt(i);
-        char ch2;
-        // #
-        if (
-            ch1 >= '0'
-                && ch1 <= '9'
-        ) {
-          isNumeric = true;
-          dotUsed = false;
-          prefixLen = 1;
+        {
+          char ch1 = value.charAt(i);
+          char ch2;
+          if (
+              ch1 >= '0'
+                  && ch1 <= '9'
+          ) {
+            // #
+            isNumeric = true;
+            dotUsed = false;
+            prefixLen = 1;
+          } else if (
+              ch1 == '.'
+                  && i < (len - 1)
+                  && (ch2 = value.charAt(i + 1)) >= '0'
+                  && ch2 <= '9'
+          ) {
+            // .#
+            isNumeric = true;
+            dotUsed = true;
+            prefixLen = 2;
+          } else if (
+              ch1 == '-'
+                  && i < (len - 1)
+                  && (ch2 = value.charAt(i + 1)) >= '0'
+                  && ch2 <= '9'
+          ) {
+            // -#
+            isNumeric = true;
+            dotUsed = false;
+            prefixLen = 2;
+          } else if (
+              ch1 == '-'
+                  && i < (len - 2)
+                  && value.charAt(i + 1) == '.'
+                  && (ch2 = value.charAt(i + 2)) >= '0'
+                  && ch2 <= '9'
+          ) {
+            // -.#
+            isNumeric = true;
+            dotUsed = true;
+            prefixLen = 3;
+          } else {
+            isNumeric = false;
+            dotUsed = false;
+            prefixLen = 0;
+          }
         }
-        // .#
-        else if (
-            ch1 == '.'
-                && i < (len - 1)
-                && (ch2 = value.charAt(i + 1)) >= '0'
-                && ch2 <= '9'
-        ) {
-          isNumeric = true;
-          dotUsed = true;
-          prefixLen = 2;
-        }
-        // -#
-        else if (
-            ch1 == '-'
-                && i < (len - 1)
-                && (ch2 = value.charAt(i + 1)) >= '0'
-                && ch2 <= '9'
-        ) {
-          isNumeric = true;
-          dotUsed = false;
-          prefixLen = 2;
-        }
-        // -.#
-        else if (
-            ch1 == '-'
-                && i < (len - 2)
-                && value.charAt(i + 1) == '.'
-                && (ch2 = value.charAt(i + 2)) >= '0'
-                && ch2 <= '9'
-        ) {
-          isNumeric = true;
-          dotUsed = true;
-          prefixLen = 3;
-        } else {
-          isNumeric = false;
-          dotUsed = false;
-          prefixLen = 0;
-        }
-      }
 
       if (isNumeric) {
         if (i == pos) {
@@ -250,8 +246,8 @@ public class SmartComparator implements Comparator<Object> {
       } else {
         String sub1 = t1.value.substring(t1.begin, t1.end);
         String sub2 = t2.value.substring(t2.begin, t2.end);
-        // Both numeric
         if (type1 == TokenType.NUMERIC) {
+          // Both numeric
           assert type2 == TokenType.NUMERIC;
           BigDecimal bd1 = new BigDecimal(sub1);
           BigDecimal bd2 = new BigDecimal(sub2);
@@ -262,9 +258,8 @@ public class SmartComparator implements Comparator<Object> {
           if (diff != 0) {
             return diff;
           }
-        }
-        // Both string
-        else if (type1 == TokenType.STRING) {
+        } else if (type1 == TokenType.STRING) {
+          // Both string
           assert type2 == TokenType.STRING;
           // Use collator first
           int diff = collator.compare(sub1, sub2);

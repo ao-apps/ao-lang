@@ -39,13 +39,13 @@ public final class ExecutionExceptions {
 
   /**
    * Wraps and throws an {@link ExecutionException} when its {@linkplain ExecutionException#getCause() cause} is an
-   * instance of {@code xClass}.
+   * instance of {@code exClass}.
    * This is compatible with Lambda method references on common throwable constructors that take
    * {@code (String message, Throwable cause)}.
    * <p>
    * First, an attempt is made to create a surrogate of the cause via
    * {@link Throwables#newSurrogate(java.lang.Throwable, java.lang.Throwable)}, with the execution exception being the
-   * cause of the new surrogate.  When a surrogate cannot be created, uses the provided function {@code xSupplier} to
+   * cause of the new surrogate.  When a surrogate cannot be created, uses the provided function {@code exSupplier} to
    * create a new wrapper.
    * </p>
    * <p>
@@ -69,33 +69,33 @@ public final class ExecutionExceptions {
    *   throw ee;
    * }</pre>
    * <p>
-   * When the cause is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+   * When the cause is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
    * surrogate is not itself an {@link InterruptedException}, the current thread will be
    * {@linkplain Thread#interrupt() re-interrupted}.
    * </p>
    *
-   * @param  xClass  Exceptions with causes of this class are wrapped and thrown.
+   * @param  exClass  Exceptions with causes of this class are wrapped and thrown.
    *
-   * @param  xSupplier  Performs wrapping of the execution exception itself when a surrogate cannot be created.
+   * @param  exSupplier  Performs wrapping of the execution exception itself when a surrogate cannot be created.
    *
-   * @throws  X  When cause is an instance of {@code xClass}, throws {@code ee} wrapped via {@code xSupplier}.
+   * @throws  Ex  When cause is an instance of {@code exClass}, throws {@code ee} wrapped via {@code exSupplier}.
    *
    * @see  Throwables#newSurrogate(java.lang.Throwable, java.lang.Throwable)
    */
-  public static <X extends Throwable> void wrapAndThrow(
+  public static <Ex extends Throwable> void wrapAndThrow(
       ExecutionException ee,
-      Class<? extends X> xClass,
-      BiFunction<? super String, ? super ExecutionException, ? extends X> xSupplier
-  ) throws X {
+      Class<? extends Ex> exClass,
+      BiFunction<? super String, ? super ExecutionException, ? extends Ex> exSupplier
+  ) throws Ex {
     if (ee != null) {
       Throwable cause = ee.getCause();
-      if (xClass.isInstance(cause)) {
-        X template = xClass.cast(cause);
-        X surrogate = Throwables.newSurrogate(template, ee);
+      if (exClass.isInstance(cause)) {
+        Ex template = exClass.cast(cause);
+        Ex surrogate = Throwables.newSurrogate(template, ee);
         if (surrogate != template) {
           throw surrogate;
         } else {
-          X newExc = xSupplier.apply(template.getMessage(), ee);
+          Ex newExc = exSupplier.apply(template.getMessage(), ee);
           if (
               cause instanceof InterruptedException
                   && !(newExc instanceof InterruptedException)
@@ -111,11 +111,11 @@ public final class ExecutionExceptions {
 
   /**
    * Wraps and throws an {@link ExecutionException} when its {@linkplain ExecutionException#getCause() cause} is an
-   * instance of {@code xClass}.
+   * instance of {@code exClass}.
    * <p>
    * First, an attempt is made to create a surrogate of the cause via
    * {@link Throwables#newSurrogate(java.lang.Throwable, java.lang.Throwable)}, with the execution exception being the
-   * cause of the new surrogate.  When a surrogate cannot be created, uses the provided function {@code xSupplier} to
+   * cause of the new surrogate.  When a surrogate cannot be created, uses the provided function {@code exSupplier} to
    * create a new wrapper.
    * </p>
    * <p>
@@ -140,33 +140,33 @@ public final class ExecutionExceptions {
    *   throw ee;
    * }</pre>
    * <p>
-   * When the cause is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+   * When the cause is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
    * surrogate is not itself an {@link InterruptedException}, the current thread will be
    * {@linkplain Thread#interrupt() re-interrupted}.
    * </p>
    *
-   * @param  xClass  Exceptions with causes of this class are wrapped and thrown.
+   * @param  exClass  Exceptions with causes of this class are wrapped and thrown.
    *
-   * @param  xSupplier  Performs wrapping of the execution exception itself when a surrogate cannot be created.
+   * @param  exSupplier  Performs wrapping of the execution exception itself when a surrogate cannot be created.
    *
-   * @throws  X  When cause is an instance of {@code xClass}, throws {@code ee} wrapped via {@code xSupplier}.
+   * @throws  Ex  When cause is an instance of {@code exClass}, throws {@code ee} wrapped via {@code exSupplier}.
    *
    * @see  Throwables#newSurrogate(java.lang.Throwable, java.lang.Throwable)
    */
-  public static <X extends Throwable> void wrapAndThrowWithTemplate(
+  public static <Ex extends Throwable> void wrapAndThrowWithTemplate(
       ExecutionException ee,
-      Class<? extends X> xClass,
-      BiFunction<? super X, ? super ExecutionException, ? extends X> xSupplier
-  ) throws X {
+      Class<? extends Ex> exClass,
+      BiFunction<? super Ex, ? super ExecutionException, ? extends Ex> exSupplier
+  ) throws Ex {
     if (ee != null) {
       Throwable cause = ee.getCause();
-      if (xClass.isInstance(cause)) {
-        X template = xClass.cast(cause);
-        X surrogate = Throwables.newSurrogate(template, ee);
+      if (exClass.isInstance(cause)) {
+        Ex template = exClass.cast(cause);
+        Ex surrogate = Throwables.newSurrogate(template, ee);
         if (surrogate != template) {
           throw surrogate;
         } else {
-          X newExc = xSupplier.apply(template, ee);
+          Ex newExc = exSupplier.apply(template, ee);
           if (
               cause instanceof InterruptedException
                   && !(newExc instanceof InterruptedException)

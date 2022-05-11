@@ -21,7 +21,7 @@
  * along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
  */
 module com.aoapps.lang.devel {
-  exports com.aoapps.lang.i18n_res;
+  exports com.aoapps.lang.i18nres;
   exports com.aoapps.lang.io.i18n;
   exports com.aoapps.lang.util.i18n;
   exports com.aoapps.lang.validation.i18n;

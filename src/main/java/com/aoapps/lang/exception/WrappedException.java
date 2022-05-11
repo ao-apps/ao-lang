@@ -349,6 +349,8 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @return  No defensive copy
    */
   @Override

@@ -33,6 +33,8 @@ import java.util.ServiceLoader;
 public interface ThrowableSurrogateFactoryInitializer extends Runnable {
 
   /**
+   * {@inheritDoc}
+   *
    * @see  Throwables#registerSurrogateFactory(java.lang.Class, com.aoapps.lang.ThrowableSurrogateFactory)
    */
   @Override

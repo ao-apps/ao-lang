@@ -86,8 +86,7 @@ public class LongLong extends Number implements Comparable<LongLong> {
   /**
    * @see  #parseLongLong(java.lang.String, int)
    */
-  public static LongLong valueOf(String s) throws NumberFormatException
-  {
+  public static LongLong valueOf(String s) throws NumberFormatException {
     return parseLongLong(s, 10);
   }
 
@@ -167,7 +166,8 @@ public class LongLong extends Number implements Comparable<LongLong> {
 
   private static final long serialVersionUID = -8296704159343817686L;
 
-  private final long hi, lo;
+  private final long hi;
+  private final long lo;
 
   public LongLong(long hi, long lo) {
     this.hi = hi;
@@ -367,7 +367,8 @@ public class LongLong extends Number implements Comparable<LongLong> {
       return this;
     }
     // Rotate multiple of 64 yields swapped longs
-    long newHi, newLo;
+    long newHi;
+    long newLo;
     if ((distance & (Long.SIZE - 1)) == 0) {
       newHi = lo;
       newLo = hi;
@@ -391,7 +392,8 @@ public class LongLong extends Number implements Comparable<LongLong> {
       return this;
     }
     // Rotate multiple of 64 yields swapped longs
-    long newHi, newLo;
+    long newHi;
+    long newLo;
     if ((distance & (Long.SIZE - 1)) == 0) {
       newHi = lo;
       newLo = hi;

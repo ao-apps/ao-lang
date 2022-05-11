@@ -158,7 +158,7 @@ public final class AutoCloseables {
    * Only returns when {@code t0} is {@code null} and no new throwables.
    * </p>
    * <p>
-   * When the exception is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+   * When the exception is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
    * wrapper is not itself an {@link InterruptedException}, the current thread will be
    * {@linkplain Thread#interrupt() re-interrupted}.
    * </p>
@@ -166,10 +166,10 @@ public final class AutoCloseables {
    * @param  t0  If not {@code null}, any new throwables will be combined via
    *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
    *
-   * @param  xClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
-   *                 are thrown directly.
+   * @param  exClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
+   *                  are thrown directly.
    *
-   * @param  xSupplier  Other throwables are wrapped via this function, then thrown
+   * @param  exSupplier  Other throwables are wrapped via this function, then thrown
    *
    * @param  closeable  The closeable to be closed
    *
@@ -177,15 +177,15 @@ public final class AutoCloseables {
    *
    * @throws  RuntimeException  When resolved throwable is a {@link RuntimeException}
    *
-   * @throws  X      When resolved throwable is an instance of {@code xClass}, otherwise
-   *                 wrapped via {@code xSupplier}
+   * @throws  Ex      When resolved throwable is an instance of {@code exClass}, otherwise
+   *                  wrapped via {@code exSupplier}
    */
-  public static <X extends Throwable> void closeAndThrow(
+  public static <Ex extends Throwable> void closeAndThrow(
       Throwable t0,
-      Class<? extends X> xClass,
-      Function<? super Throwable, ? extends X> xSupplier,
+      Class<? extends Ex> exClass,
+      Function<? super Throwable, ? extends Ex> exSupplier,
       AutoCloseable closeable
-  ) throws Error, RuntimeException, X {
+  ) throws Error, RuntimeException, Ex {
     Throwable t = closeAndCatch(t0, closeable);
     if (t != null) {
       if (t instanceof Error) {
@@ -194,10 +194,10 @@ public final class AutoCloseables {
       if (t instanceof RuntimeException) {
         throw (RuntimeException) t;
       }
-      if (xClass.isInstance(t)) {
-        throw xClass.cast(t);
+      if (exClass.isInstance(t)) {
+        throw exClass.cast(t);
       }
-      X newExc = xSupplier.apply(t);
+      Ex newExc = exSupplier.apply(t);
       if (
           t instanceof InterruptedException
               && !(newExc instanceof InterruptedException)
@@ -215,15 +215,15 @@ public final class AutoCloseables {
    * Only returns when no throwables.
    * </p>
    * <p>
-   * When the exception is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+   * When the exception is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
    * wrapper is not itself an {@link InterruptedException}, the current thread will be
    * {@linkplain Thread#interrupt() re-interrupted}.
    * </p>
    *
-   * @param  xClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
-   *                 are thrown directly.
+   * @param  exClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
+   *                  are thrown directly.
    *
-   * @param  xSupplier  Other throwables are wrapped via this function, then thrown
+   * @param  exSupplier  Other throwables are wrapped via this function, then thrown
    *
    * @param  closeable  The closeable to be closed
    *
@@ -231,15 +231,15 @@ public final class AutoCloseables {
    *
    * @throws  RuntimeException  When resolved throwable is a {@link RuntimeException}
    *
-   * @throws  X      When resolved throwable is an instance of {@code xClass}, otherwise
-   *                 wrapped via {@code xSupplier}
+   * @throws  Ex      When resolved throwable is an instance of {@code exClass}, otherwise
+   *                  wrapped via {@code exSupplier}
    */
-  public static <X extends Throwable> void closeAndThrow(
-      Class<? extends X> xClass,
-      Function<? super Throwable, ? extends X> xSupplier,
+  public static <Ex extends Throwable> void closeAndThrow(
+      Class<? extends Ex> exClass,
+      Function<? super Throwable, ? extends Ex> exSupplier,
       AutoCloseable closeable
-  ) throws Error, RuntimeException, X {
-    closeAndThrow(null, xClass, xSupplier, closeable);
+  ) throws Error, RuntimeException, Ex {
+    closeAndThrow(null, exClass, exSupplier, closeable);
   }
 
   /**
@@ -248,7 +248,7 @@ public final class AutoCloseables {
    * Only returns when {@code t0} is {@code null} and no new throwables.
    * </p>
    * <p>
-   * When the exception is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+   * When the exception is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
    * wrapper is not itself an {@link InterruptedException}, the current thread will be
    * {@linkplain Thread#interrupt() re-interrupted}.
    * </p>
@@ -256,10 +256,10 @@ public final class AutoCloseables {
    * @param  t0  If not {@code null}, any new throwables will be combined via
    *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
    *
-   * @param  xClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
-   *                 are thrown directly.
+   * @param  exClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
+   *                  are thrown directly.
    *
-   * @param  xSupplier  Other throwables are wrapped via this function, then thrown
+   * @param  exSupplier  Other throwables are wrapped via this function, then thrown
    *
    * @param  closeable  The set of all closeables, which will be closed in order
    *
@@ -267,15 +267,15 @@ public final class AutoCloseables {
    *
    * @throws  RuntimeException  When resolved throwable is a {@link RuntimeException}
    *
-   * @throws  X      When resolved throwable is an instance of {@code xClass}, otherwise
-   *                 wrapped via {@code xSupplier}
+   * @throws  Ex      When resolved throwable is an instance of {@code exClass}, otherwise
+   *                  wrapped via {@code exSupplier}
    */
-  public static <X extends Throwable> void closeAndThrow(
+  public static <Ex extends Throwable> void closeAndThrow(
       Throwable t0,
-      Class<? extends X> xClass,
-      Function<? super Throwable, ? extends X> xSupplier,
+      Class<? extends Ex> exClass,
+      Function<? super Throwable, ? extends Ex> exSupplier,
       AutoCloseable ... closeable
-  ) throws Error, RuntimeException, X {
+  ) throws Error, RuntimeException, Ex {
     Throwable t = closeAndCatch(t0, closeable);
     if (t != null) {
       if (t instanceof Error) {
@@ -284,10 +284,10 @@ public final class AutoCloseables {
       if (t instanceof RuntimeException) {
         throw (RuntimeException) t;
       }
-      if (xClass.isInstance(t)) {
-        throw xClass.cast(t);
+      if (exClass.isInstance(t)) {
+        throw exClass.cast(t);
       }
-      X newExc = xSupplier.apply(t);
+      Ex newExc = exSupplier.apply(t);
       if (
           t instanceof InterruptedException
               && !(newExc instanceof InterruptedException)
@@ -305,15 +305,15 @@ public final class AutoCloseables {
    * Only returns when no throwables.
    * </p>
    * <p>
-   * When the exception is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+   * When the exception is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
    * wrapper is not itself an {@link InterruptedException}, the current thread will be
    * {@linkplain Thread#interrupt() re-interrupted}.
    * </p>
    *
-   * @param  xClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
-   *                 are thrown directly.
+   * @param  exClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
+   *                  are thrown directly.
    *
-   * @param  xSupplier  Other throwables are wrapped via this function, then thrown
+   * @param  exSupplier  Other throwables are wrapped via this function, then thrown
    *
    * @param  closeable  The set of all closeables, which will be closed in order
    *
@@ -321,15 +321,15 @@ public final class AutoCloseables {
    *
    * @throws  RuntimeException  When resolved throwable is a {@link RuntimeException}
    *
-   * @throws  X      When resolved throwable is an instance of {@code xClass}, otherwise
-   *                 wrapped via {@code xSupplier}
+   * @throws  Ex      When resolved throwable is an instance of {@code exClass}, otherwise
+   *                  wrapped via {@code exSupplier}
    */
-  public static <X extends Throwable> void closeAndThrow(
-      Class<? extends X> xClass,
-      Function<? super Throwable, ? extends X> xSupplier,
+  public static <Ex extends Throwable> void closeAndThrow(
+      Class<? extends Ex> exClass,
+      Function<? super Throwable, ? extends Ex> exSupplier,
       AutoCloseable ... closeable
-  ) throws Error, RuntimeException, X {
-    closeAndThrow(null, xClass, xSupplier, closeable);
+  ) throws Error, RuntimeException, Ex {
+    closeAndThrow(null, exClass, exSupplier, closeable);
   }
 
   /**
@@ -338,7 +338,7 @@ public final class AutoCloseables {
    * Only returns when {@code t0} is {@code null} and no new throwables.
    * </p>
    * <p>
-   * When the exception is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+   * When the exception is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
    * wrapper is not itself an {@link InterruptedException}, the current thread will be
    * {@linkplain Thread#interrupt() re-interrupted}.
    * </p>
@@ -346,10 +346,10 @@ public final class AutoCloseables {
    * @param  t0  If not {@code null}, any new throwables will be combined via
    *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
    *
-   * @param  xClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
-   *                 are thrown directly.
+   * @param  exClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
+   *                  are thrown directly.
    *
-   * @param  xSupplier  Other throwables are wrapped via this function, then thrown
+   * @param  exSupplier  Other throwables are wrapped via this function, then thrown
    *
    * @param  closeable  The set of all closeables, which will be closed in order
    *
@@ -357,15 +357,15 @@ public final class AutoCloseables {
    *
    * @throws  RuntimeException  When resolved throwable is a {@link RuntimeException}
    *
-   * @throws  X      When resolved throwable is an instance of {@code xClass}, otherwise
-   *                 wrapped via {@code xSupplier}
+   * @throws  Ex      When resolved throwable is an instance of {@code exClass}, otherwise
+   *                  wrapped via {@code exSupplier}
    */
-  public static <X extends Throwable> void closeAndThrow(
+  public static <Ex extends Throwable> void closeAndThrow(
       Throwable t0,
-      Class<? extends X> xClass,
-      Function<? super Throwable, ? extends X> xSupplier,
+      Class<? extends Ex> exClass,
+      Function<? super Throwable, ? extends Ex> exSupplier,
       Iterable<? extends AutoCloseable> closeable
-  ) throws Error, RuntimeException, X {
+  ) throws Error, RuntimeException, Ex {
     Throwable t = closeAndCatch(t0, closeable);
     if (t != null) {
       if (t instanceof Error) {
@@ -374,10 +374,10 @@ public final class AutoCloseables {
       if (t instanceof RuntimeException) {
         throw (RuntimeException) t;
       }
-      if (xClass.isInstance(t)) {
-        throw xClass.cast(t);
+      if (exClass.isInstance(t)) {
+        throw exClass.cast(t);
       }
-      X newExc = xSupplier.apply(t);
+      Ex newExc = exSupplier.apply(t);
       if (
           t instanceof InterruptedException
               && !(newExc instanceof InterruptedException)
@@ -395,15 +395,15 @@ public final class AutoCloseables {
    * Only returns when no throwables.
    * </p>
    * <p>
-   * When the exception is an {@link InterruptedException} and is wrapped via {@code xSupplier}, and the resulting
+   * When the exception is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
    * wrapper is not itself an {@link InterruptedException}, the current thread will be
    * {@linkplain Thread#interrupt() re-interrupted}.
    * </p>
    *
-   * @param  xClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
-   *                 are thrown directly.
+   * @param  exClass  Throwables of this class, as well as {@link Error} and {@link RuntimeException},
+   *                  are thrown directly.
    *
-   * @param  xSupplier  Other throwables are wrapped via this function, then thrown
+   * @param  exSupplier  Other throwables are wrapped via this function, then thrown
    *
    * @param  closeable  The set of all closeables, which will be closed in order
    *
@@ -411,25 +411,25 @@ public final class AutoCloseables {
    *
    * @throws  RuntimeException  When resolved throwable is a {@link RuntimeException}
    *
-   * @throws  X      When resolved throwable is an instance of {@code xClass}, otherwise
-   *                 wrapped via {@code xSupplier}
+   * @throws  Ex      When resolved throwable is an instance of {@code exClass}, otherwise
+   *                  wrapped via {@code exSupplier}
    */
-  public static <X extends Throwable> void closeAndThrow(
-      Class<? extends X> xClass,
-      Function<? super Throwable, ? extends X> xSupplier,
+  public static <Ex extends Throwable> void closeAndThrow(
+      Class<? extends Ex> exClass,
+      Function<? super Throwable, ? extends Ex> exSupplier,
       Iterable<? extends AutoCloseable> closeable
-  ) throws Error, RuntimeException, X {
-    closeAndThrow(null, xClass, xSupplier, closeable);
+  ) throws Error, RuntimeException, Ex {
+    closeAndThrow(null, exClass, exSupplier, closeable);
   }
 
   /**
    * Closes the given {@link AutoCloseable}, catching all {@link Throwable}.
-   * Wraps any resulting throwable, unless is an instance of {@code xClass}, {@link Error}, or {@link RuntimeException}.
+   * Wraps any resulting throwable, unless is an instance of {@code exClass}, {@link Error}, or {@link RuntimeException}.
    * <ol>
    * <li>When {@code null}, returns {@code null}.</li>
-   * <li>When is an instance of {@code xClass}, returns the exception.</li>
+   * <li>When is an instance of {@code exClass}, returns the exception.</li>
    * <li>When is {@link Error} or {@link RuntimeException}, throws the exception directly.</li>
-   * <li>Otherwise, returns the exception wrapped via {@code xSupplier}.</li>
+   * <li>Otherwise, returns the exception wrapped via {@code exSupplier}.</li>
    * </ol>
    * <p>
    * This is expected to typically used within a catch block, to throw a narrower scope:
@@ -447,43 +447,43 @@ public final class AutoCloseables {
    * @param  t0  If not {@code null}, any new throwables will be combined via
    *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
    *
-   * @param  xClass  Throwables of this class are returned directly.
+   * @param  exClass  Throwables of this class are returned directly.
    *
-   * @param  xSupplier  Throwables that a not returned directly, and are not {@link Error} or
-   *                    {@link RuntimeException}, are wrapped via this function, then returned.
+   * @param  exSupplier  Throwables that a not returned directly, and are not {@link Error} or
+   *                     {@link RuntimeException}, are wrapped via this function, then returned.
    *
    * @param  closeable  The closeable to be closed
    *
    * @return  {@code null} when {@code t0} is {@code null} and no new throwables,
-   *          resulting throwable when is an instance of {@code xClass},
-   *          otherwise wrapped via {@code xSupplier}.
+   *          resulting throwable when is an instance of {@code exClass},
+   *          otherwise wrapped via {@code exSupplier}.
    *
    * @throws  Error             When resulting throwable is an {@link Error}
    * @throws  RuntimeException  When resulting throwable is a {@link RuntimeException}
    *
    * @see  Throwables#wrap(java.lang.Throwable, java.lang.Class, java.util.function.Function)
    */
-  public static <X extends Throwable> X closeAndWrap(
+  public static <Ex extends Throwable> Ex closeAndWrap(
       Throwable t0,
-      Class<? extends X> xClass,
-      Function<? super Throwable, ? extends X> xSupplier,
+      Class<? extends Ex> exClass,
+      Function<? super Throwable, ? extends Ex> exSupplier,
       AutoCloseable closeable
   ) {
     return Throwables.wrap(
         closeAndCatch(t0, closeable),
-        xClass,
-        xSupplier
+        exClass,
+        exSupplier
     );
   }
 
   /**
    * Closes all of the given {@link AutoCloseable} in order, catching all {@link Throwable}.
-   * Wraps any resulting throwable, unless is an instance of {@code xClass}, {@link Error}, or {@link RuntimeException}.
+   * Wraps any resulting throwable, unless is an instance of {@code exClass}, {@link Error}, or {@link RuntimeException}.
    * <ol>
    * <li>When {@code null}, returns {@code null}.</li>
-   * <li>When is an instance of {@code xClass}, returns the exception.</li>
+   * <li>When is an instance of {@code exClass}, returns the exception.</li>
    * <li>When is {@link Error} or {@link RuntimeException}, throws the exception directly.</li>
-   * <li>Otherwise, returns the exception wrapped via {@code xSupplier}.</li>
+   * <li>Otherwise, returns the exception wrapped via {@code exSupplier}.</li>
    * </ol>
    * <p>
    * This is expected to typically used within a catch block, to throw a narrower scope:
@@ -501,43 +501,43 @@ public final class AutoCloseables {
    * @param  t0  If not {@code null}, any new throwables will be combined via
    *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
    *
-   * @param  xClass  Throwables of this class are returned directly.
+   * @param  exClass  Throwables of this class are returned directly.
    *
-   * @param  xSupplier  Throwables that a not returned directly, and are not {@link Error} or
-   *                    {@link RuntimeException}, are wrapped via this function, then returned.
+   * @param  exSupplier  Throwables that a not returned directly, and are not {@link Error} or
+   *                     {@link RuntimeException}, are wrapped via this function, then returned.
    *
    * @param  closeable  The set of all closeables, which will be closed in order
    *
    * @return  {@code null} when {@code t0} is {@code null} and no new throwables,
-   *          resulting throwable when is an instance of {@code xClass},
-   *          otherwise wrapped via {@code xSupplier}.
+   *          resulting throwable when is an instance of {@code exClass},
+   *          otherwise wrapped via {@code exSupplier}.
    *
    * @throws  Error             When resulting throwable is an {@link Error}
    * @throws  RuntimeException  When resulting throwable is a {@link RuntimeException}
    *
    * @see  Throwables#wrap(java.lang.Throwable, java.lang.Class, java.util.function.Function)
    */
-  public static <X extends Throwable> X closeAndWrap(
+  public static <Ex extends Throwable> Ex closeAndWrap(
       Throwable t0,
-      Class<? extends X> xClass,
-      Function<? super Throwable, ? extends X> xSupplier,
+      Class<? extends Ex> exClass,
+      Function<? super Throwable, ? extends Ex> exSupplier,
       AutoCloseable ... closeable
   ) {
     return Throwables.wrap(
         closeAndCatch(t0, closeable),
-        xClass,
-        xSupplier
+        exClass,
+        exSupplier
     );
   }
 
   /**
    * Closes all of the given {@link AutoCloseable} in order, catching all {@link Throwable}.
-   * Wraps any resulting throwable, unless is an instance of {@code xClass}, {@link Error}, or {@link RuntimeException}.
+   * Wraps any resulting throwable, unless is an instance of {@code exClass}, {@link Error}, or {@link RuntimeException}.
    * <ol>
    * <li>When {@code null}, returns {@code null}.</li>
-   * <li>When is an instance of {@code xClass}, returns the exception.</li>
+   * <li>When is an instance of {@code exClass}, returns the exception.</li>
    * <li>When is {@link Error} or {@link RuntimeException}, throws the exception directly.</li>
-   * <li>Otherwise, returns the exception wrapped via {@code xSupplier}.</li>
+   * <li>Otherwise, returns the exception wrapped via {@code exSupplier}.</li>
    * </ol>
    * <p>
    * This is expected to typically used within a catch block, to throw a narrower scope:
@@ -555,32 +555,32 @@ public final class AutoCloseables {
    * @param  t0  If not {@code null}, any new throwables will be combined via
    *             {@link Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)}
    *
-   * @param  xClass  Throwables of this class are returned directly.
+   * @param  exClass  Throwables of this class are returned directly.
    *
-   * @param  xSupplier  Throwables that a not returned directly, and are not {@link Error} or
-   *                    {@link RuntimeException}, are wrapped via this function, then returned.
+   * @param  exSupplier  Throwables that a not returned directly, and are not {@link Error} or
+   *                     {@link RuntimeException}, are wrapped via this function, then returned.
    *
    * @param  closeable  The set of all closeables, which will be closed in order
    *
    * @return  {@code null} when {@code t0} is {@code null} and no new throwables,
-   *          resulting throwable when is an instance of {@code xClass},
-   *          otherwise wrapped via {@code xSupplier}.
+   *          resulting throwable when is an instance of {@code exClass},
+   *          otherwise wrapped via {@code exSupplier}.
    *
    * @throws  Error             When resulting throwable is an {@link Error}
    * @throws  RuntimeException  When resulting throwable is a {@link RuntimeException}
    *
    * @see  Throwables#wrap(java.lang.Throwable, java.lang.Class, java.util.function.Function)
    */
-  public static <X extends Throwable> X closeAndWrap(
+  public static <Ex extends Throwable> Ex closeAndWrap(
       Throwable t0,
-      Class<? extends X> xClass,
-      Function<? super Throwable, ? extends X> xSupplier,
+      Class<? extends Ex> exClass,
+      Function<? super Throwable, ? extends Ex> exSupplier,
       Iterable<? extends AutoCloseable> closeable
   ) {
     return Throwables.wrap(
         closeAndCatch(t0, closeable),
-        xClass,
-        xSupplier
+        exClass,
+        exSupplier
     );
   }
 }

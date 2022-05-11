@@ -31,8 +31,9 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * Creates MessageFormat objects and caches them.  This may be used as an alternative
  * to the MessageFormat constructor to increase performance.
- *
+ * <p>
  * The following are the results of a single-threaded benchmark with a simple two-value substitution:
+ * </p>
  * <pre>
  * Comparing constructor/factory and format together:
  *     Constructor: 1148.127153
@@ -44,7 +45,9 @@ import java.util.concurrent.ConcurrentMap;
  *     Factory....: 42.602040
  *     23 times improvement
  * </pre>
+ * <p>
  * Longer or more complicated patterns should benefit even more (this assertion not tested).
+ * </p>
  *
  * @author  AO Industries, Inc.
  */

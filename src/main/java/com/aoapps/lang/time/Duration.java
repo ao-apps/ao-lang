@@ -110,8 +110,7 @@ public class Duration implements Comparable<Duration>, Serializable {
     return
         other != null
             && seconds == other.seconds
-            && nano == other.nano
-    ;
+            && nano == other.nano;
   }
 
   @Override

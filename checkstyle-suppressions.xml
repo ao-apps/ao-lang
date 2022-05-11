@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ao-lang - Minimal Java library with no external dependencies shared by many other projects.
+Copyright (C) 2022  AO Industries, Inc.
+    support@aoindustries.com
+    7262 Bull Pen Cir
+    Mobile, AL 36695
+
+This file is part of ao-lang.
+
+ao-lang is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ao-lang is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE suppressions PUBLIC
+  "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+  "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+
+  <!-- TODO: Complete Javadocs -->
+  <suppress checks="(MissingJavadocMethod|MissingJavadocType|SummaryJavadoc)" />
+
+  <!-- TODO: Remove in 6.0.0 release -->
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]util[/\\]ErrorPrinter\.java$"
+    message="'(addSQL|getSQL)'"
+  />
+
+  <!-- Using "Ex" for generic exceptions, since "E" if often "Element" -->
+  <suppress
+    checks="(InterfaceTypeParameterName|MethodTypeParameterName)"
+    message="'Ex'"
+  />
+
+  <!-- Inner classes used as namespace, consistency with standard Java package names -->
+  <suppress
+    checks="TypeName"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]Iterables\.java$"
+    message="'(awt|util)'"
+  />
+
+  <!-- Consistency with standard "serialVersionUID" -->
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]io[/\\]FastExternalizable\.java$"
+    message="'getSerialVersionUID'"
+  />
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]io[/\\]FastObjectInput\.java$"
+    message="'(serialVersionUIDsById|lastSerialVersionUID|actualSerialVersionUID)'"
+  />
+
+  <!-- Consistency with standard "readUTF" -->
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]io[/\\]FastObjectInput\.java$"
+    message="'readFastUTF'"
+  />
+
+  <!-- Consistency with standard "writeUTF" -->
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]io[/\\]FastObjectOutput\.java$"
+    message="'writeFastUTF'"
+  />
+
+  <!-- Consistency with standard "IOException" -->
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]io[/\\]LocalizedIOException\.java$"
+    message="'LocalizedIOException'"
+  />
+
+  <!-- Consistency with standard "SQLException" -->
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]sql[/\\]LocalizedSQLException\.java$"
+    message="'LocalizedSQLException'"
+  />
+
+  <!-- Consistency with standard "GZIPInputStream" -->
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]zip[/\\]CorrectedGZIPInputStream\.java$"
+    message="'CorrectedGZIPInputStream'"
+  />
+
+  <!-- Will continue using "IO" prefix -->
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]io[/\\]function[/\\]IO.*\.java$"
+    message="'IO.*'"
+  />
+
+  <!-- Parameter name "yyyy_mm_dd" helps clarify expected pattern -->
+  <suppress
+    checks="ParameterName"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]util[/\\]CalendarUtils.*\.java$"
+    message="'yyyy_mm_dd'"
+  />
+
+  <!-- Will not reorder overloads -->
+  <suppress
+    checks="OverloadMethodsDeclarationOrder"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]Strings\.java$"
+  />
+  <suppress
+    checks="OverloadMethodsDeclarationOrder"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]exception[/\\]WrappedException\.java$"
+  />
+  <suppress
+    checks="OverloadMethodsDeclarationOrder"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]i18n[/\\]Monies\.java$"
+  />
+  <suppress
+    checks="OverloadMethodsDeclarationOrder"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]i18n[/\\]ThreadLocale\.java$"
+  />
+  <suppress
+    checks="OverloadMethodsDeclarationOrder"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]reflect[/\\]Classes\.java$"
+  />
+  <suppress
+    checks="OverloadMethodsDeclarationOrder"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]util[/\\]BufferManager\.java$"
+  />
+  <suppress
+    checks="OverloadMethodsDeclarationOrder"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]util[/\\]ErrorPrinter\.java$"
+  />
+
+</suppressions>

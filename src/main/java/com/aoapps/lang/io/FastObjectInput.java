@@ -136,13 +136,13 @@ public class FastObjectInput implements ObjectInput {
   public Object readObject() throws IOException, ClassNotFoundException {
     int code = in.read();
     switch (code) {
-      case FastObjectOutput.NULL :
+      case FastObjectOutput.NULL:
         return null;
-      case FastObjectOutput.STANDARD :
+      case FastObjectOutput.STANDARD:
         return in.readObject();
-      case -1 :
+      case -1:
         throw new EOFException();
-      default :
+      default:
         return readFastObject(code);
     }
   }
@@ -155,14 +155,14 @@ public class FastObjectInput implements ObjectInput {
   protected FastExternalizable readFastObject() throws IOException, ClassNotFoundException {
     int code = in.read();
     switch (code) {
-      case FastObjectOutput.NULL :
+      case FastObjectOutput.NULL:
         return null;
-      case FastObjectOutput.STANDARD :
+      case FastObjectOutput.STANDARD:
         // This is OK, perhaps we just recently changed this object to now be a fast class
         return (FastExternalizable) in.readObject();
-      case -1 :
+      case -1:
         throw new EOFException();
-      default :
+      default:
         return readFastObject(code);
     }
   }
@@ -176,22 +176,19 @@ public class FastObjectInput implements ObjectInput {
     assert code >= FastObjectOutput.FAST_NEW;
     // Resolve class (as lastClass) by code
     switch (code) {
-      case FastObjectOutput.FAST_SAME :
-      {
+      case FastObjectOutput.FAST_SAME: {
         if (lastClass == null) {
           throw new StreamCorruptedException("lastClass is null");
         }
         break;
       }
-      case FastObjectOutput.FAST_NEW :
-      {
+      case FastObjectOutput.FAST_NEW: {
         classesById.add(lastClass = Class.forName(in.readUTF()));
         serialVersionUIDsById.add(lastSerialVersionUID = in.readLong());
         nextClassId++;
         break;
       }
-      case FastObjectOutput.FAST_SEEN_SHORT :
-      {
+      case FastObjectOutput.FAST_SEEN_SHORT: {
         int offset = in.readShort() & 0xffff;
         int classId = offset + (255 - FastObjectOutput.FAST_SEEN_INT);
         if (classId >= nextClassId) {
@@ -201,8 +198,7 @@ public class FastObjectInput implements ObjectInput {
         lastSerialVersionUID = serialVersionUIDsById.get(classId);
         break;
       }
-      case FastObjectOutput.FAST_SEEN_INT :
-      {
+      case FastObjectOutput.FAST_SEEN_INT: {
         int classId = in.readInt();
         if (classId >= nextClassId) {
           throw new StreamCorruptedException("Class ID not already in steam: " + classId);
@@ -211,8 +207,7 @@ public class FastObjectInput implements ObjectInput {
         lastSerialVersionUID = serialVersionUIDsById.get(classId);
         break;
       }
-      default :
-      {
+      default: {
         assert code > FastObjectOutput.FAST_SEEN_INT;
         int classId = code - (FastObjectOutput.FAST_SEEN_INT + 1);
         if (classId >= nextClassId) {
@@ -261,34 +256,28 @@ public class FastObjectInput implements ObjectInput {
     int code = in.read();
     // Resolve string by code
     switch (code) {
-      case FastObjectOutput.NULL :
-      {
+      case FastObjectOutput.NULL: {
         return null;
       }
-      case FastObjectOutput.STANDARD :
-      {
+      case FastObjectOutput.STANDARD: {
         throw new IOException("Unexpected code: " + code);
       }
-      case -1 :
-      {
+      case -1: {
         throw new EOFException();
       }
-      case FastObjectOutput.FAST_SAME :
-      {
+      case FastObjectOutput.FAST_SAME: {
         if (lastString == null) {
           throw new StreamCorruptedException("lastString is null");
         }
         return lastString;
       }
-      case FastObjectOutput.FAST_NEW :
-      {
+      case FastObjectOutput.FAST_NEW: {
         lastString = in.readUTF();
         stringsById.add(lastString);
         nextStringId++;
         return lastString;
       }
-      case FastObjectOutput.FAST_SEEN_SHORT :
-      {
+      case FastObjectOutput.FAST_SEEN_SHORT: {
         int offset = in.readShort() & 0xffff;
         int stringId = offset + (255 - FastObjectOutput.FAST_SEEN_INT);
         if (stringId >= nextStringId) {
@@ -296,16 +285,14 @@ public class FastObjectInput implements ObjectInput {
         }
         return lastString = stringsById.get(stringId);
       }
-      case FastObjectOutput.FAST_SEEN_INT :
-      {
+      case FastObjectOutput.FAST_SEEN_INT: {
         int stringId = in.readInt();
         if (stringId >= nextStringId) {
           throw new StreamCorruptedException("String ID not already in steam: " + stringId);
         }
         return lastString = stringsById.get(stringId);
       }
-      default :
-      {
+      default: {
         assert code > FastObjectOutput.FAST_SEEN_INT;
         int stringId = code - (FastObjectOutput.FAST_SEEN_INT + 1);
         if (stringId >= nextStringId) {

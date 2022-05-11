@@ -189,12 +189,12 @@ public final class Strings {
   }
 
   public static boolean containsIgnoreCase(String line, String word) {
-    int word_len = word.length();
-    int line_len = line.length();
-    int end_pos = line_len - word_len;
+    int wordlen = word.length();
+    int linelen = line.length();
+    int end = linelen - wordlen;
     Loop:
-    for (int c = 0; c <= end_pos; c++) {
-      for (int d = 0; d < word_len; d++) {
+    for (int c = 0; c <= end; c++) {
+      for (int d = 0; d < wordlen; d++) {
         char ch1 = line.charAt(c + d);
         char ch2 = word.charAt(d);
         if (ch1 >= 'A' && ch1 <= 'Z') {
@@ -399,7 +399,7 @@ public final class Strings {
   }
 
   /**
-   * Finds the first occurrence of any of the supplied characters
+   * Finds the first occurrence of any of the supplied characters.
    *
    * @param  s  the <code>String</code> to search
    * @param  chars  the characters to look for
@@ -420,11 +420,11 @@ public final class Strings {
    * @return  the index of the first occurrence of <code>-1</code> if none found
    */
   public static int indexOf(String s, char[] chars, int start) {
-    int sLen = s.length();
-    int cLen = chars.length;
-    for (int c = start; c < sLen; c++) {
+    int slen = s.length();
+    int clen = chars.length;
+    for (int c = start; c < slen; c++) {
       char ch = s.charAt(c);
-      for (int d = 0; d < cLen; d++) {
+      for (int d = 0; d < clen; d++) {
         if (ch == chars[d]) {
           return c;
         }
@@ -434,7 +434,7 @@ public final class Strings {
   }
 
   /**
-   * Finds the first occurrence of any of the supplied characters
+   * Finds the first occurrence of any of the supplied characters.
    *
    * @param  s  the <code>String</code> to search
    * @param  chars  the characters to look for
@@ -1011,16 +1011,17 @@ public final class Strings {
 
   /**
    * Word wraps a <code>String</code> to be no longer than the provided number of characters wide.
-   *
+   * <p>
    * TODO: Make this more efficient by eliminating the internal use of substring.
+   * </p>
    */
   public static void wordWrap(String string, int width, Appendable out) throws IOException {
     width++;
-    boolean useCR = false;
+    boolean useCarriageReturn = false;
     do {
       int pos = string.indexOf('\n');
-      if (!useCR && pos > 0 && string.charAt(pos - 1) == '\r') {
-        useCR = true;
+      if (!useCarriageReturn && pos > 0 && string.charAt(pos - 1) == '\r') {
+        useCarriageReturn = true;
       }
       int linelength = pos == -1 ? string.length() : pos + 1;
       if ((pos == -1 ? linelength - 1 : pos) <= width) {
@@ -1074,7 +1075,7 @@ public final class Strings {
         } else {
           // Break out the section
           out.append(string, 0, lastBreakChar);
-          if (useCR) {
+          if (useCarriageReturn) {
             out.append("\r\n");
           } else {
             out.append('\n');
@@ -1102,36 +1103,53 @@ public final class Strings {
   }
 
   /**
-   * Converts one hex digit to an integer
+   * Converts one hex digit to an integer.
    *
    * @deprecated  Please use {@link org.apache.commons.codec.binary.Hex}
    */
   @Deprecated
   public static int getHex(char ch) throws IllegalArgumentException {
     switch (ch) {
-      case '0': return 0x00;
-      case '1': return 0x01;
-      case '2': return 0x02;
-      case '3': return 0x03;
-      case '4': return 0x04;
-      case '5': return 0x05;
-      case '6': return 0x06;
-      case '7': return 0x07;
-      case '8': return 0x08;
-      case '9': return 0x09;
+      case '0':
+        return 0x00;
+      case '1':
+        return 0x01;
+      case '2':
+        return 0x02;
+      case '3':
+        return 0x03;
+      case '4':
+        return 0x04;
+      case '5':
+        return 0x05;
+      case '6':
+        return 0x06;
+      case '7':
+        return 0x07;
+      case '8':
+        return 0x08;
+      case '9':
+        return 0x09;
       case 'a':
-      case 'A': return 0x0a;
+      case 'A':
+        return 0x0a;
       case 'b':
-      case 'B': return 0x0b;
+      case 'B':
+        return 0x0b;
       case 'c':
-      case 'C': return 0x0c;
+      case 'C':
+        return 0x0c;
       case 'd':
-      case 'D': return 0x0d;
+      case 'D':
+        return 0x0d;
       case 'e':
-      case 'E': return 0x0e;
+      case 'E':
+        return 0x0e;
       case 'f':
-      case 'F': return 0x0f;
-      default: throw new IllegalArgumentException("Invalid hex character: " + ch);
+      case 'F':
+        return 0x0f;
+      default:
+        throw new IllegalArgumentException("Invalid hex character: " + ch);
     }
   }
 
@@ -1183,9 +1201,7 @@ public final class Strings {
     while (hexPos < hexLen) {
       int h = getHex(hex[hexPos++]);
       int l = getHex(hex[hexPos++]);
-      result[resultPos++] = (byte) (
-          (h << 4) | l
-      );
+      result[resultPos++] = (byte) ((h << 4) | l);
     }
     return result;
   }
@@ -1240,8 +1256,7 @@ public final class Strings {
             | (getHex(hex[4]) << 12)
             | (getHex(hex[5]) << 8)
             | (getHex(hex[6]) << 4)
-            | (getHex(hex[7]))
-    ;
+            | (getHex(hex[7]));
   }
 
   /**
@@ -1287,8 +1302,7 @@ public final class Strings {
         | (getHex(hex[4]) << 12)
         | (getHex(hex[5]) << 8)
         | (getHex(hex[6]) << 4)
-        | (getHex(hex[7]))
-    ;
+        | (getHex(hex[7]));
     int l = (getHex(hex[8]) << 28)
         | (getHex(hex[9]) << 24)
         | (getHex(hex[10]) << 20)
@@ -1296,14 +1310,13 @@ public final class Strings {
         | (getHex(hex[12]) << 12)
         | (getHex(hex[13]) << 8)
         | (getHex(hex[14]) << 4)
-        | (getHex(hex[15]))
-    ;
+        | (getHex(hex[15]));
     return (((long) h) << Integer.SIZE) | (l & 0xffffffffL);
   }
 
   /**
-   * Gets the approximate size (where k=1024) of a file in this format:
-   *
+   * Gets the approximate size (where k=1024) of a file.  In this format:
+   * <pre>
    * x byte(s)
    * xx bytes
    * xxx bytes
@@ -1320,6 +1333,7 @@ public final class Strings {
    * xx.x T
    * xxx T
    * xxx... T
+   * </pre>
    */
   public static String getApproximateSize(long size) {
     boolean neg = size < 0;
@@ -1361,8 +1375,8 @@ public final class Strings {
   }
 
   /**
-   * Gets the approximate bit rate (where k=1000) in this format:
-   *
+   * Gets the approximate bit rate (where k=1000).  In this format:
+   * <pre>
    * x
    * xx
    * xxx
@@ -1379,6 +1393,7 @@ public final class Strings {
    * xx.x T
    * xxx T
    * xxx... T
+   * </pre>
    */
   public static String getApproximateBitRate(long bitRate) {
     boolean neg = bitRate < 0;
@@ -1500,7 +1515,7 @@ public final class Strings {
     if (pos > maxCharacters) {
       pos = maxCharacters;
     }
-    return pos == value.length() ? value : (value.substring(0, pos) + '\u2026');
+    return pos == value.length() ? value : (value.substring(0, pos) + '…');
   }
 
   /**

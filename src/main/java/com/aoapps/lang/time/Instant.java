@@ -158,8 +158,7 @@ public class Instant implements Comparable<Instant>, Serializable {
     return
         other != null
             && epochSecond == other.epochSecond
-            && nano == other.nano
-    ;
+            && nano == other.nano;
   }
 
   @Override

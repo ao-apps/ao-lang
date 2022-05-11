@@ -51,6 +51,8 @@ public class UnmodifiableMessageFormat extends MessageFormat {
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @throws UnsupportedOperationException always
    */
   @Override
@@ -59,6 +61,8 @@ public class UnmodifiableMessageFormat extends MessageFormat {
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @throws UnsupportedOperationException except when called from constructor.
    */
   @Override
@@ -70,6 +74,8 @@ public class UnmodifiableMessageFormat extends MessageFormat {
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @throws UnsupportedOperationException always
    */
   @Override
@@ -78,6 +84,8 @@ public class UnmodifiableMessageFormat extends MessageFormat {
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @throws UnsupportedOperationException always
    */
   @Override
@@ -86,6 +94,8 @@ public class UnmodifiableMessageFormat extends MessageFormat {
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @throws UnsupportedOperationException always
    */
   @Override
@@ -94,6 +104,8 @@ public class UnmodifiableMessageFormat extends MessageFormat {
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @throws UnsupportedOperationException always
    */
   @Override

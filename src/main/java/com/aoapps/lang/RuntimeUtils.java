@@ -38,6 +38,7 @@ public final class RuntimeUtils {
       // Empty lock class to help heap profile
     }
   }
+
   private static final AvailableProcessorsLock availableProcessorsLock = new AvailableProcessorsLock();
   private static long availableProcessorsLastRetrieved = Long.MIN_VALUE;
   private static int availableProcessors;

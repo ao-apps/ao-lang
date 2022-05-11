@@ -558,7 +558,8 @@ public final class Coercion {
    * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
    * <li>When {@code null} do not encode.</li>
    * <li>When {@link String} encode directly.</li>
-   * <li>When {@link Writable} encode {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to {@link Writable#appendTo(com.aoapps.lang.io.Encoder, java.lang.Appendable)}.</li>
+   * <li>When {@link Writable} encode {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to
+   *     {@link Writable#appendTo(com.aoapps.lang.io.Encoder, java.lang.Appendable)}.</li>
    * <li>When {@link Segment} or {@link CharSequence} encode directly.</li>
    * <li>When {@code char[]} encode wrapped in new {@link Segment}.</li>
    * <li>When {@link Node} serialize the output as {@link StandardCharsets#UTF_8} while encoding through {@link EncoderWriter} and {@link AppendableWriter}.</li>
@@ -580,7 +581,8 @@ public final class Coercion {
    * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
    * <li>When {@code null} do not encode.</li>
    * <li>When {@link String} encode directly.</li>
-   * <li>When {@link Writable} encode {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to {@link Writable#appendTo(com.aoapps.lang.io.Encoder, java.lang.Appendable)}.</li>
+   * <li>When {@link Writable} encode {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to
+   *     {@link Writable#appendTo(com.aoapps.lang.io.Encoder, java.lang.Appendable)}.</li>
    * <li>When {@link Segment} or {@link CharSequence} encode directly.</li>
    * <li>When {@code char[]} encode wrapped in new {@link Segment}.</li>
    * <li>When {@link Node} serialize the output as {@link StandardCharsets#UTF_8} while encoding through {@link EncoderWriter} and {@link AppendableWriter}.</li>
@@ -762,7 +764,9 @@ public final class Coercion {
    * <li>When {@link String} return {@link Strings#trim(java.lang.String)}.</li>
    * <li>When {@link Writable} return {@link Strings#trim(java.lang.String)} when {@link Writable#isFastToString()} otherwise {@link Writable#trim()}.</li>
    * <li>When {@link Segment} or {@link CharSequence} return {@link Strings#trim(java.lang.CharSequence)}.</li>
-   * <li>When {@code char[]} return {@code ""} when {@code value.length == 0} or <code>{@linkplain Strings#trim(java.lang.CharSequence) Strings.trim}({@linkplain Segment#Segment(char[], int, int) new Segment(value, 0, value.length)}</code>) then {@code value} if nothing trimmed.</li>
+   * <li>When {@code char[]} return {@code ""} when {@code value.length == 0} or
+   *     <code>{@linkplain Strings#trim(java.lang.CharSequence) Strings.trim}({@linkplain Segment#Segment(char[], int, int) new Segment(value, 0, value.length)}</code>)
+   *     then {@code value} if nothing trimmed.</li>
    * <li>When {@link Node} return {@code value}.</li>
    * <li>Otherwise return <code>{@linkplain Strings#trim(java.lang.String) Strings.trim}({@linkplain Object#toString() value.toString()})</code>.</li>
    * </ol>
@@ -824,9 +828,13 @@ public final class Coercion {
    * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
    * <li>When {@code null} return {@code null}.</li>
    * <li>When {@link String} return {@link Strings#trimNullIfEmpty(java.lang.String)}.</li>
-   * <li>When {@link Writable} return {@link Strings#trimNullIfEmpty(java.lang.String)} when {@link Writable#isFastToString()} otherwise {@link Writable#trim()} then {@code null} if empty after trimming.</li>
+   * <li>When {@link Writable} return {@link Strings#trimNullIfEmpty(java.lang.String)} when
+   *     {@link Writable#isFastToString()} otherwise {@link Writable#trim()} then {@code null} if empty after
+   *     trimming.</li>
    * <li>When {@link Segment} or {@link CharSequence} return {@link Strings#trimNullIfEmpty(java.lang.CharSequence)}.</li>
-   * <li>When {@code char[]} return {@code null} when {@code value.length == 0} or <code>{@linkplain Strings#trimNullIfEmpty(java.lang.CharSequence) Strings.trimNullIfEmpty}({@linkplain Segment#Segment(char[], int, int) new Segment(value, 0, value.length)}</code>) then {@code value} if nothing trimmed.</li>
+   * <li>When {@code char[]} return {@code null} when {@code value.length == 0} or
+   *     <code>{@linkplain Strings#trimNullIfEmpty(java.lang.CharSequence) Strings.trimNullIfEmpty}({@linkplain Segment#Segment(char[], int, int) new Segment(value, 0, value.length)}</code>)
+   *     then {@code value} if nothing trimmed.</li>
    * <li>When {@link Node} return {@code value}.</li>
    * <li>Otherwise return <code>{@linkplain Strings#trimNullIfEmpty(java.lang.String) Strings.trimNullIfEmpty}({@linkplain Object#toString() value.toString()})</code>.</li>
    * </ol>

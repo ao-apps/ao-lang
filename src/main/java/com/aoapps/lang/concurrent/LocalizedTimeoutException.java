@@ -73,6 +73,8 @@ public class LocalizedTimeoutException extends TimeoutException implements Local
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @return  No defensive copy
    */
   @Override

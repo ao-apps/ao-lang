@@ -28,9 +28,10 @@ import java.io.Externalizable;
 /**
  * A FastExternalizable object does not have any loops in its object graph,
  * or is able to restore the loops itself upon deserialization.
- *
+ * <p>
  * FastExternalizable-aware containers may use this assumption to perform more
  * efficient serialization.
+ * </p>
  *
  * @author  AO Industries, Inc.
  */

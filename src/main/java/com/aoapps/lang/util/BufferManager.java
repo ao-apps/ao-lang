@@ -78,19 +78,17 @@ public final class BufferManager {
 
   private static final ThreadLocal<Deque<SoftReference<char[]>>> chars = ThreadLocal.withInitial(ArrayDeque::new);
 
-  /**
-   * Various statistics
-   */
-  private static final AtomicLong
-      bytesCreates = new AtomicLong(),
-      bytesUses = new AtomicLong(),
-      bytesZeroFills = new AtomicLong(),
-      bytesCollected = new AtomicLong(),
-      charsCreates = new AtomicLong(),
-      charsUses = new AtomicLong(),
-      charsZeroFills = new AtomicLong(),
-      charsCollected = new AtomicLong()
-  ;
+  //
+  // Various statistics
+  //
+  private static final AtomicLong bytesCreates = new AtomicLong();
+  private static final AtomicLong bytesUses = new AtomicLong();
+  private static final AtomicLong bytesZeroFills = new AtomicLong();
+  private static final AtomicLong bytesCollected = new AtomicLong();
+  private static final AtomicLong charsCreates = new AtomicLong();
+  private static final AtomicLong charsUses = new AtomicLong();
+  private static final AtomicLong charsZeroFills = new AtomicLong();
+  private static final AtomicLong charsCollected = new AtomicLong();
 
   /**
    * Gets a {@code byte[]} of length {@code BUFFER_SIZE} that may

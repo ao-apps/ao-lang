@@ -148,7 +148,7 @@ public final class SafeMath {
             (long) value1
                 + (long) value2
         ) / 2
-    );
+      );
   }
 
   /**
@@ -158,7 +158,9 @@ public final class SafeMath {
    */
   public static int avg(int ... values) {
     long sum = 0;
-    for (int value : values) sum += value;
+    for (int value : values) {
+      sum += value;
+    }
     return (int) (sum / values.length);
   }
 }

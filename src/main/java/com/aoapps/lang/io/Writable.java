@@ -77,7 +77,7 @@ public interface Writable  {
    * Writes a streamed version of the object's String representation using the given encoder.
    * What is written must be the same as if {@code encoder.write(this.toString(), out)}
    * were called, but may be a much more efficient implementation.
-   * 
+   *
    * @param  encoder  if {@code null}, no encoding is performed and will be the same as a call to {@link #writeTo(java.io.Writer)}
    */
   void writeTo(Encoder encoder, Writer out) throws IOException;
@@ -86,7 +86,7 @@ public interface Writable  {
    * Writes a streamed version of the object's String representation using the given encoder.
    * What is written must be the same as if {@code encoder.write(this.toString(), off, len, out)}
    * were called, but may be a much more efficient implementation.
-   * 
+   *
    * @param  encoder  if null, no encoding is performed and will be the same as a call to {@link #writeTo(java.io.Writer, long, long)}
    */
   void writeTo(Encoder encoder, Writer out, long off, long len) throws IOException;
@@ -133,7 +133,7 @@ public interface Writable  {
    * Appends a streamed version of the object's String representation using the given encoder.
    * What is appended must be the same as if {@code encoder.append(this.toString(), out)}
    * were called, but may be a much more efficient implementation.
-   * 
+   *
    * @param  encoder  if {@code null}, no encoding is performed and will be the same as a call to {@link #appendTo(java.lang.Appendable)}
    */
   default void appendTo(Encoder encoder, Appendable out) throws IOException {
@@ -153,7 +153,7 @@ public interface Writable  {
    * Appends a streamed version of the object's String representation using the given encoder.
    * What is appended must be the same as if {@code encoder.append(this.toString(), start, end, out)}
    * were called, but may be a much more efficient implementation.
-   * 
+   *
    * @param  encoder  if null, no encoding is performed and will be the same as a call to {@link #appendTo(java.lang.Appendable, long, long)}
    */
   default void appendTo(Encoder encoder, Appendable out, long start, long end) throws IOException {

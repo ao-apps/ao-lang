@@ -68,8 +68,7 @@ public final class Locales {
         return
             language.equals(other.language)
                 && country.equals(other.country)
-                && variant.equals(other.variant)
-        ;
+                && variant.equals(other.variant);
       }
 
       @Override
@@ -203,11 +202,12 @@ public final class Locales {
             || "iw".equals(language) // Java <= 16
             || "he".equals(language) // Java >= 17
             // persian
-            || "fa".equals(language)
-    ;
+            || "fa".equals(language);
   }
 
-  /** @deprecated  Please use {@link Locale#ROOT} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#ROOT} directly.
+   */
   @Deprecated
   public static final Locale ROOT = Locale.ROOT;
 
@@ -219,13 +219,17 @@ public final class Locales {
   public static final Locale CZECH = parseLocale("cs");
   public static final Locale DANISH = parseLocale("da");
 
-  /** @deprecated  Please use {@link Locale#GERMAN} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#GERMAN} directly.
+   */
   @Deprecated
   public static final Locale GERMAN = Locale.GERMAN;
 
   public static final Locale GREEK = parseLocale("el");
 
-  /** @deprecated  Please use {@link Locale#ENGLISH} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#ENGLISH} directly.
+   */
   @Deprecated
   public static final Locale ENGLISH = Locale.ENGLISH;
 
@@ -234,7 +238,9 @@ public final class Locales {
   public static final Locale PERSIAN = parseLocale("fa");
   public static final Locale FINNISH = parseLocale("fi");
 
-  /** @deprecated  Please use {@link Locale#FRENCH} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#FRENCH} directly.
+   */
   @Deprecated
   public static final Locale FRENCH = Locale.FRENCH;
 
@@ -243,26 +249,32 @@ public final class Locales {
   public static final Locale HUNGARIAN = parseLocale("hu");
 
   /**
-   * INDONESIAN is now "id" - this matches Java's backward compatibility "in"
+   * INDONESIAN is now "id" - this matches Java's backward compatibility "in".
    */
   // Java 17: Update ISO 639 language codes: https://bugs.openjdk.java.net/browse/JDK-8263202
   public static final Locale INDONESIAN = parseLocale("in");
   public static final Locale ICELANDIC = parseLocale("is");
 
-  /** @deprecated  Please use {@link Locale#ITALIAN} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#ITALIAN} directly.
+   */
   @Deprecated
   public static final Locale ITALIAN = Locale.ITALIAN;
 
-  /** @deprecated  Please use {@link Locale#JAPANESE} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#JAPANESE} directly.
+   */
   @Deprecated
   public static final Locale JAPANESE = Locale.JAPANESE;
 
-  /** @deprecated  Please use {@link Locale#KOREAN} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#KOREAN} directly.
+   */
   @Deprecated
   public static final Locale KOREAN = Locale.KOREAN;
 
   /**
-   * HEBREW is now "he" - this matches Java's backward compatibility "iw"
+   * HEBREW is now "he" - this matches Java's backward compatibility "iw".
    */
   // Java 17: Update ISO 639 language codes: https://bugs.openjdk.java.net/browse/JDK-8263202
   public static final Locale HEBREW = parseLocale("iw");
@@ -280,65 +292,95 @@ public final class Locales {
   public static final Locale SWEDISH = parseLocale("sv");
   public static final Locale TURKISH = parseLocale("tr");
 
-  /** @deprecated  Please use {@link Locale#CHINESE} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#CHINESE} directly.
+   */
   @Deprecated
   public static final Locale CHINESE = Locale.CHINESE;
 
-  /** @deprecated  Please use {@link Locale#SIMPLIFIED_CHINESE} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#SIMPLIFIED_CHINESE} directly.
+   */
   @Deprecated
   public static final Locale SIMPLIFIED_CHINESE = Locale.SIMPLIFIED_CHINESE;
 
-  /** @deprecated  Please use {@link Locale#TRADITIONAL_CHINESE} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#TRADITIONAL_CHINESE} directly.
+   */
   @Deprecated
   public static final Locale TRADITIONAL_CHINESE = Locale.TRADITIONAL_CHINESE;
 
-  /** Countries */
+  /* Countries */
 
-  /** @deprecated  Please use {@link Locale#FRANCE} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#FRANCE} directly.
+   */
   @Deprecated
   public static final Locale FRANCE = Locale.FRANCE;
 
-  /** @deprecated  Please use {@link Locale#GERMANY} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#GERMANY} directly.
+   */
   @Deprecated
   public static final Locale GERMANY = Locale.GERMANY;
 
-  /** @deprecated  Please use {@link Locale#ITALY} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#ITALY} directly.
+   */
   @Deprecated
   public static final Locale ITALY = Locale.ITALY;
 
-  /** @deprecated  Please use {@link Locale#JAPAN} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#JAPAN} directly.
+   */
   @Deprecated
   public static final Locale JAPAN = Locale.JAPAN;
 
-  /** @deprecated  Please use {@link Locale#KOREA} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#KOREA} directly.
+   */
   @Deprecated
   public static final Locale KOREA = Locale.KOREA;
 
-  /** @deprecated  Please use {@link Locale#CHINA} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#CHINA} directly.
+   */
   @Deprecated
   public static final Locale CHINA = Locale.CHINA;
 
-  /** @deprecated  Please use {@link Locale#PRC} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#PRC} directly.
+   */
   @Deprecated
   public static final Locale PRC = Locale.PRC;
 
-  /** @deprecated  Please use {@link Locale#TAIWAN} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#TAIWAN} directly.
+   */
   @Deprecated
   public static final Locale TAIWAN = Locale.TAIWAN;
 
-  /** @deprecated  Please use {@link Locale#UK} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#UK} directly.
+   */
   @Deprecated
   public static final Locale UK = Locale.UK;
 
-  /** @deprecated  Please use {@link Locale#US} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#US} directly.
+   */
   @Deprecated
   public static final Locale US = Locale.US;
 
-  /** @deprecated  Please use {@link Locale#CANADA} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#CANADA} directly.
+   */
   @Deprecated
   public static final Locale CANADA = Locale.CANADA;
 
-  /** @deprecated  Please use {@link Locale#CANADA_FRENCH} directly. */
+  /**
+   * @deprecated  Please use {@link Locale#CANADA_FRENCH} directly.
+   */
   @Deprecated
   public static final Locale CANADA_FRENCH = Locale.CANADA_FRENCH;
 }

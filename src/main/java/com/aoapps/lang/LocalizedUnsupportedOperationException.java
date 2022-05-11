@@ -84,6 +84,8 @@ public class LocalizedUnsupportedOperationException extends UnsupportedOperation
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @return  No defensive copy
    */
   @Override

@@ -34,7 +34,7 @@ import com.aoapps.lang.exception.WrappedException;
  * @see  ThrowableSurrogateFactoryInitializer
  */
 @FunctionalInterface
-public interface ThrowableSurrogateFactory<X extends Throwable> {
+public interface ThrowableSurrogateFactory<Ex extends Throwable> {
 
   /**
    * Creates a new {@link Throwable} surrogate, when possible to create with a compatible state.
@@ -51,5 +51,5 @@ public interface ThrowableSurrogateFactory<X extends Throwable> {
    * @return  A new throwable instance of the same type as the template, with compatible state, and the given cause
    *          either directly or wrapped.  If unable to create a compatible surrogate, returns {@code null}.
    */
-  X newSurrogate(X template, Throwable cause);
+  Ex newSurrogate(Ex template, Throwable cause);
 }

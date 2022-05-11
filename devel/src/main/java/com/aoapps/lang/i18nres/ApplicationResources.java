@@ -21,7 +21,7 @@
  * along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aoapps.lang.i18n_res;
+package com.aoapps.lang.i18nres;
 
 import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
 import com.aoapps.hodgepodge.i18n.EditableResourceBundleSet;
@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
- * Is also an editable resource bundle.
+ * Development-only editable resource bundle.
  *
  * @author  AO Industries, Inc.
  */
@@ -47,7 +47,7 @@ public final class ApplicationResources extends EditableResourceBundle {
 
   static File getSourceFile(String filename) {
     try {
-      return new File(System.getProperty("user.home") + "/maven2/ao/oss/lang/src/main/resources/com/aoapps/lang/i18n_res", filename);
+      return new File(System.getProperty("user.home") + "/maven2/ao/oss/lang/src/main/resources/com/aoapps/lang/i18nres", filename);
     } catch (SecurityException e) {
       Logger.getLogger(ApplicationResources.class.getName()).log(
           Level.WARNING,
@@ -58,6 +58,9 @@ public final class ApplicationResources extends EditableResourceBundle {
     }
   }
 
+  /**
+   * Loads the editable resource bundle.
+   */
   public ApplicationResources() {
     super(Locale.ROOT, bundleSet, getSourceFile("ApplicationResources.properties"));
   }

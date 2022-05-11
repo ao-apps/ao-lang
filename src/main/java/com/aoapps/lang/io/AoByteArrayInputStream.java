@@ -28,7 +28,7 @@ import java.io.DataInput;
 import java.io.IOException;
 
 /**
- * Provides direct access to the internal <code>byte[]</code>
+ * Provides direct access to the internal <code>byte[]</code>.
  *
  * @author  AO Industries, Inc.
  */

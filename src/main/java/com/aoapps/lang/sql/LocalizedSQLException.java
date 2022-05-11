@@ -115,6 +115,8 @@ public class LocalizedSQLException extends SQLException implements LocalizedExce
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @return  No defensive copy
    */
   @Override

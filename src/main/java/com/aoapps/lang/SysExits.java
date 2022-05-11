@@ -34,9 +34,9 @@ import javax.security.auth.login.LoginException;
 
 /**
  * POSIX-compatible process exit values.
- *
- * From /usr/include/sysexits.h:
- *
+ * <p>
+ * From <code>/usr/include/sysexits.h</code>:
+ * </p>
  * <pre>
  *  SYSEXITS.H -- Exit status codes for system programs.
  *
@@ -101,58 +101,58 @@ public final class SysExits {
     throw new AssertionError();
   }
 
-  /** successful termination */
+  /** successful termination. */
   public static final int EX_OK = 0;
 
-  /** base value for error messages */
+  /** base value for error messages. */
   public static final int EX__BASE = 64;
 
-  /** command line usage error */
+  /** command line usage error. */
   public static final int EX_USAGE = 64;
 
-  /** data format error */
+  /** data format error. */
   public static final int EX_DATAERR = 65;
 
-  /** cannot open input */
+  /** cannot open input. */
   public static final int EX_NOINPUT = 66;
 
-  /** addressee unknown */
+  /** addressee unknown. */
   public static final int EX_NOUSER = 67;
 
-  /** host name unknown */
+  /** host name unknown. */
   public static final int EX_NOHOST = 68;
 
-  /** service unavailable */
+  /** service unavailable. */
   public static final int EX_UNAVAILABLE = 69;
 
-  /** internal software error */
+  /** internal software error. */
   public static final int EX_SOFTWARE = 70;
 
-  /** system error (e.g., can't fork) */
+  /** system error (e.g., can't fork). */
   public static final int EX_OSERR = 71;
 
-  /** critical OS file missing */
+  /** critical OS file missing. */
   public static final int EX_OSFILE = 72;
 
-  /** can't create (user) output file */
+  /** can't create (user) output file. */
   public static final int EX_CANTCREAT = 73;
 
-  /** input/output error */
+  /** input/output error. */
   public static final int EX_IOERR = 74;
 
-  /** temp failure; user is invited to retry */
+  /** temp failure; user is invited to retry. */
   public static final int EX_TEMPFAIL = 75;
 
-  /** remote error in protocol */
+  /** remote error in protocol. */
   public static final int EX_PROTOCOL = 76;
 
-  /** permission denied */
+  /** permission denied. */
   public static final int EX_NOPERM = 77;
 
-  /** configuration error */
+  /** configuration error. */
   public static final int EX_CONFIG = 78;
 
-  /* maximum listed value */
+  /** maximum listed value. */
   public static final int EX__MAX = 78;
 
   /**

@@ -36,7 +36,7 @@ public class NullArgumentException extends IllegalArgumentException {
   private static final Resources RESOURCES = Resources.getResources(
       ResourceBundle::getBundle,
       NullArgumentException.class.getPackage(),
-      "i18n_res.ApplicationResources",
+      "i18nres.ApplicationResources",
       NullArgumentException.class.getSimpleName() + '.'
   );
 

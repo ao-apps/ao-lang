@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
- * Is also an editable resource bundle.
+ * Development-only editable resource bundle.
  *
  * @author  AO Industries, Inc.
  */
@@ -58,6 +58,9 @@ public final class ApplicationResources extends EditableResourceBundle {
     }
   }
 
+  /**
+   * Loads the editable resource bundle.
+   */
   public ApplicationResources() {
     super(Locale.ROOT, bundleSet, getSourceFile("ApplicationResources.properties"));
   }

@@ -90,7 +90,7 @@ public final class ThreadLocale {
    *
    * @param  <Ex>  An arbitrary exception type that may be thrown
    */
-  public static <V, Ex extends Throwable> V call(Locale locale, Class<? extends Ex> eClass, CallableE<? extends V, ? extends Ex> callable) throws Ex {
+  public static <V, Ex extends Throwable> V call(Locale locale, Class<? extends Ex> exClass, CallableE<? extends V, ? extends Ex> callable) throws Ex {
     Locale oldLocale = get();
     try {
       set(locale);
@@ -139,7 +139,7 @@ public final class ThreadLocale {
    *
    * @param  <Ex>  An arbitrary exception type that may be thrown
    */
-  public static <Ex extends Throwable> void run(Locale locale, Class<? extends Ex> eClass, RunnableE<? extends Ex> runnable) throws Ex {
+  public static <Ex extends Throwable> void run(Locale locale, Class<? extends Ex> exClass, RunnableE<? extends Ex> runnable) throws Ex {
     Locale oldLocale = get();
     try {
       set(locale);

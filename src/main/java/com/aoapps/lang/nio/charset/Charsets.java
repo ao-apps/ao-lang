@@ -42,15 +42,38 @@ public final class Charsets {
   }
 
   /**
-   * @deprecated  Use {@link java.nio.charset.StandardCharsets} as of Java 1.7.
+   * @deprecated  Use {@link java.nio.charset.StandardCharsets#US_ASCII} as of Java 1.7.
    */
   @Deprecated
-  public static final Charset
-      US_ASCII   = StandardCharsets.US_ASCII,
-      ISO_8859_1 = StandardCharsets.ISO_8859_1,
-      UTF_8      = StandardCharsets.UTF_8,
-      UTF_16BE   = StandardCharsets.UTF_16BE,
-      UTF_16LE   = StandardCharsets.UTF_16LE,
-      UTF_16     = StandardCharsets.UTF_16
-  ;
+  public static final Charset US_ASCII = StandardCharsets.US_ASCII;
+
+  /**
+   * @deprecated  Use {@link java.nio.charset.StandardCharsets#ISO_8859_1} as of Java 1.7.
+   */
+  @Deprecated
+  public static final Charset ISO_8859_1 = StandardCharsets.ISO_8859_1;
+
+  /**
+   * @deprecated  Use {@link java.nio.charset.StandardCharsets#UTF_8} as of Java 1.7.
+   */
+  @Deprecated
+  public static final Charset UTF_8 = StandardCharsets.UTF_8;
+
+  /**
+   * @deprecated  Use {@link java.nio.charset.StandardCharsets#UTF_16BE} as of Java 1.7.
+   */
+  @Deprecated
+  public static final Charset UTF_16BE = StandardCharsets.UTF_16BE;
+
+  /**
+   * @deprecated  Use {@link java.nio.charset.StandardCharsets#UTF_16LE} as of Java 1.7.
+   */
+  @Deprecated
+  public static final Charset UTF_16LE = StandardCharsets.UTF_16LE;
+
+  /**
+   * @deprecated  Use {@link java.nio.charset.StandardCharsets#UTF_16} as of Java 1.7.
+   */
+  @Deprecated
+  public static final Charset UTF_16 = StandardCharsets.UTF_16;
 }

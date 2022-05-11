@@ -87,6 +87,7 @@ public final class FileUtils {
             Files.delete(file);
             return FileVisitResult.CONTINUE;
           }
+
           @Override
           public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
             if (exc != null) {
@@ -104,15 +105,13 @@ public final class FileUtils {
    * Compares the contents of a file to the provided array.
    */
   public static boolean contentEquals(File file, byte[] contents) throws IOException {
-    {
-      final long length = file.length();
-      if (length > Integer.MAX_VALUE) {
-        return false;
-      }
-      // Be careful about file.length() returning zero on error - always read file for zero case - no shortcut.
-      if (length != 0 && length != contents.length) {
-        return false;
-      }
+    final long length = file.length();
+    if (length > Integer.MAX_VALUE) {
+      return false;
+    }
+    // Be careful about file.length() returning zero on error - always read file for zero case - no shortcut.
+    if (length != 0 && length != contents.length) {
+      return false;
     }
     try (InputStream in = new FileInputStream(file)) {
       return IoUtils.contentEquals(in, contents);
@@ -130,8 +129,8 @@ public final class FileUtils {
       return false;
     }
     try (
-      InputStream in1 = new BufferedInputStream(new FileInputStream(file1));
-      InputStream in2 = new BufferedInputStream(new FileInputStream(file2))
+        InputStream in1 = new BufferedInputStream(new FileInputStream(file1));
+        InputStream in2 = new BufferedInputStream(new FileInputStream(file2))
         ) {
       while (true) {
         int b1 = in1.read();

@@ -216,18 +216,16 @@ public final class XmlUtils {
    */
   public static Element getChildElementByTagName(Element element, String childTagName) {
     Element matched = null;
-    {
-      NodeList children = element.getChildNodes();
-      for (int index = 0, len = children.getLength(); index < len; index++) {
-        Node child = children.item(index);
-        if (child instanceof Element) {
-          Element childElem = (Element) child;
-          if (childTagName.equals(childElem.getTagName())) {
-            if (matched != null) {
-              throw new IllegalStateException("More than one child found: " + childTagName);
-            }
-            matched = childElem;
+    NodeList children = element.getChildNodes();
+    for (int index = 0, len = children.getLength(); index < len; index++) {
+      Node child = children.item(index);
+      if (child instanceof Element) {
+        Element childElem = (Element) child;
+        if (childTagName.equals(childElem.getTagName())) {
+          if (matched != null) {
+            throw new IllegalStateException("More than one child found: " + childTagName);
           }
+          matched = childElem;
         }
       }
     }
@@ -289,7 +287,7 @@ public final class XmlUtils {
   }
 
   /**
-   * See <a href="https://www.w3.org/TR/REC-xml/#NT-NameStartChar">Names and Tokens: NameStartChar</a>
+   * See <a href="https://www.w3.org/TR/REC-xml/#NT-NameStartChar">Names and Tokens: NameStartChar</a>.
    */
   public static boolean isNameStartChar(int codePoint) {
     return
@@ -312,7 +310,7 @@ public final class XmlUtils {
   }
 
   /**
-   * See <a href="https://www.w3.org/TR/REC-xml/#NT-NameChar">Names and Tokens: NameChar</a>
+   * See <a href="https://www.w3.org/TR/REC-xml/#NT-NameChar">Names and Tokens: NameChar</a>.
    */
   public static boolean isNameChar(int codePoint) {
     return
@@ -420,12 +418,12 @@ public final class XmlUtils {
    * Strips all character not matching <a href="https://www.w3.org/TR/REC-xml/#NT-Name">Names and Tokens: Name</a>:
    * </p>
    *
-   * @param  template   The preferred text to base the id on
-   * @param  defaultId  The base used when template is unusable (must be a valid id or invalid ID's may be generated)
-   *
    * <p>
    * See <a href="https://www.w3.org/TR/REC-xml/#NT-Name">Names and Tokens: Name</a>
    * </p>
+   *
+   * @param  template   The preferred text to base the id on
+   * @param  defaultId  The base used when template is unusable (must be a valid id or invalid ID's may be generated)
    */
   public static StringBuilder generateId(String template, String defaultId) {
     NullArgumentException.checkNotNull(template, "template");
@@ -454,7 +452,7 @@ public final class XmlUtils {
         pos += Character.charCount(codePoint);
         if (
             isNameChar(codePoint)
-                // Fall-through to hyphen coalesce
+                // fall-through to hyphen coalesce
                 && codePoint != '-'
         ) {
           id.appendCodePoint(codePoint);

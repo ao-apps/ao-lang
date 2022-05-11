@@ -1060,7 +1060,7 @@ public class BigFractionTest extends TestCase {
   }
 
   // These percentages are from production client data
-  public void testFractionalMoneyPCA() {
+  public void testFractionalMoneyPca() {
     // id=2
     assertEquals(
         new BigDecimal[]{

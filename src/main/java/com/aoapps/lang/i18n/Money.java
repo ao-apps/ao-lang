@@ -96,6 +96,7 @@ public final class Money implements FastExternalizable, Comparable<Money> {
 
   /**
    * Will change the scale of the value to match the currency, but will not round.
+   *
    * @throws NumberFormatException if unable to scale the value.
    */
   public Money(Currency currency, BigDecimal value) throws NumberFormatException {

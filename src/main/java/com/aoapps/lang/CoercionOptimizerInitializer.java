@@ -33,6 +33,8 @@ import java.util.ServiceLoader;
 public interface CoercionOptimizerInitializer extends Runnable {
 
   /**
+   * {@inheritDoc}
+   *
    * @see  Coercion#registerOptimizer(com.aoapps.lang.CoercionOptimizer)
    */
   @Override

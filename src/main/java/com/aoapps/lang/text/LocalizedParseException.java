@@ -73,6 +73,8 @@ public class LocalizedParseException extends ParseException implements Localized
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @return  No defensive copy
    */
   @Override

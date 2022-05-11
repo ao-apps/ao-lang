@@ -84,6 +84,8 @@ public class LocalizedIllegalArgumentException extends IllegalArgumentException 
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @return  No defensive copy
    */
   @Override

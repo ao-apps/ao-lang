@@ -21,18 +21,23 @@
  * along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.aoapps.lang.i18n_res;
+package com.aoapps.lang.i18nres;
 
 import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
 import java.util.Locale;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
+ * Development-only editable resource bundle.
+ *
  * @author  AO Industries, Inc.
  */
 @ThreadSafe
 public final class ApplicationResources_ja extends EditableResourceBundle {
 
+  /**
+   * Loads the editable resource bundle.
+   */
   public ApplicationResources_ja() {
     super(
         Locale.JAPANESE,

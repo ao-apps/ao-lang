@@ -237,18 +237,16 @@ public final class IoUtils {
     return
         (char) (
             (ioBuffer[0] << Byte.SIZE)
-                | (ioBuffer[1] & 0xff      )
-        )
-    ;
+                | (ioBuffer[1] & 0xff)
+        );
   }
 
   public static char bufferToChar(byte[] ioBuffer, int off) {
     return
         (char) (
             (ioBuffer[off + 0] << Byte.SIZE)
-                | (ioBuffer[off + 1] & 0xff      )
-        )
-    ;
+                | (ioBuffer[off + 1] & 0xff)
+        );
   }
 
   public static void shortToBuffer(short s, byte[] ioBuffer) {
@@ -265,31 +263,29 @@ public final class IoUtils {
     return
         (short) (
             (ioBuffer[0] << Byte.SIZE)
-                | (ioBuffer[1] & 0xff      )
-        )
-    ;
+                | (ioBuffer[1] & 0xff)
+        );
   }
 
   public static short bufferToShort(byte[] ioBuffer, int off) {
     return
         (short) (
             (ioBuffer[off + 0] << Byte.SIZE)
-                | (ioBuffer[off + 1] & 0xff      )
-        )
-    ;
+                | (ioBuffer[off + 1] & 0xff)
+        );
   }
 
   public static void intToBuffer(int i, byte[] ioBuffer) {
     ioBuffer[0] = (byte) (i >>> (Byte.SIZE * 3));
     ioBuffer[1] = (byte) (i >>> (Byte.SIZE * 2));
-    ioBuffer[2] = (byte) (i >>>  Byte.SIZE     );
+    ioBuffer[2] = (byte) (i >>>  Byte.SIZE);
     ioBuffer[3] = (byte) i;
   }
 
   public static void intToBuffer(int i, byte[] ioBuffer, int off) {
     ioBuffer[off    ] = (byte) (i >>> (Byte.SIZE * 3));
     ioBuffer[off + 1] = (byte) (i >>> (Byte.SIZE * 2));
-    ioBuffer[off + 2] = (byte) (i >>>  Byte.SIZE     );
+    ioBuffer[off + 2] = (byte) (i >>>  Byte.SIZE);
     ioBuffer[off + 3] = (byte) i;
   }
 
@@ -297,18 +293,16 @@ public final class IoUtils {
     return
         (ioBuffer[0]         << (Byte.SIZE * 3))
             + ((ioBuffer[1] & 0xff) << (Byte.SIZE * 2))
-            + ((ioBuffer[2] & 0xff) <<  Byte.SIZE     )
-            + (ioBuffer[3] & 0xff)
-    ;
+            + ((ioBuffer[2] & 0xff) <<  Byte.SIZE)
+            + (ioBuffer[3] & 0xff);
   }
 
   public static int bufferToInt(byte[] ioBuffer, int off) {
     return
         (ioBuffer[off]             << (Byte.SIZE * 3))
             + ((ioBuffer[off + 1] & 0xff) << (Byte.SIZE * 2))
-            + ((ioBuffer[off + 2] & 0xff) <<  Byte.SIZE     )
-            + (ioBuffer[off + 3] & 0xff)
-    ;
+            + ((ioBuffer[off + 2] & 0xff) <<  Byte.SIZE)
+            + (ioBuffer[off + 3] & 0xff);
   }
 
   public static void longToBuffer(long l, byte[] ioBuffer) {
@@ -318,7 +312,7 @@ public final class IoUtils {
     ioBuffer[3] = (byte) (l >>> (Byte.SIZE * 4));
     ioBuffer[4] = (byte) (l >>> (Byte.SIZE * 3));
     ioBuffer[5] = (byte) (l >>> (Byte.SIZE * 2));
-    ioBuffer[6] = (byte) (l >>>  Byte.SIZE     );
+    ioBuffer[6] = (byte) (l >>>  Byte.SIZE);
     ioBuffer[7] = (byte) l;
   }
 
@@ -329,7 +323,7 @@ public final class IoUtils {
     ioBuffer[off + 3] = (byte) (l >>> (Byte.SIZE * 4));
     ioBuffer[off + 4] = (byte) (l >>> (Byte.SIZE * 3));
     ioBuffer[off + 5] = (byte) (l >>> (Byte.SIZE * 2));
-    ioBuffer[off + 6] = (byte) (l >>>  Byte.SIZE     );
+    ioBuffer[off + 6] = (byte) (l >>>  Byte.SIZE);
     ioBuffer[off + 7] = (byte) l;
   }
 
@@ -341,9 +335,8 @@ public final class IoUtils {
             + ((ioBuffer[3] & 0xffL) << (Byte.SIZE * 4))
             + ((ioBuffer[4] & 0xffL) << (Byte.SIZE * 3))
             + ((ioBuffer[5] & 0xffL) << (Byte.SIZE * 2))
-            + ((ioBuffer[6] & 0xffL) <<  Byte.SIZE     )
-            + (ioBuffer[7] & 0xffL)
-    ;
+            + ((ioBuffer[6] & 0xffL) <<  Byte.SIZE)
+            + (ioBuffer[7] & 0xffL);
   }
 
   public static long bufferToLong(byte[] ioBuffer, int off) {
@@ -354,9 +347,8 @@ public final class IoUtils {
             + ((ioBuffer[off + 3] & 0xffL) << (Byte.SIZE * 4))
             + ((ioBuffer[off + 4] & 0xffL) << (Byte.SIZE * 3))
             + ((ioBuffer[off + 5] & 0xffL) << (Byte.SIZE * 2))
-            + ((ioBuffer[off + 6] & 0xffL) <<  Byte.SIZE     )
-            + (ioBuffer[off + 7] & 0xffL)
-    ;
+            + ((ioBuffer[off + 6] & 0xffL) <<  Byte.SIZE)
+            + (ioBuffer[off + 7] & 0xffL);
   }
   // </editor-fold>
 }

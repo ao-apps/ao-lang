@@ -84,6 +84,8 @@ public class LocalizedIllegalStateException extends IllegalStateException implem
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @return  No defensive copy
    */
   @Override

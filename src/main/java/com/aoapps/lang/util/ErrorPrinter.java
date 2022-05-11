@@ -68,15 +68,15 @@ public final class ErrorPrinter {
 
   private static class IdentityKey {
 
-    private final Throwable t;
+    private final Throwable throwable;
 
-    private IdentityKey(Throwable t) {
-      this.t = t;
+    private IdentityKey(Throwable throwable) {
+      this.throwable = throwable;
     }
 
     @Override
     public int hashCode() {
-      return System.identityHashCode(t);
+      return System.identityHashCode(throwable);
     }
 
     @Override
@@ -93,7 +93,7 @@ public final class ErrorPrinter {
    *
    * @param  sql  The SQL statement that caused the exception.
    */
-  public static void addSQL(Throwable t, String sql) {
+  public static void addSql(Throwable t, String sql) {
     if (t != null && sql != null) {
       IdentityKey key = new IdentityKey(t);
       synchronized (statements) {
@@ -113,10 +113,38 @@ public final class ErrorPrinter {
    *                This must provide the SQL statement from {@link PreparedStatement}{@code .toString()},
    *                which the PostgreSQL JDBC driver does.
    */
-  public static void addSQL(Throwable t, PreparedStatement pstmt) {
+  public static void addSql(Throwable t, PreparedStatement pstmt) {
     if (t != null && pstmt != null) {
-      addSQL(t, pstmt.toString());
+      addSql(t, pstmt.toString());
     }
+  }
+
+  /**
+   * Adds a new mapping between a throwable and the statement that caused it.
+   *
+   * @param  sql  The SQL statement that caused the exception.
+   *
+   * @deprecated  Please use {@link #addSql(java.lang.Throwable, java.lang.String)} instead.
+   */
+  // TODO: Remove in 6.0.0 release
+  @Deprecated
+  public static void addSQL(Throwable t, String sql) {
+    addSql(t, sql);
+  }
+
+  /**
+   * Adds a new mapping between a throwable and the statement that caused it.
+   *
+   * @param  pstmt  The SQL statement that caused the exception.
+   *                This must provide the SQL statement from {@link PreparedStatement}{@code .toString()},
+   *                which the PostgreSQL JDBC driver does.
+   *
+   * @deprecated  Please use {@link #addSql(java.lang.Throwable, java.sql.PreparedStatement)} instead.
+   */
+  // TODO: Remove in 6.0.0 release
+  @Deprecated
+  public static void addSQL(Throwable t, PreparedStatement pstmt) {
+    addSql(t, pstmt);
   }
 
   /**
@@ -124,7 +152,7 @@ public final class ErrorPrinter {
    *
    * @return  The SQL statements that caused the exception or an empty list when none.
    */
-  public static List<String> getSQL(Throwable t) {
+  public static List<String> getSql(Throwable t) {
     if (t == null) {
       return Collections.emptyList();
     } else {
@@ -136,6 +164,19 @@ public final class ErrorPrinter {
             : Collections.unmodifiableList(new ArrayList<>(causes));
       }
     }
+  }
+
+  /**
+   * Gets the mappings between the given throwable and any statements that caused it.
+   *
+   * @return  The SQL statements that caused the exception or an empty list when none.
+   *
+   * @deprecated  Please use {@link #getSql(java.lang.Throwable)} instead.
+   */
+  // TODO: Remove in 6.0.0 release
+  @Deprecated
+  public static List<String> getSQL(Throwable t) {
+    return getSql(t);
   }
 
   /**
@@ -249,9 +290,9 @@ public final class ErrorPrinter {
       try {
         ThreadGroup tg = thread.getThreadGroup();
         while (tg != null) {
-          String name = tg.getName();
-          String classname = tg.getClass().getName();
-          int maxPriority = tg.getMaxPriority();
+          final String name = tg.getName();
+          final String classname = tg.getClass().getName();
+          final int maxPriority = tg.getMaxPriority();
           appendln("        ThreadGroup", out);
           append("            Name........: ", out);
           appendln(name, out);
@@ -293,8 +334,8 @@ public final class ErrorPrinter {
   }
 
   private static boolean isClosed(Throwable thrown, List<Throwable> closed) {
-    for (Throwable T : closed) {
-      if (T == thrown) {
+    for (Throwable t : closed) {
+      if (t == thrown) {
         return true;
       }
     }
@@ -411,26 +452,26 @@ public final class ErrorPrinter {
         append(err.toString(), out);
       }
     }
-    // SQL Statements (not within SQLException, since they can be associated with any throwable)
-    {
-      List<String> causes = getSQL(thrown);
-      int size = causes.size();
-      if (size != 0) {
-        final String LABEL_PRE = "SQL Statement";
-        StringBuilder label = new StringBuilder(LABEL_PRE);
-        for (int i = 0; i < size; i++) {
-          label.setLength(LABEL_PRE.length());
-          if (size != 1) {
-            label.append(" #").append(i + 1);
+      // SQL Statements (not within SQLException, since they can be associated with any throwable)
+      {
+        List<String> causes = getSql(thrown);
+        int size = causes.size();
+        if (size != 0) {
+          final String labelPre = "SQL Statement";
+          StringBuilder label = new StringBuilder(labelPre);
+          for (int i = 0; i < size; i++) {
+            label.setLength(labelPre.length());
+            if (size != 1) {
+              label.append(" #").append(i + 1);
+            }
+            while (label.length() < LABEL_WIDTH) {
+              label.append('.');
+            }
+            label.append(": ");
+            CustomMessageHandler.printMessage(out, indent + 4, label.toString(), causes.get(i));
           }
-          while (label.length() < LABEL_WIDTH) {
-            label.append('.');
-          }
-          label.append(": ");
-          CustomMessageHandler.printMessage(out, indent + 4, label.toString(), causes.get(i));
         }
       }
-    }
     indent(out, indent + 4);
     appendln("Stack Trace", out);
     StackTraceElement[] stack = thrown.getStackTrace();
@@ -475,8 +516,8 @@ public final class ErrorPrinter {
         }
       }
     } catch (
-        // OK, future versions of JspException might not have getRootCause
-        NoSuchMethodException
+    // OK, future versions of JspException might not have getRootCause
+    NoSuchMethodException
             // OK, future versions of JspException could make it private
             | IllegalAccessException
             // Ignored because we are dealing with one exception at a time
@@ -502,8 +543,8 @@ public final class ErrorPrinter {
         }
       }
     } catch (
-        // OK, future versions of ServletException might not have getRootCause
-        NoSuchMethodException
+    // OK, future versions of ServletException might not have getRootCause
+    NoSuchMethodException
             // OK, future versions of ServletException could make it private
             | IllegalAccessException
             // Ignored because we are dealing with one exception at a time
@@ -522,16 +563,16 @@ public final class ErrorPrinter {
       }
     }
     if (thrown instanceof SQLException) {
-      SQLException nextSQL = ((SQLException) thrown).getNextException();
-      if (nextSQL != null) {
-        List<SQLException> nextSQLs = new ArrayList<>();
+      SQLException nextSqlException = ((SQLException) thrown).getNextException();
+      if (nextSqlException != null) {
+        List<SQLException> nextSqlExceptions = new ArrayList<>();
         do {
-          if (!isClosed(nextSQL, closed)) {
-            nextSQLs.add(nextSQL);
+          if (!isClosed(nextSqlException, closed)) {
+            nextSqlExceptions.add(nextSqlException);
           }
-        } while ((nextSQL = nextSQL.getNextException()) != null);
-        closed.addAll(nextSQLs);
-        for (SQLException next : nextSQLs) {
+        } while ((nextSqlException = nextSqlException.getNextException()) != null);
+        closed.addAll(nextSqlExceptions);
+        for (SQLException next : nextSqlExceptions) {
           printThrowables(next, out, indent, closed);
         }
       }

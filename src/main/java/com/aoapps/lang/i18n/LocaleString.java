@@ -55,8 +55,7 @@ public class LocaleString {
     LocaleString other = (LocaleString) obj;
     return
         locale.equals(other.locale)
-            && value.equals(other.value)
-    ;
+            && value.equals(other.value);
   }
 
   @Override

@@ -33,7 +33,7 @@ import java.io.Writer;
  * Writer that encodes during write.
  * <p>
  * See <a href="https://oss.aoapps.com/encoding/apidocs/com.aoapps.encoding/com/aoapps/encoding/MediaEncoder.html">MediaEncoder</a>
- * <p>
+ * </p>
  *
  * @author  AO Industries, Inc.
  */
@@ -84,7 +84,7 @@ public class EncoderWriter extends FilterWriter implements NoClose {
   }
 
   /**
-   * See <a href="https://oss.aoapps.com/encoding/apidocs/com.aoapps.encoding/com/aoapps/encoding/MediaEncoder.html#writePrefixTo(java.lang.Appendable)">MediaEncoder.writePrefixTo(java.lang.Appendable)</a>
+   * See <a href="https://oss.aoapps.com/encoding/apidocs/com.aoapps.encoding/com/aoapps/encoding/MediaEncoder.html#writePrefixTo(java.lang.Appendable)">MediaEncoder.writePrefixTo(java.lang.Appendable)</a>.
    */
   public void writePrefix() throws IOException {
     encoder.writePrefixTo(out);
@@ -134,7 +134,7 @@ public class EncoderWriter extends FilterWriter implements NoClose {
   }
 
   /**
-   * See <a href="https://oss.aoapps.com/encoding/apidocs/com.aoapps.encoding/com/aoapps/encoding/MediaEncoder.html#writeSuffixTo(java.lang.Appendable)">MediaEncoder.writeSuffixTo(java.lang.Appendable)</a>
+   * See <a href="https://oss.aoapps.com/encoding/apidocs/com.aoapps.encoding/com/aoapps/encoding/MediaEncoder.html#writeSuffixTo(java.lang.Appendable)">MediaEncoder.writeSuffixTo(java.lang.Appendable)</a>.
    *
    * @deprecated  Please use {@link #writeSuffix(boolean)} while specifying desired trim.
    */
@@ -144,7 +144,7 @@ public class EncoderWriter extends FilterWriter implements NoClose {
   }
 
   /**
-   * See <a href="https://oss.aoapps.com/encoding/apidocs/com.aoapps.encoding/com/aoapps/encoding/MediaEncoder.html#writeSuffixTo(java.lang.Appendable,boolean)">MediaEncoder.writeSuffixTo(java.lang.Appendable, boolean)</a>
+   * See <a href="https://oss.aoapps.com/encoding/apidocs/com.aoapps.encoding/com/aoapps/encoding/MediaEncoder.html#writeSuffixTo(java.lang.Appendable,boolean)">MediaEncoder.writeSuffixTo(java.lang.Appendable, boolean)</a>.
    *
    * @param  trim  Requests that the buffer be trimmed, if buffered and trim supported.
    */

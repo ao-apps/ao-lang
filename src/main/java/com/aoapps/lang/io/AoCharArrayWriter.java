@@ -29,14 +29,11 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * Provides direct access to the internal <code>char[]</code>
+ * Provides direct access to the internal <code>char[]</code>.
  *
  * @author  AO Industries, Inc.
  */
-public class AoCharArrayWriter
-    extends CharArrayWriter
-    implements Writable
-{
+public class AoCharArrayWriter extends CharArrayWriter implements Writable {
 
   public AoCharArrayWriter() {
     super();

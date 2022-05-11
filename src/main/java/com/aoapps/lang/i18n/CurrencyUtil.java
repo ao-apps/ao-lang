@@ -50,10 +50,13 @@ public final class CurrencyUtil {
     String currencyCode = currency.getCurrencyCode();
     if (symbol.equals(currencyCode)) {
       switch (currencyCode) {
-        case "USD" : return "$";
-        case "EUR" : return "€";
-        case "JPY" : return "¥";
-        case "CAD" : {
+        case "USD":
+          return "$";
+        case "EUR":
+          return "€";
+        case "JPY":
+          return "¥";
+        case "CAD": {
           // https://www.btb.termiumplus.gc.ca/tpv2guides/guides/wrtps/index-eng.html?lang=eng&lettr=indx_catlog_c&page=9Rl-N63dyxbA.html
           if (Locale.FRENCH.getLanguage().equals(locale.getLanguage())) {
             return "$\u00A0CA"; // non-breaking space
@@ -61,6 +64,8 @@ public final class CurrencyUtil {
             return "Can$";
           }
         }
+        default:
+          // fall-through
       }
     }
     return symbol;
