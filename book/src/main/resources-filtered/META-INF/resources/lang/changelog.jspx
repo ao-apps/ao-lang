@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2017-03-12T17:54:37-05:00"
-    dateModified="2022-04-19T20:58:39-05:00"
+    dateModified="2022-05-13T20:39:45-05:00"
   >
     <c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
       <changelog:release
@@ -47,25 +47,34 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         artifactId="@{documented.artifactId}"
         repository="@{nexusUrl}content/repositories/snapshots/"
         scmUrl="@{project.scm.url}"
-      >
-        <ul>
-          <li>New exception type <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/LocalizedUnsupportedOperationException.html">LocalizedUnsupportedOperationException</ao:a></code>.</li>
-          <li>Encoder suffix and validate now accept optional trim, when trimmed, validation is applied after trimming.</li>
-          <li>New interface <code>NoClose</code> along with static <code>wrap(…)</code> methods to avoid duplicate wrapping.</li>
-          <li><code>EncoderWriter</code> now unwraps the writer via <code>Coercion.optimize(Writer, Encoder)</code>.</li>
-          <li>Moved <code>FailOnWriteWriter</code> from <core:link book="/encoding" page="/index.jspx" />.</li>
-          <li>
-            New method <code>Encoder.isBuffered()</code> that provides information about when an encoder is
-            buffered or write-through.  This affects which optimizations are allowed to bypass the encoder.
-          </li>
-          <li>
-            XML output indentation changed from four-space to two-space for consistency with the new
-            <core:link book="/checkstyle-config" page="/index.jspx" /> project, which itself is based on
-            <ao:a href="https://google.github.io/styleguide/javaguide.html">Google Java Style Guide</ao:a>.
-          </li>
-        </ul>
-      </changelog:release>
+      />
     </c:if>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="5.2.0"
+      datePublished="2022-05-13T20:39:45-05:00"
+      groupId="@{project.groupId}"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>New exception type <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/LocalizedUnsupportedOperationException.html">LocalizedUnsupportedOperationException</ao:a></code>.</li>
+        <li>Encoder suffix and validate now accept optional trim, when trimmed, validation is applied after trimming.</li>
+        <li>New interface <code>NoClose</code> along with static <code>wrap(…)</code> methods to avoid duplicate wrapping.</li>
+        <li><code>EncoderWriter</code> now unwraps the writer via <code>Coercion.optimize(Writer, Encoder)</code>.</li>
+        <li>Moved <code>FailOnWriteWriter</code> from <core:link book="/encoding" page="/index.jspx" />.</li>
+        <li>
+          New method <code>Encoder.isBuffered()</code> that provides information about when an encoder is
+          buffered or write-through.  This affects which optimizations are allowed to bypass the encoder.
+        </li>
+        <li>
+          XML output indentation changed from four-space to two-space for consistency with the new
+          <core:link book="/checkstyle-config" page="/index.jspx" /> project, which itself is based on
+          <ao:a href="https://google.github.io/styleguide/javaguide.html">Google Java Style Guide</ao:a>.
+        </li>
+      </ul>
+    </changelog:release>
 
     <changelog:release
       projectName="@{documented.name}"
