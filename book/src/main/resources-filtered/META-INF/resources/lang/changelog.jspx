@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2017-03-12T17:54:37-05:00"
-    dateModified="2022-05-13T20:39:45-05:00"
+    dateModified="2022-06-27T15:37:57-05:00"
   >
     <c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
       <changelog:release
@@ -112,7 +112,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         <li>
           For compatibility with Java 17, removed <code>java.rmi.activation.*</code> from
           <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/Throwables.html">Throwables</ao:a></code>.
-          See <ao:a href="https://openjdk.java.net/jeps/407">JEP 407: Remove RMI Activation</ao:a> for details.
+          See <ao:a href="https://openjdk.org/jeps/407">JEP 407: Remove RMI Activation</ao:a> for details.
         </li>
       </ul>
     </changelog:release>
