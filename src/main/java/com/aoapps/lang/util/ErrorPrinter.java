@@ -288,6 +288,7 @@ public final class ErrorPrinter {
       append("            Priority....: ", out);
       appendln(thread.getPriority(), out);
       try {
+        // Java 19: java.lang.ThreadGroup Is Degraded, see https://bugs.openjdk.org/browse/JDK-8284161
         ThreadGroup tg = thread.getThreadGroup();
         while (tg != null) {
           final String name = tg.getName();

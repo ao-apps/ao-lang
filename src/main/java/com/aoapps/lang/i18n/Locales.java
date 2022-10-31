@@ -91,6 +91,8 @@ public final class Locales {
       CacheKey key = new CacheKey(language, country, variant);
       Locale locale = locales.get(key);
       if (locale == null) {
+        // Java 19: Deprecation of Locale Class Constructors, see https://bugs.openjdk.org/browse/JDK-8282819
+        //          Entire caching mechanism should probably be removed
         locale = new Locale(
             language,
             country,
