@@ -112,7 +112,7 @@ public final class Coercion {
     if (value instanceof Node) {
       try {
         // Can use thread-local or pooled transformers if performance is ever an issue
-        // Java 19: New XML Processing Limits (JDK-8270504 (not public)), see https://www.oracle.com/java/technologies/javase/19all-relnotes.html
+        // TODO: New XML Processing Limits (JDK-8270504 (not public)), see https://www.oracle.com/java/technologies/javase/8all-relnotes.html
         TransformerFactory transFactory = TransformerFactory.newInstance();
         try {
           transFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
@@ -295,7 +295,7 @@ public final class Coercion {
           // If is a DOM node, serialize the output
           try {
             // Can use thread-local or pooled transformers if performance is ever an issue
-            // Java 19: New XML Processing Limits (JDK-8270504 (not public)), see https://www.oracle.com/java/technologies/javase/19all-relnotes.html
+            // TODO: New XML Processing Limits (JDK-8270504 (not public)), see https://www.oracle.com/java/technologies/javase/8all-relnotes.html
             TransformerFactory transFactory = TransformerFactory.newInstance();
             try {
               transFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
@@ -411,7 +411,7 @@ public final class Coercion {
           // If is a DOM node, serialize the output
           try {
             // Can use thread-local or pooled transformers if performance is ever an issue
-            // Java 19: New XML Processing Limits (JDK-8270504 (not public)), see https://www.oracle.com/java/technologies/javase/19all-relnotes.html
+            // TODO: New XML Processing Limits (JDK-8270504 (not public)), see https://www.oracle.com/java/technologies/javase/8all-relnotes.html
             TransformerFactory transFactory = TransformerFactory.newInstance();
             try {
               transFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
@@ -523,7 +523,7 @@ public final class Coercion {
           // If is a DOM node, serialize the output
           try {
             // Can use thread-local or pooled transformers if performance is ever an issue
-            // Java 19: New XML Processing Limits (JDK-8270504 (not public)), see https://www.oracle.com/java/technologies/javase/19all-relnotes.html
+            // TODO: New XML Processing Limits (JDK-8270504 (not public)), see https://www.oracle.com/java/technologies/javase/8all-relnotes.html
             TransformerFactory transFactory = TransformerFactory.newInstance();
             try {
               transFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
@@ -643,7 +643,7 @@ public final class Coercion {
           // If is a DOM node, serialize the output
           try {
             // Can use thread-local or pooled transformers if performance is ever an issue
-            // Java 19: New XML Processing Limits (JDK-8270504 (not public)), see https://www.oracle.com/java/technologies/javase/19all-relnotes.html
+            // TODO: New XML Processing Limits (JDK-8270504 (not public)), see https://www.oracle.com/java/technologies/javase/8all-relnotes.html
             TransformerFactory transFactory = TransformerFactory.newInstance();
             try {
               transFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
