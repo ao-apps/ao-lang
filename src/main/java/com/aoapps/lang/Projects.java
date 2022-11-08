@@ -263,7 +263,7 @@ public final class Projects {
 
   /**
    * Some projects are packaged with an additional release beyond their effective version number,
-   * separated by a single hypen.
+   * separated by a single hyphen.
    * This release is optional, and expected to be numeric only.
    */
   public static String stripRelease(String version) {
@@ -273,7 +273,7 @@ public final class Projects {
 
   /**
    * Some projects are packaged with an additional release beyond their effective version number,
-   * separated by a single hypen.
+   * separated by a single hyphen.
    * This release is optional, and expected to be numeric only.
    */
   public static String getRelease(String version) {
