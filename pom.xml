@@ -246,18 +246,12 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
       <!-- Direct -->
       <dependency>
         <groupId>commons-codec</groupId><artifactId>commons-codec</artifactId><version>${commons-codec.version}</version>
-        <!-- Javadoc-only -->
-        <exclusions><exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion></exclusions>
       </dependency>
       <dependency>
         <groupId>commons-io</groupId><artifactId>commons-io</artifactId><version>${commons-io.version}</version>
-        <!-- Javadoc-only -->
-        <exclusions><exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion></exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${commons-lang3.version}</version>
-        <!-- Javadoc-only -->
-        <exclusions><exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion></exclusions>
       </dependency>
       <!-- Test Direct -->
       <dependency>
