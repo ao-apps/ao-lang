@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -40,9 +40,9 @@ public final class Suppliers {
   }
 
   /**
-   * Lazily evaluates a set of suppliers, returning the first non-null result or {@link Optional#EMPTY} when no result.
+   * Lazily evaluates a set of suppliers, returning the first non-null result or {@link Optional#empty()} when no result.
    *
-   * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
+   * @return  The first non-null result or {@link Optional#empty()} when all return {@code null}
    */
   @SuppressWarnings("unchecked")
   public static <T> Optional<T> coalesce(Supplier<? extends T> ... suppliers) {
@@ -59,9 +59,9 @@ public final class Suppliers {
   }
 
   /**
-   * Lazily evaluates a set of suppliers, returning the first non-null result or {@link Optional#EMPTY} when no result.
+   * Lazily evaluates a set of suppliers, returning the first non-null result or {@link Optional#empty()} when no result.
    *
-   * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
+   * @return  The first non-null result or {@link Optional#empty()} when all return {@code null}
    */
   @SuppressWarnings("unchecked")
   public static <T, Ex extends Throwable> Optional<T> coalesceE(SupplierE<? extends T, ? extends Ex> ... suppliers) throws Ex {

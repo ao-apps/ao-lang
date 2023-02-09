@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -40,9 +40,9 @@ public final class Functions {
   }
 
   /**
-   * Lazily evaluates a set of functions, returning the first non-null result or {@link Optional#EMPTY} when no result.
+   * Lazily evaluates a set of functions, returning the first non-null result or {@link Optional#empty()} when no result.
    *
-   * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
+   * @return  The first non-null result or {@link Optional#empty()} when all return {@code null}
    */
   @SuppressWarnings("unchecked")
   public static <T, R> Optional<R> coalesce(T t, Function<? super T, ? extends R> ... functions) {
@@ -59,9 +59,9 @@ public final class Functions {
   }
 
   /**
-   * Lazily evaluates a set of functions, returning the first non-null result or {@link Optional#EMPTY} when no result.
+   * Lazily evaluates a set of functions, returning the first non-null result or {@link Optional#empty()} when no result.
    *
-   * @return  The first non-null result or {@link Optional#EMPTY} when all return {@code null}
+   * @return  The first non-null result or {@link Optional#empty()} when all return {@code null}
    */
   @SuppressWarnings("unchecked")
   public static <T, R, Ex extends Throwable> Optional<R> coalesceE(T t, FunctionE<? super T, ? extends R, ? extends Ex> ... functions) throws Ex {
