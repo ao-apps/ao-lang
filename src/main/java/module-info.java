@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -34,6 +34,7 @@ module com.aoapps.lang {
   exports com.aoapps.lang.math;
   exports com.aoapps.lang.nio.charset;
   exports com.aoapps.lang.reflect;
+  exports com.aoapps.lang.security.acl;
   exports com.aoapps.lang.sql;
   exports com.aoapps.lang.text;
   exports com.aoapps.lang.time;
