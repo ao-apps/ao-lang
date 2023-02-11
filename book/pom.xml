@@ -29,11 +29,11 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     <relativePath>../../parent/pom.xml</relativePath>
   </parent>
 
-  <groupId>com.aoapps</groupId><artifactId>ao-lang-book</artifactId><version>5.3.0-SNAPSHOT</version>
+  <groupId>com.aoapps</groupId><artifactId>ao-lang-book</artifactId><version>5.3.0</version>
   <packaging>bundle</packaging>
 
   <properties>
-    <project.build.outputTimestamp>2023-02-10T02:42:41Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2023-02-11T16:19:45Z</project.build.outputTimestamp>
     <module.name>com.aoapps.lang.book</module.name>
     <!-- These values are copied from the project being documented -->
     <documented.artifactId>ao-lang</documented.artifactId>
@@ -78,7 +78,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     <connection>scm:git:git://github.com/ao-apps/ao-lang.git</connection>
     <developerConnection>scm:git:git@github.com:ao-apps/ao-lang.git</developerConnection>
     <url>https://github.com/ao-apps/ao-lang</url>
-    <tag>HEAD</tag>
+    <tag>ao-lang-book-5.3.0</tag>
   </scm>
 
   <issueManagement>
