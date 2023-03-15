@@ -30,6 +30,7 @@ import java.util.BitSet;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * @author  AO Industries, Inc.
@@ -80,6 +81,7 @@ public final class Strings {
    * @see  #join(java.lang.Iterable, java.lang.String, java.lang.Appendable)
    * @see  #join(java.lang.Object[], java.lang.String)
    * @see  String#join(java.lang.CharSequence, java.lang.Iterable)
+   * @see  StringJoiner
    */
   public static String join(Iterable<?> objects, String delimiter) throws ConcurrentModificationException {
     int delimiterLength = delimiter.length();
@@ -117,6 +119,7 @@ public final class Strings {
    * @see  #join(java.lang.Iterable, java.lang.String)
    * @see  #join(java.lang.Object[], java.lang.String, java.lang.Appendable)
    * @see  String#join(java.lang.CharSequence, java.lang.Iterable)
+   * @see  StringJoiner
    */
   public static <A extends Appendable> A join(Iterable<?> objects, String delimiter, A out) throws IOException {
     boolean didOne = false;
@@ -141,6 +144,7 @@ public final class Strings {
    * @see  #join(java.lang.Object[], java.lang.String, java.lang.Appendable)
    * @see  #join(java.lang.Iterable, java.lang.String)
    * @see  String#join(java.lang.CharSequence, java.lang.CharSequence...)
+   * @see  StringJoiner
    */
   public static String join(Object[] objects, String delimiter) throws ConcurrentModificationException {
     int delimiterLength = delimiter.length();
@@ -178,6 +182,7 @@ public final class Strings {
    * @see  #join(java.lang.Object[], java.lang.String)
    * @see  #join(java.lang.Iterable, java.lang.String, java.lang.Appendable)
    * @see  String#join(java.lang.CharSequence, java.lang.CharSequence...)
+   * @see  StringJoiner
    */
   public static <A extends Appendable> A join(Object[] objects, String delimiter, A out) throws IOException {
     boolean didOne = false;
