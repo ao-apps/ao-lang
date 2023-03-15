@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -79,6 +79,7 @@ public final class Strings {
    *
    * @see  #join(java.lang.Iterable, java.lang.String, java.lang.Appendable)
    * @see  #join(java.lang.Object[], java.lang.String)
+   * @see  String#join(java.lang.CharSequence, java.lang.Iterable)
    */
   public static String join(Iterable<?> objects, String delimiter) throws ConcurrentModificationException {
     int delimiterLength = delimiter.length();
@@ -115,6 +116,7 @@ public final class Strings {
    *
    * @see  #join(java.lang.Iterable, java.lang.String)
    * @see  #join(java.lang.Object[], java.lang.String, java.lang.Appendable)
+   * @see  String#join(java.lang.CharSequence, java.lang.Iterable)
    */
   public static <A extends Appendable> A join(Iterable<?> objects, String delimiter, A out) throws IOException {
     boolean didOne = false;
@@ -138,6 +140,7 @@ public final class Strings {
    *
    * @see  #join(java.lang.Object[], java.lang.String, java.lang.Appendable)
    * @see  #join(java.lang.Iterable, java.lang.String)
+   * @see  String#join(java.lang.CharSequence, java.lang.CharSequence...)
    */
   public static String join(Object[] objects, String delimiter) throws ConcurrentModificationException {
     int delimiterLength = delimiter.length();
@@ -174,6 +177,7 @@ public final class Strings {
    *
    * @see  #join(java.lang.Object[], java.lang.String)
    * @see  #join(java.lang.Iterable, java.lang.String, java.lang.Appendable)
+   * @see  String#join(java.lang.CharSequence, java.lang.CharSequence...)
    */
   public static <A extends Appendable> A join(Object[] objects, String delimiter, A out) throws IOException {
     boolean didOne = false;
