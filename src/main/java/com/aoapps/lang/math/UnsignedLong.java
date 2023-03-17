@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2016, 2017, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2012, 2016, 2017, 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,13 +23,14 @@
 
 package com.aoapps.lang.math;
 
-import java.math.BigInteger;
-
 /**
  * Static utilities for dealing with long values as if they are unsigned.
  *
+ * @deprecated  Please use methods available in {@link Long} as of Java 8.
+ *
  * @author  AO Industries, Inc.
  */
+@Deprecated
 public final class UnsignedLong {
 
   /** Make no instances. */
@@ -37,39 +38,23 @@ public final class UnsignedLong {
     throw new AssertionError();
   }
 
-  private static final BigInteger TWO_POWER_64 = new BigInteger("10000000000000000", 16);
-  private static final BigInteger TWO_POWER_64_MINUS_1 = TWO_POWER_64.subtract(BigInteger.ONE);
-
-  private static BigInteger getUnsigned(long value) {
-    BigInteger bigValue = BigInteger.valueOf(value);
-    if (value < 0) {
-      bigValue = bigValue.add(TWO_POWER_64).and(TWO_POWER_64_MINUS_1);
-    }
-    return bigValue;
-  }
-
   /**
    * Divides two unsigned long values.
+   *
+   * @deprecated  Please use {@link Long#divideUnsigned(long, long)} as of Java 8.
    */
+  @Deprecated
   public static long divide(long dividend, long divisor) {
-    // This may not be very fast, but it is simple to implement
-    return getUnsigned(dividend).divide(getUnsigned(divisor)).longValue();
+    return Long.divideUnsigned(dividend, divisor);
   }
 
   /**
    * Gets the remainder (modulus) from a division.
+   *
+   * @deprecated  Please use {@link Long#remainderUnsigned(long, long)} as of Java 8.
    */
+  @Deprecated
   public static long remainder(long dividend, long divisor) {
-    // This may not be very fast, but it is simple to implement
-    return getUnsigned(dividend).remainder(getUnsigned(divisor)).longValue();
+    return Long.remainderUnsigned(dividend, divisor);
   }
-
-  // Not necessary, regular multiplication should be OK
-  ///**
-  // * Multiplies two unsigned long values.
-  // */
-  //public static long multiply(long factor1, long factor2) {
-  //  // This may not be very fast, but it is simple to implement
-  //  return getUnsigned(factor1).multiply(getUnsigned(factor2)).longValue();
-  //}
 }
