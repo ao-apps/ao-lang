@@ -44,10 +44,6 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 
     <javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://oss.aoapps.com/">AO OSS</a>
 / <a target="${javadoc.target}" href="${project.url}">Lang</a>]]></javadoc.breadcrumbs>
-    <!-- SonarQube -->
-    <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
-    <sonar.organization>ao-apps</sonar.organization>
-    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <!-- Dependencies -->
     <commons-codec.version>1.15</commons-codec.version>
     <commons-io.version>2.11.0</commons-io.version>
