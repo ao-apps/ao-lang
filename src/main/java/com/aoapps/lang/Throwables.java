@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -1311,6 +1311,7 @@ public final class Throwables {
         (template, cause) -> initCause(new javax.management.openmbean.InvalidOpenTypeException(template.getMessage()), cause));
     registerSurrogateFactory(
         java.security.InvalidParameterException.class,
+        // Java 20: Added Constructors (String, Throwable) and (Throwable) to InvalidParameterException
         (template, cause) -> initCause(new java.security.InvalidParameterException(template.getMessage()), cause));
     registerSurrogateFactory(
         java.nio.file.InvalidPathException.class,
