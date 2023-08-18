@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2017-03-12T17:54:37-05:00"
-    dateModified="2023-03-17T19:05:23Z"
+    dateModified="2023-08-18T18:00:34Z"
   >
     <c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
       <changelog:release
@@ -52,6 +52,10 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
           <li>
             Deprecated <code>UnsignedLong</code> since all its functionality is available in
             <ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Long.html">Long</ao:a> as of Java 8.
+          </li>
+          <li>
+            New <code>ContentType.CSV</code> constant for <code>text/csv</code> per
+            <ao:a href="https://www.rfc-editor.org/rfc/rfc7111">RFC 7111</ao:a>.
           </li>
         </ul>
       </changelog:release>

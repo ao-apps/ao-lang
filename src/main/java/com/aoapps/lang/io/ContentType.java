@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -44,6 +44,11 @@ public final class ContentType {
    * A CSS stylesheet.
    */
   public static final String CSS = "text/css";
+
+  /**
+   * A Comma-Separated Values file per <a href="https://www.rfc-editor.org/rfc/rfc7111">RFC 7111</a>.
+   */
+  public static final String CSV = "text/csv";
 
   /**
    * A GIF image.
