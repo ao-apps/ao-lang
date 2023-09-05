@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2017-03-12T17:54:37-05:00"
-    dateModified="2023-08-19T22:03:10Z"
+    dateModified="2023-09-05T21:28:55Z"
   >
     <c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
       <changelog:release
@@ -47,7 +47,16 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         artifactId="@{documented.artifactId}"
         repository="@{nexusUrl}content/repositories/snapshots/"
         scmUrl="@{project.scm.url}"
-      />
+      >
+        <ul>
+          <li>
+            Additional <code>ZipUtils</code> methods to get and set creation, access, and last-modified times in UTC
+            time zone within <ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/zip/ZipEntry.html">ZipEntry</ao:a>.
+            The get methods leverage <ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Optional.html">Optional</ao:a>
+            to represent that the times may not be available.
+          </li>
+        </ul>
+      </changelog:release>
     </c:if>
 
     <changelog:release
