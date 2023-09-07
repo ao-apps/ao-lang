@@ -62,6 +62,7 @@ public final class ZipUtils {
    *
    * @see #setTimeUtc(java.util.zip.ZipEntry, long)
    */
+  // Copied to ao-ant-tasks:ZipUtils.java
   public static Optional<Long> getTimeUtc(ZipEntry entry) {
     long time = entry.getTime();
     return time == -1 ? Optional.empty() : Optional.of(time + TimeZone.getDefault().getOffset(time));
@@ -74,6 +75,7 @@ public final class ZipUtils {
    *
    * @see #getTimeUtc(java.util.zip.ZipEntry)
    */
+  // Copied to ao-ant-tasks:ZipUtils.java
   public static void setTimeUtc(ZipEntry entry, long time) {
     entry.setTime(time - TimeZone.getDefault().getOffset(time));
   }
@@ -115,6 +117,7 @@ public final class ZipUtils {
    *
    * @see #setCreationTimeUtc(java.util.zip.ZipEntry, long)
    */
+  // Copied to ao-ant-tasks:ZipUtils.java
   public static Optional<Long> getCreationTimeUtc(ZipEntry entry) {
     FileTime creationTime = entry.getCreationTime();
     if (creationTime == null) {
@@ -131,6 +134,7 @@ public final class ZipUtils {
    *
    * @see #getCreationTimeUtc(java.util.zip.ZipEntry)
    */
+  // Copied to ao-ant-tasks:ZipUtils.java
   public static void setCreationTimeUtc(ZipEntry entry, long creationTime) {
     entry.setCreationTime(FileTime.fromMillis(creationTime - TimeZone.getDefault().getOffset(creationTime)));
   }
@@ -143,6 +147,7 @@ public final class ZipUtils {
    *
    * @see #setLastAccessTimeUtc(java.util.zip.ZipEntry, long)
    */
+  // Copied to ao-ant-tasks:ZipUtils.java
   public static Optional<Long> getLastAccessTimeUtc(ZipEntry entry) {
     FileTime lastAccess = entry.getLastAccessTime();
     if (lastAccess == null) {
@@ -159,6 +164,7 @@ public final class ZipUtils {
    *
    * @see #getLastAccessTimeUtc(java.util.zip.ZipEntry)
    */
+  // Copied to ao-ant-tasks:ZipUtils.java
   public static void setLastAccessTimeUtc(ZipEntry entry, long lastAccessTime) {
     entry.setCreationTime(FileTime.fromMillis(lastAccessTime - TimeZone.getDefault().getOffset(lastAccessTime)));
   }
@@ -171,6 +177,7 @@ public final class ZipUtils {
    *
    * @see #setLastModifiedTimeUtc(java.util.zip.ZipEntry, long)
    */
+  // Copied to ao-ant-tasks:ZipUtils.java
   public static Optional<Long> getLastModifiedTimeUtc(ZipEntry entry) {
     FileTime lastModifiedTime = entry.getLastModifiedTime();
     if (lastModifiedTime == null) {
@@ -187,6 +194,7 @@ public final class ZipUtils {
    *
    * @see #getLastModifiedTimeUtc(java.util.zip.ZipEntry)
    */
+  // Copied to ao-ant-tasks:ZipUtils.java
   public static void setLastModifiedTimeUtc(ZipEntry entry, long lastModifiedTime) {
     entry.setCreationTime(FileTime.fromMillis(lastModifiedTime - TimeZone.getDefault().getOffset(lastModifiedTime)));
   }
