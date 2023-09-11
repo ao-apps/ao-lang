@@ -23,7 +23,6 @@
 
 package com.aoapps.lang.zip;
 
-import com.aoapps.lang.exception.WrappedException;
 import com.aoapps.lang.io.FileUtils;
 import com.aoapps.lang.io.IoUtils;
 import java.io.File;
@@ -109,7 +108,7 @@ public final class ZipUtils {
     try {
       return getTimeUtc(entry).orElse(-1L);
     } catch (ZipException e) {
-      throw new WrappedException(e);
+      throw new UncheckedIOException(e);
     }
   }
 
@@ -127,7 +126,7 @@ public final class ZipUtils {
     try {
       setTimeUtc(entry, time);
     } catch (ZipException e) {
-      throw new WrappedException(e);
+      throw new UncheckedIOException(e);
     }
   }
 
