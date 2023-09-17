@@ -29,12 +29,12 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     <relativePath>../../parent/pom.xml</relativePath>
   </parent>
 
-  <groupId>com.aoapps</groupId><artifactId>ao-lang-book</artifactId><version>5.5.0-SNAPSHOT</version>
+  <groupId>com.aoapps</groupId><artifactId>ao-lang-book</artifactId><version>5.5.0</version>
   <packaging>jar</packaging>
 
   <properties>
     <!-- Must be set to ${git.commit.time} for snapshots or ISO 8601 timestamp for releases. -->
-    <project.build.outputTimestamp>${git.commit.time}</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2023-09-17T09:23:40Z</project.build.outputTimestamp>
     <module.name>com.aoapps.lang.book</module.name>
     <!-- These values are copied from the project being documented -->
     <documented.artifactId>ao-lang</documented.artifactId>
@@ -79,7 +79,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     <connection>scm:git:git://github.com/ao-apps/ao-lang.git</connection>
     <developerConnection>scm:git:git@github.com:ao-apps/ao-lang.git</developerConnection>
     <url>https://github.com/ao-apps/ao-lang</url>
-    <tag>HEAD</tag>
+    <tag>ao-lang-book-5.5.0</tag>
   </scm>
 
   <issueManagement>
