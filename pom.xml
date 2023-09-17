@@ -29,12 +29,12 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
 
-  <groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>5.5.0-SNAPSHOT</version>
+  <groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>5.5.0</version>
   <packaging>jar</packaging>
 
   <properties>
     <!-- Must be set to ${git.commit.time} for snapshots or ISO 8601 timestamp for releases. -->
-    <project.build.outputTimestamp>${git.commit.time}</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2023-09-17T08:18:53Z</project.build.outputTimestamp>
     <module.name>com.aoapps.lang</module.name>
     <!-- Java 1.8 -->
     <javase.version>1.8</javase.version>
@@ -81,7 +81,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     <connection>scm:git:git://github.com/ao-apps/ao-lang.git</connection>
     <developerConnection>scm:git:git@github.com:ao-apps/ao-lang.git</developerConnection>
     <url>https://github.com/ao-apps/ao-lang</url>
-    <tag>HEAD</tag>
+    <tag>ao-lang-5.5.0</tag>
   </scm>
 
   <issueManagement>
