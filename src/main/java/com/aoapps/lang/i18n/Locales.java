@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -253,7 +253,7 @@ public final class Locales {
   /**
    * INDONESIAN is now "id" - this matches Java's backward compatibility "in".
    */
-  // Java 17: Update ISO 639 language codes: https://bugs.openjdk.java.net/browse/JDK-8263202
+  // Java 17: Update ISO 639 language codes: https://bugs.openjdk.org/browse/JDK-8263202
   public static final Locale INDONESIAN = parseLocale("in");
   public static final Locale ICELANDIC = parseLocale("is");
 
@@ -278,7 +278,7 @@ public final class Locales {
   /**
    * HEBREW is now "he" - this matches Java's backward compatibility "iw".
    */
-  // Java 17: Update ISO 639 language codes: https://bugs.openjdk.java.net/browse/JDK-8263202
+  // Java 17: Update ISO 639 language codes: https://bugs.openjdk.org/browse/JDK-8263202
   public static final Locale HEBREW = parseLocale("iw");
   public static final Locale LITHUANIAN = parseLocale("lt");
   public static final Locale LATVIAN = parseLocale("lv");

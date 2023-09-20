@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2017-03-12T17:54:37-05:00"
-    dateModified="2023-09-17T08:21:04Z"
+    dateModified="2023-09-20T16:47:30Z"
   >
     <c:set var="latestRelease" value="5.5.0" />
     <c:if test="${
@@ -185,7 +185,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
       scmUrl="@{project.scm.url}"
     >
       <ul>
-        <li>Added support for <ao:a href="https://bugs.openjdk.java.net/browse/JDK-8263202">Updated ISO 639 Language Codes in Java 17</ao:a>.</li>
+        <li>Added support for <ao:a href="https://bugs.openjdk.org/browse/JDK-8263202">Updated ISO 639 Language Codes in Java 17</ao:a>.</li>
       </ul>
     </changelog:release>
 
