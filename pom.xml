@@ -43,10 +43,6 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 
     <javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://oss.aoapps.com/">AO OSS</a>
 / <a target="${javadoc.target}" href="${project.url}">Lang</a>]]></javadoc.breadcrumbs>
-    <!-- Dependencies -->
-    <commons-codec.version>1.16.0</commons-codec.version>
-    <commons-io.version>2.13.0</commons-io.version>
-    <commons-lang3.version>3.13.0</commons-lang3.version>
   </properties>
 
   <name>AO Lang</name>
@@ -213,15 +209,15 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
               <offlineLinks combine.children="append">
                 <!-- Direct -->
                 <offlineLink>
-                  <url>https://commons.apache.org/proper/commons-codec/archives/${commons-codec.version}/apidocs/</url>
+                  <url>https://commons.apache.org/proper/commons-codec/archives/${commons-codec:commons-codec:jar.version}/apidocs/</url>
                   <location>${project.build.directory}/offlineLinks/commons-codec/commons-codec</location>
                 </offlineLink>
                 <offlineLink>
-                  <url>https://javadoc.io/doc/commons-io/commons-io/${commons-io.version}/</url>
+                  <url>https://javadoc.io/doc/commons-io/commons-io/${commons-io:commons-io:jar.version}/</url>
                   <location>${project.build.directory}/offlineLinks/commons-io/commons-io</location>
                 </offlineLink>
                 <offlineLink>
-                  <url>https://javadoc.io/doc/org.apache.commons/commons-lang3/${commons-lang3.version}/</url>
+                  <url>https://javadoc.io/doc/org.apache.commons/commons-lang3/${org.apache.commons:commons-lang3:jar.version}/</url>
                   <location>${project.build.directory}/offlineLinks/org.apache.commons/commons-lang3</location>
                 </offlineLink>
                 <!-- Test Direct -->
@@ -241,13 +237,13 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     <dependencies>
       <!-- Direct -->
       <dependency>
-        <groupId>commons-codec</groupId><artifactId>commons-codec</artifactId><version>${commons-codec.version}</version>
+        <groupId>commons-codec</groupId><artifactId>commons-codec</artifactId><version>1.16.0</version>
       </dependency>
       <dependency>
-        <groupId>commons-io</groupId><artifactId>commons-io</artifactId><version>${commons-io.version}</version>
+        <groupId>commons-io</groupId><artifactId>commons-io</artifactId><version>2.13.0</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${commons-lang3.version}</version>
+        <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.13.0</version>
       </dependency>
       <!-- Test Direct -->
       <dependency>
