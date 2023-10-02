@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2017-03-12T17:54:37-05:00"
-    dateModified="2023-09-24T09:25:40Z"
+    dateModified="2023-10-02T01:19:19Z"
   >
     <c:set var="latestRelease" value="5.5.1" />
     <c:if test="${
@@ -52,7 +52,11 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         artifactId="@{documented.artifactId}"
         repository="@{nexusUrl}content/repositories/snapshots/"
         scmUrl="@{project.scm.url}"
-      />
+      >
+        <ul>
+          <li>Functional <code>identity()</code> now declare throws <code>RuntimeException</code> instead of <code>Throwable</code>.</li>
+        </ul>
+      </changelog:release>
     </c:if>
 
     <changelog:release

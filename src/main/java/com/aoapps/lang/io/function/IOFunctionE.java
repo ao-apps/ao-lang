@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -49,10 +49,7 @@ public interface IOFunctionE<T, R, Ex extends Throwable> {
     return t -> after.apply(apply(t));
   }
 
-  /**
-   * @param  <Ex>  An arbitrary exception type that may be thrown
-   */
-  static <T, Ex extends Throwable> IOFunctionE<T, T, Ex> identity() {
+  static <T> IOFunctionE<T, T, RuntimeException> identity() {
     return t -> t;
   }
 }
