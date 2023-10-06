@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -30,6 +30,7 @@ import com.aoapps.lang.io.EncoderWriter;
 import com.aoapps.lang.io.Writable;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.UncheckedIOException;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -685,8 +686,10 @@ public final class Coercion {
    * <li>When {@link Node} return {@code false}.</li>
    * <li>Otherwise return <code>{@linkplain Object#toString() value.toString()}.{@linkplain String#isEmpty() isEmpty()}</code>.</li>
    * </ol>
+   *
+   * @throws UncheckedIOException on any underlying {@link IOException}.
    */
-  public static boolean isEmpty(Object value) throws IOException {
+  public static boolean isEmpty(Object value) {
     // Support Optional
     while (value instanceof Optional) {
       value = ((Optional<?>) value).orElse(null);
@@ -699,7 +702,11 @@ public final class Coercion {
       return ((String) value).isEmpty();
     } else if (value instanceof Writable) {
       // If is a Writable, support optimizations
-      return ((Writable) value).getLength() == 0;
+      try {
+        return ((Writable) value).getLength() == 0;
+      } catch (IOException e) {
+        throw new UncheckedIOException(e);
+      }
     } else if (value instanceof CharSequence) {
       // Support Segment and CharSequence
       return ((CharSequence) value).length() == 0;
@@ -730,8 +737,10 @@ public final class Coercion {
    * </ol>
    *
    * @see  #isEmpty(java.lang.Object)
+   *
+   * @throws UncheckedIOException on any underlying {@link IOException}.
    */
-  public static Object nullIfEmpty(Object value) throws IOException {
+  public static Object nullIfEmpty(Object value) {
     // Support Optional
     while (value instanceof Optional) {
       value = ((Optional<?>) value).orElse(null);
@@ -744,7 +753,11 @@ public final class Coercion {
       return Strings.nullIfEmpty((String) value);
     } else if (value instanceof Writable) {
       // If is a Writable, support optimizations
-      return ((Writable) value).getLength() == 0 ? null : value;
+      try {
+        return ((Writable) value).getLength() == 0 ? null : value;
+      } catch (IOException e) {
+        throw new UncheckedIOException(e);
+      }
     } else if (value instanceof CharSequence) {
       // Support Segment and CharSequence
       return ((CharSequence) value).length() == 0 ? null : value;
@@ -780,8 +793,10 @@ public final class Coercion {
    *          a trimmed version of the value (possibly of a different type),
    *          a trimmed {@link String} representation of the object,
    *          or {@code null} when the value is {@code null}.
+   *
+   * @throws UncheckedIOException on any underlying {@link IOException}.
    */
-  public static Object trim(Object value) throws IOException {
+  public static Object trim(Object value) {
     // Support Optional
     while (value instanceof Optional) {
       value = ((Optional<?>) value).orElse(null);
@@ -798,7 +813,11 @@ public final class Coercion {
       if (writable.isFastToString()) {
         return Strings.trim(writable.toString());
       } else {
-        return writable.trim();
+        try {
+          return writable.trim();
+        } catch (IOException e) {
+          throw new UncheckedIOException(e);
+        }
       }
     } else if (value instanceof CharSequence) {
       // Support Segment and CharSequence
@@ -848,8 +867,10 @@ public final class Coercion {
    *          a trimmed version of the value (possibly of a different type),
    *          a trimmed {@link String} representation of the object,
    *          or {@code null} when the value is {@code null} or empty after trimming.
+   *
+   * @throws UncheckedIOException on any underlying {@link IOException}.
    */
-  public static Object trimNullIfEmpty(Object value) throws IOException {
+  public static Object trimNullIfEmpty(Object value) {
     // Support Optional
     while (value instanceof Optional) {
       value = ((Optional<?>) value).orElse(null);
@@ -866,8 +887,12 @@ public final class Coercion {
       if (writable.isFastToString()) {
         return Strings.trimNullIfEmpty(writable.toString());
       } else {
-        writable = writable.trim();
-        return writable.getLength() == 0 ? null : writable;
+        try {
+          writable = writable.trim();
+          return writable.getLength() == 0 ? null : writable;
+        } catch (IOException e) {
+          throw new UncheckedIOException(e);
+        }
       }
     } else if (value instanceof CharSequence) {
       // Support Segment and CharSequence

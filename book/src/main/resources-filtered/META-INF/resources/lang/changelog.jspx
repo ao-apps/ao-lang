@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2017-03-12T17:54:37-05:00"
-    dateModified="2023-10-02T01:19:19Z"
+    dateModified="2023-10-06T01:31:21Z"
   >
     <c:set var="latestRelease" value="5.5.1" />
     <c:if test="${
@@ -55,6 +55,10 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
       >
         <ul>
           <li>Functional <code>identity()</code> now declare throws <code>RuntimeException</code> instead of <code>Throwable</code>.</li>
+          <li>
+            <code>Coercion</code> throws <code>UncheckedIOException</code> instead of <code>IOException</code> for
+            methods that are not specifically I/O-related.
+          </li>
         </ul>
       </changelog:release>
     </c:if>
