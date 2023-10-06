@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -30,6 +30,7 @@ import java.util.ServiceLoader;
  * {@link Coercion#registerOptimizer(com.aoapps.lang.CoercionOptimizer)},
  * loaded by {@link ServiceLoader}.
  */
+@FunctionalInterface
 public interface CoercionOptimizerInitializer extends Runnable {
 
   /**
