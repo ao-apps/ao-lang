@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2016, 2017, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2016, 2017, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -38,6 +38,26 @@ public class LongLong extends Number implements Comparable<LongLong> {
   public static final LongLong MIN_VALUE = valueOf(Long.MIN_VALUE, 0L);
 
   public static final LongLong MAX_VALUE = valueOf(Long.MAX_VALUE, -1L);
+
+  private static final int CACHE_MIN = -128;
+  private static final int CACHE_MAX = 127;
+
+  private static final class LongLongCache {
+
+    /** Make no instances. */
+    private LongLongCache() {
+      throw new AssertionError();
+    }
+
+    static final LongLong[] cache = new LongLong[-CACHE_MIN + CACHE_MAX + 1];
+
+    static {
+      for (int i = 0; i < cache.length; i++) {
+        int value = i + CACHE_MIN;
+        cache[i] = new LongLong(value < 0 ? -1 : 0, value);
+      }
+    }
+  }
 
   private static byte[] getBytes(BigInteger bigInteger) {
     if (bigInteger.bitLength() >= SIZE) {
@@ -88,26 +108,6 @@ public class LongLong extends Number implements Comparable<LongLong> {
    */
   public static LongLong valueOf(String s) throws NumberFormatException {
     return parseLongLong(s, 10);
-  }
-
-  private static final int CACHE_MIN = -128;
-  private static final int CACHE_MAX = 127;
-
-  private static final class LongLongCache {
-
-    /** Make no instances. */
-    private LongLongCache() {
-      throw new AssertionError();
-    }
-
-    static final LongLong[] cache = new LongLong[-CACHE_MIN + CACHE_MAX + 1];
-
-    static {
-      for (int i = 0; i < cache.length; i++) {
-        int value = i + CACHE_MIN;
-        cache[i] = new LongLong(value < 0 ? -1 : 0, value);
-      }
-    }
   }
 
   public static LongLong valueOf(long hi, long lo) {

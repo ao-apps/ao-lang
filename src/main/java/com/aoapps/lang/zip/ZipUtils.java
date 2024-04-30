@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2013, 2016, 2017, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
+ * Copyright (C) 2012, 2013, 2016, 2017, 2019, 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -54,6 +54,16 @@ public final class ZipUtils {
   private ZipUtils() {
     throw new AssertionError();
   }
+
+  private static final Comparator<File> reverseFileComparator = (File f1, File f2) -> {
+    try {
+      String path1 = f1.getCanonicalPath();
+      String path2 = f2.getCanonicalPath();
+      return path2.compareTo(path1);
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
+  };
 
   /**
    * Gets the time for a ZipEntry, converting from UTC as stored in the ZIP
@@ -284,16 +294,6 @@ public final class ZipUtils {
   public static void unzip(File sourceFile, File destination) throws IOException {
     unzip(sourceFile, "", destination, null);
   }
-
-  private static final Comparator<File> reverseFileComparator = (File f1, File f2) -> {
-    try {
-      String path1 = f1.getCanonicalPath();
-      String path2 = f2.getCanonicalPath();
-      return path2.compareTo(path1);
-    } catch (IOException e) {
-      throw new UncheckedIOException(e);
-    }
-  };
 
   /**
    * Unzips the provided file to the given destination directory.

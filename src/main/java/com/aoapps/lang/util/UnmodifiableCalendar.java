@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2016, 2017, 2019, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2013, 2016, 2017, 2019, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -78,6 +78,13 @@ public final class UnmodifiableCalendar extends Calendar implements Cloneable {
     return (Calendar) cal.clone();
   }
 
+  private final Calendar wrapped;
+
+  private UnmodifiableCalendar(Calendar wrapped) {
+    assert !(wrapped instanceof UnmodifiableCalendar);
+    this.wrapped = wrapped;
+  }
+
   /**
    * Checks if the calendar is an instance of the given class or is a wrapper
    * around an instance of the given class.
@@ -93,13 +100,6 @@ public final class UnmodifiableCalendar extends Calendar implements Cloneable {
       }
     }
     return false;
-  }
-
-  private final Calendar wrapped;
-
-  private UnmodifiableCalendar(Calendar wrapped) {
-    assert !(wrapped instanceof UnmodifiableCalendar);
-    this.wrapped = wrapped;
   }
 
   /**
