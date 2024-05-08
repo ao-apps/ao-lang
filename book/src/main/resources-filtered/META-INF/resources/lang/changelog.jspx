@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-lang - Minimal Java library with no external dependencies shared by many other projects.
-Copyright (C) 2017, 2018, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
+Copyright (C) 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -37,9 +37,9 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2017-03-12T17:54:37-05:00"
-    dateModified="2023-10-06T01:31:21Z"
+    dateModified="2024-05-08T04:04:12Z"
   >
-    <c:set var="latestRelease" value="5.5.1" />
+    <c:set var="latestRelease" value="5.6.0" />
     <c:if test="${
       fn:endsWith('@{project.version}', '-SNAPSHOT')
       and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')
@@ -52,16 +52,25 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         artifactId="@{documented.artifactId}"
         repository="@{nexusUrl}content/repositories/snapshots/"
         scmUrl="@{project.scm.url}"
-      >
-        <ul>
-          <li>Functional <code>identity()</code> now declare throws <code>RuntimeException</code> instead of <code>Throwable</code>.</li>
-          <li>
-            <code>Coercion</code> throws <code>UncheckedIOException</code> instead of <code>IOException</code> for
-            methods that are not specifically I/O-related.
-          </li>
-        </ul>
-      </changelog:release>
+      />
     </c:if>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="5.6.0"
+      datePublished="2024-05-08T04:04:12Z"
+      groupId="@{project.groupId}"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Functional <code>identity()</code> now declare throws <code>RuntimeException</code> instead of <code>Throwable</code>.</li>
+        <li>
+          <code>Coercion</code> throws <code>UncheckedIOException</code> instead of <code>IOException</code> for
+          methods that are not specifically I/O-related.
+        </li>
+      </ul>
+    </changelog:release>
 
     <changelog:release
       projectName="@{documented.name}"
