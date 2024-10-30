@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -26,16 +26,13 @@ package com.aoapps.lang.exception;
 import com.aoapps.lang.Throwables;
 
 /**
- * <p>
  * An invalid configuration has been detected.
  * This should be an abnormal condition, subject to corrective action by
  * the application administrator.
- * </p>
- * <p>
- * Once configured correctly, there should be a very low chance of this
+ *
+ * <p>Once configured correctly, there should be a very low chance of this
  * exception occurring.  In other words, this exception should not generally
- * happen in response to external resources or conditions.
- * </p>
+ * happen in response to external resources or conditions.</p>
  *
  * @author  AO Industries, Inc.
  */

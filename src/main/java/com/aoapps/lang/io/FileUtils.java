@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -204,16 +204,14 @@ public final class FileUtils {
 
   /**
    * Copies a stream to a newly created temporary file in the given directory.
-   * <p>
-   * The file is created with the default permissions via
-   * {@link Files#createTempFile(java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute...)}.
-   * </p>
-   * <p>
-   * The file is not {@linkplain File#deleteOnExit() deleted on exit}.  If this is required, we recommend creating the
+   *
+   * <p>The file is created with the default permissions via
+   * {@link Files#createTempFile(java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute...)}.</p>
+   *
+   * <p>The file is not {@linkplain File#deleteOnExit() deleted on exit}.  If this is required, we recommend creating the
    * temp file with the <a href="https://oss.aoapps.com/tempfiles/">AO TempFiles</a> project, then using
    * {@link #copyToFile(java.io.InputStream, java.io.File)}.  This avoids the memory leak of the implementation
-   * of {@link File#deleteOnExit()}.
-   * </p>
+   * of {@link File#deleteOnExit()}.</p>
    */
   public static File copyToTempFile(InputStream in, String prefix, String suffix) throws IOException {
     return copyToTempFile(in, prefix, suffix, null);
@@ -221,16 +219,14 @@ public final class FileUtils {
 
   /**
    * Copies a stream to a newly created temporary file.
-   * <p>
-   * The file is created with the default permissions via
-   * {@link Files#createTempFile(java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute...)}.
-   * </p>
-   * <p>
-   * The file is not {@linkplain File#deleteOnExit() deleted on exit}.  If this is required, we recommend creating the
+   *
+   * <p>The file is created with the default permissions via
+   * {@link Files#createTempFile(java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute...)}.</p>
+   *
+   * <p>The file is not {@linkplain File#deleteOnExit() deleted on exit}.  If this is required, we recommend creating the
    * temp file with the <a href="https://oss.aoapps.com/tempfiles/">AO TempFiles</a> project, then using
    * {@link #copyToFile(java.io.InputStream, java.io.File)}.  This avoids the memory leak of the implementation
-   * of {@link File#deleteOnExit()}.
-   * </p>
+   * of {@link File#deleteOnExit()}.</p>
    */
   public static File copyToTempFile(InputStream in, String prefix, String suffix, File directory) throws IOException {
     Path tmpPath = Files.createTempFile("cache_", null);
@@ -399,10 +395,9 @@ public final class FileUtils {
 
   /**
    * Gets a File for a URL, retrieving the contents into a temporary file if needed.
-   * <p>
-   * The file is created with the default permissions via
-   * {@link Files#createTempFile(java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute...)}.
-   * </p>
+   *
+   * <p>The file is created with the default permissions via
+   * {@link Files#createTempFile(java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute...)}.</p>
    *
    * @param  deleteOnExit  when <code>true</code>, any newly created temp file will be flagged for {@link File#deleteOnExit() delete on exit}
    *

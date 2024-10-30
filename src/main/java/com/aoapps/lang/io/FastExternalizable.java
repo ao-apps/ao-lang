@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2016, 2017, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2011, 2016, 2017, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -28,10 +28,9 @@ import java.io.Externalizable;
 /**
  * A FastExternalizable object does not have any loops in its object graph,
  * or is able to restore the loops itself upon deserialization.
- * <p>
- * FastExternalizable-aware containers may use this assumption to perform more
- * efficient serialization.
- * </p>
+ *
+ * <p>FastExternalizable-aware containers may use this assumption to perform more
+ * efficient serialization.</p>
  *
  * @author  AO Industries, Inc.
  */

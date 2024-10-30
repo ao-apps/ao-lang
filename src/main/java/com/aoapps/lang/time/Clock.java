@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2017, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2014, 2017, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -25,10 +25,9 @@ package com.aoapps.lang.time;
 
 /**
  * Access to the current system clock.
- * <p>
- * This will be deprecated once Java 8 is ubiquitous and only serves as an extremely
- * simplified stop-gap.
- * </p>
+ *
+ * <p>This will be deprecated once Java 8 is ubiquitous and only serves as an extremely
+ * simplified stop-gap.</p>
  *
  * @author  AO Industries, Inc.
  *

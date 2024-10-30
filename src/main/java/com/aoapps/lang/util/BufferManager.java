@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -30,35 +30,28 @@ import java.util.Deque;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * <p>
  * {@code BufferManager} manages a reusable pool of {@code byte[]} and {@code char[]} buffers.
  * This avoids the repetitive allocation of memory for an operation that only needs a temporary buffer.
  * The buffers are stored as {@code ThreadLocal} to maximize cache locality.
- * </p>
- * <p>
- * Do not use if intra-thread security is more important than performance.
- * </p>
- * <p>
- * The buffers are not necessarily cleared between invocations so the results of previous operations may be available
+ *
+ * <p>Do not use if intra-thread security is more important than performance.</p>
+ *
+ * <p>The buffers are not necessarily cleared between invocations so the results of previous operations may be available
  * to additional callers.  On the scale of security versus performance, this is biased toward performance.
- * However, being thread local there remains some control over the visibility of the data.
- * </p>
- * <p>
- * Buffers should not be passed between threads.
+ * However, being thread local there remains some control over the visibility of the data.</p>
+ *
+ * <p>Buffers should not be passed between threads.
  * Giving a thread a buffer you didn't get from it could result in a memory or information leak.
  * Soft references are used to avoid full-on memory leaks, but keeping buffers to a single thread
- * is optimal.
- * </p>
- * <p>
- * Under no circumstances should a buffer be released more than once.  This may result
- * in the buffer being allocated twice at the same time, with resulting data corruption.
- * </p>
- * <p>
- * The Java virtual machine has improved greatly over the years.  However, we still believe
+ * is optimal.</p>
+ *
+ * <p>Under no circumstances should a buffer be released more than once.  This may result
+ * in the buffer being allocated twice at the same time, with resulting data corruption.</p>
+ *
+ * <p>The Java virtual machine has improved greatly over the years.  However, we still believe
  * this buffer management to be valuable to reduce garbage collection pressure.  If this ever
  * proves to not be the case, the implementation here can be simply changed to create new
- * arrays on each use.
- * </p>
+ * arrays on each use.</p>
  *
  * @author  AO Industries, Inc.
  */

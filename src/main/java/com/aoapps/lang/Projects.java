@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -35,9 +35,8 @@ import java.util.regex.Pattern;
 
 /**
  * Utilities that help when working with {@link Package} and/or Maven projects.
- * <p>
- * See <a href="https://stackoverflow.com/questions/2712970/get-maven-artifact-version-at-runtime">java - Get Maven artifact version at runtime - Stack Overflow</a>.
- * </p>
+ *
+ * <p>See <a href="https://stackoverflow.com/questions/2712970/get-maven-artifact-version-at-runtime">java - Get Maven artifact version at runtime - Stack Overflow</a>.</p>
  *
  * @author  AO Industries, Inc.
  */
@@ -129,9 +128,8 @@ public final class Projects {
 
   /**
    * Gets the version from a Maven <code>pom.properties</code> file.
-   * <p>
-   * Searches the unnamed module via {@link ClassLoader#getResourceAsStream(java.lang.String)}.
-   * </p>
+   *
+   * <p>Searches the unnamed module via {@link ClassLoader#getResourceAsStream(java.lang.String)}.</p>
    *
    * @return  The version or {@code null} when not found.
    */
@@ -142,9 +140,8 @@ public final class Projects {
   /**
    * Gets the version from a Maven <code>pom.properties</code> file,
    * falling back to the provided default.
-   * <p>
-   * Searches the unnamed module via {@link ClassLoader#getResourceAsStream(java.lang.String)}.
-   * </p>
+   *
+   * <p>Searches the unnamed module via {@link ClassLoader#getResourceAsStream(java.lang.String)}.</p>
    *
    * @return  The version or {@code null} when not found.
    */
@@ -215,9 +212,8 @@ public final class Projects {
    * Gets the version from a Maven <code>pom.properties</code> file,
    * falling back to {@link Package#getImplementationVersion()} then
    * {@link Package#getSpecificationVersion()}.
-   * <p>
-   * Supports named modules via {@link Class#getResourceAsStream(java.lang.String)}.
-   * </p>
+   *
+   * <p>Supports named modules via {@link Class#getResourceAsStream(java.lang.String)}.</p>
    *
    * @return  The version or {@code null} when not found.
    */
@@ -241,9 +237,8 @@ public final class Projects {
    * Gets the version from a Maven <code>pom.properties</code> file,
    * falling back to {@link Package#getImplementationVersion()} then
    * {@link Package#getSpecificationVersion()} then the provided default.
-   * <p>
-   * Supports named modules via {@link Class#getResourceAsStream(java.lang.String)}.
-   * </p>
+   *
+   * <p>Supports named modules via {@link Class#getResourceAsStream(java.lang.String)}.</p>
    *
    * @return  The version or {@code null} when not found.
    */

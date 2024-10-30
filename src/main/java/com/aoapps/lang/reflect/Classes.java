@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2018, 2019, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -65,12 +65,11 @@ public final class Classes {
 
   /**
    * Gets all classes and interfaces for a class, up to and including the given upper bound.
-   * <p>
-   * More precisely: gets all the classes that the given class either extends
+   *
+   * <p>More precisely: gets all the classes that the given class either extends
    * or implements, including all its parent classes and interfaces implemented
    * by parent classes, that are {@link Class#isAssignableFrom(java.lang.Class)
-   * assignable from} the given upper bound.
-   * </p>
+   * assignable from} the given upper bound.</p>
    */
   public static <T> Set<Class<? extends T>> getAllClasses(Class<? extends T> clazz, Class<T> upperBound) {
     Set<Class<? extends T>> classes = new LinkedHashSet<>();
@@ -95,11 +94,10 @@ public final class Classes {
 
   /**
    * Gets all classes and interfaces for a class.
-   * <p>
-   * More precisely: gets all the classes that the given class either extends
+   *
+   * <p>More precisely: gets all the classes that the given class either extends
    * or implements, including all its parent classes and interfaces implemented
-   * by parent classes.
-   * </p>
+   * by parent classes.</p>
    */
   public static Set<Class<?>> getAllClasses(Class<?> clazz) {
     Set<Class<?>> classes = new LinkedHashSet<>();

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2015, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2015, 2016, 2017, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -31,9 +31,8 @@ import java.io.Writer;
 
 /**
  * Writer that encodes during write.
- * <p>
- * See <a href="https://oss.aoapps.com/encoding/apidocs/com.aoapps.encoding/com/aoapps/encoding/MediaEncoder.html">MediaEncoder</a>
- * </p>
+ *
+ * <p>See <a href="https://oss.aoapps.com/encoding/apidocs/com.aoapps.encoding/com/aoapps/encoding/MediaEncoder.html">MediaEncoder</a></p>
  *
  * @author  AO Industries, Inc.
  */
@@ -70,9 +69,8 @@ public class EncoderWriter extends FilterWriter implements NoClose {
   /**
    * Gets the wrapped writer, which has been optimized via
    * {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}.
-   * <p>
-   * This method may be overridden for the purpose of covariant return, but must return {@link #out}.
-   * </p>
+   *
+   * <p>This method may be overridden for the purpose of covariant return, but must return {@link #out}.</p>
    */
   public Writer getOut() {
     return out;

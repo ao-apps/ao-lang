@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2016, 2017, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2016, 2017, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -25,10 +25,9 @@ package com.aoapps.lang;
 
 /**
  * Any object that should be disposed programatically.
- * <p>
- * To aid in debugging, any object that is disposable should throw {@link DisposedException}
- * when any of its methods (besides dispose itself) are accessed after being disposed.
- * </p>
+ *
+ * <p>To aid in debugging, any object that is disposable should throw {@link DisposedException}
+ * when any of its methods (besides dispose itself) are accessed after being disposed.</p>
  *
  * @deprecated  Please use {@link AutoCloseable}.
  */
@@ -37,9 +36,8 @@ public interface Disposable {
 
   /**
    * Disposes of this object instance.
-   * <p>
-   * If already disposed, no action will be taken and no exception thrown.
-   * </p>
+   *
+   * <p>If already disposed, no action will be taken and no exception thrown.</p>
    */
   void dispose();
 }

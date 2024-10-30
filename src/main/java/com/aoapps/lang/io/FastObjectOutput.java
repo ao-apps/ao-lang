@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2013, 2016, 2017, 2019, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2011, 2013, 2016, 2017, 2019, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -32,9 +32,8 @@ import java.util.Map;
 
 /**
  * Utilities to write {@link FastExternalizable}, {@link Externalizable}, and {@link Serializable} objects.
- * <p>
- * When multiple objects are being written, this avoids the repetitive writing of classnames and serialVersionUIDs.
- * </p>
+ *
+ * <p>When multiple objects are being written, this avoids the repetitive writing of classnames and serialVersionUIDs.</p>
  *
  * @author  AO Industries, Inc.
  */
@@ -45,10 +44,9 @@ public class FastObjectOutput implements ObjectOutput {
   /**
    * Gets the wrapper for the provided {@link ObjectOutput}, creating if needed.
    * To avoid memory leaks, it must also be {@link #unwrap() unwrapped} in a finally block.
-   * <p>
-   * TODO: Can {@link FastObjectOutput} itself implement {@link AutoCloseable} for {@link #unwrap()}?
-   *       Maybe this means it no longer implements {@link ObjectOutput} directly?
-   * </p>
+   *
+   * <p>TODO: Can {@link FastObjectOutput} itself implement {@link AutoCloseable} for {@link #unwrap()}?
+   *       Maybe this means it no longer implements {@link ObjectOutput} directly?</p>
    */
   public static FastObjectOutput wrap(ObjectOutput out) throws IOException {
     FastObjectOutput fastOut;
@@ -148,16 +146,13 @@ public class FastObjectOutput implements ObjectOutput {
    * Writes the provided object in the most efficient manner possible, with no object graph tracking (if possible).
    * This allows individual objects to switch between {@link FastExternalizable} and standard serialization without calling
    * code needing to know the difference.
-   * <p>
-   * If the object is {@code null}, writes a single byte of {@link #NULL}.
-   * </p>
-   * <p>
-   * If the object is {@link FastExternalizable}, calls
-   * {@link #writeFastObject(com.aoapps.lang.io.FastExternalizable)}.
-   * </p>
-   * <p>
-   * Otherwise, writes {@link #STANDARD} and then uses standard Java serialization.
-   * </p>
+   *
+   * <p>If the object is {@code null}, writes a single byte of {@link #NULL}.</p>
+   *
+   * <p>If the object is {@link FastExternalizable}, calls
+   * {@link #writeFastObject(com.aoapps.lang.io.FastExternalizable)}.</p>
+   *
+   * <p>Otherwise, writes {@link #STANDARD} and then uses standard Java serialization.</p>
    *
    * @see  FastObjectInput#readObject()
    */
@@ -223,9 +218,8 @@ public class FastObjectOutput implements ObjectOutput {
   /**
    * Writes a {@link String} to the output, not writing any duplicates.
    * Supports {@code null}.
-   * <p>
-   * TODO: Any benefit to string prefix compression, like in CompressedDataOutput?
-   * </p>
+   *
+   * <p>TODO: Any benefit to string prefix compression, like in CompressedDataOutput?</p>
    */
   public void writeFastUTF(String value) throws IOException {
     if (value == null) {

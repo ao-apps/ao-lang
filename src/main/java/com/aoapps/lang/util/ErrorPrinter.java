@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -43,14 +43,12 @@ import java.util.WeakHashMap;
 /**
  * Prints errors with more detail than a standard printStackTrace() call.  Is also able to
  * capture the error into a <code>String</code>.
- * <p>
- * TODO: Avoid repetitive sequences of stack traces to reduce total output length.
- * </p>
- * <p>
- * TODO: Make an extensible way to register additional error printer features, and
+ *
+ * <p>TODO: Avoid repetitive sequences of stack traces to reduce total output length.</p>
+ *
+ * <p>TODO: Make an extensible way to register additional error printer features, and
  * automatically load them via {@link ServiceLoader}.  Maybe spin this off to a
- * microproject if we go this far.
- * </p>
+ * microproject if we go this far.</p>
  *
  * @author  AO Industries, Inc.
  */

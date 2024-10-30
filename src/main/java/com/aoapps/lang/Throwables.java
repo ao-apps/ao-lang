@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021, 2022, 2023  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -57,15 +57,13 @@ public final class Throwables {
 
   /**
    * Adds a suppressed exception, unless already in the list of suppressed exceptions.
-   * <p>
-   * When {@code suppressed} is an {@link InterruptedException} and {@code t0} is not an {@link InterruptedException},
-   * the current thread will be {@linkplain Thread#interrupt() re-interrupted}.
-   * </p>
-   * <p>
-   * When {@code suppressed} is a {@link ThreadDeath} and {@code t0} is not itself a {@link ThreadDeath},
+   *
+   * <p>When {@code suppressed} is an {@link InterruptedException} and {@code t0} is not an {@link InterruptedException},
+   * the current thread will be {@linkplain Thread#interrupt() re-interrupted}.</p>
+   *
+   * <p>When {@code suppressed} is a {@link ThreadDeath} and {@code t0} is not itself a {@link ThreadDeath},
    * {@code suppressed} will be returned instead, with {@code t0} added to it as suppressed.
-   * This is to maintain the precedence of {@link ThreadDeath} for fail-fast behavior.
-   * </p>
+   * This is to maintain the precedence of {@link ThreadDeath} for fail-fast behavior.</p>
    *
    * @param  t0  The throwable to add to.  When {@code null}, {@code suppressed} is returned instead.
    *
@@ -112,18 +110,15 @@ public final class Throwables {
   /**
    * Adds a suppressed exception, unless already in the list of suppressed exceptions,
    * wrapping when needed, then throwing the result.
-   * <p>
-   * When {@code suppressed} is an {@link InterruptedException} and {@code t0} is not an {@link InterruptedException},
-   * the current thread will be {@linkplain Thread#interrupt() re-interrupted}.
-   * </p>
-   * <p>
-   * When {@code suppressed} is a {@link ThreadDeath} and {@code t0} is not itself a {@link ThreadDeath},
+   *
+   * <p>When {@code suppressed} is an {@link InterruptedException} and {@code t0} is not an {@link InterruptedException},
+   * the current thread will be {@linkplain Thread#interrupt() re-interrupted}.</p>
+   *
+   * <p>When {@code suppressed} is a {@link ThreadDeath} and {@code t0} is not itself a {@link ThreadDeath},
    * {@code suppressed} will be returned instead, with {@code t0} added to it as suppressed.
-   * This is to maintain the precedence of {@link ThreadDeath} for fail-fast behavior.
-   * </p>
-   * <p>
-   * Only returns when both {@code t0} and {@code suppressed} are {@code null}.
-   * </p>
+   * This is to maintain the precedence of {@link ThreadDeath} for fail-fast behavior.</p>
+   *
+   * <p>Only returns when both {@code t0} and {@code suppressed} are {@code null}.</p>
    *
    * @param  t0  The throwable to add to.  When {@code null}, {@code suppressed} is thrown instead.
    *
@@ -174,19 +169,18 @@ public final class Throwables {
    * <li>When is {@link Error} or {@link RuntimeException}, throws the exception directly.</li>
    * <li>Otherwise, throws the exception wrapped via {@code exSupplier}.</li>
    * </ol>
-   * <p>
-   * This is expected to typically used within a catch block, to throw a narrower scope:
-   * </p>
+   *
+   * <p>This is expected to typically used within a catch block, to throw a narrower scope:</p>
+   *
    * <pre>try {
    *   …
    * } catch (Throwable t) {
    *   throw Throwables.wrap(t, SQLException.class, SQLException::new);
    * }</pre>
-   * <p>
-   * When the exception is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
+   *
+   * <p>When the exception is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
    * wrapper is not itself an {@link InterruptedException}, the current thread will be
-   * {@linkplain Thread#interrupt() re-interrupted}.
-   * </p>
+   * {@linkplain Thread#interrupt() re-interrupted}.</p>
    *
    * @param  t  The throwable to return, throw, or wrap and return.
    *
@@ -234,29 +228,24 @@ public final class Throwables {
       new ConcurrentHashMap<>();
 
   /**
-   * <p>
    * Attempts to create a new instance of the same class as the given template {@link Throwable}, with all important
    * state maintained, but with the stack trace of the current {@link Thread}.
    * When a new throwable is created, it will use the given cause,
    * possibly with additional wrapping for compatibility.
-   * </p>
-   * <p>
-   * This is used to maintain exception types and states across thread boundaries, such as when an exception cause
+   *
+   * <p>This is used to maintain exception types and states across thread boundaries, such as when an exception cause
    * is obtained from an {@link ExecutionException}.  By wrapping the template, the full stack traces of both threads
    * are maintained.  This new {@link Throwable} provides the full stack trace of the caller, while the template
-   * contains the stack trace from the other thread.
-   * </p>
-   * <p>
-   * Only types with registered factories will perform the conversion, otherwise the given cause is returned without
-   * wrapping.
-   * </p>
-   * <p>
-   * This current implementation has registered all possible Java SE 8 throwable types, except those that have been
+   * contains the stack trace from the other thread.</p>
+   *
+   * <p>Only types with registered factories will perform the conversion, otherwise the given cause is returned without
+   * wrapping.</p>
+   *
+   * <p>This current implementation has registered all possible Java SE 8 throwable types, except those that have been
    * removed through Java 17.  Additionally, various throwable implementations
    * {@link #registerSurrogateFactory(java.lang.Class, com.aoapps.lang.ThrowableSurrogateFactory) register themselves}
    * in static blocks, while other APIs may be registered via the {@link ServiceLoader} mechanism on the
-   * {@link ThrowableSurrogateFactoryInitializer} interface.
-   * </p>
+   * {@link ThrowableSurrogateFactoryInitializer} interface.</p>
    *
    * @param  cause  The cause to use for the new throwable.  This should typically be either the template itself, or
    *                should have the template somewhere in its chain of causes.
@@ -281,29 +270,24 @@ public final class Throwables {
   }
 
   /**
-   * <p>
    * Attempts to create a new instance of the same class as the given template {@link Throwable}, with all important
    * state maintained, but with the stack trace of the current {@link Thread}.
    * When a new throwable is created, the template will be used as its cause,
    * possibly with additional wrapping for compatibility.
-   * </p>
-   * <p>
-   * This is used to maintain exception types and states across thread boundaries, such as when an exception cause
+   *
+   * <p>This is used to maintain exception types and states across thread boundaries, such as when an exception cause
    * is obtained from an {@link ExecutionException}.  By wrapping the template, the full stack traces of both threads
    * are maintained.  This new {@link Throwable} provides the full stack trace of the caller, while the template
-   * contains the stack trace from the other thread.
-   * </p>
-   * <p>
-   * Only types with registered factories will perform the conversion, otherwise the given cause is returned without
-   * wrapping.
-   * </p>
-   * <p>
-   * This current implementation has registered all possible Java SE 8 throwable types, except those that have been
+   * contains the stack trace from the other thread.</p>
+   *
+   * <p>Only types with registered factories will perform the conversion, otherwise the given cause is returned without
+   * wrapping.</p>
+   *
+   * <p>This current implementation has registered all possible Java SE 8 throwable types, except those that have been
    * removed through Java 17.  Additionally, various throwable implementations
    * {@link #registerSurrogateFactory(java.lang.Class, com.aoapps.lang.ThrowableSurrogateFactory) register themselves}
    * in static blocks, while other APIs may be registered via the {@link ServiceLoader} mechanism on the
-   * {@link ThrowableSurrogateFactoryInitializer} interface.
-   * </p>
+   * {@link ThrowableSurrogateFactoryInitializer} interface.</p>
    *
    * @return  When wrapping performed, returns a new throwable of the same class as the template, but with the
    *          caller's stack trace and the template as a cause.  When no wrapping performed, returns the template

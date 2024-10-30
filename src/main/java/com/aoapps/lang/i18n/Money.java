@@ -48,9 +48,8 @@ public final class Money implements FastExternalizable, Comparable<Money> {
   /**
    * Parses a monetary amount with an optional symbol prefix.
    * Trims, strips the prefix, trims, removes any commas.
-   * <p>
-   * TODO: A future version should be more locale-aware regarding assumption comma is used for group separator.
-   * </p>
+   *
+   * <p>TODO: A future version should be more locale-aware regarding assumption comma is used for group separator.</p>
    *
    * @param symbol  The optional currency prefix to strip (see {@link CurrencyUtil#getSymbol(java.util.Currency, java.util.Locale)})
    * @param value  The value to parse

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2019, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2019, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -154,10 +154,9 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
   /**
    * Compares two {@link Monies} by comparing each value matched by {@link Currency}.
    * During comparison, any currency not set is handled as zero.
-   * <p>
-   * Two {@link Monies} are not comparable when they have a conflict where one currency is higher
-   * and a different currency is lower.
-   * </p>
+   *
+   * <p>Two {@link Monies} are not comparable when they have a conflict where one currency is higher
+   * and a different currency is lower.</p>
    */
   @Override
   public int compareTo(Monies o) {

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -191,10 +191,9 @@ public final class Coercion {
   /**
    * Optimizes the given appendable by dispatching to {@link #optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
    * when it is a {@link Writer}.
-   * <p>
-   * There is currently no implementation of appendable-specific unwrapping,
-   * but this is here for consistency with the writer unwrapping.
-   * </p>
+   *
+   * <p>There is currently no implementation of appendable-specific unwrapping,
+   * but this is here for consistency with the writer unwrapping.</p>
    *
    * @see  #optimize(java.io.Writer, com.aoapps.lang.io.Encoder)
    */

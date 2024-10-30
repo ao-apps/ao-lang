@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -26,19 +26,15 @@ package com.aoapps.lang.exception;
 import com.aoapps.lang.Throwables;
 
 /**
- * <p>
  * A wrapped error may be used to rethrow any throwable in a context where {@link Error} is expected.  As this is not
  * often the case, you probably want to use {@link WrappedException} to wrap checked exceptions.
- * </p>
- * <p>
- * This could be accomplished by
+ *
+ * <p>This could be accomplished by
  * rethrowing with {@link Error} directly, but having this distinct
  * class provides more meaning as well as the ability to catch wrapped
- * errors while letting all other errors go through directly.
- * </p>
- * <p>
- * Catching {@link WrappedError} may be used to unwrap expected throwable types.
- * </p>
+ * errors while letting all other errors go through directly.</p>
+ *
+ * <p>Catching {@link WrappedError} may be used to unwrap expected throwable types.</p>
  *
  * @author  AO Industries, Inc.
  */

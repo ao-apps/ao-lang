@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -31,10 +31,9 @@ import java.io.Serializable;
 /**
  * Wraps the number of seconds from the Epoch as well as positive nanoseconds into an
  * immutable value type.
- * <p>
- * This will be deprecated once Java 8 is ubiquitous and only serves as an extremely
- * simplified stop-gap.
- * </p>
+ *
+ * <p>This will be deprecated once Java 8 is ubiquitous and only serves as an extremely
+ * simplified stop-gap.</p>
  *
  * @author  AO Industries, Inc.
  *
@@ -188,16 +187,14 @@ public class Instant implements Comparable<Instant>, Serializable {
   }
 
   /**
-   * <p>
    * The nanoseconds, to simplify this is always in the positive direction.
    * For negative instants, this means the nanos goes up from zero to 1 billion,
    * then the seconds go up one (toward zero).  This may be counterintuitive if
    * one things of nanoseconds as a fractional part of seconds, but this definition
    * leads to a very clean implementation.
-   * </p>
-   * <p>
-   * Counting up by nanoseconds:
-   * </p>
+   *
+   * <p>Counting up by nanoseconds:</p>
+   *
    * <ol>
    *   <li>-1.999999998</li>
    *   <li>-1.999999999</li>

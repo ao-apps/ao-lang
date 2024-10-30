@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -165,10 +165,9 @@ public final class Locales {
    * Language is converted to lowercase.
    * Country is converted to uppercase.
    * Caches locales so the same instance will be returned for each combination of language, country, and variant.
-   * <p>
-   *   Locales are currently cached forever.
-   *   Malicious external sources of locales could fill the heap space, so protect against this if needed.
-   * </p>
+   *
+   * <p>Locales are currently cached forever.
+   * Malicious external sources of locales could fill the heap space, so protect against this if needed.</p>
    */
   public static Locale parseLocale(String locale) {
     int pos = indexOfSeparator(locale, 0);

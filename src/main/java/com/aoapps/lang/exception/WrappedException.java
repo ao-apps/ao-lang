@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2016, 2017, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2016, 2017, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -31,19 +31,15 @@ import java.io.UncheckedIOException;
 import java.util.concurrent.Callable;
 
 /**
- * <p>
  * A wrapped exception may be used to rethrow checked exceptions in a context
  * where they are otherwise not allowed.
- * </p>
- * <p>
- * This could be accomplished by
+ *
+ * <p>This could be accomplished by
  * rethrowing with {@link RuntimeException} directly, but having this distinct
  * class provides more meaning as well as the ability to catch wrapped
- * exceptions while letting all other runtime exceptions go through directly.
- * </p>
- * <p>
- * Catching {@link WrappedException} may be used to unwrap expected throwable types.
- * </p>
+ * exceptions while letting all other runtime exceptions go through directly.</p>
+ *
+ * <p>Catching {@link WrappedException} may be used to unwrap expected throwable types.</p>
  *
  * @author  AO Industries, Inc.
  */

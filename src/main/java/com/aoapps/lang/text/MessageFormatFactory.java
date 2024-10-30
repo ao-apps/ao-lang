@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2013, 2016, 2017, 2019, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2011, 2013, 2016, 2017, 2019, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -31,11 +31,10 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * Creates MessageFormat objects and caches them.  This may be used as an alternative
  * to the MessageFormat constructor to increase performance.
- * <p>
- * The following are the results of a single-threaded benchmark with a simple two-value substitution:
- * </p>
- * <pre>
- * Comparing constructor/factory and format together:
+ *
+ * <p>The following are the results of a single-threaded benchmark with a simple two-value substitution:</p>
+ *
+ * <pre>Comparing constructor/factory and format together:
  *     Constructor: 1148.127153
  *     Factory....: 283.366235
  *     4 times improvement
@@ -43,11 +42,9 @@ import java.util.concurrent.ConcurrentMap;
  * Comparing constructor/factory only:
  *     Constructor: 985.182660
  *     Factory....: 42.602040
- *     23 times improvement
- * </pre>
- * <p>
- * Longer or more complicated patterns should benefit even more (this assertion not tested).
- * </p>
+ *     23 times improvement</pre>
+ *
+ * <p>Longer or more complicated patterns should benefit even more (this assertion not tested).</p>
  *
  * @author  AO Industries, Inc.
  */

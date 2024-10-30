@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2015, 2016, 2017, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2015, 2016, 2017, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -72,9 +72,8 @@ public interface Encoder {
    * This should also flush any internal buffers to <code>out</code>.  It
    * should not, however, call flush on <code>out</code> itself.  This is
    * to not interfere with any output buffering of <code>out</code>.
-   * <p>
-   * The internal buffer is always clear for re-use, even when an exception is thrown.
-   * </p>
+   *
+   * <p>The internal buffer is always clear for re-use, even when an exception is thrown.</p>
    *
    * @param  out  May optionally have already been optimized via {@link com.aoapps.lang.Coercion#optimize(java.lang.Appendable, com.aoapps.lang.io.Encoder)}.
    *
@@ -88,9 +87,8 @@ public interface Encoder {
    * This should also flush any internal buffers to <code>out</code>.  It
    * should not, however, call flush on <code>out</code> itself.  This is
    * to not interfere with any output buffering of <code>out</code>.
-   * <p>
-   * The internal buffer is always clear for re-use, even when an exception is thrown.
-   * </p>
+   *
+   * <p>The internal buffer is always clear for re-use, even when an exception is thrown.</p>
    *
    * @param  out  May optionally have already been optimized via {@link com.aoapps.lang.Coercion#optimize(java.lang.Appendable, com.aoapps.lang.io.Encoder)}.
    *

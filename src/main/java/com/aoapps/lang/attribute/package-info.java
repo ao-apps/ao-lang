@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,9 +23,9 @@
 
 /**
  * Utilities for working with various attribute scopes.
- * <p>
- * This API has four concepts:
- * </p>
+ *
+ * <p>This API has four concepts:</p>
+ *
  * <ol>
  *   <li>{@link Scope} - The most broad concept is scope.
  *                       Does not yet have a resolved context or attribute name.</li>
@@ -34,11 +34,10 @@
  *   <li>{@link Attribute} - An attribute has both context and name and is used for value access.</li>
  *   <li>{@link Attribute.Name} - A name without any specific scope or context.</li>
  * </ol>
- * <p>
- * Ultimately, the goal is to get to an attribute, which means having both a fully resolved context and a name.  The
+ *
+ * <p>Ultimately, the goal is to get to an attribute, which means having both a fully resolved context and a name.  The
  * API supports arriving at an attribute in any order, such as <code>scope → context → name</code> or
- * <code>name → context</code>.
- * </p>
+ * <code>name → context</code>.</p>
  *
  * @author  AO Industries, Inc.
  */

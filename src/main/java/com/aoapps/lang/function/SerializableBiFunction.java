@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -28,9 +28,8 @@ import java.util.function.BiFunction;
 
 /**
  * A bifunction that must be {@link Serializable}.
- * <p>
- * Inspired by <a href="https://stackoverflow.com/questions/22807912/how-to-serialize-a-lambda">java - How to serialize a lambda? - Stack Overflow</a>.
- * </p>
+ *
+ * <p>Inspired by <a href="https://stackoverflow.com/questions/22807912/how-to-serialize-a-lambda">java - How to serialize a lambda? - Stack Overflow</a>.</p>
  */
 @FunctionalInterface
 public interface SerializableBiFunction<T, U, R> extends BiFunction<T, U, R>, Serializable {

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -415,13 +415,11 @@ public final class XmlUtils {
 
   /**
    * Generates a valid ID from an arbitrary string.
-   * <p>
-   * Strips all character not matching <a href="https://www.w3.org/TR/REC-xml/#NT-Name">Names and Tokens: Name</a>:
-   * </p>
    *
-   * <p>
-   * See <a href="https://www.w3.org/TR/REC-xml/#NT-Name">Names and Tokens: Name</a>
-   * </p>
+   * <p>Strips all character not matching <a href="https://www.w3.org/TR/REC-xml/#NT-Name">Names and Tokens: Name</a>:</p>
+   *
+   *
+   * <p>See <a href="https://www.w3.org/TR/REC-xml/#NT-Name">Names and Tokens: Name</a></p>
    *
    * @param  template   The preferred text to base the id on
    * @param  defaultId  The base used when template is unusable (must be a valid id or invalid ID's may be generated)

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -34,11 +34,10 @@ import javax.security.auth.login.LoginException;
 
 /**
  * POSIX-compatible process exit values.
- * <p>
- * From <code>/usr/include/sysexits.h</code>:
- * </p>
- * <pre>
- *  SYSEXITS.H -- Exit status codes for system programs.
+ *
+ * <p>From <code>/usr/include/sysexits.h</code>:</p>
+ *
+ * <pre> SYSEXITS.H -- Exit status codes for system programs.
  *
  *  This include file attempts to categorize possible error
  *  exit statuses for system programs, notably delivermail
@@ -91,8 +90,7 @@ import javax.security.auth.login.LoginException;
  *  EX_NOPERM -- You did not have sufficient permission to
  *    perform the operation.  This is not intended for
  *    file system problems, which should use NOINPUT or
- *    CANTCREAT, but rather for higher level permissions.
- * </pre>
+ *    CANTCREAT, but rather for higher level permissions.</pre>
  */
 public final class SysExits {
 

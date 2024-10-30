@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -161,9 +161,8 @@ public abstract class Attribute<C, T> {
 
   /**
    * Removes the value from this attribute.
-   * <p>
-   * {@link #getContext()} may be {@code null}, which will skip removal
-   * </p>
+   *
+   * <p>{@link #getContext()} may be {@code null}, which will skip removal</p>
    */
   public abstract void remove();
 
@@ -211,9 +210,8 @@ public abstract class Attribute<C, T> {
   // <editor-fold desc="Name">
   /**
    * A name without any specific scope or context.
-   * <p>
-   * {@link Attribute}: Has name, still needs scope or context.
-   * </p>
+   *
+   * <p>{@link Attribute}: Has name, still needs scope or context.</p>
    */
   public static class Name<T> implements Serializable {
 
@@ -249,10 +247,9 @@ public abstract class Attribute<C, T> {
 
     /**
      * {@link Attribute}: Uses the given scope (located by content type) and this name, still needs context.
-     * <p>
-     * <strong>Performance:</strong> This loads {@link ScopeFactory} via {@link ServiceLoader#load(java.lang.Class)} on
-     * every call.  It is strongly encouraged to use subclass-specific implementations where performance is critical.
-     * </p>
+     *
+     * <p><strong>Performance:</strong> This loads {@link ScopeFactory} via {@link ServiceLoader#load(java.lang.Class)} on
+     * every call.  It is strongly encouraged to use subclass-specific implementations where performance is critical.</p>
      */
     public <C> Scope.Attribute<C, T> scope(Class<C> contextType) {
       @SuppressWarnings("unchecked")
@@ -296,10 +293,9 @@ public abstract class Attribute<C, T> {
 
     /**
      * {@link Attribute}: Uses the given context and this name.
-     * <p>
-     * <strong>Performance:</strong> This loads {@link ContextFactory} via {@link ServiceLoader#load(java.lang.Class)} on
-     * every call.  It is strongly encouraged to use subclass-specific implementations where performance is critical.
-     * </p>
+     *
+     * <p><strong>Performance:</strong> This loads {@link ContextFactory} via {@link ServiceLoader#load(java.lang.Class)} on
+     * every call.  It is strongly encouraged to use subclass-specific implementations where performance is critical.</p>
      */
     public <C> Attribute<C, T> context(C context) {
       @SuppressWarnings("unchecked")

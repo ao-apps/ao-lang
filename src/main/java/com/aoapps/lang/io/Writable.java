@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2015, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2013, 2015, 2016, 2017, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -44,10 +44,9 @@ public interface Writable  {
    * Checks if the writable will be able to be converted toString in an extremely efficient manner.
    * This means without allocating any new buffer space or string copies.
    * Callers should prefer {@code toString} over {@code writeTo} or {@code appendTo} when {@code isFastToString} returns true.
-   * <p>
-   * Note: As of Java 1.7.0_06, {@link String#substring(int, int)} and related operations now
-   * copy underlying buffers.
-   * </p>
+   *
+   * <p>Note: As of Java 1.7.0_06, {@link String#substring(int, int)} and related operations now
+   * copy underlying buffers.</p>
    */
   boolean isFastToString();
 
@@ -178,11 +177,10 @@ public interface Writable  {
   /**
    * Trims the contents of this writable, as per rules of {@link Strings#isWhitespace(int)},
    * returning the instance that represents this writable trimmed.
-   * <p>
-   * It will most likely be faster to check {@link #isFastToString()} and then trim the result
+   *
+   * <p>It will most likely be faster to check {@link #isFastToString()} and then trim the result
    * of {@link #toString()}.  However, for non-fast-toString writables, this trim will be more
-   * efficient.
-   * </p>
+   * efficient.</p>
    */
   Writable trim() throws IOException;
 }

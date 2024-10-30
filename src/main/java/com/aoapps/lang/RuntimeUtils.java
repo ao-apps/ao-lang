@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2016, 2017, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2013, 2016, 2017, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -45,12 +45,11 @@ public final class RuntimeUtils {
 
   /**
    * Faster way to get the number of processors in the system.
-   * <p>
-   * The call the Runtime.availableProcessors is prohibitively slow (at least
+   *
+   * <p>The call the Runtime.availableProcessors is prohibitively slow (at least
    * in Java 1.6 on Debian 6).  The number of processors in a system is unlikely
    * to change frequently.  This will only call Runtime.availableProcessors
-   * once a second.
-   * </p>
+   * once a second.</p>
    */
   public static int getAvailableProcessors() {
     long currentTime = System.currentTimeMillis();

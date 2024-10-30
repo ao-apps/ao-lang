@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -69,18 +69,16 @@ public class Resources implements Serializable {
    *
    * @param  bundleAccessor  Bi-function lookup for bundle, which will typically be the static method reference
    *                         <code>ResourceBundle::getBundle</code>.
-   *                         <p>
-   *                         As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
+   *
+   *                         <p>As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
    *                         caller permissions, pass a small lambda that performs the bundle access.  This will
    *                         typically be the static method reference <code>ResourceBundle::getBundle</code>, but may
    *                         be of any arbitrary complexity.  The bundle accessor is invoked for every message lookup,
-   *                         so the implementation should take care to perform well.
-   *                         </p>
-   *                         <p>
-   *                         When {@code null}, the bundle is looked-up via a direct call to
+   *                         so the implementation should take care to perform well.</p>
+   *
+   *                         <p>When {@code null}, the bundle is looked-up via a direct call to
    *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires
-   *                         <code>opens …;</code> in <code>module-info.java</code>.
-   *                         </p>
+   *                         <code>opens …;</code> in <code>module-info.java</code>.</p>
    *
    * @deprecated  Please use one of the class- or package-relative techniques in locating the resource bundle, as they
    *              will correctly locate the resources after packages are renamed by code obfuscation.
@@ -100,11 +98,10 @@ public class Resources implements Serializable {
    * Accesses the resources with the given base name and prefix.
    *
    * @deprecated  Please use {@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.String, java.lang.String)} instead.
-   *              <p>
-   *              As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
+   *
+   *              <p>As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
    *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires <code>opens …;</code> in
-   *              <code>module-info.java</code>.
-   *              </p>
+   *              <code>module-info.java</code>.</p>
    */
   @Deprecated
   public static Resources getResources(String baseName, String prefix) {
@@ -116,18 +113,16 @@ public class Resources implements Serializable {
    *
    * @param  bundleAccessor  Bi-function lookup for bundle, which will typically be the static method reference
    *                         <code>ResourceBundle::getBundle</code>.
-   *                         <p>
-   *                         As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
+   *
+   *                         <p>As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
    *                         caller permissions, pass a small lambda that performs the bundle access.  This will
    *                         typically be the static method reference <code>ResourceBundle::getBundle</code>, but may
    *                         be of any arbitrary complexity.  The bundle accessor is invoked for every message lookup,
-   *                         so the implementation should take care to perform well.
-   *                         </p>
-   *                         <p>
-   *                         When {@code null}, the bundle is looked-up via a direct call to
+   *                         so the implementation should take care to perform well.</p>
+   *
+   *                         <p>When {@code null}, the bundle is looked-up via a direct call to
    *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires
-   *                         <code>opens …;</code> in <code>module-info.java</code>.
-   *                         </p>
+   *                         <code>opens …;</code> in <code>module-info.java</code>.</p>
    *
    * @deprecated  Please use one of the class- or package-relative techniques in locating the resource bundle, as they
    *              will correctly locate the resources after packages are renamed by code obfuscation.
@@ -147,11 +142,10 @@ public class Resources implements Serializable {
    * Accesses the resources with the given base name and no prefix.
    *
    * @deprecated  Please use {@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.String)} instead.
-   *              <p>
-   *              As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
+   *
+   *              <p>As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
    *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires <code>opens …;</code> in
-   *              <code>module-info.java</code>.
-   *              </p>
+   *              <code>module-info.java</code>.</p>
    */
   @Deprecated
   public static Resources getResources(String baseName) {
@@ -161,31 +155,27 @@ public class Resources implements Serializable {
   /**
    * Accesses the resources in the given package (or sub-package) with the given name and prefix.
    * The base name is derived as {@code pack.getName() + '.' + name}.
-   * <p>
-   * By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   *
+   * <p>By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
-   * reflection.
-   * </p>
-   * <p>
-   * Note: Being accessed relative to the package, the resources can still be correctly located after
-   * packages are renamed by code obfuscation.
-   * </p>
+   * reflection.</p>
+   *
+   * <p>Note: Being accessed relative to the package, the resources can still be correctly located after
+   * packages are renamed by code obfuscation.</p>
    *
    * @param  bundleAccessor  Bi-function lookup for bundle, which will typically be the static method reference
    *                         <code>ResourceBundle::getBundle</code>.
-   *                         <p>
-   *                         As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
+   *
+   *                         <p>As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
    *                         caller permissions, pass a small lambda that performs the bundle access.  This will
    *                         typically be the static method reference <code>ResourceBundle::getBundle</code>, but may
    *                         be of any arbitrary complexity.  The bundle accessor is invoked for every message lookup,
-   *                         so the implementation should take care to perform well.
-   *                         </p>
-   *                         <p>
-   *                         When {@code null}, the bundle is looked-up via a direct call to
+   *                         so the implementation should take care to perform well.</p>
+   *
+   *                         <p>When {@code null}, the bundle is looked-up via a direct call to
    *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires
-   *                         <code>opens …;</code> in <code>module-info.java</code>.
-   *                         </p>
+   *                         <code>opens …;</code> in <code>module-info.java</code>.</p>
    *
    * @param  name  The name of the resource within the package, when {@code null} defaults to
    *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
@@ -201,26 +191,23 @@ public class Resources implements Serializable {
   /**
    * Accesses the resources in the given package (or sub-package) with the given name and prefix.
    * The base name is derived as {@code pack.getName() + '.' + name}.
-   * <p>
-   * By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   *
+   * <p>By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
-   * reflection.
-   * </p>
-   * <p>
-   * Note: Being accessed relative to the package, the resources can still be correctly located after
-   * packages are renamed by code obfuscation.
-   * </p>
+   * reflection.</p>
+   *
+   * <p>Note: Being accessed relative to the package, the resources can still be correctly located after
+   * packages are renamed by code obfuscation.</p>
    *
    * @param  name  The name of the resource within the package, when {@code null} defaults to
    *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
    *
    * @deprecated  Please use {@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String, java.lang.String)} instead.
-   *              <p>
-   *              As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
+   *
+   *              <p>As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
    *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires <code>opens …;</code> in
-   *              <code>module-info.java</code>.
-   *              </p>
+   *              <code>module-info.java</code>.</p>
    */
   @Deprecated
   public static Resources getResources(Package pack, String name, String prefix) {
@@ -230,31 +217,27 @@ public class Resources implements Serializable {
   /**
    * Accesses the resources in the given package (or sub-package) with the given name and no prefix.
    * The base name is derived as {@code pack.getName() + '.' + name}.
-   * <p>
-   * By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   *
+   * <p>By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
-   * reflection.
-   * </p>
-   * <p>
-   * Note: Being accessed relative to the package, the resources can still be correctly located after
-   * packages are renamed by code obfuscation.
-   * </p>
+   * reflection.</p>
+   *
+   * <p>Note: Being accessed relative to the package, the resources can still be correctly located after
+   * packages are renamed by code obfuscation.</p>
    *
    * @param  bundleAccessor  Bi-function lookup for bundle, which will typically be the static method reference
    *                         <code>ResourceBundle::getBundle</code>.
-   *                         <p>
-   *                         As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
+   *
+   *                         <p>As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
    *                         caller permissions, pass a small lambda that performs the bundle access.  This will
    *                         typically be the static method reference <code>ResourceBundle::getBundle</code>, but may
    *                         be of any arbitrary complexity.  The bundle accessor is invoked for every message lookup,
-   *                         so the implementation should take care to perform well.
-   *                         </p>
-   *                         <p>
-   *                         When {@code null}, the bundle is looked-up via a direct call to
+   *                         so the implementation should take care to perform well.</p>
+   *
+   *                         <p>When {@code null}, the bundle is looked-up via a direct call to
    *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires
-   *                         <code>opens …;</code> in <code>module-info.java</code>.
-   *                         </p>
+   *                         <code>opens …;</code> in <code>module-info.java</code>.</p>
    *
    * @param  name  The name of the resource within the package, when {@code null} defaults to
    *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
@@ -266,26 +249,23 @@ public class Resources implements Serializable {
   /**
    * Accesses the resources in the given package (or sub-package) with the given name and no prefix.
    * The base name is derived as {@code pack.getName() + '.' + name}.
-   * <p>
-   * By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   *
+   * <p>By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
-   * reflection.
-   * </p>
-   * <p>
-   * Note: Being accessed relative to the package, the resources can still be correctly located after
-   * packages are renamed by code obfuscation.
-   * </p>
+   * reflection.</p>
+   *
+   * <p>Note: Being accessed relative to the package, the resources can still be correctly located after
+   * packages are renamed by code obfuscation.</p>
    *
    * @param  name  The name of the resource within the package, when {@code null} defaults to
    *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
    *
    * @deprecated  Please use {@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String)} instead.
-   *              <p>
-   *              As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
+   *
+   *              <p>As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
    *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires <code>opens …;</code> in
-   *              <code>module-info.java</code>.
-   *              </p>
+   *              <code>module-info.java</code>.</p>
    */
   @Deprecated
   public static Resources getResources(Package pack, String name) {
@@ -295,31 +275,27 @@ public class Resources implements Serializable {
   /**
    * Accesses the resources in the {@link #DEFAULT_SUBPACKAGE} sub-package of the given package named {@link #DEFAULT_NAME}.
    * The base name is derived as {@code pack.getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
-   * <p>
-   * Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   *
+   * <p>Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
-   * reflection.
-   * </p>
-   * <p>
-   * Note: Being accessed relative to the package, the resources can still be correctly located after
-   * packages are renamed by code obfuscation.
-   * </p>
+   * reflection.</p>
+   *
+   * <p>Note: Being accessed relative to the package, the resources can still be correctly located after
+   * packages are renamed by code obfuscation.</p>
    *
    * @param  bundleAccessor  Bi-function lookup for bundle, which will typically be the static method reference
    *                         <code>ResourceBundle::getBundle</code>.
-   *                         <p>
-   *                         As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
+   *
+   *                         <p>As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
    *                         caller permissions, pass a small lambda that performs the bundle access.  This will
    *                         typically be the static method reference <code>ResourceBundle::getBundle</code>, but may
    *                         be of any arbitrary complexity.  The bundle accessor is invoked for every message lookup,
-   *                         so the implementation should take care to perform well.
-   *                         </p>
-   *                         <p>
-   *                         When {@code null}, the bundle is looked-up via a direct call to
+   *                         so the implementation should take care to perform well.</p>
+   *
+   *                         <p>When {@code null}, the bundle is looked-up via a direct call to
    *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires
-   *                         <code>opens …;</code> in <code>module-info.java</code>.
-   *                         </p>
+   *                         <code>opens …;</code> in <code>module-info.java</code>.</p>
    */
   public static Resources getResources(SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor, Package pack) {
     return getResources(bundleAccessor, pack, null, null);
@@ -328,23 +304,20 @@ public class Resources implements Serializable {
   /**
    * Accesses the resources in the {@link #DEFAULT_SUBPACKAGE} sub-package of the given package named {@link #DEFAULT_NAME}.
    * The base name is derived as {@code pack.getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
-   * <p>
-   * Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   *
+   * <p>Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
-   * reflection.
-   * </p>
-   * <p>
-   * Note: Being accessed relative to the package, the resources can still be correctly located after
-   * packages are renamed by code obfuscation.
-   * </p>
+   * reflection.</p>
+   *
+   * <p>Note: Being accessed relative to the package, the resources can still be correctly located after
+   * packages are renamed by code obfuscation.</p>
    *
    * @deprecated  Please use {@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package)} instead.
-   *              <p>
-   *              As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
+   *
+   *              <p>As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
    *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires <code>opens …;</code> in
-   *              <code>module-info.java</code>.
-   *              </p>
+   *              <code>module-info.java</code>.</p>
    */
   @Deprecated
   public static Resources getResources(Package pack) {
@@ -356,37 +329,32 @@ public class Resources implements Serializable {
    * {@link #DEFAULT_NAME} with {@code clazz.getSimpleName() + '.'} as the prefix.
    * The base name is derived as {@code clazz.getPackage().getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME}
    * (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
-   * <p>
-   * Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   *
+   * <p>Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
-   * reflection.
-   * </p>
-   * <p>
-   * Note: Being accessed relative to the package, the resources may still be correctly located after
+   * reflection.</p>
+   *
+   * <p>Note: Being accessed relative to the package, the resources may still be correctly located after
    * packages are renamed by code obfuscation.  However, if classes are also renamed, the prefix will change and the
-   * build system must also alter the contents of the underlying <code>*.properties</code> files correspondingly.
-   * </p>
-   * <p>
-   * When rewriting the contents of the underlying properties files is not possible, it may be best either use
+   * build system must also alter the contents of the underlying <code>*.properties</code> files correspondingly.</p>
+   *
+   * <p>When rewriting the contents of the underlying properties files is not possible, it may be best either use
    * hard-coded prefix (may leak original class name, thus thwarting obfuscation a bit) or use a per-class
-   * properties file (tedious, also requires build system coordination).
-   * </p>
+   * properties file (tedious, also requires build system coordination).</p>
    *
    * @param  bundleAccessor  Bi-function lookup for bundle, which will typically be the static method reference
    *                         <code>ResourceBundle::getBundle</code>.
-   *                         <p>
-   *                         As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
+   *
+   *                         <p>As of Java 9, bundle access is affected by module descriptors.  To access the bundle with
    *                         caller permissions, pass a small lambda that performs the bundle access.  This will
    *                         typically be the static method reference <code>ResourceBundle::getBundle</code>, but may
    *                         be of any arbitrary complexity.  The bundle accessor is invoked for every message lookup,
-   *                         so the implementation should take care to perform well.
-   *                         </p>
-   *                         <p>
-   *                         When {@code null}, the bundle is looked-up via a direct call to
+   *                         so the implementation should take care to perform well.</p>
+   *
+   *                         <p>When {@code null}, the bundle is looked-up via a direct call to
    *                         {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires
-   *                         <code>opens …;</code> in <code>module-info.java</code>.
-   *                         </p>
+   *                         <code>opens …;</code> in <code>module-info.java</code>.</p>
    *
    * @param  clazz  This class is used for determining the package and prefix only.  It will typically be the
    *                class that is using the resource, not the class that implements {@link ResourceBundle}.
@@ -400,32 +368,28 @@ public class Resources implements Serializable {
    * {@link #DEFAULT_NAME} with {@code clazz.getSimpleName() + '.'} as the prefix.
    * The base name is derived as {@code clazz.getPackage().getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME}
    * (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
-   * <p>
-   * Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   *
+   * <p>Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
-   * reflection.
-   * </p>
-   * <p>
-   * Note: Being accessed relative to the package, the resources may still be correctly located after
+   * reflection.</p>
+   *
+   * <p>Note: Being accessed relative to the package, the resources may still be correctly located after
    * packages are renamed by code obfuscation.  However, if classes are also renamed, the prefix will change and the
-   * build system must also alter the contents of the underlying <code>*.properties</code> files correspondingly.
-   * </p>
-   * <p>
-   * When rewriting the contents of the underlying properties files is not possible, it may be best either use
+   * build system must also alter the contents of the underlying <code>*.properties</code> files correspondingly.</p>
+   *
+   * <p>When rewriting the contents of the underlying properties files is not possible, it may be best either use
    * hard-coded prefix (may leak original class name, thus thwarting obfuscation a bit) or use a per-class
-   * properties file (tedious, also requires build system coordination).
-   * </p>
+   * properties file (tedious, also requires build system coordination).</p>
    *
    * @param  clazz  This class is used for determining the package and prefix only.  It will typically be the
    *                class that is using the resource, not the class that implements {@link ResourceBundle}.
    *
    * @deprecated  Please use {@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Class)} instead.
-   *              <p>
-   *              As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
+   *
+   *              <p>As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
    *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires <code>opens …;</code> in
-   *              <code>module-info.java</code>.
-   *              </p>
+   *              <code>module-info.java</code>.</p>
    */
   @Deprecated
   public static Resources getResources(Class<?> clazz) {
@@ -532,15 +496,12 @@ public class Resources implements Serializable {
   }
 
   /**
-   * <p>
    * Gets the message with the given key in the provided locale,
    * optionally {@link MessageFormat#format(java.lang.Object[], java.lang.StringBuffer, java.text.FieldPosition) message-formatted}.
    * If missing, will generate a Struts-like value including the locale and (prefix + key).
-   * </p>
-   * <p>
-   * Substitutes arguments in the text where it finds {0}, {1}, {2}, …
-   * Message formatting is not performed when {@code args} is {@code null} or empty.
-   * </p>
+   *
+   * <p>Substitutes arguments in the text where it finds {0}, {1}, {2}, …
+   * Message formatting is not performed when {@code args} is {@code null} or empty.</p>
    *
    * @param  key  This will be combined with any {@link #getPrefix() prefix}
    */
@@ -611,15 +572,12 @@ public class Resources implements Serializable {
   }
 
   /**
-   * <p>
    * Gets the message with the given key in the {@linkplain ThreadLocale#get() current thread's locale},
    * optionally {@link MessageFormat#format(java.lang.Object[], java.lang.StringBuffer, java.text.FieldPosition) message-formatted}.
    * If missing, will generate a Struts-like value including the locale and (prefix + key).
-   * </p>
-   * <p>
-   * Substitutes arguments in the text where it finds {0}, {1}, {2}, …
-   * Message formatting is not performed when {@code args} is {@code null} or empty.
-   * </p>
+   *
+   * <p>Substitutes arguments in the text where it finds {0}, {1}, {2}, …
+   * Message formatting is not performed when {@code args} is {@code null} or empty.</p>
    *
    * @param  key  This will be combined with any {@link #getPrefix() prefix}
    *

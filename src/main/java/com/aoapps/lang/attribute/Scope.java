@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -27,9 +27,8 @@ import java.io.Serializable;
 
 /**
  * The most broad concept is scope.
- * <p>
- * {@link com.aoapps.lang.attribute.Attribute}: Has scope, still needs context and name.
- * </p>
+ *
+ * <p>{@link com.aoapps.lang.attribute.Attribute}: Has scope, still needs context and name.</p>
  *
  * @see  com.aoapps.lang.attribute.Attribute
  * @see  Context

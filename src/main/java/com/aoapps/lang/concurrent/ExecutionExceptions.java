@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -42,25 +42,22 @@ public final class ExecutionExceptions {
    * instance of {@code exClass}.
    * This is compatible with Lambda method references on common throwable constructors that take
    * {@code (String message, Throwable cause)}.
-   * <p>
-   * First, an attempt is made to create a surrogate of the cause via
+   *
+   * <p>First, an attempt is made to create a surrogate of the cause via
    * {@link Throwables#newSurrogate(java.lang.Throwable, java.lang.Throwable)}, with the execution exception being the
    * cause of the new surrogate.  When a surrogate cannot be created, uses the provided function {@code exSupplier} to
-   * create a new wrapper.
-   * </p>
-   * <p>
-   * When an {@link ExecutionException} occurs, unwrapping the {@linkplain ExecutionException#getCause() cause} may
-   * lose important stack trace information, since the cause is likely processed on a different thread and will not
-   * have the full caller stack trace.
-   * </p>
-   * <p>
-   * Furthermore, it is desirable to be able to maintain expected exception types.  This wrapping will help maintain
-   * exception types while not losing critical stack trace information.
-   * </p>
+   * create a new wrapper.</p>
    *
-   * <p>
-   * This is expected to typically used within a catch block, to maintain exception types:
-   * </p>
+   * <p>When an {@link ExecutionException} occurs, unwrapping the {@linkplain ExecutionException#getCause() cause} may
+   * lose important stack trace information, since the cause is likely processed on a different thread and will not
+   * have the full caller stack trace.</p>
+   *
+   * <p>Furthermore, it is desirable to be able to maintain expected exception types.  This wrapping will help maintain
+   * exception types while not losing critical stack trace information.</p>
+   *
+   *
+   * <p>This is expected to typically used within a catch block, to maintain exception types:</p>
+   *
    * <pre>try {
    *   …
    *   return future.get();
@@ -68,11 +65,10 @@ public final class ExecutionExceptions {
    *   wrapAndThrow(ee, IOException.class, IOException::new);
    *   throw ee;
    * }</pre>
-   * <p>
-   * When the cause is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
+   *
+   * <p>When the cause is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
    * surrogate is not itself an {@link InterruptedException}, the current thread will be
-   * {@linkplain Thread#interrupt() re-interrupted}.
-   * </p>
+   * {@linkplain Thread#interrupt() re-interrupted}.</p>
    *
    * @param  exClass  Exceptions with causes of this class are wrapped and thrown.
    *
@@ -112,25 +108,22 @@ public final class ExecutionExceptions {
   /**
    * Wraps and throws an {@link ExecutionException} when its {@linkplain ExecutionException#getCause() cause} is an
    * instance of {@code exClass}.
-   * <p>
-   * First, an attempt is made to create a surrogate of the cause via
+   *
+   * <p>First, an attempt is made to create a surrogate of the cause via
    * {@link Throwables#newSurrogate(java.lang.Throwable, java.lang.Throwable)}, with the execution exception being the
    * cause of the new surrogate.  When a surrogate cannot be created, uses the provided function {@code exSupplier} to
-   * create a new wrapper.
-   * </p>
-   * <p>
-   * When an {@link ExecutionException} occurs, unwrapping the {@linkplain ExecutionException#getCause() cause} may
-   * lose important stack trace information, since the cause is likely processed on a different thread and will not
-   * have the full caller stack trace.
-   * </p>
-   * <p>
-   * Furthermore, it is desirable to be able to maintain expected exception types.  This wrapping will help maintain
-   * exception types while not losing critical stack trace information.
-   * </p>
+   * create a new wrapper.</p>
    *
-   * <p>
-   * This is expected to typically used within a catch block, to maintain exception types:
-   * </p>
+   * <p>When an {@link ExecutionException} occurs, unwrapping the {@linkplain ExecutionException#getCause() cause} may
+   * lose important stack trace information, since the cause is likely processed on a different thread and will not
+   * have the full caller stack trace.</p>
+   *
+   * <p>Furthermore, it is desirable to be able to maintain expected exception types.  This wrapping will help maintain
+   * exception types while not losing critical stack trace information.</p>
+   *
+   *
+   * <p>This is expected to typically used within a catch block, to maintain exception types:</p>
+   *
    * <pre>try {
    *   …
    *   return future.get();
@@ -139,11 +132,10 @@ public final class ExecutionExceptions {
    *     -&gt; new SQLException(template.getMessage(), template.getSQLState(), template.getErrorCode(), cause)));
    *   throw ee;
    * }</pre>
-   * <p>
-   * When the cause is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
+   *
+   * <p>When the cause is an {@link InterruptedException} and is wrapped via {@code exSupplier}, and the resulting
    * surrogate is not itself an {@link InterruptedException}, the current thread will be
-   * {@linkplain Thread#interrupt() re-interrupted}.
-   * </p>
+   * {@linkplain Thread#interrupt() re-interrupted}.</p>
    *
    * @param  exClass  Exceptions with causes of this class are wrapped and thrown.
    *

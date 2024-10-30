@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2016, 2017, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2016, 2017, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -182,99 +182,101 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
       }
     } else {
       switch (distributionMethod) {
-        case PROPORTIONAL: {
-          // Sort the fractions from lowest to highest
-          BigFraction[] fractionOrdereds = Arrays.copyOf(fractions, len);
-          Arrays.sort(fractionOrdereds);
-          BigFraction[] fractionAltereds = Arrays.copyOf(fractionOrdereds, len);
+        case PROPORTIONAL:
+          {
+            // Sort the fractions from lowest to highest
+            BigFraction[] fractionOrdereds = Arrays.copyOf(fractions, len);
+            Arrays.sort(fractionOrdereds);
+            BigFraction[] fractionAltereds = Arrays.copyOf(fractionOrdereds, len);
 
-          BigDecimal remaining = total;
-          for (int c = len - 1; c >= 0; c--) {
-            BigFraction fractionAltered = fractionAltereds[c];
-            BigDecimal result = BigFraction.valueOf(remaining, false).multiply(fractionAltered).getBigDecimal(total.scale(), RoundingMode.UP);
-            if (result.signum() != 0 && result.signum() != totalSignum) {
-              throw new AssertionError("sign(result) != sign(total): " + result);
+            BigDecimal remaining = total;
+            for (int c = len - 1; c >= 0; c--) {
+              BigFraction fractionAltered = fractionAltereds[c];
+              BigDecimal result = BigFraction.valueOf(remaining, false).multiply(fractionAltered).getBigDecimal(total.scale(), RoundingMode.UP);
+              if (result.signum() != 0 && result.signum() != totalSignum) {
+                throw new AssertionError("sign(result) != sign(total): " + result);
+              }
+              remaining = remaining.subtract(result);
+              BigFraction divisor = BigFraction.ONE.subtract(fractionAltered);
+              for (int d = c - 1; d >= 0; d--) {
+                fractionAltereds[d] = fractionAltereds[d].divide(divisor);
+              }
+
+              BigFraction fractionOrdered = fractionOrdereds[c];
+              for (int d = 0; d < len; d++) {
+                if (results[d] == null && fractions[d].compareTo(fractionOrdered) == 0) {
+                  results[d] = result;
+                  break;
+                }
+              }
             }
-            remaining = remaining.subtract(result);
-            BigFraction divisor = BigFraction.ONE.subtract(fractionAltered);
-            for (int d = c - 1; d >= 0; d--) {
-              fractionAltereds[d] = fractionAltereds[d].divide(divisor);
+            if (remaining.signum() != 0) {
+              throw new AssertionError("remaining != 0: " + remaining);
+            }
+            break;
+          }
+        case HALF_UP:
+          {
+            // First pass, calculate the rounded values and any remainder (either positive or negative based on rounding)
+            final BigFraction totalFraction = BigFraction.valueOf(total, false);
+            BigFraction[] remainders = new BigFraction[len];
+            BigFraction totalRemainder = BigFraction.ZERO;
+            for (int i = 0; i < len; i++) {
+              BigFraction value = totalFraction.multiply(fractions[i]);
+              BigDecimal result = value.getBigDecimal(total.scale(), RoundingMode.HALF_UP);
+              BigFraction remainder = value.subtract(BigFraction.valueOf(result, false));
+              results[i] = result;
+              remainders[i] = remainder;
+              totalRemainder = totalRemainder.add(remainder);
             }
 
-            BigFraction fractionOrdered = fractionOrdereds[c];
-            for (int d = 0; d < len; d++) {
-              if (results[d] == null && fractions[d].compareTo(fractionOrdered) == 0) {
-                results[d] = result;
+            // While total remainder is non-zero, find the largest remainder of opposite sign of total remainder, and round the
+            // other direction.
+            BigDecimal offsetDecimal = BigDecimal.valueOf(1, total.scale());
+            BigFraction offsetFraction = BigFraction.valueOf(offsetDecimal, false);
+            while (true) {
+              int signum = totalRemainder.signum();
+              if (signum == 0) {
                 break;
               }
-            }
-          }
-          if (remaining.signum() != 0) {
-            throw new AssertionError("remaining != 0: " + remaining);
-          }
-          break;
-        }
-        case HALF_UP: {
-          // First pass, calculate the rounded values and any remainder (either positive or negative based on rounding)
-          final BigFraction totalFraction = BigFraction.valueOf(total, false);
-          BigFraction[] remainders = new BigFraction[len];
-          BigFraction totalRemainder = BigFraction.ZERO;
-          for (int i = 0; i < len; i++) {
-            BigFraction value = totalFraction.multiply(fractions[i]);
-            BigDecimal result = value.getBigDecimal(total.scale(), RoundingMode.HALF_UP);
-            BigFraction remainder = value.subtract(BigFraction.valueOf(result, false));
-            results[i] = result;
-            remainders[i] = remainder;
-            totalRemainder = totalRemainder.add(remainder);
-          }
-
-          // While total remainder is non-zero, find the largest remainder of opposite sign of total remainder, and round the
-          // other direction.
-          BigDecimal offsetDecimal = BigDecimal.valueOf(1, total.scale());
-          BigFraction offsetFraction = BigFraction.valueOf(offsetDecimal, false);
-          while (true) {
-            int signum = totalRemainder.signum();
-            if (signum == 0) {
-              break;
-            }
-            if (signum > 0) {
-              // Find largest positive remainder
-              BigFraction largestRemainder = remainders[0];
-              int largestRemainderIndex = 0;
-              for (int i = 1; i < len; i++) {
-                if (
-                    totalSignum > 0
-                        ? remainders[i].compareTo(largestRemainder) > 0       // Add to earlier elements so higher values last
-                        : remainders[i].compareTo(largestRemainder) >= 0      // Subtract from later elements so higher values first
-                ) {
-                  largestRemainder = remainders[i];
-                  largestRemainderIndex = i;
+              if (signum > 0) {
+                // Find largest positive remainder
+                BigFraction largestRemainder = remainders[0];
+                int largestRemainderIndex = 0;
+                for (int i = 1; i < len; i++) {
+                  if (
+                      totalSignum > 0
+                          ? remainders[i].compareTo(largestRemainder) > 0       // Add to earlier elements so higher values last
+                          : remainders[i].compareTo(largestRemainder) >= 0      // Subtract from later elements so higher values first
+                  ) {
+                    largestRemainder = remainders[i];
+                    largestRemainderIndex = i;
+                  }
                 }
-              }
-              results[largestRemainderIndex] = results[largestRemainderIndex].add(offsetDecimal);
-              remainders[largestRemainderIndex] = remainders[largestRemainderIndex].subtract(offsetFraction);
-              totalRemainder = totalRemainder.subtract(offsetFraction);
-            } else {
-              // Find largest negative remainder
-              BigFraction largestRemainder = remainders[0];
-              int largestRemainderIndex = 0;
-              for (int i = 1; i < len; i++) {
-                if (
-                    totalSignum < 0
-                        ? remainders[i].compareTo(largestRemainder) < 0       // Add to earlier elements so higher values last
-                        : remainders[i].compareTo(largestRemainder) <= 0      // Subtract from later elements so higher values first
-                ) {
-                  largestRemainder = remainders[i];
-                  largestRemainderIndex = i;
+                results[largestRemainderIndex] = results[largestRemainderIndex].add(offsetDecimal);
+                remainders[largestRemainderIndex] = remainders[largestRemainderIndex].subtract(offsetFraction);
+                totalRemainder = totalRemainder.subtract(offsetFraction);
+              } else {
+                // Find largest negative remainder
+                BigFraction largestRemainder = remainders[0];
+                int largestRemainderIndex = 0;
+                for (int i = 1; i < len; i++) {
+                  if (
+                      totalSignum < 0
+                          ? remainders[i].compareTo(largestRemainder) < 0       // Add to earlier elements so higher values last
+                          : remainders[i].compareTo(largestRemainder) <= 0      // Subtract from later elements so higher values first
+                  ) {
+                    largestRemainder = remainders[i];
+                    largestRemainderIndex = i;
+                  }
                 }
+                results[largestRemainderIndex] = results[largestRemainderIndex].subtract(offsetDecimal);
+                remainders[largestRemainderIndex] = remainders[largestRemainderIndex].add(offsetFraction);
+                totalRemainder = totalRemainder.add(offsetFraction);
               }
-              results[largestRemainderIndex] = results[largestRemainderIndex].subtract(offsetDecimal);
-              remainders[largestRemainderIndex] = remainders[largestRemainderIndex].add(offsetFraction);
-              totalRemainder = totalRemainder.add(offsetFraction);
             }
+            break;
           }
-          break;
-        }
         default:
           throw new AssertionError("Unexpected distributionMethod: " + distributionMethod);
       }
@@ -506,9 +508,8 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
 
   /**
    * Adds two fractions, returning the value in lowest terms.
-   * <p>
-   * If either is a percentage, the result will be a percentage.
-   * </p>
+   *
+   * <p>If either is a percentage, the result will be a percentage.</p>
    */
   public BigFraction add(BigFraction val) {
     if (denominator.compareTo(val.denominator) == 0) {
@@ -528,9 +529,8 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
 
   /**
    * Subtracts two fractions, returning the value in lowest terms.
-   * <p>
-   * If either is a percentage, the result will be a percentage.
-   * </p>
+   *
+   * <p>If either is a percentage, the result will be a percentage.</p>
    */
   public BigFraction subtract(BigFraction val) {
     if (denominator.compareTo(val.denominator) == 0) {
@@ -550,9 +550,8 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
 
   /**
    * Multiplies two fractions, returning the value in lowest terms.
-   * <p>
-   * If both are percentages, the result will be a percentage.
-   * </p>
+   *
+   * <p>If both are percentages, the result will be a percentage.</p>
    */
   public BigFraction multiply(BigFraction val) {
     if (val.compareTo(ONE) == 0) {

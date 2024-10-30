@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,11 +23,10 @@
 
 /**
  * Internationalization (i18n) utilities shared by many projects.
- * <p>
- * We are consolidating classes into this package.  Once consolidated, this package will be split into its own "ao-18n"
+ *
+ * <p>We are consolidating classes into this package.  Once consolidated, this package will be split into its own "ao-18n"
  * project.  Some features will go into sub-projects, such as in-context translation becoming "ao-i18n-editor" and its
- * related servlets going into something like "ao-i18n-editor-servlet".
- * </p>
+ * related servlets going into something like "ao-i18n-editor-servlet".</p>
  */
 
 package com.aoapps.lang.i18n;

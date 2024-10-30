@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -1020,9 +1020,8 @@ public final class Strings {
 
   /**
    * Word wraps a <code>String</code> to be no longer than the provided number of characters wide.
-   * <p>
-   * TODO: Make this more efficient by eliminating the internal use of substring.
-   * </p>
+   *
+   * <p>TODO: Make this more efficient by eliminating the internal use of substring.</p>
    */
   public static void wordWrap(String string, int width, Appendable out) throws IOException {
     width++;
@@ -1325,8 +1324,8 @@ public final class Strings {
 
   /**
    * Gets the approximate size (where k=1024) of a file.  In this format:
-   * <pre>
-   * x byte(s)
+   *
+   * <pre>x byte(s)
    * xx bytes
    * xxx bytes
    * x.x k
@@ -1341,8 +1340,7 @@ public final class Strings {
    * x.x T
    * xx.x T
    * xxx T
-   * xxx... T
-   * </pre>
+   * xxx... T</pre>
    */
   public static String getApproximateSize(long size) {
     boolean neg = size < 0;
@@ -1385,8 +1383,8 @@ public final class Strings {
 
   /**
    * Gets the approximate bit rate (where k=1000).  In this format:
-   * <pre>
-   * x
+   *
+   * <pre>x
    * xx
    * xxx
    * x.x k
@@ -1401,8 +1399,7 @@ public final class Strings {
    * x.x T
    * xx.x T
    * xxx T
-   * xxx... T
-   * </pre>
+   * xxx... T</pre>
    */
   public static String getApproximateBitRate(long bitRate) {
     boolean neg = bitRate < 0;

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -26,10 +26,9 @@ package com.aoapps.lang;
 /**
  * A set of various {@link Iterable} over common Java types,
  * useful to avoid conflict after type erasure.
- * <p>
- * Sometimes different method overloads want to accept different types of
- * {@link Iterable}, but they cannot due to conflict after type erasure.
- * </p>
+ *
+ * <p>Sometimes different method overloads want to accept different types of
+ * {@link Iterable}, but they cannot due to conflict after type erasure.</p>
  */
 // TODO: @see  Suppliers
 public final class Iterables {

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -203,10 +203,9 @@ public class SmartComparator implements Comparator<Object> {
   /**
    * Compares two strings, supporting {@code null}.
    * Sorts nulls after non-nulls.
-   * <p>
-   * This choice of nulls after non-nulls is selected to be consistent with
-   * <a href="https://www.postgresql.org/docs/9.4/static/queries-order.html">PostgreSQL's default "NULLS LAST" ordering</a>.
-   * </p>
+   *
+   * <p>This choice of nulls after non-nulls is selected to be consistent with
+   * <a href="https://www.postgresql.org/docs/9.4/static/queries-order.html">PostgreSQL's default "NULLS LAST" ordering</a>.</p>
    */
   public int compare(String s1, String s2) {
     // Put all nulls after non-nulls
