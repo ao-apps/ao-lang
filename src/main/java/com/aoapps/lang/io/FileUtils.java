@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -196,6 +196,7 @@ public final class FileUtils {
    *
    * @return  the number of bytes copied
    */
+  // Note: Copied to ao-ant-tasks:FileUtils.java
   public static long copyToFile(InputStream in, File file) throws IOException {
     try (OutputStream out = new FileOutputStream(file)) {
       return IoUtils.copy(in, out);
@@ -290,6 +291,7 @@ public final class FileUtils {
    *
    * @return  the number of bytes copied
    */
+  // Note: Copied to ao-ant-tasks:FileUtils.java
   public static long copy(File from, File to) throws IOException {
     try (InputStream in = new FileInputStream(from)) {
       long modified = from.lastModified();
@@ -449,6 +451,7 @@ public final class FileUtils {
    * Allow a non-atomic delete/rename pair when the underlying system is unable
    * to rename one file over another, such as in Microsoft Windows.
    */
+  // Note: Copied to ao-ant-tasks:FileUtils.java
   public static void renameAllowNonAtomic(File from, File to) throws IOException {
     // Try atomic rename first
     if (!from.renameTo(to)) {

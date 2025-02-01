@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2015, 2016, 2017, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2013, 2015, 2016, 2017, 2020, 2021, 2022, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -48,6 +48,7 @@ public final class IoUtils {
    *
    * @see #copy(java.io.InputStream, java.io.OutputStream, boolean)
    */
+  // Note: Copied to ao-ant-tasks:IoUtils.java
   public static long copy(InputStream in, OutputStream out) throws IOException {
     return copy(in, out, false);
   }
@@ -60,6 +61,7 @@ public final class IoUtils {
    *
    * @see  BufferManager#getBytes()
    */
+  // Note: Copied to ao-ant-tasks:IoUtils.java, but without using BufferManager
   public static long copy(InputStream in, OutputStream out, boolean flush) throws IOException {
     byte[] buff = BufferManager.getBytes();
     try {
