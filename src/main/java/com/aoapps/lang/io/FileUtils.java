@@ -46,6 +46,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * File utilities.
@@ -287,6 +288,16 @@ public final class FileUtils {
   }
 
   /**
+   * Sets the last modified, throwing IOException when unsuccessful.
+   */
+  // Note: Copied to ao-ant-tasks:FileUtils.java
+  public static void setLastModified(File file, long time) throws IOException {
+    if (!file.setLastModified(time)) {
+      throw new IOException("Unable to set last modified of \"" + file + "\" to \"" + new Date(time) + '"');
+    }
+  }
+
+  /**
    * Copies one file over another, possibly creating if needed.
    *
    * @return  the number of bytes copied
@@ -297,7 +308,7 @@ public final class FileUtils {
       long modified = from.lastModified();
       long bytes = copyToFile(in, to);
       if (modified != 0) {
-        to.setLastModified(modified);
+        setLastModified(to, modified);
       }
       return bytes;
     }
@@ -365,7 +376,7 @@ public final class FileUtils {
           }
         }
         if (modified != 0) {
-          to.setLastModified(modified);
+          setLastModified(to, modified);
         }
       } else if (from.isFile()) {
         if (to.exists()) {

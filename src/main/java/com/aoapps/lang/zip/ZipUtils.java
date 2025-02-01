@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2013, 2016, 2017, 2019, 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
+ * Copyright (C) 2012, 2013, 2016, 2017, 2019, 2020, 2021, 2022, 2023, 2024, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -351,7 +351,7 @@ public final class ZipUtils {
                     throw new IOException("copyBytes != size: " + copyBytes + " != " + size);
                   }
                   if (entryTime != -1) {
-                    file.setLastModified(entryTime);
+                    FileUtils.setLastModified(file, entryTime);
                   }
                 }
               }
@@ -363,7 +363,7 @@ public final class ZipUtils {
       // Pass two: go backwards through directories, setting the modification times
       for (Map.Entry<File, Long> entry : directoryModifyTimes.entrySet()) {
         //System.out.println("File: " + entry.getKey() + ", mtime = " + entry.getValue());
-        entry.getKey().setLastModified(entry.getValue());
+        FileUtils.setLastModified(entry.getKey(), entry.getValue());
       }
     }
   }
