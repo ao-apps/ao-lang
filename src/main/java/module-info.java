@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021, 2022, 2023  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2023, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -49,14 +49,19 @@ module com.aoapps.lang {
   requires static org.apache.commons.io; // <groupId>commons-io</groupId><artifactId>commons-io</artifactId>
   requires static org.apache.commons.lang3; // <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId>
   // Java SE
+  // TODO: Which ones of these are added for Throwables.registerJavaseSurrogateFactories only?
+  //       How can we gracefully initialize Throwables.registerJavaseSurrogateFactories when the module is missing?
+  //       If solve this, some of these may become requires static (optional).
   requires java.compiler;
   requires java.desktop;
   requires java.instrument;
   requires java.logging;
   requires java.management;
+  requires java.net.http;
   requires java.prefs;
   requires java.rmi;
   requires java.security.sasl;
+  requires java.smartcardio;
   requires java.sql;
   requires java.sql.rowset;
   requires java.xml;

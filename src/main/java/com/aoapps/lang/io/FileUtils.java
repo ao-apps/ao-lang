@@ -81,8 +81,7 @@ public final class FileUtils {
     Path deleteMe = file.toPath();
     Files.walkFileTree(
         deleteMe,
-        // Java 9: new SimpleFileVisitor<>
-        new SimpleFileVisitor<Path>() {
+        new SimpleFileVisitor<>() {
           @Override
           public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
             Files.delete(file);

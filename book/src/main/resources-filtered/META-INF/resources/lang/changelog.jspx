@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2017-03-12T17:54:37-05:00"
-    dateModified="2025-02-01T22:27:58Z"
+    dateModified="2025-02-12T02:29:49Z"
   >
     <c:set var="latestRelease" value="5.6.0" />
     <c:if test="${
@@ -56,6 +56,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         <ul>
           <li>Updated to <ao:a href="https://checkstyle.org/releasenotes.html#Release_10.21.1">Checkstyle 10.21.1</ao:a>.</li>
           <li>Throw <code>IOException</code> when <code>setLastModified</code> fails.</li>
+          <li>Minimum Java version changed from 1.8 to 11.</li>
         </ul>
       </changelog:release>
     </c:if>

@@ -29,7 +29,7 @@ Minimal Java library with no external dependencies shared by many other projects
 * Small, simple, unfocused utilities that are generally extensions to the standard Java libraries.
 * Shared by many other projects and can be used to glue them together.
 * Small footprint, self-contained, no transitive dependencies - not part of a big monolithic package.
-* Java 1.8 implementation:
+* Java 11 implementation:
     * Android compatible.
 
 ## Motivation

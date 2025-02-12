@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2019, 2020, 2021, 2022, 2024, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -120,8 +120,7 @@ public final class XmlUtils {
    * Iterates over a NodeList.
    */
   public static Iterable<Node> iterableNodes(final NodeList nodeList) {
-    // Java 9: new Iterator<>
-    return () -> new Iterator<Node>() {
+    return () -> new Iterator<>() {
       private int index = 0;
 
       @Override
@@ -144,8 +143,7 @@ public final class XmlUtils {
    * Iterates over a NodeList, only returning Elements.
    */
   public static Iterable<Element> iterableElements(final NodeList nodeList) {
-    // Java 9: new Iterator<>
-    return () -> new Iterator<Element>() {
+    return () -> new Iterator<>() {
       private int index = 0;
 
       @Override
@@ -176,8 +174,7 @@ public final class XmlUtils {
    * returning only returning child elements of the given name.
    */
   public static Iterable<Element> iterableChildElementsByTagName(final Element element, final String childTagName) {
-    // Java 9: new Iterator<>
-    return () -> new Iterator<Element>() {
+    return () -> new Iterator<>() {
       private final NodeList children = element.getChildNodes();
       private int index = 0;
 

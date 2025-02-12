@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2020, 2021, 2022, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -106,7 +106,7 @@ public final class WriterOutputStream extends OutputStream implements NoClose {
    *
    * @deprecated The finalization mechanism is inherently problematic.
    *
-  @Deprecated // Java 9: (since="9")
+  @Deprecated(since="9")
   @Override
   protected void finalize() throws Throwable {
     try {

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2023, 2024, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -323,9 +323,9 @@ public final class Throwables {
 
   /**
    * Used by static initializer to register Java SE types, see
-   * <a href="https://docs.oracle.com/javase/8/docs/api/overview-tree.html">https://docs.oracle.com/javase/8/docs/api/overview-tree.html</a>.
+   * <a href="https://docs.oracle.com/en/java/javase/11/docs/api/overview-tree.html">https://docs.oracle.com/en/java/javase/11/docs/api/overview-tree.html</a>.
    */
-  // Java 9: Review list for any new exception types, bump this note up to next Java version
+  // Java 12: Review list for any new exception types, bump this note up to next Java version
   @SuppressWarnings("deprecation")
   private static void registerJavaseSurrogateFactories() {
     registerSurrogateFactory(
@@ -451,7 +451,6 @@ public final class Throwables {
     registerSurrogateFactory(
         java.rmi.AlreadyBoundException.class,
         (template, cause) -> initCause(new java.rmi.AlreadyBoundException(template.getMessage()), cause));
-    // org.omg.CORBA.portable.ApplicationException: Has fields
     registerSurrogateFactory(
         java.awt.AWTException.class,
         (template, cause) -> initCause(new java.awt.AWTException(template.getMessage()), cause));
@@ -470,6 +469,13 @@ public final class Throwables {
     registerSurrogateFactory(
         java.util.concurrent.BrokenBarrierException.class,
         (template, cause) -> initCause(new java.util.concurrent.BrokenBarrierException(template.getMessage()), cause));
+    // javax.management.BadStringOperationException: Has fields
+    registerSurrogateFactory(
+        javax.smartcardio.CardException.class,
+        (template, cause) -> new javax.smartcardio.CardException(template.getMessage(), cause));
+    registerSurrogateFactory(
+        javax.smartcardio.CardNotPresentException.class,
+        (template, cause) -> new javax.smartcardio.CardNotPresentException(template.getMessage(), cause));
     registerSurrogateFactory(
         javax.security.cert.CertificateException.class,
         (template, cause) -> initCause(new javax.security.cert.CertificateException(template.getMessage()), cause));
@@ -502,6 +508,7 @@ public final class Throwables {
     registerSurrogateFactory(
         javax.security.auth.DestroyFailedException.class,
         (template, cause) -> initCause(new javax.security.auth.DestroyFailedException(template.getMessage()), cause));
+    // Skipping jdk.*
     registerSurrogateFactory(
         java.util.concurrent.ExecutionException.class,
         (template, cause) -> new java.util.concurrent.ExecutionException(template.getMessage(), cause));
@@ -727,6 +734,12 @@ public final class Throwables {
         java.net.HttpRetryException.class,
         (template, cause) -> initCause(new java.net.HttpRetryException(template.getMessage(), template.responseCode(), template.getLocation()), cause));
     registerSurrogateFactory(
+        java.net.http.HttpTimeoutException.class,
+        (template, cause) -> initCause(new java.net.http.HttpTimeoutException(template.getMessage()), cause));
+    registerSurrogateFactory(
+        java.net.http.HttpConnectTimeoutException.class,
+        (template, cause) -> initCause(new java.net.http.HttpConnectTimeoutException(template.getMessage()), cause));
+    registerSurrogateFactory(
         javax.imageio.IIOException.class,
         (template, cause) -> new javax.imageio.IIOException(template.getMessage(), cause));
     registerSurrogateFactory(
@@ -796,8 +809,6 @@ public final class Throwables {
             ? new java.rmi.AccessException(template.getMessage(), (Exception) cause)
             : new java.rmi.AccessException(template.getMessage(), new WrappedException(cause)));
     // java.rmi.activation.ActivateFailedException: Not in Java SE 17+
-    // javax.activity.ActivityCompletedException: Not in Java SE 11+, don't add dependency on activation
-    // javax.activity.ActivityRequiredException: Not in Java SE 11, don't add dependency on activation
     registerSurrogateFactory(
         java.rmi.ConnectException.class,
         (template, cause) -> (cause instanceof Exception)
@@ -818,8 +829,6 @@ public final class Throwables {
         (template, cause) -> (cause instanceof Exception)
             ? new java.rmi.server.SocketSecurityException(template.getMessage(), (Exception) cause)
             : new java.rmi.server.SocketSecurityException(template.getMessage(), new WrappedException(cause)));
-    // javax.activity.InvalidActivityException: Not in Java SE 11, don't add dependency on activation
-    // javax.transaction.InvalidTransactionException: Not in Java SE 11, don't add dependency on activation
     registerSurrogateFactory(
         java.rmi.MarshalException.class,
         (template, cause) -> (cause instanceof Exception)
@@ -856,8 +865,6 @@ public final class Throwables {
         (template, cause) -> (cause instanceof Exception)
             ? new java.rmi.StubNotFoundException(template.getMessage(), (Exception) cause)
             : new java.rmi.StubNotFoundException(template.getMessage(), new WrappedException(cause)));
-    // javax.transaction.TransactionRequiredException: Not in Java SE 11, don't add dependency on activation
-    // javax.transaction.TransactionRolledbackException: Not in Java SE 11, don't add dependency on activation
     registerSurrogateFactory(
         java.rmi.UnexpectedException.class,
         (template, cause) -> (cause instanceof Exception)
@@ -918,7 +925,6 @@ public final class Throwables {
     registerSurrogateFactory(
         java.net.UnknownServiceException.class,
         (template, cause) -> initCause(new java.net.UnknownServiceException(template.getMessage()), cause));
-    // javax.activation.UnsupportedDataTypeException: Not in Java SE 11, don't add dependency on activation
     registerSurrogateFactory(
         java.io.UnsupportedEncodingException.class,
         (template, cause) -> initCause(new java.io.UnsupportedEncodingException(template.getMessage()), cause));
@@ -930,16 +936,15 @@ public final class Throwables {
         java.io.UTFDataFormatException.class,
         (template, cause) -> initCause(new java.io.UTFDataFormatException(template.getMessage()), cause));
     registerSurrogateFactory(
+        java.net.http.WebSocketHandshakeException.class,
+        // Does not accept message
+        (template, cause) -> initCause(new java.net.http.WebSocketHandshakeException(template.getResponse()), cause));
+    registerSurrogateFactory(
         java.util.zip.ZipException.class,
         (template, cause) -> initCause(new java.util.zip.ZipException(template.getMessage()), cause));
     registerSurrogateFactory(
         java.util.jar.JarException.class,
         (template, cause) -> initCause(new java.util.jar.JarException(template.getMessage()), cause));
-    // javax.xml.bind.JAXBException: Not in Java SE 11, don't add dependency on jaxb
-    // javax.xml.bind.MarshalException: Not in Java SE 11, don't add dependency on jaxb
-    // javax.xml.bind.PropertyException: Not in Java SE 11, don't add dependency on jaxb
-    // javax.xml.bind.UnmarshalException: Not in Java SE 11, don't add dependency on jaxb
-    // javax.xml.bind.ValidationException: Not in Java SE 11, don't add dependency on jaxb
     registerSurrogateFactory(
         javax.management.JMException.class,
         (template, cause) -> initCause(new javax.management.JMException(template.getMessage()), cause));
@@ -1024,6 +1029,7 @@ public final class Throwables {
     registerSurrogateFactory(
         javax.management.relation.RoleNotFoundException.class,
         (template, cause) -> initCause(new javax.management.relation.RoleNotFoundException(template.getMessage()), cause));
+    // Skipping jdk.*
     registerSurrogateFactory(
         javax.xml.crypto.KeySelectorException.class,
         (template, cause) -> new javax.xml.crypto.KeySelectorException(template.getMessage(), cause));
@@ -1043,7 +1049,6 @@ public final class Throwables {
     registerSurrogateFactory(
         java.awt.datatransfer.MimeTypeParseException.class,
         (template, cause) -> initCause(new java.awt.datatransfer.MimeTypeParseException(template.getMessage()), cause));
-    // javax.activation.MimeTypeParseException: Not in Java SE 11, don't add dependency on activation
     // javax.naming.NamingException.class: Has fields
     // javax.naming.directory.AttributeInUseException: Has fields
     // javax.naming.directory.AttributeModificationException: Has fields
@@ -1143,7 +1148,6 @@ public final class Throwables {
     registerSurrogateFactory(
         javax.security.auth.RefreshFailedException.class,
         (template, cause) -> initCause(new javax.security.auth.RefreshFailedException(template.getMessage()), cause));
-    // org.omg.CORBA.portable.RemarshalException: Removed in Java 11
     registerSurrogateFactory(
         java.lang.RuntimeException.class,
         (template, cause) -> new java.lang.RuntimeException(template.getMessage(), cause));
@@ -1174,6 +1178,9 @@ public final class Throwables {
         // Does not accept message
         (template, cause) -> initCause(new javax.swing.undo.CannotUndoException(), cause));
     registerSurrogateFactory(
+        javax.xml.catalog.CatalogException.class,
+        (template, cause) -> new javax.xml.catalog.CatalogException(template.getMessage(), cause));
+    registerSurrogateFactory(
         java.lang.ClassCastException.class,
         (template, cause) -> initCause(new java.lang.ClassCastException(template.getMessage()), cause));
     registerSurrogateFactory(
@@ -1191,7 +1198,6 @@ public final class Throwables {
         (template, cause) -> (cause instanceof java.io.IOException)
             ? new java.nio.file.DirectoryIteratorException((java.io.IOException) cause)
             : new java.nio.file.DirectoryIteratorException(new java.io.IOException(template.getMessage(), cause)));
-    // javax.xml.bind.DataBindingException.class: Not in Java SE 11, don't add dependency on jaxb
     registerSurrogateFactory(
         java.time.DateTimeException.class,
         (template, cause) -> new java.time.DateTimeException(template.getMessage(), cause));
@@ -1224,6 +1230,9 @@ public final class Throwables {
     registerSurrogateFactory(
         java.nio.file.FileSystemNotFoundException.class,
         (template, cause) -> initCause(new java.nio.file.FileSystemNotFoundException(template.getMessage()), cause));
+    registerSurrogateFactory(
+        java.lang.module.FindException.class,
+        (template, cause) -> initCause(new java.lang.module.FindException(template.getMessage()), cause));
     registerSurrogateFactory(
         java.lang.IllegalArgumentException.class,
         (template, cause) -> new java.lang.IllegalArgumentException(template.getMessage(), cause));
@@ -1326,6 +1335,9 @@ public final class Throwables {
         java.nio.charset.UnsupportedCharsetException.class,
         // Does not accept message
         (template, cause) -> initCause(new java.nio.charset.UnsupportedCharsetException(template.getCharsetName()), cause));
+    registerSurrogateFactory(
+        java.lang.IllegalCallerException.class,
+        (template, cause) -> new java.lang.IllegalCallerException(template.getMessage(), cause));
     registerSurrogateFactory(
         java.lang.IllegalMonitorStateException.class,
         (template, cause) -> initCause(new java.lang.IllegalMonitorStateException(template.getMessage()), cause));
@@ -1435,6 +1447,9 @@ public final class Throwables {
         java.awt.image.ImagingOpException.class,
         (template, cause) -> initCause(new java.awt.image.ImagingOpException(template.getMessage()), cause));
     registerSurrogateFactory(
+        java.lang.reflect.InaccessibleObjectException.class,
+        (template, cause) -> initCause(new java.lang.reflect.InaccessibleObjectException(template.getMessage()), cause));
+    registerSurrogateFactory(
         java.lang.annotation.IncompleteAnnotationException.class,
         // Does not accept message
         (template, cause) -> initCause(new java.lang.annotation.IncompleteAnnotationException(template.annotationType(), template.elementName()), cause));
@@ -1447,6 +1462,10 @@ public final class Throwables {
     registerSurrogateFactory(
         java.lang.StringIndexOutOfBoundsException.class,
         (template, cause) -> initCause(new java.lang.StringIndexOutOfBoundsException(template.getMessage()), cause));
+    registerSurrogateFactory(
+        java.lang.module.InvalidModuleDescriptorException.class,
+        (template, cause) -> initCause(new java.lang.module.InvalidModuleDescriptorException(template.getMessage()), cause));
+    // Skipping jdk.*
     registerSurrogateFactory(
         javax.management.JMRuntimeException.class,
         (template, cause) -> initCause(new javax.management.JMRuntimeException(template.getMessage()), cause));
@@ -1468,13 +1487,16 @@ public final class Throwables {
         (template, cause) -> (cause instanceof java.lang.RuntimeException)
             ? new javax.management.RuntimeOperationsException((java.lang.RuntimeException) cause, template.getMessage())
             : new javax.management.RuntimeOperationsException(new WrappedException(cause), template.getMessage()));
+    // Skipping netscape.javascript.*
+    registerSurrogateFactory(
+        java.lang.LayerInstantiationException.class,
+        (template, cause) -> new java.lang.LayerInstantiationException(template.getMessage(), cause));
     registerSurrogateFactory(
         org.w3c.dom.ls.LSException.class,
         (template, cause) -> initCause(new org.w3c.dom.ls.LSException(template.code, template.getMessage()), cause));
     registerSurrogateFactory(
         java.lang.reflect.MalformedParameterizedTypeException.class,
-        // Java 9-11: Accepts message
-        (template, cause) -> initCause(new java.lang.reflect.MalformedParameterizedTypeException(), cause));
+        (template, cause) -> initCause(new java.lang.reflect.MalformedParameterizedTypeException(template.getMessage()), cause));
     registerSurrogateFactory(
         java.lang.reflect.MalformedParametersException.class,
         (template, cause) -> initCause(new java.lang.reflect.MalformedParametersException(template.getMessage()), cause));
@@ -1483,9 +1505,11 @@ public final class Throwables {
     registerSurrogateFactory(
         java.util.MissingResourceException.class,
         (template, cause) -> initCause(new java.util.MissingResourceException(template.getMessage(), template.getClassName(), template.getKey()), cause));
+    // Skipping jdk.*
     registerSurrogateFactory(
         java.lang.NegativeArraySizeException.class,
         (template, cause) -> initCause(new java.lang.NegativeArraySizeException(template.getMessage()), cause));
+    // Skipping jdk.*
     registerSurrogateFactory(
         java.util.NoSuchElementException.class,
         (template, cause) -> initCause(new java.util.NoSuchElementException(template.getMessage()), cause));
@@ -1508,11 +1532,17 @@ public final class Throwables {
         java.nio.file.ProviderNotFoundException.class,
         (template, cause) -> initCause(new java.nio.file.ProviderNotFoundException(template.getMessage()), cause));
     registerSurrogateFactory(
+        org.w3c.dom.ranges.RangeException.class,
+        (template, cause) -> initCause(new org.w3c.dom.ranges.RangeException(template.code, template.getMessage()), cause));
+    registerSurrogateFactory(
         java.awt.image.RasterFormatException.class,
         (template, cause) -> initCause(new java.awt.image.RasterFormatException(template.getMessage()), cause));
     registerSurrogateFactory(
         java.util.concurrent.RejectedExecutionException.class,
         (template, cause) -> new java.util.concurrent.RejectedExecutionException(template.getMessage(), cause));
+    registerSurrogateFactory(
+        java.lang.module.ResolutionException.class,
+        (template, cause) -> new java.lang.module.ResolutionException(template.getMessage(), cause));
     registerSurrogateFactory(
         java.lang.SecurityException.class,
         (template, cause) -> new java.lang.SecurityException(template.getMessage(), cause));
@@ -1520,49 +1550,7 @@ public final class Throwables {
         java.security.AccessControlException.class,
         (template, cause) -> initCause(new java.security.AccessControlException(template.getMessage(), template.getPermission()), cause));
     // java.rmi.RMISecurityException: deprecated no replacement
-    // org.omg.CORBA.SystemException: Removed in Java 11
-    // org.omg.CORBA.ACTIVITY_COMPLETED: Removed in Java 11
-    // org.omg.CORBA.ACTIVITY_REQUIRED: Removed in Java 11
-    // org.omg.CORBA.BAD_CONTEXT: Removed in Java 11
-    // org.omg.CORBA.BAD_INV_ORDER: Removed in Java 11
-    // org.omg.CORBA.BAD_OPERATION: Removed in Java 11
-    // org.omg.CORBA.BAD_PARAM: Removed in Java 11
-    // org.omg.CORBA.BAD_QOS: Removed in Java 11
-    // org.omg.CORBA.BAD_TYPECODE: Removed in Java 11
-    // org.omg.CORBA.CODESET_INCOMPATIBLE: Removed in Java 11
-    // org.omg.CORBA.COMM_FAILURE: Removed in Java 11
-    // org.omg.CORBA.DATA_CONVERSION: Removed in Java 11
-    // org.omg.CORBA.FREE_MEM: Removed in Java 11
-    // org.omg.CORBA.IMP_LIMIT: Removed in Java 11
-    // org.omg.CORBA.portable.IndirectionException: Removed in Java 11
-    // org.omg.CORBA.INITIALIZE: Removed in Java 11
-    // org.omg.CORBA.INTERNAL: Removed in Java 11
-    // org.omg.CORBA.INTF_REPOS: Removed in Java 11
-    // org.omg.CORBA.INV_FLAG: Removed in Java 11
-    // org.omg.CORBA.INV_IDENT: Removed in Java 11
-    // org.omg.CORBA.INV_OBJREF: Removed in Java 11
-    // org.omg.CORBA.INV_POLICY: Removed in Java 11
-    // org.omg.CORBA.INVALID_ACTIVITY: Removed in Java 11
-    // org.omg.CORBA.INVALID_TRANSACTION: Removed in Java 11
-    // org.omg.CORBA.MARSHAL: Removed in Java 11
-    // org.omg.CORBA.NO_IMPLEMENT: Removed in Java 11
-    // org.omg.CORBA.NO_MEMORY: Removed in Java 11
-    // org.omg.CORBA.NO_PERMISSION: Removed in Java 11
-    // org.omg.CORBA.NO_RESOURCES: Removed in Java 11
-    // org.omg.CORBA.NO_RESPONSE: Removed in Java 11
-    // org.omg.CORBA.OBJ_ADAPTER: Removed in Java 11
-    // org.omg.CORBA.OBJECT_NOT_EXIST: Removed in Java 11
-    // org.omg.CORBA.PERSIST_STORE: Removed in Java 11
-    // org.omg.CORBA.REBIND: Removed in Java 11
-    // org.omg.CORBA.TIMEOUT: Removed in Java 11
-    // org.omg.CORBA.TRANSACTION_MODE: Removed in Java 11
-    // org.omg.CORBA.TRANSACTION_REQUIRED: Removed in Java 11
-    // org.omg.CORBA.TRANSACTION_ROLLEDBACK: Removed in Java 11
-    // org.omg.CORBA.TRANSACTION_UNAVAILABLE: Removed in Java 11
-    // org.omg.CORBA.TRANSIENT: Removed in Java 11
-    // org.omg.CORBA.UNKNOWN: Removed in Java 11
-    // org.omg.CORBA.portable.UnknownException: Removed in Java 11
-    // javax.xml.bind.TypeConstraintException: Not in Java SE 11, don't add dependency on jaxb
+    // Skipping jdk.*
     registerSurrogateFactory(
         java.lang.TypeNotPresentException.class,
         // Does not accept message
@@ -1581,6 +1569,10 @@ public final class Throwables {
         // Does not accept message
         (template, cause) -> initCause(new javax.lang.model.element.UnknownAnnotationValueException(template.getUnknownAnnotationValue(), template.getArgument()), cause));
     registerSurrogateFactory(
+        javax.lang.model.element.UnknownDirectiveException.class,
+        // Does not accept message
+        (template, cause) -> initCause(new javax.lang.model.element.UnknownDirectiveException(template.getUnknownDirective(), template.getArgument()), cause));
+    registerSurrogateFactory(
         javax.lang.model.element.UnknownElementException.class,
         // Does not accept message
         (template, cause) -> initCause(new javax.lang.model.element.UnknownElementException(template.getUnknownElement(), template.getArgument()), cause));
@@ -1588,6 +1580,7 @@ public final class Throwables {
         javax.lang.model.type.UnknownTypeException.class,
         // Does not accept message
         (template, cause) -> initCause(new javax.lang.model.type.UnknownTypeException(template.getUnknownType(), template.getArgument()), cause));
+    // Skipping jdk.*
     registerSurrogateFactory(
         javax.print.attribute.UnmodifiableSetException.class,
         (template, cause) -> initCause(new javax.print.attribute.UnmodifiableSetException(template.getMessage()), cause));
@@ -1605,10 +1598,6 @@ public final class Throwables {
         java.nio.file.ReadOnlyFileSystemException.class,
         // Does not accept message
         (template, cause) -> initCause(new java.nio.file.ReadOnlyFileSystemException(), cause));
-    // javax.xml.ws.WebServiceException: Not in Java SE 11, don't add dependency on jaxb
-    // javax.xml.ws.ProtocolException: Not in Java SE 11, don't add dependency on jaxb
-    // javax.xml.ws.http.HTTPException: Not in Java SE 11, don't add dependency on jaxb
-    // javax.xml.ws.soap.SOAPFaultException: Not in Java SE 11, don't add dependency on jaxb
     registerSurrogateFactory(
         java.lang.invoke.WrongMethodTypeException.class,
         (template, cause) -> initCause(new java.lang.invoke.WrongMethodTypeException(template.getMessage()), cause));
@@ -1716,6 +1705,9 @@ public final class Throwables {
           return newEx;
         });
     registerSurrogateFactory(
+        java.lang.invoke.StringConcatException.class,
+        (template, cause) -> new java.lang.invoke.StringConcatException(template.getMessage(), cause));
+    registerSurrogateFactory(
         java.util.concurrent.TimeoutException.class,
         (template, cause) -> initCause(new java.util.concurrent.TimeoutException(template.getMessage()), cause));
     registerSurrogateFactory(
@@ -1746,49 +1738,6 @@ public final class Throwables {
         java.net.URISyntaxException.class,
         // Does not accept message
         (template, cause) -> initCause(new java.net.URISyntaxException(template.getInput(), template.getReason(), template.getIndex()), cause));
-    // org.omg.CORBA.UserException: Removed in Java 11
-    // org.omg.PortableServer.POAPackage.AdapterAlreadyExists: Removed in Java 11
-    // org.omg.PortableServer.POAManagerPackage.AdapterInactive: Removed in Java 11
-    // org.omg.PortableServer.POAPackage.AdapterNonExistent: Removed in Java 11
-    // org.omg.CosNaming.NamingContextPackage.AlreadyBound: Removed in Java 11
-    // org.omg.CORBA.TypeCodePackage.BadKind: Removed in Java 11
-    // org.omg.CORBA.Bounds: Removed in Java 11
-    // org.omg.CORBA.TypeCodePackage.Bounds: Removed in Java 11
-    // org.omg.CosNaming.NamingContextPackage.CannotProceed: Removed in Java 11
-    // org.omg.PortableInterceptor.ORBInitInfoPackage.DuplicateName: Removed in Java 11
-    // org.omg.IOP.CodecPackage.FormatMismatch: Removed in Java 11
-    // org.omg.PortableServer.ForwardRequest: Removed in Java 11
-    // org.omg.PortableInterceptor.ForwardRequest: Removed in Java 11
-    // org.omg.CORBA.ORBPackage.InconsistentTypeCode: Removed in Java 11
-    // org.omg.DynamicAny.DynAnyFactoryPackage.InconsistentTypeCode: Removed in Java 11
-    // org.omg.CORBA.DynAnyPackage.Invalid: Removed in Java 11
-    // org.omg.CosNaming.NamingContextExtPackage.InvalidAddress: Removed in Java 11
-    // org.omg.CORBA.ORBPackage.InvalidName: Removed in Java 11
-    // org.omg.CosNaming.NamingContextPackage.InvalidName: Removed in Java 11
-    // org.omg.PortableInterceptor.ORBInitInfoPackage.InvalidName: Removed in Java 11
-    // org.omg.PortableServer.POAPackage.InvalidPolicy: Removed in Java 11
-    // org.omg.CORBA.DynAnyPackage.InvalidSeq: Removed in Java 11
-    // org.omg.PortableInterceptor.InvalidSlot: Removed in Java 11
-    // org.omg.IOP.CodecPackage.InvalidTypeForEncoding: Removed in Java 11
-    // org.omg.CORBA.DynAnyPackage.InvalidValue: Removed in Java 11
-    // org.omg.DynamicAny.DynAnyPackage.InvalidValue: Removed in Java 11
-    // org.omg.PortableServer.CurrentPackage.NoContext: Removed in Java 11
-    // org.omg.PortableServer.POAPackage.NoServant: Removed in Java 11
-    // org.omg.CosNaming.NamingContextPackage.NotEmpty: Removed in Java 11
-    // org.omg.CosNaming.NamingContextPackage.NotFound: Removed in Java 11
-    // org.omg.PortableServer.POAPackage.ObjectAlreadyActive: Removed in Java 11
-    // org.omg.PortableServer.POAPackage.ObjectNotActive: Removed in Java 11
-    // org.omg.CORBA.PolicyError: Removed in Java 11
-    // org.omg.PortableServer.POAPackage.ServantAlreadyActive: Removed in Java 11
-    // org.omg.PortableServer.POAPackage.ServantNotActive: Removed in Java 11
-    // org.omg.CORBA.DynAnyPackage.TypeMismatch: Removed in Java 11
-    // org.omg.IOP.CodecPackage.TypeMismatch: Removed in Java 11
-    // org.omg.DynamicAny.DynAnyPackage.TypeMismatch: Removed in Java 11
-    // org.omg.IOP.CodecFactoryPackage.UnknownEncoding: Removed in Java 11
-    // org.omg.CORBA.UnknownUserException: Removed in Java 11
-    // org.omg.PortableServer.POAPackage.WrongAdapter: Removed in Java 11
-    // org.omg.PortableServer.POAPackage.WrongPolicy: Removed in Java 11
-    // org.omg.CORBA.WrongTransaction: Removed in Java 11
     registerSurrogateFactory(
         javax.transaction.xa.XAException.class, (javax.transaction.xa.XAException template, Throwable cause) -> {
           javax.transaction.xa.XAException newEx = initCause(new javax.transaction.xa.XAException(template.getMessage()), cause);
@@ -1820,7 +1769,7 @@ public final class Throwables {
 
   static {
     registerJavaseSurrogateFactories();
-    // Java 9: Maintain modularity? Could also possibly be optional module deps, with one service loader per module?
+    // TODO: Java 9: Maintain modularity? Could also possibly be optional module deps, with one service loader per module?
     for (ThrowableSurrogateFactoryInitializer initializer : ServiceLoader.load(ThrowableSurrogateFactoryInitializer.class)) {
       initializer.run();
     }
