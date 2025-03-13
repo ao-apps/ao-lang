@@ -28,9 +28,8 @@ import java.io.Writer;
 /**
  * Discards all data.
  *
- * @deprecated  Please use {@link Writer#nullWriter()}, which more thoroughly enforces the contract of {@link Writer}.
+ * <p>Please consider {@link Writer#nullWriter()}, which more thoroughly enforces the contract of {@link Writer}.</p>
  */
-@Deprecated(forRemoval = true)
 public final class NullWriter extends Writer implements NoClose {
 
   private static final NullWriter instance = new NullWriter();
