@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -112,54 +112,54 @@ public class SmartComparator implements Comparator<Object> {
       boolean isNumeric;
       boolean dotUsed;
       int prefixLen;
-        {
-          char ch1 = value.charAt(i);
-          char ch2;
-          if (
-              ch1 >= '0'
-                  && ch1 <= '9'
-          ) {
-            // #
-            isNumeric = true;
-            dotUsed = false;
-            prefixLen = 1;
-          } else if (
-              ch1 == '.'
-                  && i < (len - 1)
-                  && (ch2 = value.charAt(i + 1)) >= '0'
-                  && ch2 <= '9'
-          ) {
-            // .#
-            isNumeric = true;
-            dotUsed = true;
-            prefixLen = 2;
-          } else if (
-              ch1 == '-'
-                  && i < (len - 1)
-                  && (ch2 = value.charAt(i + 1)) >= '0'
-                  && ch2 <= '9'
-          ) {
-            // -#
-            isNumeric = true;
-            dotUsed = false;
-            prefixLen = 2;
-          } else if (
-              ch1 == '-'
-                  && i < (len - 2)
-                  && value.charAt(i + 1) == '.'
-                  && (ch2 = value.charAt(i + 2)) >= '0'
-                  && ch2 <= '9'
-          ) {
-            // -.#
-            isNumeric = true;
-            dotUsed = true;
-            prefixLen = 3;
-          } else {
-            isNumeric = false;
-            dotUsed = false;
-            prefixLen = 0;
-          }
+      {
+        char ch1 = value.charAt(i);
+        char ch2;
+        if (
+            ch1 >= '0'
+                && ch1 <= '9'
+        ) {
+          // #
+          isNumeric = true;
+          dotUsed = false;
+          prefixLen = 1;
+        } else if (
+            ch1 == '.'
+                && i < (len - 1)
+                && (ch2 = value.charAt(i + 1)) >= '0'
+                && ch2 <= '9'
+        ) {
+          // .#
+          isNumeric = true;
+          dotUsed = true;
+          prefixLen = 2;
+        } else if (
+            ch1 == '-'
+                && i < (len - 1)
+                && (ch2 = value.charAt(i + 1)) >= '0'
+                && ch2 <= '9'
+        ) {
+          // -#
+          isNumeric = true;
+          dotUsed = false;
+          prefixLen = 2;
+        } else if (
+            ch1 == '-'
+                && i < (len - 2)
+                && value.charAt(i + 1) == '.'
+                && (ch2 = value.charAt(i + 2)) >= '0'
+                && ch2 <= '9'
+        ) {
+          // -.#
+          isNumeric = true;
+          dotUsed = true;
+          prefixLen = 3;
+        } else {
+          isNumeric = false;
+          dotUsed = false;
+          prefixLen = 0;
         }
+      }
 
       if (isNumeric) {
         if (i == pos) {

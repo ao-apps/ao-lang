@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2016, 2017, 2019, 2020, 2021, 2022, 2024, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -451,26 +451,26 @@ public final class ErrorPrinter {
         append(err.toString(), out);
       }
     }
-      // SQL Statements (not within SQLException, since they can be associated with any throwable)
-      {
-        List<String> causes = getSql(thrown);
-        int size = causes.size();
-        if (size != 0) {
-          final String labelPre = "SQL Statement";
-          StringBuilder label = new StringBuilder(labelPre);
-          for (int i = 0; i < size; i++) {
-            label.setLength(labelPre.length());
-            if (size != 1) {
-              label.append(" #").append(i + 1);
-            }
-            while (label.length() < LABEL_WIDTH) {
-              label.append('.');
-            }
-            label.append(": ");
-            CustomMessageHandler.printMessage(out, indent + 4, label.toString(), causes.get(i));
+    // SQL Statements (not within SQLException, since they can be associated with any throwable)
+    {
+      List<String> causes = getSql(thrown);
+      int size = causes.size();
+      if (size != 0) {
+        final String labelPre = "SQL Statement";
+        StringBuilder label = new StringBuilder(labelPre);
+        for (int i = 0; i < size; i++) {
+          label.setLength(labelPre.length());
+          if (size != 1) {
+            label.append(" #").append(i + 1);
           }
+          while (label.length() < LABEL_WIDTH) {
+            label.append('.');
+          }
+          label.append(": ");
+          CustomMessageHandler.printMessage(out, indent + 4, label.toString(), causes.get(i));
         }
       }
+    }
     indent(out, indent + 4);
     appendln("Stack Trace", out);
     StackTraceElement[] stack = thrown.getStackTrace();
