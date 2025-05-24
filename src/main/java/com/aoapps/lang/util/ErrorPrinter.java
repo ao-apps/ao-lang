@@ -515,8 +515,8 @@ public final class ErrorPrinter {
         }
       }
     } catch (
-    // OK, future versions of JspException might not have getRootCause
-    NoSuchMethodException
+        // OK, future versions of JspException might not have getRootCause
+        NoSuchMethodException
             // OK, future versions of JspException could make it private
             | IllegalAccessException
             // Ignored because we are dealing with one exception at a time
@@ -542,8 +542,8 @@ public final class ErrorPrinter {
         }
       }
     } catch (
-    // OK, future versions of ServletException might not have getRootCause
-    NoSuchMethodException
+        // OK, future versions of ServletException might not have getRootCause
+        NoSuchMethodException
             // OK, future versions of ServletException could make it private
             | IllegalAccessException
             // Ignored because we are dealing with one exception at a time
