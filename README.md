@@ -22,7 +22,7 @@ Minimal Java library with no external dependencies shared by many other projects
 * [Project Home](https://oss.aoapps.com/lang/)
 * [Changelog](https://oss.aoapps.com/lang/changelog)
 * [API Docs](https://oss.aoapps.com/lang/apidocs/)
-* [Maven Central Repository](https://central.sonatype.com/artifact/com.aoapps/ao-lang)
+* [Central Repository](https://central.sonatype.com/artifact/com.aoapps/ao-lang)
 * [GitHub](https://github.com/ao-apps/ao-lang)
 
 ## Features
