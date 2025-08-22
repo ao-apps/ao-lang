@@ -44,7 +44,7 @@ public class WrappedExceptions extends RuntimeException {
   /**
    * Gets an unmodifiable, unique set of exceptions.
    */
-  private static List<Throwable> getUniqueCauses(Throwable ... causes) {
+  private static List<Throwable> getUniqueCauses(Throwable... causes) {
     int len = causes.length;
     List<Throwable> uniqueCauses = new ArrayList<>(len);
     for (Throwable cause : causes) {
@@ -59,7 +59,7 @@ public class WrappedExceptions extends RuntimeException {
   private final List<Throwable> causes;
 
   @SuppressWarnings("OverridableMethodCallInConstructor")
-  public WrappedExceptions(Throwable ... causes) {
+  public WrappedExceptions(Throwable... causes) {
     super();
     this.causes = getUniqueCauses(causes);
     if (!this.causes.isEmpty()) {
@@ -68,7 +68,7 @@ public class WrappedExceptions extends RuntimeException {
   }
 
   @SuppressWarnings("OverridableMethodCallInConstructor")
-  public WrappedExceptions(String message, Throwable ... causes) {
+  public WrappedExceptions(String message, Throwable... causes) {
     super(message);
     this.causes = getUniqueCauses(causes);
     if (!this.causes.isEmpty()) {

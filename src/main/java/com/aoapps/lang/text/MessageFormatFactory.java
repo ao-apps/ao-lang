@@ -103,12 +103,12 @@ public final class MessageFormatFactory {
     };
     long startTime = System.nanoTime();
     for (int i=0; i<iterations; i++) {
-      //sb.setLength(0);
+      // sb.setLength(0);
       new MessageFormat("This is a {0} {1}", locale); //.format(args, sb, null);
     }
     long midTime = System.nanoTime();
     for (int i=0; i<iterations; i++) {
-      //sb.setLength(0);
+      // sb.setLength(0);
       MessageFormatFactory.getMessageFormat("This is a {0} {1}", locale); //.format(args, sb, null);
     }
     long endTime = System.nanoTime();

@@ -35,7 +35,7 @@ public class ThreadLocalsRunnable implements Runnable {
   private final ThreadLocal<?>[] threadLocals;
   private final Object[] values;
 
-  public ThreadLocalsRunnable(Runnable task, ThreadLocal<?> ... threadLocals) {
+  public ThreadLocalsRunnable(Runnable task, ThreadLocal<?>... threadLocals) {
     this.task = task;
     this.threadLocals = threadLocals;
     int len = threadLocals.length;

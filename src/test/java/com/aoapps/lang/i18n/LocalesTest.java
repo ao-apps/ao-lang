@@ -50,7 +50,7 @@ public class LocalesTest extends TestCase {
               && locale.getExtensionKeys().isEmpty()
       ) {
         Locale parsed = Locales.parseLocale(locale.toString());
-        //System.out.println(locale+"→"+parsed);
+        // System.out.println(locale+"→"+parsed);
         assertEquals(locale, parsed);
       }
     }

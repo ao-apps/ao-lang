@@ -37,7 +37,7 @@ public class ThreadLocalsCallable<T> implements Callable<T> {
   private final ThreadLocal<?>[] threadLocals;
   private final Object[] values;
 
-  public ThreadLocalsCallable(Callable<T> task, ThreadLocal<?> ... threadLocals) {
+  public ThreadLocalsCallable(Callable<T> task, ThreadLocal<?>... threadLocals) {
     this.task = task;
     this.threadLocals = threadLocals;
     int len = threadLocals.length;

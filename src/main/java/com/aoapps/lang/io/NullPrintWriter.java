@@ -202,22 +202,22 @@ public final class NullPrintWriter extends PrintWriter implements NoClose {
   }
 
   @Override
-  public NullPrintWriter printf(String format, Object ... args) {
+  public NullPrintWriter printf(String format, Object... args) {
     return this;
   }
 
   @Override
-  public NullPrintWriter printf(Locale l, String format, Object ... args) {
+  public NullPrintWriter printf(Locale l, String format, Object... args) {
     return this;
   }
 
   @Override
-  public NullPrintWriter format(String format, Object ... args) {
+  public NullPrintWriter format(String format, Object... args) {
     return this;
   }
 
   @Override
-  public NullPrintWriter format(Locale l, String format, Object ... args) {
+  public NullPrintWriter format(Locale l, String format, Object... args) {
     return this;
   }
 }

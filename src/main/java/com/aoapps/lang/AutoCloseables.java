@@ -87,7 +87,7 @@ public final class AutoCloseables {
    *
    * @return  {@code t0}, a new throwable, or {@code null} when none given and none new
    */
-  public static Throwable closeAndCatch(Throwable t0, AutoCloseable ... closeable) {
+  public static Throwable closeAndCatch(Throwable t0, AutoCloseable... closeable) {
     if (closeable != null) {
       for (AutoCloseable ac : closeable) {
         t0 = closeAndCatch(t0, ac);
@@ -106,7 +106,7 @@ public final class AutoCloseables {
    *
    * @return  A new throwable or {@code null}
    */
-  public static Throwable closeAndCatch(AutoCloseable ... closeable) {
+  public static Throwable closeAndCatch(AutoCloseable... closeable) {
     return closeAndCatch(null, closeable);
   }
 
@@ -262,7 +262,7 @@ public final class AutoCloseables {
       Throwable t0,
       Class<? extends Ex> exClass,
       Function<? super Throwable, ? extends Ex> exSupplier,
-      AutoCloseable ... closeable
+      AutoCloseable... closeable
   ) throws Error, RuntimeException, Ex {
     Throwable t = closeAndCatch(t0, closeable);
     if (t != null) {
@@ -313,7 +313,7 @@ public final class AutoCloseables {
   public static <Ex extends Throwable> void closeAndThrow(
       Class<? extends Ex> exClass,
       Function<? super Throwable, ? extends Ex> exSupplier,
-      AutoCloseable ... closeable
+      AutoCloseable... closeable
   ) throws Error, RuntimeException, Ex {
     closeAndThrow(null, exClass, exSupplier, closeable);
   }
@@ -501,7 +501,7 @@ public final class AutoCloseables {
       Throwable t0,
       Class<? extends Ex> exClass,
       Function<? super Throwable, ? extends Ex> exSupplier,
-      AutoCloseable ... closeable
+      AutoCloseable... closeable
   ) {
     return Throwables.wrap(
         closeAndCatch(t0, closeable),

@@ -131,7 +131,7 @@ public final class SafeMath {
    *
    * @see Math#multiplyExact(long, long)
    */
-  public static long multiply(long ... values) {
+  public static long multiply(long... values) {
     long product = 1;
     for (long value : values) {
       product = Math.multiplyExact(product, value);
@@ -156,7 +156,7 @@ public final class SafeMath {
    *
    * @throws ArithmeticException  When values is empty (due to resulting division by zero)
    */
-  public static int avg(int ... values) {
+  public static int avg(int... values) {
     long sum = 0;
     for (int value : values) {
       sum += value;

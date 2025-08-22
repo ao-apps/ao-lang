@@ -85,7 +85,7 @@ public final class Runnables {
    *
    * @return  {@code t0}, a new throwable, or {@code null} when none given and none new
    */
-  public static Throwable runAndCatch(Throwable t0, Runnable ... runnable) {
+  public static Throwable runAndCatch(Throwable t0, Runnable... runnable) {
     if (runnable != null) {
       for (Runnable ac : runnable) {
         t0 = runAndCatch(t0, ac);
@@ -104,7 +104,7 @@ public final class Runnables {
    *
    * @return  A new throwable or {@code null}
    */
-  public static Throwable runAndCatch(Runnable ... runnable) {
+  public static Throwable runAndCatch(Runnable... runnable) {
     return runAndCatch(null, runnable);
   }
 

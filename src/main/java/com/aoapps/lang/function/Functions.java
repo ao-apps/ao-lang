@@ -45,7 +45,7 @@ public final class Functions {
    * @return  The first non-null result or {@link Optional#empty()} when all return {@code null}
    */
   @SuppressWarnings("unchecked")
-  public static <T, R> Optional<R> coalesce(T t, Function<? super T, ? extends R> ... functions) {
+  public static <T, R> Optional<R> coalesce(T t, Function<? super T, ? extends R>... functions) {
     R r = null;
     if (functions != null) {
       for (Function<? super T, ? extends R> function : functions) {
@@ -64,7 +64,7 @@ public final class Functions {
    * @return  The first non-null result or {@link Optional#empty()} when all return {@code null}
    */
   @SuppressWarnings("unchecked")
-  public static <T, R, Ex extends Throwable> Optional<R> coalesceE(T t, FunctionE<? super T, ? extends R, ? extends Ex> ... functions) throws Ex {
+  public static <T, R, Ex extends Throwable> Optional<R> coalesceE(T t, FunctionE<? super T, ? extends R, ? extends Ex>... functions) throws Ex {
     R r = null;
     if (functions != null) {
       for (FunctionE<? super T, ? extends R, ? extends Ex> function : functions) {

@@ -83,7 +83,7 @@ public class Monies implements Comparable<Monies>, Iterable<Money> {
   /**
    * Combines all the provided the money, adding together any that have the same currency.
    */
-  public static Monies of(Money ... monies) {
+  public static Monies of(Money... monies) {
     if (monies == null || monies.length == 0) {
       return of();
     }

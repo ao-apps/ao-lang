@@ -283,7 +283,7 @@ public class LongLong extends Number implements Comparable<LongLong> {
     if (hi > other.hi) {
       return 1;
     }
-    //return (lo<other.lo ? -1 : (lo == other.lo ? 0 : 1));
+    // return (lo<other.lo ? -1 : (lo == other.lo ? 0 : 1));
     // Compare lo as unsigned
     return Long.compareUnsigned(lo, other.lo);
   }

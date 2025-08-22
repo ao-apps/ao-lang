@@ -45,7 +45,7 @@ public final class BiFunctions {
    * @return  The first non-null result or {@link Optional#empty()} when all return {@code null}
    */
   @SuppressWarnings("unchecked")
-  public static <T, U, R> Optional<R> coalesce(T t, U u, BiFunction<? super T, ? super U, ? extends R> ... functions) {
+  public static <T, U, R> Optional<R> coalesce(T t, U u, BiFunction<? super T, ? super U, ? extends R>... functions) {
     R r = null;
     if (functions != null) {
       for (BiFunction<? super T, ? super U, ? extends R> function : functions) {
@@ -64,7 +64,7 @@ public final class BiFunctions {
    * @return  The first non-null result or {@link Optional#empty()} when all return {@code null}
    */
   @SuppressWarnings("unchecked")
-  public static <T, U, R, Ex extends Throwable> Optional<R> coalesceE(T t, U u, BiFunctionE<? super T, ? super U, ? extends R, ? extends Ex> ... functions) throws Ex {
+  public static <T, U, R, Ex extends Throwable> Optional<R> coalesceE(T t, U u, BiFunctionE<? super T, ? super U, ? extends R, ? extends Ex>... functions) throws Ex {
     R r = null;
     if (functions != null) {
       for (BiFunctionE<? super T, ? super U, ? extends R, ? extends Ex> function : functions) {

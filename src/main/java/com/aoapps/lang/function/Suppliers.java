@@ -45,7 +45,7 @@ public final class Suppliers {
    * @return  The first non-null result or {@link Optional#empty()} when all return {@code null}
    */
   @SuppressWarnings("unchecked")
-  public static <T> Optional<T> coalesce(Supplier<? extends T> ... suppliers) {
+  public static <T> Optional<T> coalesce(Supplier<? extends T>... suppliers) {
     T t = null;
     if (suppliers != null) {
       for (Supplier<? extends T> supplier : suppliers) {
@@ -64,7 +64,7 @@ public final class Suppliers {
    * @return  The first non-null result or {@link Optional#empty()} when all return {@code null}
    */
   @SuppressWarnings("unchecked")
-  public static <T, Ex extends Throwable> Optional<T> coalesceE(SupplierE<? extends T, ? extends Ex> ... suppliers) throws Ex {
+  public static <T, Ex extends Throwable> Optional<T> coalesceE(SupplierE<? extends T, ? extends Ex>... suppliers) throws Ex {
     T t = null;
     if (suppliers != null) {
       for (SupplierE<? extends T, ? extends Ex> supplier : suppliers) {

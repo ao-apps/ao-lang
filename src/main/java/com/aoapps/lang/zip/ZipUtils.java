@@ -326,7 +326,7 @@ public final class ZipUtils {
               long entryTime = getZipEntryTime(entry);
               if (entry.isDirectory()) {
                 name = name.substring(0, name.length() - 1); // Strip trailing '/'
-                //System.out.println("Directory: " + name);
+                // System.out.println("Directory: " + name);
                 File directory = new File(destination, name);
                 if (!directory.exists()) {
                   Files.createDirectories(directory.toPath());
@@ -335,7 +335,7 @@ public final class ZipUtils {
                   directoryModifyTimes.put(directory, entryTime);
                 }
               } else {
-                //System.out.println("File: " + name);
+                // System.out.println("File: " + name);
                 File file = new File(destination, name);
                 File directory = file.getParentFile();
                 if (!directory.exists()) {
@@ -362,7 +362,7 @@ public final class ZipUtils {
 
       // Pass two: go backwards through directories, setting the modification times
       for (Map.Entry<File, Long> entry : directoryModifyTimes.entrySet()) {
-        //System.out.println("File: " + entry.getKey() + ", mtime = " + entry.getValue());
+        // System.out.println("File: " + entry.getKey() + ", mtime = " + entry.getValue());
         FileUtils.setLastModified(entry.getKey(), entry.getValue());
       }
     }
@@ -377,7 +377,7 @@ public final class ZipUtils {
    *                   against ZIP bombs.  Please see <a href="https://rules.sonarsource.com/java/RSPEC-5042">Expanding archive files without controlling resource consumption is security-sensitive</a>
    *                   for details.
    */
-  public static void mergeUnzip(File destination, File ... zipFiles) throws IOException {
+  public static void mergeUnzip(File destination, File... zipFiles) throws IOException {
     mergeUnzip(null, destination, zipFiles);
   }
 
@@ -391,7 +391,7 @@ public final class ZipUtils {
    *                   for details.
    */
   @SuppressWarnings("deprecation")
-  public static void mergeUnzip(ZipEntryFilter filter, File destination, File ... zipFiles) throws IOException {
+  public static void mergeUnzip(ZipEntryFilter filter, File destination, File... zipFiles) throws IOException {
     if (zipFiles.length > 0) {
       if (zipFiles.length == 1) {
         unzip(zipFiles[0], "", destination, filter);
