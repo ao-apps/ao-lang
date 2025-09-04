@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2016, 2017, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2016, 2017, 2020, 2021, 2022, 2024, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -251,15 +251,15 @@ public class LongLong extends Number implements Comparable<LongLong> {
     try {
       v = System.getProperty(nm);
     } catch (IllegalArgumentException e) {
-      // TODO
+      // TODO: Implement
     } catch (NullPointerException e) {
-      // TODO
+      // TODO: Implement
     }
     if (v != null) {
       try {
         return LongLong.decode(v);
       } catch (NumberFormatException e) {
-        // TODO
+        // TODO: Implement
       }
     }
     return val;
