@@ -288,7 +288,6 @@ public class LongLong extends Number implements Comparable<LongLong> {
     return Long.compareUnsigned(lo, other.lo);
   }
 
-
   public int compareToUnsigned(LongLong other) {
     int diff = Long.compareUnsigned(hi, other.hi);
     if (diff != 0) {
@@ -308,7 +307,6 @@ public class LongLong extends Number implements Comparable<LongLong> {
    * complement binary form.
    */
   public static final int BYTES = SIZE / Byte.SIZE;
-
 
   public LongLong highestOneBit() {
     long newHi = Long.highestOneBit(hi);
