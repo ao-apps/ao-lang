@@ -78,8 +78,8 @@ public final class Strings {
    *
    * @throws ConcurrentModificationException if iteration is not consistent between passes
    *
-   * @see  #join(java.lang.Iterable, java.lang.String, java.lang.Appendable)
-   * @see  #join(java.lang.Object[], java.lang.String)
+   * @see  Strings#join(java.lang.Iterable, java.lang.String, java.lang.Appendable)
+   * @see  Strings#join(java.lang.Object[], java.lang.String)
    * @see  String#join(java.lang.CharSequence, java.lang.Iterable)
    * @see  StringJoiner
    */
@@ -116,8 +116,8 @@ public final class Strings {
   /**
    * Joins the string representation of objects on the provided delimiter.
    *
-   * @see  #join(java.lang.Iterable, java.lang.String)
-   * @see  #join(java.lang.Object[], java.lang.String, java.lang.Appendable)
+   * @see  Strings#join(java.lang.Iterable, java.lang.String)
+   * @see  Strings#join(java.lang.Object[], java.lang.String, java.lang.Appendable)
    * @see  String#join(java.lang.CharSequence, java.lang.Iterable)
    * @see  StringJoiner
    */
@@ -141,8 +141,8 @@ public final class Strings {
    *
    * @throws ConcurrentModificationException if iteration is not consistent between passes
    *
-   * @see  #join(java.lang.Object[], java.lang.String, java.lang.Appendable)
-   * @see  #join(java.lang.Iterable, java.lang.String)
+   * @see  Strings#join(java.lang.Object[], java.lang.String, java.lang.Appendable)
+   * @see  Strings#join(java.lang.Iterable, java.lang.String)
    * @see  String#join(java.lang.CharSequence, java.lang.CharSequence...)
    * @see  StringJoiner
    */
@@ -179,8 +179,8 @@ public final class Strings {
   /**
    * Joins the string representation of objects on the provided delimiter.
    *
-   * @see  #join(java.lang.Object[], java.lang.String)
-   * @see  #join(java.lang.Iterable, java.lang.String, java.lang.Appendable)
+   * @see  Strings#join(java.lang.Object[], java.lang.String)
+   * @see  Strings#join(java.lang.Iterable, java.lang.String, java.lang.Appendable)
    * @see  String#join(java.lang.CharSequence, java.lang.CharSequence...)
    * @see  StringJoiner
    */
@@ -679,7 +679,7 @@ public final class Strings {
   /**
    * Splits a <code>String</code> into a <code>String[]</code>.
    *
-   * @see  #isWhitespace(int)
+   * @see  Strings#isWhitespace(int)
    */
   // TODO: Just return List<String> instead or processing in two passes.
   public static String[] split(String line) {
@@ -740,7 +740,7 @@ public final class Strings {
   /**
    * Splits a <code>String</code> into a <code>String[]</code>.
    *
-   * @see  #isWhitespace(int)
+   * @see  Strings#isWhitespace(int)
    *
    * @deprecated  It is highly unlikely this method is still used
    */
@@ -807,7 +807,7 @@ public final class Strings {
   /**
    * Splits a <code>String</code> into a <code>String[]</code>.
    *
-   * @see  #isWhitespace(int)
+   * @see  Strings#isWhitespace(int)
    *
    * @deprecated  It is highly unlikely this method is still used
    */
@@ -964,7 +964,7 @@ public final class Strings {
    *
    * @return  The list of non-empty strings.
    *
-   * @see  #isWhitespace(int)
+   * @see  Strings#isWhitespace(int)
    */
   public static List<String> splitCommaSpace(String line) {
     List<String> words = new ArrayList<>();
@@ -1550,7 +1550,7 @@ public final class Strings {
   }
 
   /**
-   * Trims a value, as per rules of {@link #isWhitespace(int)}.
+   * Trims a value, as per rules of {@link Strings#isWhitespace(int)}.
    *
    * @return  The value trimmed or {@code null} when was {@code null}
    *
@@ -1585,7 +1585,7 @@ public final class Strings {
   }
 
   /**
-   * Trims a value, as per rules of {@link #isWhitespace(int)}.
+   * Trims a value, as per rules of {@link Strings#isWhitespace(int)}.
    *
    * @return  The value trimmed or {@code null} when was {@code null}
    *
@@ -1619,7 +1619,7 @@ public final class Strings {
   }
 
   /**
-   * Trims a value, as per rules of {@link #isWhitespace(int)}, returning {@code null} if empty after trimming.
+   * Trims a value, as per rules of {@link Strings#isWhitespace(int)}, returning {@code null} if empty after trimming.
    */
   public static String trimNullIfEmpty(String value) {
     if (value != null) {
@@ -1632,7 +1632,7 @@ public final class Strings {
   }
 
   /**
-   * Trims a value, as per rules of {@link #isWhitespace(int)}, returning {@code null} if empty after trimming.
+   * Trims a value, as per rules of {@link Strings#isWhitespace(int)}, returning {@code null} if empty after trimming.
    */
   public static CharSequence trimNullIfEmpty(CharSequence value) {
     if (value != null) {

@@ -62,7 +62,7 @@ public abstract class Attribute<C, T> {
 
   /**
    * A backup value from before attribute initialization,
-   * which must be {@link #close() closed} to restore the old value.
+   * which must be {@link OldValue#close() closed} to restore the old value.
    * This is best used in try-with-resources.
    */
   public abstract static class OldValue implements AutoCloseable {
@@ -74,7 +74,7 @@ public abstract class Attribute<C, T> {
     }
 
     /**
-     * Gets the old value of the attribute, which will be restored on {@link #close()}.
+     * Gets the old value of the attribute, which will be restored on {@link OldValue#close()}.
      * This can be of any type, since this is used to backup arbitrary values before new scopes.
      *
      * @return  the old attribute value or {@code null} when none
@@ -133,7 +133,7 @@ public abstract class Attribute<C, T> {
   /**
    * Gets the value of this attribute.
    *
-   * @return  {@link #getContext()} may be {@code null}, which will return {@code null}
+   * @return  {@link Attribute#getContext()} may be {@code null}, which will return {@code null}
    */
   public abstract T get();
 
@@ -141,7 +141,7 @@ public abstract class Attribute<C, T> {
    * Much like {@link Map#getOrDefault(java.lang.Object, java.lang.Object)},
    * but for this attribute.
    *
-   * @return  {@link #getContext()} may be {@code null}, which will return {@code defaultValue}
+   * @return  {@link Attribute#getContext()} may be {@code null}, which will return {@code defaultValue}
    *
    * @see  Map#getOrDefault(java.lang.Object, java.lang.Object)
    */
@@ -162,7 +162,7 @@ public abstract class Attribute<C, T> {
   /**
    * Removes the value from this attribute.
    *
-   * <p>{@link #getContext()} may be {@code null}, which will skip removal</p>
+   * <p>{@link Attribute#getContext()} may be {@code null}, which will skip removal</p>
    */
   public abstract void remove();
 
@@ -233,7 +233,7 @@ public abstract class Attribute<C, T> {
     // <editor-fold desc="Scope">
     /**
      * Supports scope attributes in extensible scopes, loaded via {@link ServiceLoader#load(java.lang.Class)} on each
-     * access to {@link #scope(java.lang.Class)}.
+     * access to {@link Name#scope(java.lang.Class)}.
      *
      * @see  Name#scope(java.lang.Class)
      */
@@ -279,7 +279,7 @@ public abstract class Attribute<C, T> {
     // <editor-fold desc="Context">
     /**
      * Supports attributes in extensible contexts, loaded via {@link ServiceLoader#load(java.lang.Class)} on each
-     * access to {@link #context(java.lang.Object)}.
+     * access to {@link Name#context(java.lang.Object)}.
      *
      * @see  Name#context(java.lang.Object)
      */

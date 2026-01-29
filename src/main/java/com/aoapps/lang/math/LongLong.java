@@ -97,14 +97,14 @@ public class LongLong extends Number implements Comparable<LongLong> {
   }
 
   /**
-   * @see  #parseLongLong(java.lang.String, int)
+   * @see  LongLong#parseLongLong(java.lang.String, int)
    */
   public static LongLong valueOf(String s, int radix) throws NumberFormatException {
     return parseLongLong(s, radix);
   }
 
   /**
-   * @see  #parseLongLong(java.lang.String, int)
+   * @see  LongLong#parseLongLong(java.lang.String, int)
    */
   public static LongLong valueOf(String s) throws NumberFormatException {
     return parseLongLong(s, 10);

@@ -27,7 +27,7 @@ import java.io.Closeable;
 import java.io.IOException;
 
 /**
- * Indicates that {@link #close()} is overridden to be a no-op.
+ * Indicates that {@link NoClose#close()} is overridden to be a no-op.
  * This facilitates avoiding duplicate wrapping for close protection.
  *
  * @see  NoCloseInputStream#wrap(java.io.InputStream)
@@ -41,7 +41,7 @@ import java.io.IOException;
 public interface NoClose extends Closeable {
 
   /**
-   * Determines if calls to {@link #close()} will be ignored.
+   * Determines if calls to {@link NoClose#close()} will be ignored.
    * This value must not change over time; it may be queried once, repeatedly, or never.
    */
   default boolean isNoClose() {
@@ -49,7 +49,7 @@ public interface NoClose extends Closeable {
   }
 
   /**
-   * Calls to close are ignored when {@link #isNoClose()}, otherwise some action might be taken which means close
+   * Calls to close are ignored when {@link NoClose#isNoClose()}, otherwise some action might be taken which means close
    * calls to this object may not be skipped or assumed to be ignored.
    */
   @Override

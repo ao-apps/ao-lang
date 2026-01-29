@@ -27,7 +27,7 @@ import java.io.FilterReader;
 import java.io.Reader;
 
 /**
- * Overrides {@link #close()} to a no-op.
+ * Overrides {@link NoCloseReader#close()} to a no-op.
  */
 public class NoCloseReader extends FilterReader implements NoClose {
 
@@ -44,7 +44,7 @@ public class NoCloseReader extends FilterReader implements NoClose {
   }
 
   /**
-   * @deprecated  Please use {@link #wrap(java.io.Reader)} to skip wrapping when possible.
+   * @deprecated  Please use {@link NoCloseReader#wrap(java.io.Reader)} to skip wrapping when possible.
    */
   @Deprecated
   public NoCloseReader(Reader in) {

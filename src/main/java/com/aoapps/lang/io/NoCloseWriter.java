@@ -27,7 +27,7 @@ import java.io.FilterWriter;
 import java.io.Writer;
 
 /**
- * Overrides {@link #close()} to a no-op.
+ * Overrides {@link NoCloseWriter#close()} to a no-op.
  */
 public class NoCloseWriter extends FilterWriter implements NoClose {
 
@@ -44,7 +44,7 @@ public class NoCloseWriter extends FilterWriter implements NoClose {
   }
 
   /**
-   * @deprecated  Please use {@link #wrap(java.io.Writer)} to skip wrapping when possible.
+   * @deprecated  Please use {@link NoCloseWriter#wrap(java.io.Writer)} to skip wrapping when possible.
    */
   @Deprecated
   public NoCloseWriter(Writer out) {

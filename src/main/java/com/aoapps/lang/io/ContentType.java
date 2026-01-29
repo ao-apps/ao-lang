@@ -68,7 +68,7 @@ public final class ContentType {
   /**
    * An ECMA script (old).
    *
-   * @deprecated  Please use {@link #ECMASCRIPT}
+   * @deprecated  Please use {@link ContentType#ECMASCRIPT}
    */
   @Deprecated
   public static final String ECMASCRIPT_OLD = "text/ecmascript";
@@ -86,7 +86,7 @@ public final class ContentType {
   /**
    * A JavaScript (old).
    *
-   * @deprecated  Please use {@link #JAVASCRIPT}
+   * @deprecated  Please use {@link ContentType#JAVASCRIPT}
    */
   @Deprecated
   public static final String JAVASCRIPT_OLD = "text/javascript";
@@ -169,7 +169,7 @@ public final class ContentType {
   /**
    * An XML document (old).
    *
-   * @deprecated  Please use {@link #XML}
+   * @deprecated  Please use {@link ContentType#XML}
    */
   @Deprecated
   public static final String XML_OLD = "text/xml";

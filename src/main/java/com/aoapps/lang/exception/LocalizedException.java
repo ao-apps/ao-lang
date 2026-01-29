@@ -28,7 +28,7 @@ import java.io.Serializable;
 
 /**
  * Methods common to localized exceptions, which allows access to i18n resources used to generate
- * {@link #getLocalizedMessage()}.
+ * {@link LocalizedException#getLocalizedMessage()}.
  *
  * @author  AO Industries, Inc.
  */

@@ -454,7 +454,7 @@ public class BigFraction extends Number implements Serializable, Comparable<BigF
    * Two fractions are equal when they have both the same numerator, denominator, and displayPercentage.
    * For numerical equality independent of denominator, use <code>compareTo</code>.
    *
-   * @see  #compareTo(BigFraction)
+   * @see  BigFraction#compareTo(BigFraction)
    */
   @Override
   public boolean equals(Object obj) {

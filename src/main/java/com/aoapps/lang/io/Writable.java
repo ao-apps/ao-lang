@@ -77,7 +77,7 @@ public interface Writable  {
    * What is written must be the same as if {@code encoder.write(this.toString(), out)}
    * were called, but may be a much more efficient implementation.
    *
-   * @param  encoder  if {@code null}, no encoding is performed and will be the same as a call to {@link #writeTo(java.io.Writer)}
+   * @param  encoder  if {@code null}, no encoding is performed and will be the same as a call to {@link Writable#writeTo(java.io.Writer)}
    */
   void writeTo(Encoder encoder, Writer out) throws IOException;
 
@@ -86,7 +86,7 @@ public interface Writable  {
    * What is written must be the same as if {@code encoder.write(this.toString(), off, len, out)}
    * were called, but may be a much more efficient implementation.
    *
-   * @param  encoder  if null, no encoding is performed and will be the same as a call to {@link #writeTo(java.io.Writer, long, long)}
+   * @param  encoder  if null, no encoding is performed and will be the same as a call to {@link Writable#writeTo(java.io.Writer, long, long)}
    */
   void writeTo(Encoder encoder, Writer out, long off, long len) throws IOException;
 
@@ -133,7 +133,7 @@ public interface Writable  {
    * What is appended must be the same as if {@code encoder.append(this.toString(), out)}
    * were called, but may be a much more efficient implementation.
    *
-   * @param  encoder  if {@code null}, no encoding is performed and will be the same as a call to {@link #appendTo(java.lang.Appendable)}
+   * @param  encoder  if {@code null}, no encoding is performed and will be the same as a call to {@link Writable#appendTo(java.lang.Appendable)}
    */
   default void appendTo(Encoder encoder, Appendable out) throws IOException {
     assert out != null;
@@ -153,7 +153,7 @@ public interface Writable  {
    * What is appended must be the same as if {@code encoder.append(this.toString(), start, end, out)}
    * were called, but may be a much more efficient implementation.
    *
-   * @param  encoder  if null, no encoding is performed and will be the same as a call to {@link #appendTo(java.lang.Appendable, long, long)}
+   * @param  encoder  if null, no encoding is performed and will be the same as a call to {@link Writable#appendTo(java.lang.Appendable, long, long)}
    */
   default void appendTo(Encoder encoder, Appendable out, long start, long end) throws IOException {
     assert out != null;
@@ -178,8 +178,8 @@ public interface Writable  {
    * Trims the contents of this writable, as per rules of {@link Strings#isWhitespace(int)},
    * returning the instance that represents this writable trimmed.
    *
-   * <p>It will most likely be faster to check {@link #isFastToString()} and then trim the result
-   * of {@link #toString()}.  However, for non-fast-toString writables, this trim will be more
+   * <p>It will most likely be faster to check {@link Writable#isFastToString()} and then trim the result
+   * of {@link Writable#toString()}.  However, for non-fast-toString writables, this trim will be more
    * efficient.</p>
    */
   Writable trim() throws IOException;

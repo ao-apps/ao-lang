@@ -43,9 +43,9 @@ public class FastObjectOutput implements ObjectOutput {
 
   /**
    * Gets the wrapper for the provided {@link ObjectOutput}, creating if needed.
-   * To avoid memory leaks, it must also be {@link #unwrap() unwrapped} in a finally block.
+   * To avoid memory leaks, it must also be {@link FastObjectOutput#unwrap() unwrapped} in a finally block.
    *
-   * <p>TODO: Can {@link FastObjectOutput} itself implement {@link AutoCloseable} for {@link #unwrap()}?
+   * <p>TODO: Can {@link FastObjectOutput} itself implement {@link AutoCloseable} for {@link FastObjectOutput#unwrap()}?
    *       Maybe this means it no longer implements {@link ObjectOutput} directly?</p>
    */
   public static FastObjectOutput wrap(ObjectOutput out) throws IOException {
@@ -147,12 +147,12 @@ public class FastObjectOutput implements ObjectOutput {
    * This allows individual objects to switch between {@link FastExternalizable} and standard serialization without calling
    * code needing to know the difference.
    *
-   * <p>If the object is {@code null}, writes a single byte of {@link #NULL}.</p>
+   * <p>If the object is {@code null}, writes a single byte of {@link FastObjectOutput#NULL}.</p>
    *
    * <p>If the object is {@link FastExternalizable}, calls
-   * {@link #writeFastObject(com.aoapps.lang.io.FastExternalizable)}.</p>
+   * {@link FastObjectOutput#writeFastObject(com.aoapps.lang.io.FastExternalizable)}.</p>
    *
-   * <p>Otherwise, writes {@link #STANDARD} and then uses standard Java serialization.</p>
+   * <p>Otherwise, writes {@link FastObjectOutput#STANDARD} and then uses standard Java serialization.</p>
    *
    * @see  FastObjectInput#readObject()
    */

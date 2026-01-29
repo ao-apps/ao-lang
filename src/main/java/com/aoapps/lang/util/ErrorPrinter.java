@@ -122,7 +122,7 @@ public final class ErrorPrinter {
    *
    * @param  sql  The SQL statement that caused the exception.
    *
-   * @deprecated  Please use {@link #addSql(java.lang.Throwable, java.lang.String)} instead.
+   * @deprecated  Please use {@link ErrorPrinter#addSql(java.lang.Throwable, java.lang.String)} instead.
    */
   // TODO: Remove in 6.0.0 release
   @Deprecated
@@ -137,7 +137,7 @@ public final class ErrorPrinter {
    *                This must provide the SQL statement from {@link PreparedStatement}{@code .toString()},
    *                which the PostgreSQL JDBC driver does.
    *
-   * @deprecated  Please use {@link #addSql(java.lang.Throwable, java.sql.PreparedStatement)} instead.
+   * @deprecated  Please use {@link ErrorPrinter#addSql(java.lang.Throwable, java.sql.PreparedStatement)} instead.
    */
   // TODO: Remove in 6.0.0 release
   @Deprecated
@@ -169,7 +169,7 @@ public final class ErrorPrinter {
    *
    * @return  The SQL statements that caused the exception or an empty list when none.
    *
-   * @deprecated  Please use {@link #getSql(java.lang.Throwable)} instead.
+   * @deprecated  Please use {@link ErrorPrinter#getSql(java.lang.Throwable)} instead.
    */
   // TODO: Remove in 6.0.0 release
   @Deprecated
@@ -178,7 +178,7 @@ public final class ErrorPrinter {
   }
 
   /**
-   * @deprecated  Please use {@link #printStackTraces(java.lang.Throwable, java.lang.Appendable)} with {@link System#err}
+   * @deprecated  Please use {@link ErrorPrinter#printStackTraces(java.lang.Throwable, java.lang.Appendable)} with {@link System#err}
    */
   @Deprecated
   @SuppressWarnings("UseOfSystemOutOrSystemErr")
@@ -187,7 +187,7 @@ public final class ErrorPrinter {
   }
 
   /**
-   * @deprecated  Please use {@link #printStackTraces(java.lang.Throwable, java.lang.Appendable, java.lang.Object...)} with {@link System#err}
+   * @deprecated  Please use {@link ErrorPrinter#printStackTraces(java.lang.Throwable, java.lang.Appendable, java.lang.Object...)} with {@link System#err}
    */
   @Deprecated
   @SuppressWarnings("UseOfSystemOutOrSystemErr")

@@ -190,7 +190,7 @@ public class SmartComparator implements Comparator<Object> {
    * Compares two objects by their {@link Object#toString()} values.
    *
    * @see  Objects#toString(java.lang.Object, java.lang.String)
-   * @see  #compare(java.lang.Object, java.lang.Object)
+   * @see  SmartComparator#compare(java.lang.Object, java.lang.Object)
    */
   @Override
   public int compare(Object o1, Object o2) {

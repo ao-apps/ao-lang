@@ -71,7 +71,7 @@ public final class Throwables {
    *
    * @return  {@code t0} when not null, otherwise {@code suppressed}.
    *
-   * @see  #addSuppressedAndThrow(java.lang.Throwable, java.lang.Class, java.util.function.Function, java.lang.Throwable)
+   * @see  Throwables#addSuppressedAndThrow(java.lang.Throwable, java.lang.Class, java.util.function.Function, java.lang.Throwable)
    */
   // TODO: Rename "merge", since either one of them might be returned?
   public static Throwable addSuppressed(Throwable t0, Throwable suppressed) {
@@ -136,8 +136,8 @@ public final class Throwables {
    * @throws  Ex      When resolved throwable is an instance of {@code exClass}, otherwise
    *                  wrapped via {@code exSupplier}
    *
-   * @see  #addSuppressed(java.lang.Throwable, java.lang.Throwable)
-   * @see  #wrap(java.lang.Throwable, java.lang.Class, java.util.function.Function)
+   * @see  Throwables#addSuppressed(java.lang.Throwable, java.lang.Throwable)
+   * @see  Throwables#wrap(java.lang.Throwable, java.lang.Class, java.util.function.Function)
    */
   // TODO: Rename "mergeAndThrow", since either one of them might be returned?
   public static <Ex extends Throwable> void addSuppressedAndThrow(
@@ -194,7 +194,7 @@ public final class Throwables {
    * @throws  Error             When {@code t} is an {@link Error}
    * @throws  RuntimeException  When {@code t} is a {@link RuntimeException}
    *
-   * @see  #addSuppressedAndThrow(java.lang.Throwable, java.lang.Class, java.util.function.Function, java.lang.Throwable)
+   * @see  Throwables#addSuppressedAndThrow(java.lang.Throwable, java.lang.Class, java.util.function.Function, java.lang.Throwable)
    */
   public static <Ex extends Throwable> Ex wrap(
       Throwable t,
@@ -243,7 +243,7 @@ public final class Throwables {
    *
    * <p>This current implementation has registered all possible Java SE 8 throwable types, except those that have been
    * removed through Java 17.  Additionally, various throwable implementations
-   * {@link #registerSurrogateFactory(java.lang.Class, com.aoapps.lang.ThrowableSurrogateFactory) register themselves}
+   * {@link Throwables#registerSurrogateFactory(java.lang.Class, com.aoapps.lang.ThrowableSurrogateFactory) register themselves}
    * in static blocks, while other APIs may be registered via the {@link ServiceLoader} mechanism on the
    * {@link ThrowableSurrogateFactoryInitializer} interface.</p>
    *
@@ -285,7 +285,7 @@ public final class Throwables {
    *
    * <p>This current implementation has registered all possible Java SE 8 throwable types, except those that have been
    * removed through Java 17.  Additionally, various throwable implementations
-   * {@link #registerSurrogateFactory(java.lang.Class, com.aoapps.lang.ThrowableSurrogateFactory) register themselves}
+   * {@link Throwables#registerSurrogateFactory(java.lang.Class, com.aoapps.lang.ThrowableSurrogateFactory) register themselves}
    * in static blocks, while other APIs may be registered via the {@link ServiceLoader} mechanism on the
    * {@link ThrowableSurrogateFactoryInitializer} interface.</p>
    *

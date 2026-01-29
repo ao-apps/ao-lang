@@ -71,7 +71,7 @@ public final class ThreadLocale {
    * Changes the current thread locale then calls the Callable.  The locale is
    * automatically restored.
    *
-   * @deprecated  Please use {@link #call(java.util.Locale, com.aoapps.lang.concurrent.CallableE)}
+   * @deprecated  Please use {@link ThreadLocale#call(java.util.Locale, com.aoapps.lang.concurrent.CallableE)}
    */
   @Deprecated
   public static <V> V set(Locale locale, Callable<V> callable) throws Exception {
@@ -106,7 +106,7 @@ public final class ThreadLocale {
    *
    * @param  <Ex>  An arbitrary exception type that may be thrown
    *
-   * @deprecated  Please use {@link #call(java.util.Locale, com.aoapps.lang.concurrent.CallableE)}
+   * @deprecated  Please use {@link ThreadLocale#call(java.util.Locale, com.aoapps.lang.concurrent.CallableE)}
    */
   @Deprecated
   public static <V, Ex extends Exception> V set(Locale locale, com.aoapps.lang.CallableE<V, Ex> callable) throws Ex {
@@ -153,7 +153,7 @@ public final class ThreadLocale {
    * Changes the current thread locale then gets the result from the Supplier.  The locale is
    * automatically restored.
    *
-   * @deprecated  Please use {@link #call(java.util.Locale, com.aoapps.lang.concurrent.CallableE)} with
+   * @deprecated  Please use {@link ThreadLocale#call(java.util.Locale, com.aoapps.lang.concurrent.CallableE)} with
    *              {@link RuntimeException}
    */
   @Deprecated
@@ -178,7 +178,7 @@ public final class ThreadLocale {
   }
 
   /**
-   * @deprecated  Please use {@link #call(java.util.Locale, com.aoapps.lang.concurrent.CallableE)} with
+   * @deprecated  Please use {@link ThreadLocale#call(java.util.Locale, com.aoapps.lang.concurrent.CallableE)} with
    *              {@link RuntimeException}
    */
   @Deprecated

@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Overrides {@link #close()} to a no-op.
+ * Overrides {@link NoCloseOutputStream#close()} to a no-op.
  */
 public class NoCloseOutputStream extends FilterOutputStream implements NoClose {
 
@@ -45,7 +45,7 @@ public class NoCloseOutputStream extends FilterOutputStream implements NoClose {
   }
 
   /**
-   * @deprecated  Please use {@link #wrap(java.io.OutputStream)} to skip wrapping when possible.
+   * @deprecated  Please use {@link NoCloseOutputStream#wrap(java.io.OutputStream)} to skip wrapping when possible.
    */
   @Deprecated
   public NoCloseOutputStream(OutputStream out) {

@@ -71,7 +71,7 @@ public final class ZipUtils {
    *
    * @return  the time assuming UTC zone or {@code null} if not specified.
    *
-   * @see #setTimeUtc(java.util.zip.ZipEntry, long)
+   * @see ZipUtils#setTimeUtc(java.util.zip.ZipEntry, long)
    */
   // Note: ao-ant-utils:ZipTimestampMerge.getTimeUtc is based on this
   public static Optional<Long> getTimeUtc(ZipEntry entry) throws ZipException {
@@ -92,7 +92,7 @@ public final class ZipUtils {
    * entry to make times correct between time zones.  The actual time stored
    * may be rounded to the nearest two-second interval.
    *
-   * @see #getTimeUtc(java.util.zip.ZipEntry)
+   * @see ZipUtils#getTimeUtc(java.util.zip.ZipEntry)
    */
   // Note: ao-ant-tasks:ZipTimestampMerge.getDosTimeDate is based on this
   public static void setTimeUtc(ZipEntry entry, long time) throws ZipException {
@@ -109,9 +109,9 @@ public final class ZipUtils {
    *
    * @return  the time assuming UTC zone or {@code -1} if not specified.
    *
-   * @see #setZipEntryTime(java.util.zip.ZipEntry, long)
+   * @see ZipUtils#setZipEntryTime(java.util.zip.ZipEntry, long)
    *
-   * @deprecated Please use {@link #getTimeUtc(java.util.zip.ZipEntry)} instead.
+   * @deprecated Please use {@link ZipUtils#getTimeUtc(java.util.zip.ZipEntry)} instead.
    */
   @Deprecated
   public static long getZipEntryTime(ZipEntry entry) {
@@ -127,9 +127,9 @@ public final class ZipUtils {
    * entry to make times correct between time zones.  The actual time stored
    * may be rounded to the nearest two-second interval.
    *
-   * @see #getZipEntryTime(java.util.zip.ZipEntry)
+   * @see ZipUtils#getZipEntryTime(java.util.zip.ZipEntry)
    *
-   * @deprecated Please use {@link #setTimeUtc(java.util.zip.ZipEntry, long)} instead.
+   * @deprecated Please use {@link ZipUtils#setTimeUtc(java.util.zip.ZipEntry, long)} instead.
    */
   @Deprecated
   public static void setZipEntryTime(ZipEntry entry, long time) {
@@ -146,7 +146,7 @@ public final class ZipUtils {
    *
    * @return  the creation time assuming UTC zone or {@code null} if not specified.
    *
-   * @see #setCreationTimeUtc(java.util.zip.ZipEntry, long)
+   * @see ZipUtils#setCreationTimeUtc(java.util.zip.ZipEntry, long)
    */
   public static Optional<Long> getCreationTimeUtc(ZipEntry entry) {
     FileTime creationTime = entry.getCreationTime();
@@ -162,7 +162,7 @@ public final class ZipUtils {
    * Sets the creation time for a ZipEntry, converting to UTC while storing to the ZIP
    * entry to make times correct between time zones.
    *
-   * @see #getCreationTimeUtc(java.util.zip.ZipEntry)
+   * @see ZipUtils#getCreationTimeUtc(java.util.zip.ZipEntry)
    */
   public static void setCreationTimeUtc(ZipEntry entry, long creationTime) {
     entry.setCreationTime(FileTime.fromMillis(creationTime - TimeZone.getDefault().getOffset(creationTime)));
@@ -174,7 +174,7 @@ public final class ZipUtils {
    *
    * @return  the last access time assuming UTC zone or {@code null} if not specified.
    *
-   * @see #setLastAccessTimeUtc(java.util.zip.ZipEntry, long)
+   * @see ZipUtils#setLastAccessTimeUtc(java.util.zip.ZipEntry, long)
    */
   public static Optional<Long> getLastAccessTimeUtc(ZipEntry entry) {
     FileTime lastAccess = entry.getLastAccessTime();
@@ -190,7 +190,7 @@ public final class ZipUtils {
    * Sets the last access time for a ZipEntry, converting to UTC while storing to the ZIP
    * entry to make times correct between time zones.
    *
-   * @see #getLastAccessTimeUtc(java.util.zip.ZipEntry)
+   * @see ZipUtils#getLastAccessTimeUtc(java.util.zip.ZipEntry)
    */
   public static void setLastAccessTimeUtc(ZipEntry entry, long lastAccessTime) {
     entry.setCreationTime(FileTime.fromMillis(lastAccessTime - TimeZone.getDefault().getOffset(lastAccessTime)));
@@ -202,7 +202,7 @@ public final class ZipUtils {
    *
    * @return  the last modified time assuming UTC zone or {@code null} if not specified.
    *
-   * @see #setLastModifiedTimeUtc(java.util.zip.ZipEntry, long)
+   * @see ZipUtils#setLastModifiedTimeUtc(java.util.zip.ZipEntry, long)
    */
   public static Optional<Long> getLastModifiedTimeUtc(ZipEntry entry) {
     FileTime lastModifiedTime = entry.getLastModifiedTime();
@@ -218,7 +218,7 @@ public final class ZipUtils {
    * Sets the last modified time for a ZipEntry, converting to UTC while storing to the ZIP
    * entry to make times correct between time zones.
    *
-   * @see #getLastModifiedTimeUtc(java.util.zip.ZipEntry)
+   * @see ZipUtils#getLastModifiedTimeUtc(java.util.zip.ZipEntry)
    */
   public static void setLastModifiedTimeUtc(ZipEntry entry, long lastModifiedTime) {
     entry.setCreationTime(FileTime.fromMillis(lastModifiedTime - TimeZone.getDefault().getOffset(lastModifiedTime)));

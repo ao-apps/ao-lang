@@ -211,7 +211,7 @@ public final class FileUtils {
    *
    * <p>The file is not {@linkplain File#deleteOnExit() deleted on exit}.  If this is required, we recommend creating the
    * temp file with the <a href="https://oss.aoapps.com/tempfiles/">AO TempFiles</a> project, then using
-   * {@link #copyToFile(java.io.InputStream, java.io.File)}.  This avoids the memory leak of the implementation
+   * {@link FileUtils#copyToFile(java.io.InputStream, java.io.File)}.  This avoids the memory leak of the implementation
    * of {@link File#deleteOnExit()}.</p>
    */
   public static File copyToTempFile(InputStream in, String prefix, String suffix) throws IOException {
@@ -226,7 +226,7 @@ public final class FileUtils {
    *
    * <p>The file is not {@linkplain File#deleteOnExit() deleted on exit}.  If this is required, we recommend creating the
    * temp file with the <a href="https://oss.aoapps.com/tempfiles/">AO TempFiles</a> project, then using
-   * {@link #copyToFile(java.io.InputStream, java.io.File)}.  This avoids the memory leak of the implementation
+   * {@link FileUtils#copyToFile(java.io.InputStream, java.io.File)}.  This avoids the memory leak of the implementation
    * of {@link File#deleteOnExit()}.</p>
    */
   public static File copyToTempFile(InputStream in, String prefix, String suffix, File directory) throws IOException {
@@ -478,7 +478,7 @@ public final class FileUtils {
   /**
    * Reads the contents of a File and returns as a String in the system default character set.
    *
-   * @see  #readFileAsString(java.io.File, java.nio.charset.Charset)
+   * @see  FileUtils#readFileAsString(java.io.File, java.nio.charset.Charset)
    * @see  Charset#defaultCharset()
    */
   public static String readFileAsString(File file) throws IOException {
@@ -488,7 +488,7 @@ public final class FileUtils {
   /**
    * Reads the contents of a File and returns as a String in the provided character set.
    *
-   * @see  #readFileAsString(java.io.File)
+   * @see  FileUtils#readFileAsString(java.io.File)
    */
   public static String readFileAsString(File file, Charset charset) throws IOException {
     long len = file.length();

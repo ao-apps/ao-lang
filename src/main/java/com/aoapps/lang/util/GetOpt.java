@@ -127,7 +127,7 @@ public final class GetOpt {
    *
    * @return  the converted value or <code>null</code> if not found
    *
-   * @see #parse(String, Class)
+   * @see GetOpt#parse(String, Class)
    */
   @SuppressWarnings("unchecked")
   public static <T> T getOpt(String[] args, String name, Class<T> type) {

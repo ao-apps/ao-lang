@@ -27,7 +27,7 @@ import java.io.FilterInputStream;
 import java.io.InputStream;
 
 /**
- * Overrides {@link #close()} to a no-op.
+ * Overrides {@link NoCloseInputStream#close()} to a no-op.
  */
 public class NoCloseInputStream extends FilterInputStream implements NoClose {
 
@@ -44,7 +44,7 @@ public class NoCloseInputStream extends FilterInputStream implements NoClose {
   }
 
   /**
-   * @deprecated  Please use {@link #wrap(java.io.InputStream)} to skip wrapping when possible.
+   * @deprecated  Please use {@link NoCloseInputStream#wrap(java.io.InputStream)} to skip wrapping when possible.
    */
   @Deprecated
   public NoCloseInputStream(InputStream in) {

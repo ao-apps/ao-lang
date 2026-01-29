@@ -52,9 +52,9 @@ public class FastObjectInput implements ObjectInput {
 
   /**
    * Gets the wrapper for the provided {@link ObjectInput}, creating if needed.
-   * To avoid memory leaks, it must also be {@link #unwrap() unwrapped} in a finally block.
+   * To avoid memory leaks, it must also be {@link FastObjectInput#unwrap() unwrapped} in a finally block.
    *
-   * <p>TODO: Can {@link FastObjectInput} itself implement {@link AutoCloseable} for {@link #unwrap()}?
+   * <p>TODO: Can {@link FastObjectInput} itself implement {@link AutoCloseable} for {@link FastObjectInput#unwrap()}?
    *       Maybe this means it no longer implements {@link ObjectInput} directly?</p>
    */
   public static FastObjectInput wrap(ObjectInput in) throws IOException {
@@ -167,7 +167,7 @@ public class FastObjectInput implements ObjectInput {
   /**
    * Reads a {@link FastExternalizable} object from the stream.
    *
-   * @see  #writeFastObject(java.io.ObjectOutput, com.aoapps.lang.io.FastExternalizable)
+   * @see  FastObjectInput#writeFastObject(java.io.ObjectOutput, com.aoapps.lang.io.FastExternalizable)
    */
   private FastExternalizable readFastObject(int code) throws IOException, ClassNotFoundException {
     assert code >= FastObjectOutput.FAST_NEW;

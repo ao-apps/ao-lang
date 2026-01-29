@@ -156,7 +156,7 @@ public final class SysExits {
   /**
    * Gets a sysexit value for common exception types.
    *
-   * @return  When {@code t} is null, returns {@link #EX_OK}, otherwise returns a non-zero sys exit best matching the
+   * @return  When {@code t} is null, returns {@link SysExits#EX_OK}, otherwise returns a non-zero sys exit best matching the
    *          given throwable.
    */
   // TODO: Add more as-needed.  This is just off the top of my head.

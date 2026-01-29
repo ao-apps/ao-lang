@@ -60,7 +60,7 @@ public class EncoderWriter extends FilterWriter implements NoClose {
   }
 
   /**
-   * This method may be overridden for the purpose of covariant return, but must return {@link #encoder}.
+   * This method may be overridden for the purpose of covariant return, but must return {@link EncoderWriter#encoder}.
    */
   public Encoder getEncoder() {
     return encoder;
@@ -70,7 +70,7 @@ public class EncoderWriter extends FilterWriter implements NoClose {
    * Gets the wrapped writer, which has been optimized via
    * {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}.
    *
-   * <p>This method may be overridden for the purpose of covariant return, but must return {@link #out}.</p>
+   * <p>This method may be overridden for the purpose of covariant return, but must return {@link EncoderWriter#out}.</p>
    */
   public Writer getOut() {
     return out;
@@ -134,7 +134,7 @@ public class EncoderWriter extends FilterWriter implements NoClose {
   /**
    * See <a href="https://oss.aoapps.com/encoding/apidocs/com.aoapps.encoding/com/aoapps/encoding/MediaEncoder.html#writeSuffixTo(java.lang.Appendable)">MediaEncoder.writeSuffixTo(java.lang.Appendable)</a>.
    *
-   * @deprecated  Please use {@link #writeSuffix(boolean)} while specifying desired trim.
+   * @deprecated  Please use {@link EncoderWriter#writeSuffix(boolean)} while specifying desired trim.
    */
   @Deprecated
   public final void writeSuffix() throws IOException {

@@ -233,7 +233,7 @@ public final class XmlUtils {
    * Gets the text content of a child element for a tag name or {@code null} if not found.
    * Is an error if more than once child is found for the given name.
    *
-   * @see #getChildElementByTagName(org.w3c.dom.Element, java.lang.String)
+   * @see XmlUtils#getChildElementByTagName(org.w3c.dom.Element, java.lang.String)
    *
    * @throws  IllegalStateException  if there is more than one child element with the given name
    */
@@ -243,7 +243,7 @@ public final class XmlUtils {
   }
 
   /**
-   * @deprecated  Use {@link #toString(org.w3c.dom.Node)} instead.
+   * @deprecated  Use {@link XmlUtils#toString(org.w3c.dom.Node)} instead.
    */
   @Deprecated
   public static String toString(Document document) throws TransformerException {
@@ -370,7 +370,7 @@ public final class XmlUtils {
    * <li>See <a href="https://www.w3.org/TR/REC-xml/#id">Validity constraint: ID</a></li>
    * </ol>
    *
-   * @deprecated  Please use {@link #isValidName(java.lang.String)}, since
+   * @deprecated  Please use {@link XmlUtils#isValidName(java.lang.String)}, since
    *              "Values of type ID MUST match the Name production."
    */
   @Deprecated

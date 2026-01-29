@@ -82,7 +82,7 @@ public final class Money implements FastExternalizable, Comparable<Money> {
   }
 
   /**
-   * @see  #parseMoneyAmount(java.util.Locale, java.lang.String, java.lang.String)
+   * @see  Money#parseMoneyAmount(java.util.Locale, java.lang.String, java.lang.String)
    */
   public static Money parseMoney(Currency currency, Locale locale, String value) {
     BigDecimal amount = parseMoneyAmount(locale, currency == null ? null : CurrencyUtil.getSymbol(currency, locale), value);

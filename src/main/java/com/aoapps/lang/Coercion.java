@@ -163,7 +163,7 @@ public final class Coercion {
 
   /**
    * Optimizes the given writer by passing through {@link CoercionOptimizer#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
-   * on all {@linkplain #registerOptimizer(com.aoapps.lang.CoercionOptimizer) registered coercion optimizers} until
+   * on all {@linkplain Coercion#registerOptimizer(com.aoapps.lang.CoercionOptimizer) registered coercion optimizers} until
    * there are no replacements.
    */
   public static Writer optimize(Writer out, Encoder encoder) {
@@ -189,13 +189,13 @@ public final class Coercion {
   }
 
   /**
-   * Optimizes the given appendable by dispatching to {@link #optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
+   * Optimizes the given appendable by dispatching to {@link Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)}
    * when it is a {@link Writer}.
    *
    * <p>There is currently no implementation of appendable-specific unwrapping,
    * but this is here for consistency with the writer unwrapping.</p>
    *
-   * @see  #optimize(java.io.Writer, com.aoapps.lang.io.Encoder)
+   * @see  Coercion#optimize(java.io.Writer, com.aoapps.lang.io.Encoder)
    */
   public static Appendable optimize(Appendable out, Encoder encoder) {
     if (out instanceof Writer) {
@@ -210,7 +210,7 @@ public final class Coercion {
    * <ol>
    * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
    * <li>When {@code null} do not write.</li>
-   * <li>When {@link EncoderWriter} unwrap and dispatch to {@link #write(java.lang.Object, com.aoapps.lang.io.Encoder, java.io.Writer)}.</li>
+   * <li>When {@link EncoderWriter} unwrap and dispatch to {@link Coercion#write(java.lang.Object, com.aoapps.lang.io.Encoder, java.io.Writer)}.</li>
    * <li>When {@link String} write directly.</li>
    * <li>When {@link Writable} write {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to {@link Writable#writeTo(java.io.Writer)}.</li>
    * <li>When {@link Segment} write {@link Segment#array}.</li>
@@ -230,7 +230,7 @@ public final class Coercion {
    * <ol>
    * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
    * <li>When {@code null} do not write.</li>
-   * <li>When {@link EncoderWriter} unwrap and dispatch to {@link #write(java.lang.Object, com.aoapps.lang.io.Encoder, java.io.Writer, boolean)}.</li>
+   * <li>When {@link EncoderWriter} unwrap and dispatch to {@link Coercion#write(java.lang.Object, com.aoapps.lang.io.Encoder, java.io.Writer, boolean)}.</li>
    * <li>When {@link String} write directly.</li>
    * <li>When {@link Writable} write {@link Writable#toString()} when {@link Writable#isFastToString()} or dispatch to {@link Writable#writeTo(java.io.Writer)}.</li>
    * <li>When {@link Segment} write {@link Segment#array}.</li>
@@ -329,7 +329,7 @@ public final class Coercion {
    * Encodes an object's String representation,
    * supporting streaming for specialized types.
    * <ol>
-   * <li>When {@code encoder == null} dispatch to {@link #write(java.lang.Object, java.io.Writer)}.</li>
+   * <li>When {@code encoder == null} dispatch to {@link Coercion#write(java.lang.Object, java.io.Writer)}.</li>
    * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
    * <li>When {@code null} do not encode.</li>
    * <li>When {@link String} encode directly.</li>
@@ -351,7 +351,7 @@ public final class Coercion {
    * Encodes an object's String representation,
    * supporting streaming for specialized types.
    * <ol>
-   * <li>When {@code encoder == null} dispatch to {@link #write(java.lang.Object, java.io.Writer, boolean)}.</li>
+   * <li>When {@code encoder == null} dispatch to {@link Coercion#write(java.lang.Object, java.io.Writer, boolean)}.</li>
    * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
    * <li>When {@code null} do not encode.</li>
    * <li>When {@link String} encode directly.</li>
@@ -445,7 +445,7 @@ public final class Coercion {
    * Appends an object's String representation,
    * supporting streaming for specialized types.
    * <ol>
-   * <li>When {@code out} is a {@link Writer} dispatch to {@link #write(java.lang.Object, java.io.Writer)}.</li>
+   * <li>When {@code out} is a {@link Writer} dispatch to {@link Coercion#write(java.lang.Object, java.io.Writer)}.</li>
    * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
    * <li>When {@code null} do not append.</li>
    * <li>When {@link String} append directly.</li>
@@ -464,7 +464,7 @@ public final class Coercion {
    * Appends an object's String representation,
    * supporting streaming for specialized types.
    * <ol>
-   * <li>When {@code out} is a {@link Writer} dispatch to {@link #write(java.lang.Object, java.io.Writer, boolean)}.</li>
+   * <li>When {@code out} is a {@link Writer} dispatch to {@link Coercion#write(java.lang.Object, java.io.Writer, boolean)}.</li>
    * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
    * <li>When {@code null} do not append.</li>
    * <li>When {@link String} append directly.</li>
@@ -557,8 +557,8 @@ public final class Coercion {
    * Encodes an object's String representation,
    * supporting streaming for specialized types.
    * <ol>
-   * <li>When {@code encoder == null} dispatch to {@link #append(java.lang.Object, java.lang.Appendable)}.</li>
-   * <li>When {@code out} is a {@link Writer} dispatch to {@link #write(java.lang.Object, com.aoapps.lang.io.Encoder, java.io.Writer)}.</li>
+   * <li>When {@code encoder == null} dispatch to {@link Coercion#append(java.lang.Object, java.lang.Appendable)}.</li>
+   * <li>When {@code out} is a {@link Writer} dispatch to {@link Coercion#write(java.lang.Object, com.aoapps.lang.io.Encoder, java.io.Writer)}.</li>
    * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
    * <li>When {@code null} do not encode.</li>
    * <li>When {@link String} encode directly.</li>
@@ -580,8 +580,8 @@ public final class Coercion {
    * Encodes an object's String representation,
    * supporting streaming for specialized types.
    * <ol>
-   * <li>When {@code encoder == null} dispatch to {@link #append(java.lang.Object, java.lang.Appendable, boolean)}.</li>
-   * <li>When {@code out} is a {@link Writer} dispatch to {@link #write(java.lang.Object, com.aoapps.lang.io.Encoder, java.io.Writer, boolean)}.</li>
+   * <li>When {@code encoder == null} dispatch to {@link Coercion#append(java.lang.Object, java.lang.Appendable, boolean)}.</li>
+   * <li>When {@code out} is a {@link Writer} dispatch to {@link Coercion#write(java.lang.Object, com.aoapps.lang.io.Encoder, java.io.Writer, boolean)}.</li>
    * <li>Any {@link Optional} is unwrapped (supporting any levels of nesting).</li>
    * <li>When {@code null} do not encode.</li>
    * <li>When {@link String} encode directly.</li>
@@ -735,7 +735,7 @@ public final class Coercion {
    * <li>Otherwise return <code>{@linkplain Strings#nullIfEmpty(java.lang.String) Strings.nullIfEmpty}({@linkplain Object#toString() value.toString()})</code>.</li>
    * </ol>
    *
-   * @see  #isEmpty(java.lang.Object)
+   * @see  Coercion#isEmpty(java.lang.Object)
    *
    * @throws UncheckedIOException on any underlying {@link IOException}.
    */

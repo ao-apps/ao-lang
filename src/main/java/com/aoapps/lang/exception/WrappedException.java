@@ -62,7 +62,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
   /**
    * Invokes the given callable, wrapping any checked exceptions.
    *
-   * @deprecated  Please use {@link #call(java.util.concurrent.Callable)}
+   * @deprecated  Please use {@link WrappedException#call(java.util.concurrent.Callable)}
    */
   @Deprecated
   public static <V> V wrapChecked(Callable<V> callable) {
@@ -85,7 +85,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
   /**
    * Invokes the given callable, wrapping any checked exceptions.
    *
-   * @deprecated  Please use {@link #call(java.util.concurrent.Callable, java.lang.Object...)}
+   * @deprecated  Please use {@link WrappedException#call(java.util.concurrent.Callable, java.lang.Object...)}
    */
   @Deprecated
   public static <V> V wrapChecked(Callable<V> callable, Object... extraInfo) {
@@ -108,7 +108,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
   /**
    * Invokes the given callable, wrapping any checked exceptions.
    *
-   * @deprecated  Please use {@link #call(java.util.concurrent.Callable, java.lang.String)}
+   * @deprecated  Please use {@link WrappedException#call(java.util.concurrent.Callable, java.lang.String)}
    */
   @Deprecated
   public static <V> V wrapChecked(Callable<V> callable, String message) {
@@ -131,7 +131,7 @@ public class WrappedException extends RuntimeException implements ExtraInfo {
   /**
    * Invokes the given callable, wrapping any checked exceptions.
    *
-   * @deprecated  Please use {@link #call(java.util.concurrent.Callable, java.lang.String, java.lang.Object...)}
+   * @deprecated  Please use {@link WrappedException#call(java.util.concurrent.Callable, java.lang.String, java.lang.Object...)}
    */
   @Deprecated
   public static <V> V wrapChecked(Callable<V> callable, String message, Object... extraInfo) {

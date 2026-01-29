@@ -46,7 +46,7 @@ public final class IoUtils {
   /**
    * copies without flush.
    *
-   * @see #copy(java.io.InputStream, java.io.OutputStream, boolean)
+   * @see IoUtils#copy(java.io.InputStream, java.io.OutputStream, boolean)
    */
   // Note: Copied to ao-ant-tasks:IoUtils.java
   public static long copy(InputStream in, OutputStream out) throws IOException {

@@ -83,10 +83,10 @@ public class Resources implements Serializable {
    * @deprecated  Please use one of the class- or package-relative techniques in locating the resource bundle, as they
    *              will correctly locate the resources after packages are renamed by code obfuscation.
    *              <ul>
-   *              <li>{@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Class)}</li>
-   *              <li>{@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package)}</li>
-   *              <li>{@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String)}</li>
-   *              <li>{@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String, java.lang.String)}</li>
+   *              <li>{@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Class)}</li>
+   *              <li>{@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package)}</li>
+   *              <li>{@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String)}</li>
+   *              <li>{@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String, java.lang.String)}</li>
    *              </ul>
    */
   @Deprecated
@@ -97,7 +97,7 @@ public class Resources implements Serializable {
   /**
    * Accesses the resources with the given base name and prefix.
    *
-   * @deprecated  Please use {@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.String, java.lang.String)} instead.
+   * @deprecated  Please use {@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.String, java.lang.String)} instead.
    *
    *              <p>As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
    *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires <code>opens …;</code> in
@@ -127,10 +127,10 @@ public class Resources implements Serializable {
    * @deprecated  Please use one of the class- or package-relative techniques in locating the resource bundle, as they
    *              will correctly locate the resources after packages are renamed by code obfuscation.
    *              <ul>
-   *              <li>{@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Class)}</li>
-   *              <li>{@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package)}</li>
-   *              <li>{@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String)}</li>
-   *              <li>{@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String, java.lang.String)}</li>
+   *              <li>{@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Class)}</li>
+   *              <li>{@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package)}</li>
+   *              <li>{@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String)}</li>
+   *              <li>{@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String, java.lang.String)}</li>
    *              </ul>
    */
   @Deprecated
@@ -141,7 +141,7 @@ public class Resources implements Serializable {
   /**
    * Accesses the resources with the given base name and no prefix.
    *
-   * @deprecated  Please use {@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.String)} instead.
+   * @deprecated  Please use {@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.String)} instead.
    *
    *              <p>As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
    *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires <code>opens …;</code> in
@@ -156,7 +156,7 @@ public class Resources implements Serializable {
    * Accesses the resources in the given package (or sub-package) with the given name and prefix.
    * The base name is derived as {@code pack.getName() + '.' + name}.
    *
-   * <p>By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   * <p>By default, resources are expected to be in a sub-package named {@link Resources#DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
    * reflection.</p>
@@ -178,7 +178,7 @@ public class Resources implements Serializable {
    *                         <code>opens …;</code> in <code>module-info.java</code>.</p>
    *
    * @param  name  The name of the resource within the package, when {@code null} defaults to
-   *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+   *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link Resources#DEFAULT_SUBPACKAGE} sub-package).
    */
   public static Resources getResources(SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor, Package pack, String name, String prefix) {
     return getResources(
@@ -192,7 +192,7 @@ public class Resources implements Serializable {
    * Accesses the resources in the given package (or sub-package) with the given name and prefix.
    * The base name is derived as {@code pack.getName() + '.' + name}.
    *
-   * <p>By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   * <p>By default, resources are expected to be in a sub-package named {@link Resources#DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
    * reflection.</p>
@@ -201,9 +201,9 @@ public class Resources implements Serializable {
    * packages are renamed by code obfuscation.</p>
    *
    * @param  name  The name of the resource within the package, when {@code null} defaults to
-   *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+   *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link Resources#DEFAULT_SUBPACKAGE} sub-package).
    *
-   * @deprecated  Please use {@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String, java.lang.String)} instead.
+   * @deprecated  Please use {@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String, java.lang.String)} instead.
    *
    *              <p>As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
    *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires <code>opens …;</code> in
@@ -218,7 +218,7 @@ public class Resources implements Serializable {
    * Accesses the resources in the given package (or sub-package) with the given name and no prefix.
    * The base name is derived as {@code pack.getName() + '.' + name}.
    *
-   * <p>By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   * <p>By default, resources are expected to be in a sub-package named {@link Resources#DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
    * reflection.</p>
@@ -240,7 +240,7 @@ public class Resources implements Serializable {
    *                         <code>opens …;</code> in <code>module-info.java</code>.</p>
    *
    * @param  name  The name of the resource within the package, when {@code null} defaults to
-   *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+   *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link Resources#DEFAULT_SUBPACKAGE} sub-package).
    */
   public static Resources getResources(SerializableBiFunction<String, Locale, ResourceBundle> bundleAccessor, Package pack, String name) {
     return getResources(bundleAccessor, pack, name, null);
@@ -250,7 +250,7 @@ public class Resources implements Serializable {
    * Accesses the resources in the given package (or sub-package) with the given name and no prefix.
    * The base name is derived as {@code pack.getName() + '.' + name}.
    *
-   * <p>By default, resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   * <p>By default, resources are expected to be in a sub-package named {@link Resources#DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
    * reflection.</p>
@@ -259,9 +259,9 @@ public class Resources implements Serializable {
    * packages are renamed by code obfuscation.</p>
    *
    * @param  name  The name of the resource within the package, when {@code null} defaults to
-   *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+   *               {@code DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link Resources#DEFAULT_SUBPACKAGE} sub-package).
    *
-   * @deprecated  Please use {@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String)} instead.
+   * @deprecated  Please use {@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package, java.lang.String)} instead.
    *
    *              <p>As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
    *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires <code>opens …;</code> in
@@ -273,10 +273,10 @@ public class Resources implements Serializable {
   }
 
   /**
-   * Accesses the resources in the {@link #DEFAULT_SUBPACKAGE} sub-package of the given package named {@link #DEFAULT_NAME}.
-   * The base name is derived as {@code pack.getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+   * Accesses the resources in the {@link Resources#DEFAULT_SUBPACKAGE} sub-package of the given package named {@link Resources#DEFAULT_NAME}.
+   * The base name is derived as {@code pack.getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link Resources#DEFAULT_SUBPACKAGE} sub-package).
    *
-   * <p>Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   * <p>Resources are expected to be in a sub-package named {@link Resources#DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
    * reflection.</p>
@@ -302,10 +302,10 @@ public class Resources implements Serializable {
   }
 
   /**
-   * Accesses the resources in the {@link #DEFAULT_SUBPACKAGE} sub-package of the given package named {@link #DEFAULT_NAME}.
-   * The base name is derived as {@code pack.getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+   * Accesses the resources in the {@link Resources#DEFAULT_SUBPACKAGE} sub-package of the given package named {@link Resources#DEFAULT_NAME}.
+   * The base name is derived as {@code pack.getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME} (to be within {@link Resources#DEFAULT_SUBPACKAGE} sub-package).
    *
-   * <p>Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   * <p>Resources are expected to be in a sub-package named {@link Resources#DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
    * reflection.</p>
@@ -313,7 +313,7 @@ public class Resources implements Serializable {
    * <p>Note: Being accessed relative to the package, the resources can still be correctly located after
    * packages are renamed by code obfuscation.</p>
    *
-   * @deprecated  Please use {@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package)} instead.
+   * @deprecated  Please use {@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Package)} instead.
    *
    *              <p>As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
    *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires <code>opens …;</code> in
@@ -325,12 +325,12 @@ public class Resources implements Serializable {
   }
 
   /**
-   * Accesses the resources in the {@link #DEFAULT_SUBPACKAGE} sub-package of the given class named
-   * {@link #DEFAULT_NAME} with {@code clazz.getSimpleName() + '.'} as the prefix.
+   * Accesses the resources in the {@link Resources#DEFAULT_SUBPACKAGE} sub-package of the given class named
+   * {@link Resources#DEFAULT_NAME} with {@code clazz.getSimpleName() + '.'} as the prefix.
    * The base name is derived as {@code clazz.getPackage().getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME}
-   * (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+   * (to be within {@link Resources#DEFAULT_SUBPACKAGE} sub-package).
    *
-   * <p>Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   * <p>Resources are expected to be in a sub-package named {@link Resources#DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
    * reflection.</p>
@@ -364,12 +364,12 @@ public class Resources implements Serializable {
   }
 
   /**
-   * Accesses the resources in the {@link #DEFAULT_SUBPACKAGE} sub-package of the given class named
-   * {@link #DEFAULT_NAME} with {@code clazz.getSimpleName() + '.'} as the prefix.
+   * Accesses the resources in the {@link Resources#DEFAULT_SUBPACKAGE} sub-package of the given class named
+   * {@link Resources#DEFAULT_NAME} with {@code clazz.getSimpleName() + '.'} as the prefix.
    * The base name is derived as {@code clazz.getPackage().getName() + "." + DEFAULT_SUBPACKAGE + "." + DEFAULT_NAME}
-   * (to be within {@link #DEFAULT_SUBPACKAGE} sub-package).
+   * (to be within {@link Resources#DEFAULT_SUBPACKAGE} sub-package).
    *
-   * <p>Resources are expected to be in a sub-package named {@link #DEFAULT_SUBPACKAGE}.  A sub-package is
+   * <p>Resources are expected to be in a sub-package named {@link Resources#DEFAULT_SUBPACKAGE}.  A sub-package is
    * used because the module system does not allow opening for reflection separately from opening for resources.  By
    * using a separate sub-package, the resource bundles may be opened up without exposing the entire package to
    * reflection.</p>
@@ -385,7 +385,7 @@ public class Resources implements Serializable {
    * @param  clazz  This class is used for determining the package and prefix only.  It will typically be the
    *                class that is using the resource, not the class that implements {@link ResourceBundle}.
    *
-   * @deprecated  Please use {@link #getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Class)} instead.
+   * @deprecated  Please use {@link Resources#getResources(com.aoapps.lang.function.SerializableBiFunction, java.lang.Class)} instead.
    *
    *              <p>As of Java 9, bundle access is affected by module descriptors.  The bundle is looked-up via a direct call to
    *              {@link ResourceBundle#getBundle(java.lang.String, java.util.Locale)}, which requires <code>opens …;</code> in
@@ -403,7 +403,7 @@ public class Resources implements Serializable {
   @FunctionalInterface
   public static interface Listener {
     /**
-     * Called during {@link #getMessage(java.util.Locale, java.lang.String, java.lang.Object...)} when a lookup is performed and the key found.
+     * Called during {@link Listener#getMessage(java.util.Locale, java.lang.String, java.lang.Object...)} when a lookup is performed and the key found.
      *
      * @param  resource  The value received from the {@link ResourceBundle} or {@code null} when the lookup failed.
      * @param  args      The set of arguments, may be an empty array, never {@code null}.
@@ -476,7 +476,7 @@ public class Resources implements Serializable {
 
   /**
    * Gets the bundle for the provided locale.
-   * Direct use of this bundle will not have any {@linkplain #getPrefix() prefix} applied.
+   * Direct use of this bundle will not have any {@linkplain Resources#getPrefix() prefix} applied.
    */
   public ResourceBundle getResourceBundle(Locale locale) {
     return (bundleAccessor != null)
@@ -486,10 +486,10 @@ public class Resources implements Serializable {
 
   /**
    * Gets the bundle for the {@linkplain ThreadLocale#get() current thread's locale}.
-   * Direct use of this bundle will not have any {@linkplain #getPrefix() prefix} applied.
+   * Direct use of this bundle will not have any {@linkplain Resources#getPrefix() prefix} applied.
    *
    * @see  ThreadLocale
-   * @see  #getResourceBundle(java.util.Locale)
+   * @see  Resources#getResourceBundle(java.util.Locale)
    */
   public ResourceBundle getResourceBundle() {
     return getResourceBundle(ThreadLocale.get());
@@ -503,7 +503,7 @@ public class Resources implements Serializable {
    * <p>Substitutes arguments in the text where it finds {0}, {1}, {2}, …
    * Message formatting is not performed when {@code args} is {@code null} or empty.</p>
    *
-   * @param  key  This will be combined with any {@link #getPrefix() prefix}
+   * @param  key  This will be combined with any {@link Resources#getPrefix() prefix}
    */
   @SuppressWarnings("RedundantStringConstructorCall")
   public String getMessage(Locale locale, String key, Object... args) {
@@ -565,7 +565,7 @@ public class Resources implements Serializable {
    * Gets the message with the given key in the provided locale.
    * If missing, will generate a Struts-like value including the locale and (prefix + key).
    *
-   * @param  key  This will be combined with any {@link #getPrefix() prefix}
+   * @param  key  This will be combined with any {@link Resources#getPrefix() prefix}
    */
   public String getMessage(Locale locale, String key) {
     return getMessage(locale, key, EMPTY_OBJECT_ARRAY);
@@ -579,10 +579,10 @@ public class Resources implements Serializable {
    * <p>Substitutes arguments in the text where it finds {0}, {1}, {2}, …
    * Message formatting is not performed when {@code args} is {@code null} or empty.</p>
    *
-   * @param  key  This will be combined with any {@link #getPrefix() prefix}
+   * @param  key  This will be combined with any {@link Resources#getPrefix() prefix}
    *
    * @see  ThreadLocale
-   * @see  #getMessage(java.util.Locale, java.lang.String, java.lang.Object...)
+   * @see  Resources#getMessage(java.util.Locale, java.lang.String, java.lang.Object...)
    */
   public String getMessage(String key, Object... args) {
     return getMessage(ThreadLocale.get(), key, args);
@@ -592,10 +592,10 @@ public class Resources implements Serializable {
    * Gets the message with the given key in the {@linkplain ThreadLocale#get() current thread's locale}.
    * If missing, will generate a Struts-like value including the locale and (prefix + key).
    *
-   * @param  key  This will be combined with any {@link #getPrefix() prefix}
+   * @param  key  This will be combined with any {@link Resources#getPrefix() prefix}
    *
    * @see  ThreadLocale
-   * @see  #getMessage(java.util.Locale, java.lang.String)
+   * @see  Resources#getMessage(java.util.Locale, java.lang.String)
    */
   public String getMessage(String key) {
     return getMessage(ThreadLocale.get(), key, EMPTY_OBJECT_ARRAY);
