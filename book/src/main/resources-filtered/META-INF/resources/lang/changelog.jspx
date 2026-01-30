@@ -37,9 +37,9 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2017-03-12T17:54:37-05:00"
-    dateModified="2026-01-15T22:52:15Z"
+    dateModified="2026-01-30T09:38:11Z"
   >
-    <c:set var="latestRelease" value="5.6.0" />
+    <c:set var="latestRelease" value="5.7.0" />
     <c:if test="${
       fn:endsWith('@{project.version}', '-SNAPSHOT')
       and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')
@@ -51,14 +51,23 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         groupId="@{project.groupId}"
         artifactId="@{documented.artifactId}"
         scmUrl="@{project.scm.url}"
-      >
-        <ul>
-          <li>Updated to <ao:a href="https://checkstyle.org/releasenotes.html#Release_13.0.0">Checkstyle 13.0.0</ao:a>.</li>
-          <li>Throw <code>IOException</code> when <code>setLastModified</code> fails.</li>
-          <li>Minimum Java version changed from 1.8 to 11.</li>
-        </ul>
-      </changelog:release>
+      />
     </c:if>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="5.7.0"
+      datePublished="2026-01-30T09:38:11Z"
+      groupId="@{project.groupId}"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Updated to <ao:a href="https://checkstyle.org/releasenotes.html#Release_13.0.0">Checkstyle 13.0.0</ao:a>.</li>
+        <li>Throw <code>IOException</code> when <code>setLastModified</code> fails.</li>
+        <li>Minimum Java version changed from 1.8 to 11.</li>
+      </ul>
+    </changelog:release>
 
     <changelog:release
       projectName="@{documented.name}"
