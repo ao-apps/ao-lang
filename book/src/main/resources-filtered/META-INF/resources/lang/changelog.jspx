@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2017-03-12T17:54:37-05:00"
-    dateModified="2026-01-30T09:38:11Z"
+    dateModified="2026-02-05T18:09:30Z"
   >
     <c:set var="latestRelease" value="5.7.0" />
     <c:if test="${
@@ -116,8 +116,8 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
       <ul>
         <li>
           Additional <code>ZipUtils</code> methods to get and set creation, access, and last-modified times in UTC
-          time zone within <ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/zip/ZipEntry.html">ZipEntry</ao:a>.
-          The get methods leverage <ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Optional.html">Optional</ao:a>
+          time zone within <ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/util/zip/ZipEntry.html">ZipEntry</ao:a>.
+          The get methods leverage <ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/util/Optional.html">Optional</ao:a>
           to represent that the times may not be available.
         </li>
       </ul>
@@ -134,7 +134,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
       <ul>
         <li>
           Deprecated <code>UnsignedLong</code> since all its functionality is available in
-          <ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Long.html">Long</ao:a> as of Java 8.
+          <ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/lang/Long.html">Long</ao:a> as of Java 8.
         </li>
         <li>
           New <code>ContentType.CSV</code> constant for <code>text/csv</code> per
@@ -516,7 +516,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
       <ul>
         <li>
           Deprecated <code>LongLong.compareUnsigned(long, long)</code> in favor of Java 8's standard implementation
-          <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Long.html#compareUnsigned-long-long-">Long.compareUnsigned(long, long)</ao:a></code>.
+          <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/lang/Long.html#compareUnsigned-long-long-">Long.compareUnsigned(long, long)</ao:a></code>.
         </li>
         <li>
           Moved the <code>com.aoindustries.security</code> package to the new
@@ -589,8 +589,8 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         <li>
           <p>
             New methods in <code>Resources</code> for obtaining resources relative to
-            a <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Class.html">Class</ao:a></code>
-            or <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Package.html">Package</ao:a></code>.
+            a <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/lang/Class.html">Class</ao:a></code>
+            or <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/lang/Package.html">Package</ao:a></code>.
           </p>
           <p>
             Being accessed relative to the package, the application resources can still be correctly
@@ -599,7 +599,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         </li>
         <li>
           <code>Resources</code> now supports an optional prefix, which is combined with keys on lookups.
-          When using a <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Class.html">Class</ao:a></code>
+          When using a <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/lang/Class.html">Class</ao:a></code>
           to locate the resources, defaults to the class' simple name.
         </li>
         <li>New method <code>Throwables.isSuppressed(…)</code> to check if a throwable is already suppressed.</li>
@@ -897,12 +897,12 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         <li>
           <p>
             New class <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/Iterables.html">Iterables</ao:a></code> with
-            a set of various <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Iterable.html">Iterable</ao:a></code> over common Java types,
+            a set of various <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/util/Iterable.html">Iterable</ao:a></code> over common Java types,
             useful to avoid conflict after type erasure.
           </p>
           <p>
             Sometimes different method overloads want to accept different types of
-            <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Iterable.html">Iterable</ao:a></code>, but they cannot due to conflict after type erasure.
+            <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/util/Iterable.html">Iterable</ao:a></code>, but they cannot due to conflict after type erasure.
           </p>
         </li>
         <li>Updated dependencies.</li>
@@ -959,7 +959,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
       <ul>
         <li>
           Added new variants of <code>StringUtility.indexOf(…)</code> that
-          accept a <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/BitSet.html">BitSet</ao:a></code>
+          accept a <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/util/BitSet.html">BitSet</ao:a></code>
           of the characters to find.
         </li>
       </ul>
@@ -1074,18 +1074,18 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         </li>
         <li>
           <code><ao:a href="https://oss.aoapps.com/collections/apidocs/com.aoapps.collections/com/aoapps/collections/MinimalList.html">MinimalList</ao:a></code> now represents
-          an empty list as using <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Collections.html#emptyList()">Collections.emptyList()</ao:a></code>
+          an empty list as using <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/util/Collections.html#emptyList()">Collections.emptyList()</ao:a></code>
           instead of <code>null</code>.
         </li>
         <li>
           <code><ao:a href="https://oss.aoapps.com/collections/apidocs/com.aoapps.collections/com/aoapps/collections/MinimalMap.html">MinimalMap</ao:a></code> now represents
-          an empty map as using <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Collections.html#emptyMap()">Collections.emptyMap()</ao:a></code>
+          an empty map as using <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/util/Collections.html#emptyMap()">Collections.emptyMap()</ao:a></code>
           instead of <code>null</code>.
         </li>
         <li>
           New methods in <code><ao:a href="https://oss.aoapps.com/collections/apidocs/com.aoapps.collections/com/aoapps/collections/AoCollections.html">AoCollections</ao:a></code> to assist
-          in efficiently converting <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Iterable.html">Iterable</ao:a></code>
-          to different types of <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/util/Collection.html">Collection</ao:a></code>.
+          in efficiently converting <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/lang/Iterable.html">Iterable</ao:a></code>
+          to different types of <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/util/Collection.html">Collection</ao:a></code>.
         </li>
         <li>
           <p>
@@ -1109,7 +1109,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         </li>
         <li>
           New class <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/reflect/Classes.html">Classes</ao:a></code> to help when
-          dealing with <code><ao:a rel="nofollow" href="@{javadoc.link.javase}java/lang/Class.html">Class</ao:a></code>.
+          dealing with <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/lang/Class.html">Class</ao:a></code>.
         </li>
         <li>
           New classes <code><ao:a href="https://oss.aoapps.com/collections/apidocs/com.aoapps.collections/com/aoapps/collections/PolymorphicRegistry.html">PolymorphicRegistry</ao:a></code>
