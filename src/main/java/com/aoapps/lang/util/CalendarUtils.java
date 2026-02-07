@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2016, 2017, 2019, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2013, 2016, 2017, 2019, 2021, 2022, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -32,7 +32,10 @@ import java.util.TimeZone;
  * Calendar utilities.
  *
  * @author  AO Industries, Inc.
+ *
+ * @deprecated Please use {@link java.time} available since Java SE 8.
  */
+@Deprecated(forRemoval = false)
 public final class CalendarUtils {
 
   /** Make no instances. */
@@ -44,7 +47,10 @@ public final class CalendarUtils {
    * Formats a date in "YYYY-MM-DD" format.
    *
    * @return  the formatted date or {@code null} if the parameter is {@code null}
+   *
+   * @deprecated Please use {@link java.time.LocalDate#toString()} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static String formatDate(Calendar cal) {
     if (cal == null) {
       return null;
@@ -60,7 +66,10 @@ public final class CalendarUtils {
 
   /**
    * Formats a date in "YYYY-MM-DD" format.
+   *
+   * @deprecated Please use {@link java.time.LocalDate#toString()} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static void formatDate(Calendar cal, Appendable out) throws IOException {
     if (cal != null) {
       Calendar gcal;
@@ -96,7 +105,10 @@ public final class CalendarUtils {
    *
    * @param yyyy_mm_dd  The date in YYYY-MM-DD format.
    * @param timeZone  The time zone to use or {@code null} to use the default time zone
+   *
+   * @deprecated Please use {@link java.time.LocalDate#parse(java.lang.CharSequence)} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static GregorianCalendar parseDate(String yyyy_mm_dd, TimeZone timeZone) throws IllegalArgumentException {
     if (yyyy_mm_dd == null) {
       return null;
@@ -143,7 +155,10 @@ public final class CalendarUtils {
    * Allows shorter months and days like "1976-1-9".
    *
    * @param yyyy_mm_dd  The date in YYYY-MM-DD format.
+   *
+   * @deprecated Please use {@link java.time.LocalDate#parse(java.lang.CharSequence)} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static GregorianCalendar parseDate(String yyyy_mm_dd) throws IllegalArgumentException {
     return parseDate(yyyy_mm_dd, null);
   }
@@ -152,7 +167,10 @@ public final class CalendarUtils {
    * Formats a time in "HH:MM:SS" format.
    *
    * @return  the formatted time or {@code null} if the parameter is {@code null}
+   *
+   * @deprecated Please use {@link java.time.LocalTime#format(java.time.format.DateTimeFormatter)} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static String formatTime(Calendar cal) {
     if (cal == null) {
       return null;
@@ -168,7 +186,10 @@ public final class CalendarUtils {
 
   /**
    * Formats a time in "HH:MM:SS" format.
+   *
+   * @deprecated Please use {@link java.time.LocalTime#format(java.time.format.DateTimeFormatter)} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static void formatTime(Calendar cal, Appendable out) throws IOException {
     if (cal != null) {
       Calendar gcal;
@@ -205,7 +226,10 @@ public final class CalendarUtils {
    * Formats a date and time in "YYYY-MM-DD HH:MM:SS" format.
    *
    * @return  the formatted date and time or {@code null} if the parameter is {@code null}
+   *
+   * @deprecated Please use {@link java.time.LocalDateTime#format(java.time.format.DateTimeFormatter)} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static String formatDateTime(Calendar cal) {
     if (cal == null) {
       return null;
@@ -221,7 +245,10 @@ public final class CalendarUtils {
 
   /**
    * Formats a date and time in "YYYY-MM-DD HH:MM:SS" format.
+   *
+   * @deprecated Please use {@link java.time.LocalDateTime#format(java.time.format.DateTimeFormatter)} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static void formatDateTime(Calendar cal, Appendable out) throws IOException {
     if (cal != null) {
       formatDate(cal, out);
@@ -230,6 +257,10 @@ public final class CalendarUtils {
     }
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @FunctionalInterface
   public static interface DateTimeProducer<T> {
     /**
@@ -245,7 +276,10 @@ public final class CalendarUtils {
    * Allows shorter months, days, hours, minutes, and millis like "1976-1-9 1:2:3.1".
    *
    * @param timeZone  The time zone to use or {@code null} to use the default time zone
+   *
+   * @deprecated Please use {@link java.time.LocalDateTime#parse(java.lang.CharSequence, java.time.format.DateTimeFormatter)} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static <T> T parseDateTime(String dateTime, TimeZone timeZone, DateTimeProducer<T> producer) throws IllegalArgumentException {
     if (dateTime == null) {
       return null;
@@ -357,7 +391,10 @@ public final class CalendarUtils {
    * Allows shorter months, days, hours, minutes, and millis like "1976-1-9 1:2:3.1".
    *
    * @param timeZone  The time zone to use or {@code null} to use the default time zone
+   *
+   * @deprecated Please use {@link java.time.LocalDateTime#parse(java.lang.CharSequence, java.time.format.DateTimeFormatter)} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static GregorianCalendar parseDateTime(String dateTime, TimeZone timeZone) throws IllegalArgumentException {
     return parseDateTime(
         dateTime,
@@ -375,7 +412,10 @@ public final class CalendarUtils {
    * Gets the date and time from the "YYYY-MM-DD[ HH:MM[:SS[.mmm]]]" format in the default time zone or {@code null} if the parameter is {@code null}.
    * Allows negative years like "-344-01-23".
    * Allows shorter months, days, hours, minutes, and millis like "1976-1-9 1:2:3.1".
+   *
+   * @deprecated Please use {@link java.time.LocalDateTime#parse(java.lang.CharSequence, java.time.format.DateTimeFormatter)} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static GregorianCalendar parseDateTime(String dateTime) throws IllegalArgumentException {
     return parseDateTime(dateTime, null);
   }
@@ -384,7 +424,10 @@ public final class CalendarUtils {
    * Gets today's date in the given time zone.  Hour, minute, second, and millisecond are all set to zero.
    *
    * @param timeZone  The time zone to use or {@code null} to use the default time zone
+   *
+   * @deprecated Please use {@link java.time.LocalDate#now(java.time.ZoneId)} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static GregorianCalendar getToday(TimeZone timeZone) {
     GregorianCalendar gcal = timeZone == null ? new GregorianCalendar() : new GregorianCalendar(timeZone);
     gcal.set(Calendar.HOUR_OF_DAY, 0);
@@ -396,7 +439,10 @@ public final class CalendarUtils {
 
   /**
    * Gets today's date in the default time zone.  Hour, minute, second, and millisecond are all set to zero.
+   *
+   * @deprecated Please use {@link java.time.LocalDate#now()} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static GregorianCalendar getToday() {
     return getToday(null);
   }

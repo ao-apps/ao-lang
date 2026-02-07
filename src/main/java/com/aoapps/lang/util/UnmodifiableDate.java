@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2012, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2012, 2016, 2017, 2019, 2020, 2021, 2022, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -29,63 +29,99 @@ import java.util.Date;
  * An unmodifiable Date.  Any mutator is overridden to throw UnsupportedOperationException.
  *
  * @author  AO Industries, Inc.
+ *
+ * @deprecated Please use {@link java.time} available since Java SE 8.
  */
+@Deprecated(forRemoval = false)
 public final class UnmodifiableDate extends Date implements Cloneable {
 
   private static final long serialVersionUID = 1L;
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   public UnmodifiableDate() {
     super();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   public UnmodifiableDate(long date) {
     super(date);
   }
 
   /**
    * Return a copy of this object.
+   *
+   * @deprecated Please use {@link java.time} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   @Override
   public UnmodifiableDate clone() {
     return (UnmodifiableDate) super.clone();
   }
 
-  @Deprecated
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void setYear(int year) {
     throw new UnsupportedOperationException();
   }
 
-  @Deprecated
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void setMonth(int month) {
     throw new UnsupportedOperationException();
   }
 
-  @Deprecated
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void setDate(int date) {
     throw new UnsupportedOperationException();
   }
 
-  @Deprecated
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void setHours(int hours) {
     throw new UnsupportedOperationException();
   }
 
-  @Deprecated
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void setMinutes(int minutes) {
     throw new UnsupportedOperationException();
   }
 
-  @Deprecated
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void setSeconds(int seconds) {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void setTime(long time) {
     throw new UnsupportedOperationException();

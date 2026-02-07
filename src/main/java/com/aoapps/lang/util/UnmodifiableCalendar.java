@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2012, 2013, 2016, 2017, 2019, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2011, 2012, 2013, 2016, 2017, 2019, 2021, 2022, 2024, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -32,7 +32,10 @@ import java.util.TimeZone;
  * Wraps a Calendar to make it unmodifiable.
  *
  * @author  AO Industries, Inc.
+ *
+ * @deprecated Please use {@link java.time} available since Java SE 8.
  */
+@Deprecated(forRemoval = false)
 public final class UnmodifiableCalendar extends Calendar implements Cloneable {
 
   private static final long serialVersionUID = -8096789285108910128L;
@@ -41,7 +44,10 @@ public final class UnmodifiableCalendar extends Calendar implements Cloneable {
    * Wraps the calendar if needed.
    * If null, null is returned.
    * If already unmodifiable, parameter is returned without additional wrapping.
+   *
+   * @deprecated Please use {@link java.time} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static UnmodifiableCalendar wrap(Calendar cal) {
     if (cal == null) {
       return null;
@@ -68,7 +74,10 @@ public final class UnmodifiableCalendar extends Calendar implements Cloneable {
 
   /**
    * Unwraps and returns a modifiable clone of the given calendar.
+   *
+   * @deprecated Please use {@link java.time} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static Calendar unwrapClone(Calendar cal) {
     if (cal == null) {
       return null;
@@ -88,7 +97,10 @@ public final class UnmodifiableCalendar extends Calendar implements Cloneable {
   /**
    * Checks if the calendar is an instance of the given class or is a wrapper
    * around an instance of the given class.
+   *
+   * @deprecated Please use {@link java.time} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public static boolean isInstanceOf(Calendar cal, Class<? extends Calendar> clazz) {
     if (cal == null) {
       return false;
@@ -105,171 +117,306 @@ public final class UnmodifiableCalendar extends Calendar implements Cloneable {
   /**
    * Checks if the calendar is an instance of the given class or is a wrapper
    * around an instance of the given class.
+   *
+   * @deprecated Please use {@link java.time} available since Java SE 8.
    */
+  @Deprecated(forRemoval = false)
   public boolean isInstanceOf(Class<? extends Calendar> clazz) {
     return isInstanceOf(wrapped, clazz);
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void add(int field, int amount) {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public boolean after(Object when) {
     return wrapped.after(unwrap(when));
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public boolean before(Object when) {
     return wrapped.before(unwrap(when));
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public UnmodifiableCalendar clone() {
     return new UnmodifiableCalendar((Calendar) wrapped.clone());
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public int compareTo(Calendar anotherCalendar) {
     return wrapped.compareTo(unwrap(anotherCalendar));
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   protected void complete() {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   protected void computeFields() {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   protected void computeTime() {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public boolean equals(Object obj) {
     return wrapped.equals(unwrap(obj));
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public int get(int field) {
     return wrapped.get(field);
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public int getActualMaximum(int field) {
     return wrapped.getActualMaximum(field);
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public int getActualMinimum(int field) {
     return wrapped.getActualMinimum(field);
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public String getDisplayName(int field, int style, Locale locale) {
     return wrapped.getDisplayName(field, style, locale);
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public Map<String, Integer> getDisplayNames(int field, int style, Locale locale) {
     return wrapped.getDisplayNames(field, style, locale);
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public int getFirstDayOfWeek() {
     return wrapped.getFirstDayOfWeek();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public int getGreatestMinimum(int field) {
     return wrapped.getGreatestMinimum(field);
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public int getLeastMaximum(int field) {
     return wrapped.getLeastMaximum(field);
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public int getMaximum(int field) {
     return wrapped.getMaximum(field);
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public int getMinimalDaysInFirstWeek() {
     return wrapped.getMinimalDaysInFirstWeek();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public int getMinimum(int field) {
     return wrapped.getMinimum(field);
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public long getTimeInMillis() {
     return wrapped.getTimeInMillis();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public TimeZone getTimeZone() {
     return wrapped.getTimeZone();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public int hashCode() {
     return wrapped.hashCode();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public boolean isLenient() {
     return wrapped.isLenient();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void roll(int field, boolean up) {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void roll(int field, int amount) {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void set(int field, int value) {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void setFirstDayOfWeek(int value) {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void setLenient(boolean lenient) {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void setMinimalDaysInFirstWeek(int value) {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void setTimeInMillis(long millis) {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public void setTimeZone(TimeZone value) {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Please use {@link java.time} available since Java SE 8.
+   */
+  @Deprecated(forRemoval = false)
   @Override
   public String toString() {
     return wrapped.toString();

@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2017-03-12T17:54:37-05:00"
-    dateModified="2026-02-05T18:09:30Z"
+    dateModified="2026-02-07T17:31:54Z"
   >
     <c:set var="latestRelease" value="5.7.0" />
     <c:if test="${
@@ -51,7 +51,18 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         groupId="@{project.groupId}"
         artifactId="@{documented.artifactId}"
         scmUrl="@{project.scm.url}"
-      />
+      >
+        <ul>
+          <li>
+            Deprecated <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/util/CalendarUtils.html">CalendarUtils</ao:a></code>,
+            <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/util/UnmodifiableCalendar.html">UnmodifiableCalendar</ao:a></code>,
+            and <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/util/UnmodifiableDate.html">UnmodifiableDate</ao:a></code>
+            in favor of
+            <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/time/package-summary.html">java.time</ao:a></code>
+            (a standard part of Java SE 8 and above).
+          </li>
+        </ul>
+      </changelog:release>
     </c:if>
 
     <changelog:release
