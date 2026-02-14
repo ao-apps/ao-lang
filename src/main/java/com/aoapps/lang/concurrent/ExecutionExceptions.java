@@ -30,9 +30,9 @@ import java.util.function.BiFunction;
 /**
  * Utilities for working with {@link ExecutionException}.
  *
- * <p>TODO: Implement callWrapAndThrow the accepts {@link CallableE} with wrapping, reducing common boilerplate.</p>
+ * <p>TODO: Implement {@code callWrapAndThrow} that accepts {@link CallableE} with wrapping, reducing common boilerplate.</p>
  *
- * <p>TODO: Implement runWrapAndThrow the accepts {@link Runnable} with wrapping, reducing common boilerplate.</p>
+ * <p>TODO: Implement {@code runWrapAndThrow} that accepts {@link Runnable} with wrapping, reducing common boilerplate.</p>
  */
 public final class ExecutionExceptions {
 
