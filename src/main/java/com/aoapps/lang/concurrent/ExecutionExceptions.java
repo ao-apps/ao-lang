@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2024, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -29,6 +29,10 @@ import java.util.function.BiFunction;
 
 /**
  * Utilities for working with {@link ExecutionException}.
+ *
+ * <p>TODO: Implement callWrapAndThrow the accepts {@link CallableE} with wrapping, reducing common boilerplate.</p>
+ *
+ * <p>TODO: Implement runWrapAndThrow the accepts {@link Runnable} with wrapping, reducing common boilerplate.</p>
  */
 public final class ExecutionExceptions {
 
