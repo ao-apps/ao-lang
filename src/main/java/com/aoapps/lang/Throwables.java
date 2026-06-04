@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2020, 2021, 2022, 2023, 2024, 2025  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2023, 2024, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -1744,11 +1744,6 @@ public final class Throwables {
           newEx.errorCode = template.errorCode;
           return newEx;
         });
-    registerSurrogateFactory(
-        javax.management.modelmbean.XMLParseException.class,
-        (template, cause) -> (cause instanceof Exception)
-            ? new javax.management.modelmbean.XMLParseException((Exception) cause, template.getMessage())
-            : new javax.management.modelmbean.XMLParseException(new WrappedException(cause), template.getMessage()));
     registerSurrogateFactory(
         javax.xml.crypto.dsig.XMLSignatureException.class,
         (template, cause) -> new javax.xml.crypto.dsig.XMLSignatureException(template.getMessage(), cause));

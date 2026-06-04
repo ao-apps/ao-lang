@@ -61,6 +61,10 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
             <code><ao:a rel="nofollow" href="@{documented.javadoc.link.javase}java.base/java/time/package-summary.html">java.time</ao:a></code>
             (a standard part of Java SE 8 and above).
           </li>
+          <li>
+            For compatibility with Java 26, removed <code>javax.management.modelmbean.XMLParseException</code> from
+            <code><ao:a href="apidocs/com.aoapps.lang/com/aoapps/lang/Throwables.html">Throwables</ao:a></code>.
+          </li>
         </ul>
       </changelog:release>
     </c:if>
