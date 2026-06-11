@@ -35,7 +35,7 @@ import org.junit.Test;
 public class ThrowablesTest {
 
   /**
-   * This is sufficient to trigger the static initializers in {@link Throwable}, which effectively accomplishes
+   * This is sufficient to trigger the static initializers in {@link Throwables}, which effectively accomplishes
    * the Java version compatibility across all registered exception types.
    */
   @Test
