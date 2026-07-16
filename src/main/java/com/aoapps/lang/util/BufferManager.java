@@ -69,6 +69,7 @@ public final class BufferManager {
    * built into many projects as a compile-time constant.</p>
    */
   public static final int BUFFER_SIZE = 4096;
+
   static {
     assert BUFFER_SIZE <= Short.MAX_VALUE : "BUFFER_SIZE must be <= Short.MAX_VALUE to not break wire protocols.";
   }
