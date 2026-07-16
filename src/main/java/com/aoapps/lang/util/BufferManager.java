@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -64,8 +64,14 @@ public final class BufferManager {
 
   /**
    * The size of buffers that are returned.
+   *
+   * <p>Note: This value should probably never be changed due to being
+   * built into many projects as a compile-time constant.</p>
    */
   public static final int BUFFER_SIZE = 4096;
+  static {
+    assert BUFFER_SIZE <= Short.MAX_VALUE : "BUFFER_SIZE must be <= Short.MAX_VALUE to not break wire protocols.";
+  }
 
   private static final ThreadLocal<Deque<SoftReference<byte[]>>> bytes = ThreadLocal.withInitial(ArrayDeque::new);
 
