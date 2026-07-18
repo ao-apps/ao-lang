@@ -37,7 +37,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2017-03-12T17:54:37-05:00"
-    dateModified="2026-06-12T15:13:26Z"
+    dateModified="2026-07-18T01:41:06Z"
   >
     <c:set var="latestRelease" value="5.8.0" />
     <c:if test="${
@@ -51,7 +51,15 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
         groupId="@{project.groupId}"
         artifactId="@{documented.artifactId}"
         scmUrl="@{project.scm.url}"
-      />
+      >
+        <ul>
+          <li>
+            Added new <code>OptionalE</code> that is similar to standard <code>Optional</code> but allows checked
+            exceptions using our existing <code>com.aoapps.lang.function</code> package.
+            This should not be used as a return type, use standard <code>Optional</code> instead.
+          </li>
+        </ul>
+      </changelog:release>
     </c:if>
 
     <changelog:release
