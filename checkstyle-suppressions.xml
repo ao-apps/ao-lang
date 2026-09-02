@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-lang - Minimal Java library with no external dependencies shared by many other projects.
-Copyright (C) 2022, 2023, 2024  AO Industries, Inc.
+Copyright (C) 2022, 2023, 2024, 2026  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -58,7 +58,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 
   <!-- Consistency with standard "serialVersionUID" -->
   <suppress
-    checks="AbbreviationAsWordInName"
+    checks="(AbbreviationAsWordInName|GoogleMethodName)"
     files="[/\\]com[/\\]aoapps[/\\]lang[/\\]io[/\\]FastExternalizable\.java$"
     message="'getSerialVersionUID'"
   />
