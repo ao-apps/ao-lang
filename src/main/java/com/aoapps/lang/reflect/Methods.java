@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2014, 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2013, 2014, 2016, 2017, 2019, 2020, 2021, 2022, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -55,7 +55,7 @@ public final class Methods {
    * us the full reflection API.
    */
   public static <T> T invoke(Class<T> returnType, Object target, String methodName, Class<?> parameterType, Object parameterValue) throws ReflectionException {
-    return invoke(returnType, target, methodName, new Class<?>[]{parameterType}, new Object[]{parameterValue});
+    return invoke(returnType, target, methodName, new Class<?>[] {parameterType}, new Object[] {parameterValue});
   }
 
   /**

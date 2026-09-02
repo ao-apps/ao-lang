@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2016, 2017, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2011, 2016, 2017, 2020, 2021, 2022, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -39,11 +39,11 @@ public class UnmodifiableMessageFormat extends MessageFormat {
 
   private boolean initCompleted;
 
-  /* Unused 2013-09-27
-  public UnmodifiableMessageFormat(String pattern) {
-    super(pattern);
-    initCompleted = true;
-  } */
+  // Unused 2013-09-27
+  // public UnmodifiableMessageFormat(String pattern) {
+  //   super(pattern);
+  //   initCompleted = true;
+  // }
 
   public UnmodifiableMessageFormat(String pattern, Locale locale) {
     super(pattern, locale);

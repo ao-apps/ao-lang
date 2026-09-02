@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2013, 2016, 2017, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2013, 2016, 2017, 2021, 2022, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -63,7 +63,7 @@ public final class WriterFacade extends Writer implements NoClose {
   }
 
   @Override
-  public void write(char[] cbuf, int off, int len) throws IOException  {
+  public void write(char[] cbuf, int off, int len) throws IOException {
     out.write(cbuf, off, len);
   }
 

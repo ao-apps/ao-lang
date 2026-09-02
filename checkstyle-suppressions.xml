@@ -38,7 +38,7 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 
   <!-- TODO: Remove in 6.0.0 release -->
   <suppress
-    checks="AbbreviationAsWordInName"
+    checks="(AbbreviationAsWordInName|GoogleMethodName)"
     files="[/\\]com[/\\]aoapps[/\\]lang[/\\]util[/\\]ErrorPrinter\.java$"
     message="'(addSQL|getSQL)'"
   />
@@ -70,16 +70,22 @@ along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
 
   <!-- Consistency with standard "readUTF" -->
   <suppress
-    checks="AbbreviationAsWordInName"
+    checks="(AbbreviationAsWordInName|GoogleMethodName)"
     files="[/\\]com[/\\]aoapps[/\\]lang[/\\]io[/\\]FastObjectInput\.java$"
     message="'readFastUTF'"
   />
 
   <!-- Consistency with standard "writeUTF" -->
   <suppress
-    checks="AbbreviationAsWordInName"
+    checks="(AbbreviationAsWordInName|GoogleMethodName)"
     files="[/\\]com[/\\]aoapps[/\\]lang[/\\]io[/\\]FastObjectOutput\.java$"
     message="'writeFastUTF'"
+  />
+
+  <!-- Intentional code style -->
+  <suppress
+    checks="(ArrayBracketNoWhitespace|SingleSpaceSeparator)"
+    files="[/\\]com[/\\]aoapps[/\\]lang[/\\]io[/\\]IoUtils\.java$"
   />
 
   <!-- Consistency with standard "IOException" -->

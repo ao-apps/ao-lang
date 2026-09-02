@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -1478,7 +1478,7 @@ public final class Strings {
       return fromIndex;
     }
 
-    char first  = target.charAt(0);
+    char first = target.charAt(0);
     int max = sourceCount - targetCount;
 
     for (int i = fromIndex; i <= max; i++) {
@@ -1575,9 +1575,9 @@ public final class Strings {
         len = st;
       }
     }
-    assert st  >= 0;
+    assert st >= 0;
     assert len <= valueLen;
-    assert st  <= len;
+    assert st <= len;
     return
         (st == 0 && len == valueLen) ? value // Unchanged
             : (st == len) ? ""                     // Now empty
@@ -1610,9 +1610,9 @@ public final class Strings {
         len = st;
       }
     }
-    assert st  >= 0;
+    assert st >= 0;
     assert len <= valueLen;
-    assert st  <= len;
+    assert st <= len;
     return
         (st == 0 && len == valueLen) ? value // Unchanged
             : value.subSequence(st, len);          // Trimmed

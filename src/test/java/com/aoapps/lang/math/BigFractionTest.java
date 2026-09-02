@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2016, 2017, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2016, 2017, 2021, 2022, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -459,7 +459,7 @@ public class BigFractionTest extends TestCase {
 
   public void testFractionalMoneyProportional() {
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("33333.34"),
             new BigDecimal("33333.33"),
             new BigDecimal("33333.33")
@@ -473,7 +473,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("25000.00"),
             new BigDecimal("25000.00"),
             new BigDecimal("25000.00"),
@@ -489,7 +489,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("33333.34"),
             new BigDecimal("33333.34"),
             new BigDecimal("33333.33"),
@@ -509,7 +509,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("33333.34"),
             new BigDecimal("33333.33"),
             new BigDecimal("33333.33"),
@@ -525,7 +525,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("-33333.34"),
             new BigDecimal("-33333.33"),
             new BigDecimal("-33333.33"),
@@ -541,7 +541,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("33333.34"),
             new BigDecimal("100000.00"),
             new BigDecimal("33333.33"),
@@ -557,7 +557,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("-33333.34"),
             new BigDecimal("-100000.00"),
             new BigDecimal("-33333.33"),
@@ -573,7 +573,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("33333.34"),
             new BigDecimal("33333.33"),
             new BigDecimal("0.00"),
@@ -591,7 +591,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("0.01"),
             new BigDecimal("0.01"),
             new BigDecimal("0.00"),
@@ -607,7 +607,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("0.01"),
             new BigDecimal("0.00"),
             new BigDecimal("0.00"),
@@ -623,7 +623,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("0.00"),
             new BigDecimal("0.00"),
             new BigDecimal("0.00"),
@@ -639,7 +639,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("0.01"),
         },
         BigFraction.distributeValue(
@@ -649,7 +649,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("0.00"),
         },
         BigFraction.distributeValue(
@@ -659,7 +659,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("33333.33"),
             new BigDecimal("33333.33"),
             new BigDecimal("133333.34")
@@ -673,7 +673,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("28571.42"),
             new BigDecimal("85714.29"),
             new BigDecimal("85714.29")
@@ -687,7 +687,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("28571.43"),
             new BigDecimal("85714.29"),
             new BigDecimal("85714.29")
@@ -701,7 +701,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("28571.43"),
             new BigDecimal("85714.30"),
             new BigDecimal("85714.29")
@@ -715,7 +715,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("28571.43"),
             new BigDecimal("85714.30"),
             new BigDecimal("85714.30")
@@ -729,7 +729,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("28571.42857"),
             new BigDecimal("85714.28572"),
             new BigDecimal("85714.28571")
@@ -743,7 +743,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("28571.42857"),
             new BigDecimal("85714.28572"),
             new BigDecimal("85714.28572")
@@ -760,7 +760,7 @@ public class BigFractionTest extends TestCase {
 
   public void testFractionalMoneyHalfUp() {
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("33333.34"),
             new BigDecimal("33333.33"),
             new BigDecimal("33333.33")
@@ -774,7 +774,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("25000.00"),
             new BigDecimal("25000.00"),
             new BigDecimal("25000.00"),
@@ -790,7 +790,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("33333.34"),
             new BigDecimal("33333.34"),
             new BigDecimal("33333.33"),
@@ -810,7 +810,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("33333.34"),
             new BigDecimal("33333.33"),
             new BigDecimal("33333.33"),
@@ -826,7 +826,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("-33333.34"),
             new BigDecimal("-33333.33"),
             new BigDecimal("-33333.33"),
@@ -842,7 +842,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("33333.34"),
             new BigDecimal("100000.00"),
             new BigDecimal("33333.33"),
@@ -858,7 +858,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("-33333.34"),
             new BigDecimal("-100000.00"),
             new BigDecimal("-33333.33"),
@@ -874,7 +874,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("33333.34"),
             new BigDecimal("33333.33"),
             new BigDecimal("0.00"),
@@ -892,7 +892,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("0.01"),
             new BigDecimal("0.01"),
             new BigDecimal("0.00"),
@@ -908,7 +908,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("0.01"),
             new BigDecimal("0.00"),
             new BigDecimal("0.00"),
@@ -924,7 +924,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("0.00"),
             new BigDecimal("0.00"),
             new BigDecimal("0.00"),
@@ -940,7 +940,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("0.01"),
         },
         BigFraction.distributeValue(
@@ -950,7 +950,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("0.00"),
         },
         BigFraction.distributeValue(
@@ -960,7 +960,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("33333.34"),
             new BigDecimal("33333.33"),
             new BigDecimal("133333.33")
@@ -974,7 +974,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("28571.43"),
             new BigDecimal("85714.29"),
             new BigDecimal("85714.28")
@@ -988,7 +988,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("28571.43"),
             new BigDecimal("85714.29"),
             new BigDecimal("85714.29")
@@ -1002,7 +1002,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("28571.43"),
             new BigDecimal("85714.30"),
             new BigDecimal("85714.29")
@@ -1016,7 +1016,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("28571.43"),
             new BigDecimal("85714.30"),
             new BigDecimal("85714.30")
@@ -1030,7 +1030,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("28571.42857"),
             new BigDecimal("85714.28572"),
             new BigDecimal("85714.28571")
@@ -1044,7 +1044,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("28571.42857"),
             new BigDecimal("85714.28572"),
             new BigDecimal("85714.28572")
@@ -1063,7 +1063,7 @@ public class BigFractionTest extends TestCase {
   public void testFractionalMoneyPca() {
     // id=2
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("519.58"),
             new BigDecimal("779.37")
         },
@@ -1075,7 +1075,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("-519.58"),
             new BigDecimal("-779.37")
         },
@@ -1088,7 +1088,7 @@ public class BigFractionTest extends TestCase {
     );
     // id=7
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("1110.96"),
             new BigDecimal("1666.43")
         },
@@ -1100,7 +1100,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("-1110.96"),
             new BigDecimal("-1666.43")
         },
@@ -1113,7 +1113,7 @@ public class BigFractionTest extends TestCase {
     );
     // id=24
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("436.92"),
             new BigDecimal("655.39")
         },
@@ -1125,7 +1125,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("-436.92"),
             new BigDecimal("-655.39")
         },
@@ -1138,7 +1138,7 @@ public class BigFractionTest extends TestCase {
     );
     // id=45
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("495.46"),
             new BigDecimal("743.20")
         },
@@ -1150,7 +1150,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("-495.46"),
             new BigDecimal("-743.20")
         },
@@ -1163,7 +1163,7 @@ public class BigFractionTest extends TestCase {
     );
     // id=82
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("494.43"),
             new BigDecimal("741.65")
         },
@@ -1175,7 +1175,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("-494.43"),
             new BigDecimal("-741.65")
         },
@@ -1188,7 +1188,7 @@ public class BigFractionTest extends TestCase {
     );
     // id=88
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("541.37"),
             new BigDecimal("812.06")
         },
@@ -1200,7 +1200,7 @@ public class BigFractionTest extends TestCase {
         )
     );
     assertEquals(
-        new BigDecimal[]{
+        new BigDecimal[] {
             new BigDecimal("-541.37"),
             new BigDecimal("-812.06")
         },

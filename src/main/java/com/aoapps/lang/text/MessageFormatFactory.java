@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2011, 2013, 2016, 2017, 2019, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2011, 2013, 2016, 2017, 2019, 2021, 2022, 2024, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -93,31 +93,29 @@ public final class MessageFormatFactory {
     return messageFormat;
   }
 
-  /*
-  public static void benchmark() {
-    Locale locale = Locale.getDefault();
-    int iterations = 1000000;
-    StringBuffer sb = new StringBuffer();
-    Object[] args = new Object[] {
-      "test", "message"
-    };
-    long startTime = System.nanoTime();
-    for (int i=0; i<iterations; i++) {
-      // sb.setLength(0);
-      new MessageFormat("This is a {0} {1}", locale); //.format(args, sb, null);
-    }
-    long midTime = System.nanoTime();
-    for (int i=0; i<iterations; i++) {
-      // sb.setLength(0);
-      MessageFormatFactory.getMessageFormat("This is a {0} {1}", locale); //.format(args, sb, null);
-    }
-    long endTime = System.nanoTime();
-    System.out.println("Constructor: "+BigDecimal.valueOf(midTime - startTime, 6));
-    System.out.println("Factory....: "+BigDecimal.valueOf(endTime - midTime, 6));
-  }
-
-  public static void main(String[] args) {
-    for (int c=0;c<100;c++) benchmark();
-  }
-   */
+  // public static void benchmark() {
+  //   Locale locale = Locale.getDefault();
+  //   int iterations = 1000000;
+  //   StringBuffer sb = new StringBuffer();
+  //   Object[] args = new Object[] {
+  //     "test", "message"
+  //   };
+  //   long startTime = System.nanoTime();
+  //   for (int i=0; i<iterations; i++) {
+  //     // sb.setLength(0);
+  //     new MessageFormat("This is a {0} {1}", locale); //.format(args, sb, null);
+  //   }
+  //   long midTime = System.nanoTime();
+  //   for (int i=0; i<iterations; i++) {
+  //     // sb.setLength(0);
+  //     MessageFormatFactory.getMessageFormat("This is a {0} {1}", locale); //.format(args, sb, null);
+  //   }
+  //   long endTime = System.nanoTime();
+  //   System.out.println("Constructor: "+BigDecimal.valueOf(midTime - startTime, 6));
+  //   System.out.println("Factory....: "+BigDecimal.valueOf(endTime - midTime, 6));
+  // }
+  //
+  // public static void main(String[] args) {
+  //   for (int c=0;c<100;c++) benchmark();
+  // }
 }

@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2016, 2017, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2016, 2017, 2020, 2021, 2022, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -64,14 +64,13 @@ public class AoByteArrayInputStream extends ByteArrayInputStream {
     }
   }
 
-  /* TODO: This requires code left back in ao-hodgepodge.  Is it used anywhere?
-  public void fillFrom(com.aoapps.persistence.PersistentBuffer pbuffer, long position, int len) throws IOException {
-    synchronized (this) {
-      pbuffer.get(position, buf, 0, len);
-      mark=0;
-      pos=0;
-      count=len;
-    }
-  }
-   */
+  // TODO: This requires code left back in ao-hodgepodge.  Is it used anywhere?
+  // public void fillFrom(com.aoapps.persistence.PersistentBuffer pbuffer, long position, int len) throws IOException {
+  //   synchronized (this) {
+  //     pbuffer.get(position, buf, 0, len);
+  //     mark=0;
+  //     pos=0;
+  //     count=len;
+  //   }
+  // }
 }

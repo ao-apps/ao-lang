@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024, 2025  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -83,19 +83,19 @@ public class SmartComparator implements Comparator<Object> {
       this.begin = begin;
       this.end = end;
     }
-    /*
-    @Override
-    public boolean equals(Object obj) {
-      if (!(obj instanceof Token)) {
-        return false;
-      }
-      Token other = (Token)obj;
-      return
-        tokenType == other.tokenType
-        && begin == other.begin
-        && end == other.end
-        && value.equals(other.value);
-    }*/
+
+    // @Override
+    // public boolean equals(Object obj) {
+    //   if (!(obj instanceof Token)) {
+    //     return false;
+    //   }
+    //   Token other = (Token)obj;
+    //   return
+    //     tokenType == other.tokenType
+    //     && begin == other.begin
+    //     && end == other.end
+    //     && value.equals(other.value);
+    // }
   }
 
   static final Token nextToken(String value, int pos) {

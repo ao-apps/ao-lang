@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2010, 2011, 2016, 2017, 2020, 2021, 2022, 2024, 2025  AO Industries, Inc.
+ * Copyright (C) 2010, 2011, 2016, 2017, 2020, 2021, 2022, 2024, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -121,48 +121,48 @@ public class LongLong extends Number implements Comparable<LongLong> {
     return new LongLong(hi, lo);
   }
 
-  /* Unused
-  public static LongLong decode(String nm) throws NumberFormatException {
-    int radix = 10;
-    int index = 0;
-    boolean negative = false;
-    LongLong result;
-
-    // Handle minus sign, if present
-    if (nm.startsWith("-")) {
-      negative = true;
-      index++;
-    }
-
-    // Handle radix specifier, if present
-    if (nm.startsWith("0x", index) || nm.startsWith("0X", index)) {
-      index += 2;
-      radix = 16;
-    } else if (nm.startsWith("#", index)) {
-      index++;
-      radix = 16;
-    } else if (nm.startsWith("0", index) && nm.length() > 1 + index) {
-      index++;
-      radix = 8;
-    }
-
-    if (nm.startsWith("-", index)) {
-      throw new NumberFormatException("Negative sign in wrong position");
-    }
-
-    try {
-      result = LongLong.valueOf(nm.substring(index), radix);
-      result = negative ? result.negate() : result;
-    } catch (NumberFormatException e) {
-      // If number is LongLong.MIN_VALUE, we'll end up here. The next line
-      // handles this case, and causes any genuine format error to be
-      // rethrown.
-      String constant = negative ? new String("-" + nm.substring(index))
-          : nm.substring(index);
-      result = LongLong.valueOf(constant, radix);
-    }
-    return result;
-  }*/
+  // Unused
+  // public static LongLong decode(String nm) throws NumberFormatException {
+  //   int radix = 10;
+  //   int index = 0;
+  //   boolean negative = false;
+  //   LongLong result;
+  //
+  //   // Handle minus sign, if present
+  //   if (nm.startsWith("-")) {
+  //     negative = true;
+  //     index++;
+  //   }
+  //
+  //   // Handle radix specifier, if present
+  //   if (nm.startsWith("0x", index) || nm.startsWith("0X", index)) {
+  //     index += 2;
+  //     radix = 16;
+  //   } else if (nm.startsWith("#", index)) {
+  //     index++;
+  //     radix = 16;
+  //   } else if (nm.startsWith("0", index) && nm.length() > 1 + index) {
+  //     index++;
+  //     radix = 8;
+  //   }
+  //
+  //   if (nm.startsWith("-", index)) {
+  //     throw new NumberFormatException("Negative sign in wrong position");
+  //   }
+  //
+  //   try {
+  //     result = LongLong.valueOf(nm.substring(index), radix);
+  //     result = negative ? result.negate() : result;
+  //   } catch (NumberFormatException e) {
+  //     // If number is LongLong.MIN_VALUE, we'll end up here. The next line
+  //     // handles this case, and causes any genuine format error to be
+  //     // rethrown.
+  //     String constant = negative ? new String("-" + nm.substring(index))
+  //         : nm.substring(index);
+  //     result = LongLong.valueOf(constant, radix);
+  //   }
+  //   return result;
+  // }
 
   private static final long serialVersionUID = -8296704159343817686L;
 
@@ -240,30 +240,30 @@ public class LongLong extends Number implements Comparable<LongLong> {
     return false;
   }
 
-  /* Unused
-  public static LongLong getLongLong(String nm) {
-    return getLongLong(nm, null);
-  }*/
+  // Unused
+  // public static LongLong getLongLong(String nm) {
+  //   return getLongLong(nm, null);
+  // }
 
-  /* Unused
-  public static LongLong getLongLong(String nm, LongLong val) {
-    String v = null;
-    try {
-      v = System.getProperty(nm);
-    } catch (IllegalArgumentException e) {
-      // TODO: Implement
-    } catch (NullPointerException e) {
-      // TODO: Implement
-    }
-    if (v != null) {
-      try {
-        return LongLong.decode(v);
-      } catch (NumberFormatException e) {
-        // TODO: Implement
-      }
-    }
-    return val;
-  }*/
+  // Unused
+  // public static LongLong getLongLong(String nm, LongLong val) {
+  //   String v = null;
+  //   try {
+  //     v = System.getProperty(nm);
+  //   } catch (IllegalArgumentException e) {
+  //     // TODO: Implement
+  //   } catch (NullPointerException e) {
+  //     // TODO: Implement
+  //   }
+  //   if (v != null) {
+  //     try {
+  //       return LongLong.decode(v);
+  //     } catch (NumberFormatException e) {
+  //       // TODO: Implement
+  //     }
+  //   }
+  //   return val;
+  // }
 
   /**
    * Compares two longs as unsigned.
