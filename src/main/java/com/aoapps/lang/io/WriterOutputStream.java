@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2020, 2021, 2022, 2025  AO Industries, Inc.
+ * Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2016, 2017, 2020, 2021, 2022, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -99,24 +99,4 @@ public final class WriterOutputStream extends OutputStream implements NoClose {
   public void write(int b) throws IOException {
     out.write(b);
   }
-
-  /*
-   * It isn't important to release buff with newer implementation.
-   * Removing finalize to save garbage collector work.
-   *
-   * @deprecated The finalization mechanism is inherently problematic.
-   *
-  @Deprecated(since="9")
-  @Override
-  protected void finalize() throws Throwable {
-    try {
-      if (buff != null) {
-        BufferManager.release(buff, false);
-        buff=null;
-      }
-    } finally {
-      super.finalize();
-    }
-  }
-  */
 }
