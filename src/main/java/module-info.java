@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2021, 2022, 2023, 2025  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2023, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -21,29 +21,6 @@
  * along with ao-lang.  If not, see <https://www.gnu.org/licenses/>.
  */
 module com.aoapps.lang {
-  exports com.aoapps.lang;
-  exports com.aoapps.lang.attribute;
-  exports com.aoapps.lang.concurrent;
-  exports com.aoapps.lang.dto;
-  exports com.aoapps.lang.exception;
-  exports com.aoapps.lang.function;
-  exports com.aoapps.lang.i18n;
-  exports com.aoapps.lang.i18n.impl to com.aoapps.hodgepodge;
-  exports com.aoapps.lang.io;
-  exports com.aoapps.lang.io.function;
-  exports com.aoapps.lang.math;
-  exports com.aoapps.lang.nio.charset;
-  exports com.aoapps.lang.reflect;
-  exports com.aoapps.lang.security.acl;
-  exports com.aoapps.lang.sql;
-  exports com.aoapps.lang.text;
-  exports com.aoapps.lang.time;
-  exports com.aoapps.lang.util;
-  exports com.aoapps.lang.validation;
-  exports com.aoapps.lang.xml;
-  exports com.aoapps.lang.zip;
-  uses com.aoapps.lang.CoercionOptimizerInitializer;
-  uses com.aoapps.lang.ThrowableSurrogateFactoryInitializer;
   // Direct
   requires static org.apache.commons.codec; // <groupId>commons-codec</groupId><artifactId>commons-codec</artifactId>
   requires static org.apache.commons.io; // <groupId>commons-io</groupId><artifactId>commons-io</artifactId>
@@ -66,4 +43,29 @@ module com.aoapps.lang {
   requires java.sql.rowset;
   requires java.xml;
   requires java.xml.crypto;
+
+  exports com.aoapps.lang;
+  exports com.aoapps.lang.attribute;
+  exports com.aoapps.lang.concurrent;
+  exports com.aoapps.lang.dto;
+  exports com.aoapps.lang.exception;
+  exports com.aoapps.lang.function;
+  exports com.aoapps.lang.i18n;
+  exports com.aoapps.lang.i18n.impl to com.aoapps.hodgepodge;
+  exports com.aoapps.lang.io;
+  exports com.aoapps.lang.io.function;
+  exports com.aoapps.lang.math;
+  exports com.aoapps.lang.nio.charset;
+  exports com.aoapps.lang.reflect;
+  exports com.aoapps.lang.security.acl;
+  exports com.aoapps.lang.sql;
+  exports com.aoapps.lang.text;
+  exports com.aoapps.lang.time;
+  exports com.aoapps.lang.util;
+  exports com.aoapps.lang.validation;
+  exports com.aoapps.lang.xml;
+  exports com.aoapps.lang.zip;
+
+  uses com.aoapps.lang.CoercionOptimizerInitializer;
+  uses com.aoapps.lang.ThrowableSurrogateFactoryInitializer;
 }
