@@ -23,6 +23,7 @@
 
 package com.aoapps.lang.text;
 
+import com.aoapps.lang.Strings;
 import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Comparator;
@@ -98,6 +99,20 @@ public class SmartComparator implements Comparator<Object> {
     // }
   }
 
+  private static boolean isNegativeAfter(String value, int pos, int i) {
+    if (i == pos) {
+      return true;
+    }
+    int cp = value.codePointBefore(i);
+    return
+        cp == '('
+        || cp == '['
+        || cp == '{'
+        || cp == '/'
+        || cp == ','
+        || Strings.isWhitespace(cp);
+  }
+
   static final Token nextToken(String value, int pos) {
     int len = value.length();
     if (pos > len) {
@@ -135,6 +150,7 @@ public class SmartComparator implements Comparator<Object> {
           prefixLen = 2;
         } else if (
             ch1 == '-'
+                && isNegativeAfter(value, pos, i)
                 && i < (len - 1)
                 && (ch2 = value.charAt(i + 1)) >= '0'
                 && ch2 <= '9'
@@ -145,6 +161,7 @@ public class SmartComparator implements Comparator<Object> {
           prefixLen = 2;
         } else if (
             ch1 == '-'
+                && isNegativeAfter(value, pos, i)
                 && i < (len - 2)
                 && value.charAt(i + 1) == '.'
                 && (ch2 = value.charAt(i + 2)) >= '0'

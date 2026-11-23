@@ -1,6 +1,6 @@
 /*
  * ao-lang - Minimal Java library with no external dependencies shared by many other projects.
- * Copyright (C) 2014, 2016, 2017, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2014, 2016, 2017, 2020, 2021, 2022, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,6 +23,7 @@
 
 package com.aoapps.lang.text;
 
+import com.aoapps.lang.Strings;
 import java.util.Arrays;
 import java.util.Collections;
 import junit.framework.Test;
@@ -153,19 +154,19 @@ public class SmartComparatorTest extends TestCase {
     );
     doTestNextToken(
         "Dan-1", 0,
-        SmartComparator.TokenType.STRING, 0, 3
+        SmartComparator.TokenType.STRING, 0, 4
     );
     doTestNextToken(
-        "Dan-1", 3,
-        SmartComparator.TokenType.NUMERIC, 3, 5
+        "Dan-1", 4,
+        SmartComparator.TokenType.NUMERIC, 4, 5
     );
     doTestNextToken(
         "Dan-1.", 0,
-        SmartComparator.TokenType.STRING, 0, 3
+        SmartComparator.TokenType.STRING, 0, 4
     );
     doTestNextToken(
-        "Dan-1.", 3,
-        SmartComparator.TokenType.NUMERIC, 3, 6
+        "Dan-1.", 4,
+        SmartComparator.TokenType.NUMERIC, 4, 6
     );
     // Ending with partial numeric beginning
     doTestNextToken(
@@ -267,6 +268,148 @@ public class SmartComparatorTest extends TestCase {
         "10.0",
         "10.00",
         "10.000"
+    };
+    String[] shuffled = Arrays.copyOf(testValues, testValues.length);
+    Collections.shuffle(Arrays.asList(shuffled));
+    Arrays.sort(shuffled, comparator);
+    assertEquals(
+        Arrays.asList(testValues),
+        Arrays.asList(shuffled)
+    );
+  }
+
+  public void testNegativeOnlyBeginningOrAfterSpecificCharacters() {
+    int unicodeWhitespace = 0x2029;
+    assertTrue(Strings.isWhitespace(unicodeWhitespace));
+    String[] testValues = {
+        "-10",
+        "-2",
+        "-1",
+        "-0",
+        "0",
+        "1",
+        "2",
+        "10",
+        "array[-10]",
+        "array[-2]",
+        "array[-1]",
+        "array[-0]",
+        "array[0]",
+        "array[1]",
+        "array[2]",
+        "array[10]",
+        "cache-a -4.test",
+        "cache-a -3.test",
+        "cache-a -2.test",
+        "cache-a -1.test",
+        "cache-a-1.test",
+        "cache-a-2.test",
+        "cache-a-3.test",
+        "cache-a-4.test",
+        "cache-b -4.test",
+        "cache-b -3.test",
+        "cache-b -2.test",
+        "cache-b -1.test",
+        "cache-b-1.test",
+        "cache-b-2.test",
+        "cache-b-3.test",
+        "cache-b-4.test",
+        "hash{-10}",
+        "hash{-2}",
+        "hash{-1}",
+        "hash{-0}",
+        "hash{0}",
+        "hash{1}",
+        "hash{2}",
+        "hash{10}",
+        "multiarray[-10,-10]",
+        "multiarray[-10,-2]",
+        "multiarray[-10,-1]",
+        "multiarray[-10,-0]",
+        "multiarray[-10,0]",
+        "multiarray[-10,1]",
+        "multiarray[-10,2]",
+        "multiarray[-10,10]",
+        "multiarray[-2,-10]",
+        "multiarray[-2,-2]",
+        "multiarray[-2,-1]",
+        "multiarray[-2,-0]",
+        "multiarray[-2,0]",
+        "multiarray[-2,1]",
+        "multiarray[-2,2]",
+        "multiarray[-2,10]",
+        "multiarray[-1,-10]",
+        "multiarray[-1,-2]",
+        "multiarray[-1,-1]",
+        "multiarray[-1,-0]",
+        "multiarray[-1,0]",
+        "multiarray[-1,1]",
+        "multiarray[-1,2]",
+        "multiarray[-1,10]",
+        "multiarray[-0,-10]",
+        "multiarray[-0,-2]",
+        "multiarray[-0,-1]",
+        "multiarray[-0,-0]",
+        "multiarray[-0,0]",
+        "multiarray[-0,1]",
+        "multiarray[-0,2]",
+        "multiarray[-0,10]",
+        "multiarray[0,-10]",
+        "multiarray[0,-2]",
+        "multiarray[0,-1]",
+        "multiarray[0,-0]",
+        "multiarray[0,0]",
+        "multiarray[0,1]",
+        "multiarray[0,2]",
+        "multiarray[0,10]",
+        "multiarray[1,-10]",
+        "multiarray[1,-2]",
+        "multiarray[1,-1]",
+        "multiarray[1,-0]",
+        "multiarray[1,0]",
+        "multiarray[1,1]",
+        "multiarray[1,2]",
+        "multiarray[1,10]",
+        "multiarray[2,-10]",
+        "multiarray[2,-2]",
+        "multiarray[2,-1]",
+        "multiarray[2,-0]",
+        "multiarray[2,0]",
+        "multiarray[2,1]",
+        "multiarray[2,2]",
+        "multiarray[2,10]",
+        "multiarray[10,-10]",
+        "multiarray[10,-2]",
+        "multiarray[10,-1]",
+        "multiarray[10,-0]",
+        "multiarray[10,0]",
+        "multiarray[10,1]",
+        "multiarray[10,2]",
+        "multiarray[10,10]",
+        "path/-10/path",
+        "path/-2/path",
+        "path/-1/path",
+        "path/-0/path",
+        "path/0/path",
+        "path/1/path",
+        "path/2/path",
+        "path/10/path",
+        "test(-10)",
+        "test(-2)",
+        "test(-1)",
+        "test(-0)",
+        "test(0)",
+        "test(1)",
+        "test(2)",
+        "test(10)",
+        Character.toString(unicodeWhitespace) + "-10",
+        Character.toString(unicodeWhitespace) + "-2",
+        Character.toString(unicodeWhitespace) + "-1",
+        Character.toString(unicodeWhitespace) + "-0",
+        Character.toString(unicodeWhitespace) + "0",
+        Character.toString(unicodeWhitespace) + "1",
+        Character.toString(unicodeWhitespace) + "2",
+        Character.toString(unicodeWhitespace) + "10",
     };
     String[] shuffled = Arrays.copyOf(testValues, testValues.length);
     Collections.shuffle(Arrays.asList(shuffled));
