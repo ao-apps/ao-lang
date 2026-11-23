@@ -43,7 +43,7 @@ import java.util.Objects;
  *   <li>B</li>
  * </ol>
  *
- * <p>Negative numbers are detected when at the beginning of the token or when preceded by any of:</p>
+ * <p>Negative numbers are detected when at the beginning of the string or when preceded by any of:</p>
  *
  * <ul>
  * <li>Parenthetical: <code>'('</code>, <code>'['</code>, and <code>'{'</code></li>
@@ -113,8 +113,8 @@ public class SmartComparator implements Comparator<Object> {
     // }
   }
 
-  private static boolean isNegativeAfter(String value, int pos, int i) {
-    if (i == pos) {
+  private static boolean isNegativeAfter(String value, int i) {
+    if (i == 0) {
       return true;
     }
     int cp = value.codePointBefore(i);
@@ -192,7 +192,7 @@ public class SmartComparator implements Comparator<Object> {
           prefixLen = 2;
         } else if (
             ch1 == '-'
-                && isNegativeAfter(value, pos, i)
+                && isNegativeAfter(value, i)
                 && i < (len - 1)
                 && (ch2 = value.charAt(i + 1)) >= '0'
                 && ch2 <= '9'
@@ -203,7 +203,7 @@ public class SmartComparator implements Comparator<Object> {
           prefixLen = 2;
         } else if (
             ch1 == '-'
-                && isNegativeAfter(value, pos, i)
+                && isNegativeAfter(value, i)
                 && i < (len - 2)
                 && value.charAt(i + 1) == '.'
                 && (ch2 = value.charAt(i + 2)) >= '0'
