@@ -43,6 +43,20 @@ import java.util.Objects;
  *   <li>B</li>
  * </ol>
  *
+ * <p>Negative numbers are detected when at the beginning of the token or when preceded by any of:</p>
+ *
+ * <ul>
+ * <li>Parenthetical: <code>'('</code>, <code>'['</code>, and <code>'{'</code></li>
+ * <li>Paths: <code>'/'</code> and <code>'\\'</code></li>
+ * <li>Lexical: <code>','</code>, <code>';'</code>, and <code>':'</code></li>
+ * <li>Comparisons: <code>'='</code>, <code>'&lt;'</code>, and <code>'&gt;'</code></li>
+ * <li>Expressions: <code>'|'</code>, <code>'&amp;'</code>, <code>'^'</code>, <code>'?'</code>, <code>'+'</code>, <code>'*'</code>, <code>'%'</code>, <code>'~'</code>, and <code>'!'</code></li>
+ * <li>Quotations: <code>'\''</code>, <code>'"'</code>, <code>'‘'</code>, <code>'“'</code>, <code>'«'</code>, and <code>'‹'</code></li>
+ * <li>{@link Strings#isWhitespace(int)}</li>
+ * </ul>
+ *
+ * <p>Otherwise, the hyphen (<code>'-'</code>) remains part of the string token.</p>
+ *
  * @author  AO Industries, Inc.
  */
 public class SmartComparator implements Comparator<Object> {
@@ -105,11 +119,39 @@ public class SmartComparator implements Comparator<Object> {
     }
     int cp = value.codePointBefore(i);
     return
+        // parenthetical
         cp == '('
         || cp == '['
         || cp == '{'
+        // paths
         || cp == '/'
+        || cp == '\\'
+        // lexical
         || cp == ','
+        || cp == ';'
+        || cp == ':'
+        // comparisons
+        || cp == '='
+        || cp == '<'
+        || cp == '>'
+        // expressions
+        || cp == '|'
+        || cp == '&'
+        || cp == '^'
+        || cp == '?'
+        || cp == '+'
+        || cp == '*'
+        || cp == '%'
+        || cp == '~'
+        || cp == '!'
+        // quotations
+        || cp == '\''
+        || cp == '"'
+        || cp == '‘'
+        || cp == '“'
+        || cp == '«'
+        || cp == '‹'
+        // whitespace
         || Strings.isWhitespace(cp);
   }
 
